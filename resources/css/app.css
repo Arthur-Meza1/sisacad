@@ -1,11 +1,170 @@
-@import 'tailwindcss';
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5dc;
+}
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-@source '../**/*.blade.php';
-@source '../**/*.js';
 
-@theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+.header {
+    background-color: #72161b;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    font-size: 0.8em;
+}
+
+.logo img {
+    height: 40px;
+    margin-right: 15px;
+}
+
+.title-right h2 {
+    font-size: 1.8em;
+    margin: 0;
+    font-weight: bold;
+}
+
+
+.content-container {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    padding: 50px 20px;
+}
+
+
+.block {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 350px;
+}
+
+
+.block-title {
+    color: white;
+    padding: 10px;
+    margin: -20px -20px 20px -20px;
+    text-align: left;
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+.title-rojo {
+    background-color: #b5383f;
+}
+
+
+.documentos ul {
+    list-style: none;
+    padding: 0;
+}
+
+.documentos li {
+    padding: 8px 0;
+    border-bottom: 1px dashed #ddd;
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+}
+
+.documentos li a {
+    text-decoration: none;
+    color: #444;
+    margin-left: 10px;
+}
+
+.check-icon {
+    color: green;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+
+
+.system-links {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.system-button {
+    text-decoration: none;
+    color: white;
+    background-color: #808080;
+    padding: 15px;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+    transition: background-color 0.2s;
+    box-shadow: 0 3px 0 #5e5e5e;
+}
+
+
+.system-button:hover {
+    background-color: #6a6a6a;
+}
+
+.login-container {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 80vh;
+    padding: 20px;
+}
+
+.login-box {
+    width: 400px;
+    padding-bottom: 30px;
+    text-align: center;
+}
+
+
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.login-box label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #444;
+}
+
+.login-box input[type="text"],
+.login-box input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 1em;
+}
+
+.full-width {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.error-message {
+    color: #b5383f;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+.enlace-publico {
+    margin-top: 20px;
+    font-size: 0.9em;
 }
