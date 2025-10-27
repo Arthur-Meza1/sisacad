@@ -13,6 +13,7 @@ php artisan key:generate
 docker context use default
 composer require laravel/sail --dev
 php artisan sail:install --with=pgsql
+./vendor/bin/sail up -d       # Iniciar backend
 ./vendor/bin/sail npm install
 ```
 4) Creating `storage` folders
@@ -29,6 +30,5 @@ mkdir -p ./storage/framework/cache
 
 ### Running
 ```shell
-./vendor/bin/sail up -d       # Iniciar backend
-./vendor/bin/sail npm run dev # Iniciar frontend
 ```
+./vendor/bin/sail npm run dev # Iniciar frontend
