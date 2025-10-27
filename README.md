@@ -30,5 +30,5 @@ mkdir -p ./storage/framework/cache
 
 ### Running
 ```shell
-```
 ./vendor/bin/sail npm run dev # Iniciar frontend
+```
