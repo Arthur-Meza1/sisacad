@@ -24,6 +24,8 @@ class Register extends Controller
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
+            'role' => 'student',
+            'active' => true,
         ]);
 
         // Log them in
