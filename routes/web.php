@@ -5,12 +5,26 @@ use App\Http\Controllers\Auth\Login;
 use App\Http\Controllers\Auth\Logout;
 use App\Http\Controllers\Auth\Register;
 
-
 Route::get('/', function () {
-    // Redirect guests to /login, show 'main' for authenticated users
-    return auth()->check()
-        ? view('student')
-        : redirect()->route('login');
+    if (!auth()->check()) {
+        return redirect()->route('login');
+    }
+
+    // Redirect based on authenticated user's role
+    return match (auth()->user()->role) {
+        'admin' => redirect('/admin'),
+        'teacher' => redirect('/teacher'),
+        'secretary' => redirect('/secretary'),
+        'student' => redirect('/student'),
+        default => redirect('/login'),
+    };
+});
+
+Route::middleware('auth')->group(function () {
+    Route::view('/student', 'student')->middleware('role:student');
+    Route::view('/admin', 'admin')->middleware('role:admin');
+    Route::view('/teacher', 'teacher')->middleware('role:teacher');
+    Route::view('/secretary', 'secretary')->middleware('role:secretary');
 });
 
 Route::view('/login', 'auth.login')

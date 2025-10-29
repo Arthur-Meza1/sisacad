@@ -18,7 +18,7 @@
 
     <div class="user-info">
         <h3>{{ auth()->user()->name }}</h3>
-        <p>Alumno</p>
+        <p>{{ auth()->user()->role }}</p>
         <hr>
     </div>
     <nav>

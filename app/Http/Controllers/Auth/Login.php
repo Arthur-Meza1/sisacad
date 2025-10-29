@@ -10,24 +10,28 @@ class Login extends Controller
 {
     public function __invoke(Request $request)
     {
-        // Validate the input
         $credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
+            'email' => ['required', 'email'],
+            'password' => ['required'],
         ]);
 
-        // Attempt to log in
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
-            // Regenerate session for security
             $request->session()->regenerate();
 
-            // Redirect to intended page or home
-            return redirect()->intended('/')->with('success', 'Welcome back!');
+            $user = Auth::user();
+
+            // Redirect based on role
+            return match ($user->role) {
+                'admin' => redirect()->intended('/admin'),
+                'teacher' => redirect()->intended('/teacher'),
+                'secretary' => redirect()->intended('/secretary'),
+                'student' => redirect()->intended('/student'),
+                default => redirect()->intended('/login'),
+            };
         }
 
-        // If login fails, redirect back with error
-        return back()
-            ->withErrors(['email' => 'The provided credentials do not match our records.'])
-            ->onlyInput('email');
+        return back()->withErrors([
+            'email' => 'Las credenciales no son válidas.',
+        ])->onlyInput('email');
     }
 }
