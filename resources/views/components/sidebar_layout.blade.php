@@ -16,13 +16,17 @@
         <h3>{{ auth()->user()->name }}</h3>
         <p>{{ auth()->user()->role }}</p>
     </div>
-    <form method="POST" action="{{ route('logout') }}" style="display:inline;">
-        @csrf
-        <button type="submit" title="Cerrar sesión" style="background:none; border:none; cursor:pointer; font-size:16px;">
-            ⏻ Logout
-        </button>
-    </form>
     <nav class="navigation">
+        <a>
+            <i class="fas fa-power-off"></i>
+            <form class method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" title="Cerrar sesión"
+                        style="color : white; background:none; border:none; cursor:pointer; font-size:16px; ;">
+                    Logout
+                </button>
+            </form>
+        </a>
         {{ $nav_options }}
     </nav>
 </div>

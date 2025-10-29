@@ -7,7 +7,7 @@
         <div class="login-box block">
             <div class="block-title">Ingresar</div>
 
-            <form method="POST" action="/login">
+            <form method="POST" action="/login" class="form-login">
                 @csrf
 
                 <div class="input-group">
@@ -36,7 +36,7 @@
                     @enderror
                 </div>
 
-                <div class="input-group">
+                <div class="input-group checkbox-group">
                     <label>
                         <input type="checkbox"
                                name="remember"
@@ -45,7 +45,7 @@
                     </label>
                 </div>
 
-                <button type="submit" class="system-button full-width">
+                <button type="submit" class="system-button full-width primary-btn">
                     Ingresar
                 </button>
             </form>

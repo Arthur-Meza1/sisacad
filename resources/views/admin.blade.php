@@ -3,7 +3,7 @@
         Dashboard Administrador
     </x-slot:title>
     <x-slot:nav_options>
-        <a href="#" class="active"><i class="fas fa-home"></i> Inicio</a>
+        <a href="#" class="active"><i class="fas fa-home"></i>Inicio</a>
         <a href="#"><i class="fas fa-users-cog"></i>Gestión de Usuarios</a>
         <a href="#"><i class="fas fa-university"></i> Gestión Académica</a>
         <a href="#"><i class="fas fa-money-bill-wave"></i> Administrativo/Finanzas</a>

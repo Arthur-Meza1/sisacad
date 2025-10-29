@@ -1,0 +1,142 @@
+:root {
+    --color-sidebar: #4da6ff;
+    --color-bg: #f4f6f9;
+    --color-text: #333;
+    --color-active: #fff;
+    --color-card-bg: #fff;
+    --color-primary: #555ad8;
+    --color-secondary: #ffc107;
+    --color-success: #28a745;
+    --color-danger: #dc3545;
+}
+
+/* General page layout */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Centered login box */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    padding: 20px;
+}
+
+.login-box {
+    background-color: var(--color-card-bg);
+    width: 100%;
+    max-width: 400px;
+    border-radius: 10px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+}
+
+.block-title {
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid var(--color-sidebar);
+    padding-bottom: 0.5rem;
+}
+
+/* Input styling */
+.input-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.2rem;
+}
+
+.input-group label {
+    font-weight: 500;
+    margin-bottom: 0.4rem;
+    color: var(--color-text);
+}
+
+.input-group input[type="text"],
+.input-group input[type="email"],
+.input-group input[type="password"] {
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.input-group input:focus {
+    border-color: var(--color-sidebar);
+    box-shadow: 0 0 3px rgba(77, 166, 255, 0.3);
+}
+
+/* Checkbox */
+.input-group input[type="checkbox"] {
+    margin-right: 8px;
+    accent-color: var(--color-sidebar);
+}
+
+/* Buttons */
+.system-button {
+    width: 100%;
+    background-color: var(--color-sidebar);
+    color: var(--color-active);
+    border: none;
+    padding: 10px 15px;
+    font-weight: 600;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.system-button:hover {
+    background-color: #3d8bcd;
+}
+
+.system-button:active {
+    transform: scale(0.98);
+}
+
+/* Error messages */
+.error-message {
+    color: var(--color-danger);
+    font-size: 0.85rem;
+    margin-top: 4px;
+}
+
+/* Sub-links (e.g., “Register here”) */
+.enlace-publico {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+}
+
+.enlace-publico a {
+    color: var(--color-sidebar);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.enlace-publico a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .login-box {
+        padding: 1.5rem;
+    }
+
+    .block-title {
+        font-size: 1.5rem;
+    }
+}
