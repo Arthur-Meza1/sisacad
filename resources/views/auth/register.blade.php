@@ -1,22 +1,21 @@
-<x-layout>
+<x-form_layout>
     <x-slot:title>
-        Register
+        Registrar usuario
     </x-slot:title>
 
     <div class="login-container">
         <div class="login-box block">
-            <div class="block-title title-rojo">Create Account</div>
+            <div class="block-title">Resgistrar usuario</div>
 
             <form method="POST" action="/register">
                 @csrf
 
-                <!-- Name -->
                 <div class="input-group">
-                    <label for="name">Name</label>
+                    <label for="name">Nombre</label>
                     <input type="text"
                            id="name"
                            name="name"
-                           placeholder="John Doe"
+                           placeholder="Juan Perez"
                            value="{{ old('name') }}"
                            required>
                     @error('name')
@@ -24,13 +23,12 @@
                     @enderror
                 </div>
 
-                <!-- Email -->
                 <div class="input-group">
-                    <label for="email">Email</label>
+                    <label for="email">Correo</label>
                     <input type="text"
                            id="email"
                            name="email"
-                           placeholder="mail@example.com"
+                           placeholder="correo@ejemplo.com"
                            value="{{ old('email') }}"
                            required>
                     @error('email')
@@ -38,9 +36,8 @@
                     @enderror
                 </div>
 
-                <!-- Password -->
                 <div class="input-group">
-                    <label for="password">Password</label>
+                    <label for="password">Contraseña</label>
                     <input type="password"
                            id="password"
                            name="password"
@@ -53,7 +50,7 @@
 
                 <!-- Confirm Password -->
                 <div class="input-group">
-                    <label for="password_confirmation">Confirm Password</label>
+                    <label for="password_confirmation">Confirmar contraseña</label>
                     <input type="password"
                            id="password_confirmation"
                            name="password_confirmation"
@@ -61,15 +58,10 @@
                            required>
                 </div>
 
-                <!-- Submit Button -->
                 <button type="submit" class="system-button full-width">
-                    Register
+                    Registrar
                 </button>
             </form>
-
-            <div class="enlace-publico">
-                <p>Already have an account? <a href="/login">Sign in here</a></p>
-            </div>
         </div>
     </div>
-</x-layout>
+</x-form_layout>

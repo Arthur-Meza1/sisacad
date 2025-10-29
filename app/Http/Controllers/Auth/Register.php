@@ -25,13 +25,12 @@ class Register extends Controller
             'email' => $validated['email'],
             'password' => Hash::make($validated['password']),
             'role' => 'student',
-            'active' => true,
         ]);
 
         // Log them in
         Auth::login($user);
 
         // Redirect to home
-        return redirect('/')->with('success', 'Welcome to Chirper!');
+        return redirect('/')->with('success', 'Registro exitoso!');
     }
 }

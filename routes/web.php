@@ -5,8 +5,12 @@ use App\Http\Controllers\Auth\Login;
 use App\Http\Controllers\Auth\Logout;
 use App\Http\Controllers\Auth\Register;
 
+
 Route::get('/', function () {
-    return view('main');
+    // Redirect guests to /login, show 'main' for authenticated users
+    return auth()->check()
+        ? view('student')
+        : redirect()->route('login');
 });
 
 Route::view('/login', 'auth.login')
