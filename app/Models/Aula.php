@@ -14,4 +14,8 @@ class Aula extends Model
     protected $casts = [
         'tipo' => AulaTipo::class,
     ];
+
+    public function bloqueHorario() {
+      return $this->hasOne(BloqueHorario::class);
+    }
 }

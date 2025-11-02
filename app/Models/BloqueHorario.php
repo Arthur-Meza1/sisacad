@@ -2,20 +2,26 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Enums\DiaSemana;
 use Illuminate\Database\Eloquent\Model;
 
 class BloqueHorario extends Model
 {
-    use HasFactory;
-
     public $timestamps = false;
 
-    public function grupoCurso() {
-        return $this->hasOne(GrupoCurso::class);
+    protected $fillable = [
+      'dia', 'horaInicio', 'horaFin',
+    ];
+
+    protected $casts = [
+        'dia' => DiaSemana::class,
+    ];
+
+    public function aula() {
+        return $this->belongsTo(Aula::class);
     }
 
-    public function dias() {
-        return $this->hasMany(BloqueHorarioDia::class);
+    public function grupoCurso() {
+      return $this->belongsTo(GrupoCurso::class);
     }
 }

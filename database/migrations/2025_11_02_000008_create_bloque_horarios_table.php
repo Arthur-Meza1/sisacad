@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Models\Aula;
 use App\Models\GrupoCurso;
 
 return new class extends Migration
@@ -14,7 +15,11 @@ return new class extends Migration
     {
         Schema::create('bloque_horarios', function (Blueprint $table) {
             $table->id();
+            $table->time('horaInicio');
+            $table->time('horaFin');
+            $table->string('dia');
             $table->foreignIdFor(GrupoCurso::class)->constrained();
+            $table->foreignIdFor(Aula::class)->constrained();
         });
     }
 

@@ -17,6 +17,6 @@ class Curso extends Model
     }
 
     public function grupoCurso() {
-        return $this->belongsTo(GrupoCurso::class);
+        return $this->hasOne(GrupoCurso::class);
     }
 }

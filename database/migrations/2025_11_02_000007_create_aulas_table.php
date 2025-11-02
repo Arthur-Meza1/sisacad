@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('aulas', function (Blueprint $table) {
             $table->id();
-            $table->enum('tipo', ['aula', 'lab']);
+            $table->string('tipo');
             $table->string('nombre');
         });
     }

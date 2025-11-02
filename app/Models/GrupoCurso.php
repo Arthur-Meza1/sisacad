@@ -25,7 +25,7 @@ class GrupoCurso extends Model
     }
 
     public function curso() {
-        return $this->hasOne(Curso::class);
+        return $this->belongsTo(Curso::class);
     }
 
     public function matriculas() {
@@ -37,7 +37,7 @@ class GrupoCurso extends Model
     }
 
     public function bloqueHorario() {
-        return $this->belongsTo(BloqueHorario::class);
+        return $this->hasMany(BloqueHorario::class);
     }
 
     public function registros() {
