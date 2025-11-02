@@ -11,6 +11,14 @@
     </x-slot:nav_options>
 
     <div class="main-content">
+      <ul>
+      @foreach(auth()->user()->alumno->grupos as $grupo)
+        <li>Estás en el curso {{$grupo->curso->nombre}} en el turno {{$grupo->turno}} y el curso es del tipo {{$grupo->tipo}} Y tiene los dias:</li>
+        @foreach($grupo->bloqueHorario as $horario)
+          <li>Dia: {{$horario->dia}} Inicio: {{$horario->horaInicio}}</li>
+        @endforeach
+      @endforeach
+      </ul>
         <header class="header-top">
             <div class="search-bar">
                 <i class="fas fa-search"></i>
