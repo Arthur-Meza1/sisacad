@@ -66,8 +66,8 @@ class TestSeeder extends Seeder
 
     $rolando = Docente::create(['user_id' =>
       User::factory()->create([
-        'name' => "Rolando",
         'role' => 'teacher',
+        'name' => "Rolando",
         'email' => "rolando@example.com",
       ])->id,
     ]);
@@ -127,25 +127,11 @@ class TestSeeder extends Seeder
       'tipo' => CursoTipo::Teoria,
     ]);
 
-    $pc_p = GrupoCurso::create([
-      'curso_id' => $cursos[0]->id,
-      'docente_id' => $rolando->id,
-      'turno' => Turno::A,
-      'tipo' => CursoTipo::Practica,
-    ]);
-
     $mac_t = GrupoCurso::create([
       'curso_id' => $cursos[5]->id,
       'docente_id' => $minion->id,
       'turno' => Turno::A,
       'tipo' => CursoTipo::Teoria,
-    ]);
-
-    $mac_p = GrupoCurso::create([
-      'curso_id' => $cursos[5]->id,
-      'docente_id' => $minion->id,
-      'turno' => Turno::A,
-      'tipo' => CursoTipo::Practica,
     ]);
 
     $mac_l = GrupoCurso::create([
@@ -162,13 +148,6 @@ class TestSeeder extends Seeder
       'tipo' => CursoTipo::Teoria,
     ]);
 
-    $eda_p = GrupoCurso::create([
-      'curso_id' => $cursos[2]->id,
-      'docente_id' => $yesenia->id,
-      'turno' => Turno::A,
-      'tipo' => CursoTipo::Practica,
-    ]);
-
     $eda_l = GrupoCurso::create([
       'curso_id' => $cursos[2]->id,
       'docente_id' => $sarmiento->id,
@@ -181,13 +160,6 @@ class TestSeeder extends Seeder
       'docente_id' => $roxana->id,
       'turno' => Turno::A,
       'tipo' => CursoTipo::Teoria,
-    ]);
-
-    $so_p = GrupoCurso::create([
-      'curso_id' => $cursos[3]->id,
-      'docente_id' => $roxana->id,
-      'turno' => Turno::A,
-      'tipo' => CursoTipo::Practica,
     ]);
 
     $so_l = GrupoCurso::create([
@@ -204,25 +176,11 @@ class TestSeeder extends Seeder
       'tipo' => CursoTipo::Teoria,
     ]);
 
-    $ti2_p = GrupoCurso::create([
-      'curso_id' => $cursos[4]->id,
-      'docente_id' => $yesenia->id,
-      'turno' => Turno::A,
-      'tipo' => CursoTipo::Practica,
-    ]);
-
     $is2_t = GrupoCurso::create([
       'curso_id' => $cursos[1]->id,
       'docente_id' => $sarmiento->id,
       'turno' => Turno::A,
       'tipo' => CursoTipo::Teoria,
-    ]);
-
-    $is2_p = GrupoCurso::create([
-      'curso_id' => $cursos[1]->id,
-      'docente_id' => $sarmiento->id,
-      'turno' => Turno::A,
-      'tipo' => CursoTipo::Practica,
     ]);
 
     $is2_l = GrupoCurso::create([
@@ -297,21 +255,21 @@ class TestSeeder extends Seeder
       'horaInicio' => '08:50:00',
       'horaFin' => '09:40:00',
       'dia' => DiaSemana::Martes,
-      'grupo_curso_id' => $pc_p->id,
+      'grupo_curso_id' => $pc_t->id,
       'aula_id' => $aula203->id,
     ]);
     BloqueHorario::create([
       'horaInicio' => '09:40:00',
       'horaFin' => '11:30:00',
       'dia' => DiaSemana::Martes,
-      'grupo_curso_id' => $mac_p->id,
+      'grupo_curso_id' => $mac_t->id,
       'aula_id' => $aula203->id,
     ]);
     BloqueHorario::create([
       'horaInicio' => '11:30:00',
       'horaFin' => '12:20:00',
       'dia' => DiaSemana::Martes,
-      'grupo_curso_id' => $pc_p->id,
+      'grupo_curso_id' => $pc_t->id,
       'aula_id' => $aula203->id,
     ]);
     BloqueHorario::create([
@@ -341,7 +299,7 @@ class TestSeeder extends Seeder
       'horaInicio' => '10:40:00',
       'horaFin' => '12:20:00',
       'dia' => DiaSemana::Miercoles,
-      'grupo_curso_id' => $so_p->id,
+      'grupo_curso_id' => $so_t->id,
       'aula_id' => $aula203->id,
     ]);
     BloqueHorario::create([
@@ -357,28 +315,28 @@ class TestSeeder extends Seeder
       'horaInicio' => '07:00:00',
       'horaFin' => '08:40:00',
       'dia' => DiaSemana::Jueves,
-      'grupo_curso_id' => $pc_p->id,
+      'grupo_curso_id' => $pc_t->id,
       'aula_id' => $aula203->id,
     ]);
     BloqueHorario::create([
       'horaInicio' => '08:50:00',
       'horaFin' => '10:30:00',
       'dia' => DiaSemana::Jueves,
-      'grupo_curso_id' => $eda_p->id,
+      'grupo_curso_id' => $eda_t->id,
       'aula_id' => $aula203->id,
     ]);
     BloqueHorario::create([
       'horaInicio' => '10:40:00',
       'horaFin' => '12:20:00',
       'dia' => DiaSemana::Jueves,
-      'grupo_curso_id' => $ti2_p->id,
+      'grupo_curso_id' => $ti2_t->id,
       'aula_id' => $aula203->id,
     ]);
     BloqueHorario::create([
       'horaInicio' => '12:20:00',
       'horaFin' => '14:00:00',
       'dia' => DiaSemana::Jueves,
-      'grupo_curso_id' => $is2_p->id,
+      'grupo_curso_id' => $is2_t->id,
       'aula_id' => $aula203->id,
     ]);
 
@@ -394,7 +352,7 @@ class TestSeeder extends Seeder
       'horaInicio' => '10:40:00',
       'horaFin' => '12:20:00',
       'dia' => DiaSemana::Viernes,
-      'grupo_curso_id' => $pc_p->id,
+      'grupo_curso_id' => $pc_t->id,
       'aula_id' => $lab04->id,
     ]);
 
@@ -410,7 +368,7 @@ class TestSeeder extends Seeder
     ]);
     Matricula::create([
       'alumno_id' => $yo->id,
-      'grupo_curso_id' => $mac_p->id,
+      'grupo_curso_id' => $mac_t->id,
     ]);
     Matricula::create([
       'alumno_id' => $yo->id,
@@ -418,15 +376,7 @@ class TestSeeder extends Seeder
     ]);
     Matricula::create([
       'alumno_id' => $yo->id,
-      'grupo_curso_id' => $is2_p->id,
-    ]);
-    Matricula::create([
-      'alumno_id' => $yo->id,
       'grupo_curso_id' => $eda_t->id,
-    ]);
-    Matricula::create([
-      'alumno_id' => $yo->id,
-      'grupo_curso_id' => $eda_p->id,
     ]);
     Matricula::create([
       'alumno_id' => $yo->id,
@@ -434,23 +384,11 @@ class TestSeeder extends Seeder
     ]);
     Matricula::create([
       'alumno_id' => $yo->id,
-      'grupo_curso_id' => $so_p->id,
-    ]);
-    Matricula::create([
-      'alumno_id' => $yo->id,
       'grupo_curso_id' => $pc_t->id,
     ]);
     Matricula::create([
       'alumno_id' => $yo->id,
-      'grupo_curso_id' => $pc_p->id,
-    ]);
-    Matricula::create([
-      'alumno_id' => $yo->id,
       'grupo_curso_id' => $ti2_t->id,
-    ]);
-    Matricula::create([
-      'alumno_id' => $yo->id,
-      'grupo_curso_id' => $ti2_p->id,
     ]);
   }
 }

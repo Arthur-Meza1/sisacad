@@ -22,6 +22,16 @@
     @endforeach
   </ul>
 
+  <ul>
+    @foreach(auth()->user()->docente->grupos as $grupo)
+      <li>
+        @foreach($grupo->alumnos as $alumno)
+          Alumno → {{$alumno->user->name}}
+        @endforeach
+      </li>
+    @endforeach
+  </ul>
+
     <div class="main-content">
         <header class="header-top">
             <div class="search-bar">
