@@ -582,10 +582,6 @@ body {
   border: 1px solid #ddd;
   text-align: center;
 }
-.data-table th {
-  background-color: var(--color-primary-light);
-  color: var(--text-dark);
-}
 .data-table input {
   width: 4rem;
   text-align: center;
