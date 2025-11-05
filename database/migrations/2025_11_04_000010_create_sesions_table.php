@@ -15,7 +15,6 @@ return new class extends Migration
         Schema::create('sesions', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(GrupoCurso::class)->constrained();
-            $table->boolean('presente');
             $table->dateTime('fecha');
             $table->time('horaInicio');
             $table->time('horaFin');

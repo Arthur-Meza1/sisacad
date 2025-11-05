@@ -572,3 +572,26 @@ body {
 
 .alert-card .card-icon { color: var(--color-danger, #dc3545); }
 .alert-card .new-alert-value { color: var(--color-danger, #dc3545); }
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.data-table th, .data-table td {
+  padding: 0.6rem;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+.data-table th {
+  background-color: var(--color-primary-light);
+  color: var(--text-dark);
+}
+.data-table input {
+  width: 4rem;
+  text-align: center;
+}
+.form-actions {
+  text-align: right;
+  margin-top: 1rem;
+}
+

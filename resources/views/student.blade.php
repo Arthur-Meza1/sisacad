@@ -70,12 +70,12 @@
           <div class="registro-item">
             <p><strong>{{ $registro->grupoCurso->curso->nombre }}</strong></p>
             <ul>
-              <li>Parcial 1: {{ $registro->parcial1 ?? '—' }}</li>
-              <li>Parcial 2: {{ $registro->parcial2 ?? '—' }}</li>
-              <li>Parcial 3: {{ $registro->parcial3 ?? '—' }}</li>
               <li>Continua 1: {{ $registro->continua1 ?? '—' }}</li>
+              <li>Parcial 1: {{ $registro->parcial1 ?? '—' }}</li>
               <li>Continua 2: {{ $registro->continua2 ?? '—' }}</li>
+              <li>Parcial 2: {{ $registro->parcial2 ?? '—' }}</li>
               <li>Continua 3: {{ $registro->continua3 ?? '—' }}</li>
+              <li>Parcial 3: {{ $registro->parcial3 ?? '—' }}</li>
               <li>Sustitutorio: {{ $registro->sustitutorio ?? '—' }}</li>
             </ul>
           </div>

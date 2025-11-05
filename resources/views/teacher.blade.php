@@ -73,10 +73,20 @@
           <p>Docente titular en 5 cursos.</p>
         </div>
         <div class="quick-actions">
-          <button class="action-button primary-btn"><i class="fas fa-user-check"></i> Tomar Asistencia
-          </button>
-          <button class="action-button secondary-btn"><i class="fas fa-poll-h"></i> Registrar Notas</button>
-          <button class="action-button default-btn"><i class="fas fa-upload"></i> Subir Material</button>
+          <div class="quick-actions">
+            <a href="{{ route('asistencia.index') }}" class="action-button primary-btn">
+              <i class="fas fa-user-check"></i> Tomar Asistencia
+            </a>
+
+            <a href="{{ route('docente.registrar_notas') }}" class="action-button secondary-btn">
+              <i class="fas fa-poll-h"></i> Registrar Notas
+            </a>
+
+            <a href="" class="action-button default-btn">
+              <i class="fas fa-upload"></i> Subir Material
+            </a>
+          </div>
+
         </div>
       </div>
 
