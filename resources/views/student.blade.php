@@ -30,27 +30,13 @@
         <p class="schedule-note">{{ $alumno->user->name }}</p>
 
         @php
-
-        $dias = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
-        $horas = [
-            '07:00 - 08:40',
-            '08:50 - 10:30',
-            '10:40 - 12:20',
-            '12:20 - 14:00',
-            '15:50 - 17:30',
-        ];
-
-        $horario = [];
-
-        foreach ($alumno->grupos as $grupo) {
-            foreach ($grupo->bloqueHorario as $bloque) {
-                foreach ($horas as $rango) {
-                    if (Str::startsWith($rango, substr($bloque->horaInicio, 0, 5))) {
-                        $horario[$rango][$bloque->dia] = "{$grupo->curso->nombre} ({$grupo->tipo})";
-                    }
-                }
-            }
-        }
+          $dias = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
+          foreach ($alumno->grupos as $grupo) {
+              foreach ($grupo->bloqueHorario as $bloque) {
+                $horario["$bloque->horaInicio-$bloque->horaFin"][$bloque->dia] = "{$grupo->curso->nombre} ($grupo->tipo)";
+              }
+          }
+          ksort($horario)
         @endphp
 
         <table class="schedule-table">
@@ -63,12 +49,12 @@
           </tr>
           </thead>
           <tbody>
-          @foreach($horas as $hora)
+          @foreach($horario as $hora => $cursos)
             <tr>
               <td class="time-slot">{{ $hora }}</td>
               @foreach($dias as $dia)
                 <td class="course-cell">
-                  {{ $horario[$hora][$dia] ?? '' }}
+                  {{ $cursos[$dia] ?? '' }}
                 </td>
               @endforeach
             </tr>
