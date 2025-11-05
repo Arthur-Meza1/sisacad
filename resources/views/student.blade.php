@@ -1,4 +1,3 @@
-@use(App\Enums\DiaSemana)
 <x-sidebar_layout>
   <x-slot:title>
     Dashboard Estudiante
@@ -32,7 +31,7 @@
 
         @php
 
-        $dias = [DiaSemana::Lunes, DiaSemana::Martes , DiaSemana::Miercoles, DiaSemana::Jueves, DiaSemana::Viernes];
+        $dias = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
         $horas = [
             '07:00 - 08:40',
             '08:50 - 10:30',
@@ -42,17 +41,12 @@
         ];
 
         $horario = [];
-        foreach ($horas as $hora) {
-            foreach ($dias as $dia) {
-                $horario[$hora][$dia->value] = '';
-            }
-        }
 
         foreach ($alumno->grupos as $grupo) {
             foreach ($grupo->bloqueHorario as $bloque) {
                 foreach ($horas as $rango) {
                     if (Str::startsWith($rango, substr($bloque->horaInicio, 0, 5))) {
-                        $horario[$rango][$bloque->dia->value] = "{$grupo->curso->nombre} ({$grupo->tipo})";
+                        $horario[$rango][$bloque->dia] = "{$grupo->curso->nombre} ({$grupo->tipo})";
                     }
                 }
             }
@@ -64,7 +58,7 @@
           <tr>
             <th>HORA</th>
             @foreach($dias as $dia)
-              <th>{{ strtoupper($dia->value) }}</th>
+              <th>{{ strtoupper($dia) }}</th>
             @endforeach
           </tr>
           </thead>
@@ -74,7 +68,7 @@
               <td class="time-slot">{{ $hora }}</td>
               @foreach($dias as $dia)
                 <td class="course-cell">
-                  {{ $horario[$hora][$dia->value] ?? '' }}
+                  {{ $horario[$hora][$dia] ?? '' }}
                 </td>
               @endforeach
             </tr>

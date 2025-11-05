@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->time('horaInicio');
             $table->time('horaFin');
-            $table->string('dia');
+            $table->enum('dia', ['lunes', 'martes', 'miercoles', 'jueves', 'viernes']);
             $table->foreignIdFor(GrupoCurso::class)->constrained();
             $table->foreignIdFor(Aula::class)->constrained();
         });
