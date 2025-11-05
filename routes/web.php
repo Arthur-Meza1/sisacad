@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DocenteController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\Login;
 use App\Http\Controllers\Auth\Logout;
@@ -23,7 +24,7 @@ Route::get('/', function () {
 Route::middleware('auth')->group(function () {
     Route::get('/student', [AlumnoController::class, 'index'])->middleware('role:student');
     Route::view('/admin', 'admin')->middleware('role:admin');
-    Route::view('/teacher', 'teacher')->middleware('role:teacher');
+  Route::get('/teacher', [DocenteController::class, 'index'])->middleware('role:teacher');
     Route::view('/secretary', 'secretary')->middleware('role:secretary');
 });
 
