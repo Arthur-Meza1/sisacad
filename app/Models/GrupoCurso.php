@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Enums\CursoTipo;
-use App\Enums\Turno;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,11 +12,6 @@ class GrupoCurso extends Model
     public $timestamps = false;
 
     protected $fillable = ['turno', 'tipo'];
-
-    protected $casts = [
-        'turno' => Turno::class,
-        'tipo' => CursoTipo::class,
-    ];
 
     public function docente() {
         return $this->belongsTo(Docente::class);

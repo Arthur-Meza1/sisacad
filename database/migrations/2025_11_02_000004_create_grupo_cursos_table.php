@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('grupo_cursos', function (Blueprint $table) {
             $table->id();
-            $table->string('turno');
+            $table->enum('turno', ['A', 'B', 'C', 'D']);
             $table->foreignIdFor(Docente::class)->constrained();
             $table->foreignIdFor(Curso::class)->constrained();
-            $table->string('tipo');
+            $table->enum('tipo', ['teoria', 'laboratorio']);
         });
     }
 

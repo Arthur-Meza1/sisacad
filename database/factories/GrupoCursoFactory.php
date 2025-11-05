@@ -2,8 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Enums\CursoTipo;
-use App\Enums\Turno;
 use App\Models\Curso;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -20,9 +18,9 @@ class GrupoCursoFactory extends Factory
     public function definition(): array
     {
         return [
-            'turno' => $this->faker->randomElement(Turno::cases()),
+            'turno' => $this->faker->randomElement(),
             'curso_id' => Curso::factory(), // Crea un curso asociado automáticamente
-            'tipo' => $this->faker->randomElement(CursoTipo::cases()),
+            'tipo' => $this->faker->randomElement(),
         ];
     }
 }

@@ -3,9 +3,7 @@
 namespace Database\Seeders;
 
 use App\Enums\AulaTipo;
-use App\Enums\CursoTipo;
 use App\Enums\DiaSemana;
-use App\Enums\Turno;
 use App\Models\Aula;
 use App\Models\BloqueHorario;
 use Illuminate\Database\Seeder;
@@ -123,71 +121,71 @@ class TestSeeder extends Seeder
     $pc_t = GrupoCurso::create([
       'curso_id' => $cursos[0]->id,
       'docente_id' => $rolando->id,
-      'turno' => Turno::A,
-      'tipo' => CursoTipo::Teoria,
+      'turno' => 'A',
+      'tipo' => 'teoria',
     ]);
 
     $mac_t = GrupoCurso::create([
       'curso_id' => $cursos[5]->id,
       'docente_id' => $minion->id,
-      'turno' => Turno::A,
-      'tipo' => CursoTipo::Teoria,
+      'turno' => 'A',
+      'tipo' => 'teoria',
     ]);
 
     $mac_l = GrupoCurso::create([
       'curso_id' => $cursos[5]->id,
       'docente_id' => $yesenia->id,
-      'turno' => Turno::A,
-      'tipo' => CursoTipo::Laboratorio,
+      'turno' => 'A',
+      'tipo' => 'laboratorio',
     ]);
 
     $eda_t = GrupoCurso::create([
       'curso_id' => $cursos[2]->id,
       'docente_id' => $yesenia->id,
-      'turno' => Turno::A,
-      'tipo' => CursoTipo::Teoria,
+      'turno' => 'A',
+      'tipo' => 'teoria',
     ]);
 
     $eda_l = GrupoCurso::create([
       'curso_id' => $cursos[2]->id,
       'docente_id' => $sarmiento->id,
-      'turno' => Turno::A,
-      'tipo' => CursoTipo::Laboratorio,
+      'turno' => 'A',
+      'tipo' => 'laboratorio',
     ]);
 
     $so_t = GrupoCurso::create([
       'curso_id' => $cursos[3]->id,
       'docente_id' => $roxana->id,
-      'turno' => Turno::A,
-      'tipo' => CursoTipo::Teoria,
+      'turno' => 'A',
+      'tipo' => 'teoria',
     ]);
 
     $so_l = GrupoCurso::create([
       'curso_id' => $cursos[3]->id,
       'docente_id' => $rolando->id,
-      'turno' => Turno::A,
-      'tipo' => CursoTipo::Laboratorio,
+      'turno' => 'A',
+      'tipo' => 'laboratorio',
     ]);
 
     $ti2_t = GrupoCurso::create([
       'curso_id' => $cursos[4]->id,
       'docente_id' => $yesenia->id,
-      'turno' => Turno::A,
-      'tipo' => CursoTipo::Teoria,
+      'turno' => 'A',
+      'tipo' => 'teoria',
     ]);
 
     $is2_t = GrupoCurso::create([
       'curso_id' => $cursos[1]->id,
       'docente_id' => $sarmiento->id,
-      'turno' => Turno::A,
-      'tipo' => CursoTipo::Teoria,
+      'turno' => 'A',
+      'tipo' => 'teoria',
     ]);
 
     $is2_l = GrupoCurso::create([
       'curso_id' => $cursos[1]->id,
       'docente_id' => $roxana->id,
-      'turno' => Turno::A,
-      'tipo' => CursoTipo::Laboratorio,
+      'turno' => 'A',
+      'tipo' => 'laboratorio',
     ]);
 
     // ========================

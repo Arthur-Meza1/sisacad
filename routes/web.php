@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\Login;
 use App\Http\Controllers\Auth\Logout;
-use App\Http\Controllers\Auth\Register;
+use App\Http\Controllers\AlumnoController;
 
 Route::get('/', function () {
     if (!auth()->check()) {
@@ -21,7 +21,7 @@ Route::get('/', function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::view('/student', 'student')->middleware('role:student');
+    Route::get('/student', [AlumnoController::class, 'index'])->middleware('role:student');
     Route::view('/admin', 'admin')->middleware('role:admin');
     Route::view('/teacher', 'teacher')->middleware('role:teacher');
     Route::view('/secretary', 'secretary')->middleware('role:secretary');
