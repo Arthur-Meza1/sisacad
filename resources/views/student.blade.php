@@ -64,30 +64,24 @@
       </div>
 
       <div class="widget">
-        <h3>Métricas Clave</h3>
-        <div class="progress-circles">
-          <div class="progress-item">
-            <div class="circle-placeholder c-90">90%</div>
-            <div>
-              <strong>Asistencia General</strong>
-              <p class="description">Porcentaje acumulado.</p>
-            </div>
+        <h3>Registros Académicos</h3>
+
+        @forelse($alumno->registros as $registro)
+          <div class="registro-item">
+            <p><strong>{{ $registro->grupoCurso->curso->nombre }}</strong></p>
+            <ul>
+              <li>Parcial 1: {{ $registro->parcial1 ?? '—' }}</li>
+              <li>Parcial 2: {{ $registro->parcial2 ?? '—' }}</li>
+              <li>Parcial 3: {{ $registro->parcial3 ?? '—' }}</li>
+              <li>Continua 1: {{ $registro->continua1 ?? '—' }}</li>
+              <li>Continua 2: {{ $registro->continua2 ?? '—' }}</li>
+              <li>Continua 3: {{ $registro->continua3 ?? '—' }}</li>
+              <li>Sustitutorio: {{ $registro->sustitutorio ?? '—' }}</li>
+            </ul>
           </div>
-          <div class="progress-item">
-            <div class="circle-placeholder c-3-8">3.8</div>
-            <div>
-              <strong>GPA Ponderado</strong>
-              <p class="description">Promedio general del semestre.</p>
-            </div>
-          </div>
-          <div class="progress-item">
-            <div class="circle-placeholder c-75">75%</div>
-            <div>
-              <strong>Cursos Aprobados</strong>
-              <p class="description">Créditos completados del total.</p>
-            </div>
-          </div>
-        </div>
+        @empty
+          <p>No hay registros disponibles.</p>
+        @endforelse
       </div>
 
       <div class="widget">
@@ -101,7 +95,8 @@
 
       <div class="widget chat-widget">
         <h3>Últimos Comunicados</h3>
-        <p class="chat-text new-alert">Cambio de Aula: El curso de Redes ahora es en el Aula F-201. (Ver Notificación)</p>
+        <p class="chat-text new-alert">Cambio de Aula: El curso de Redes ahora es en el Aula F-201. (Ver
+          Notificación)</p>
         <p class="chat-text">Recordatorio: La encuesta de satisfacción docente cierra este viernes.</p>
       </div>
     </section>

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Aula;
 use App\Models\BloqueHorario;
+use App\Models\Registro;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Docente;
@@ -103,14 +104,14 @@ class TestSeeder extends Seeder
     // -------------------------
     // Crear 30 alumnos
     // -------------------------
-   /* $alumnos = [];
-    for ($i = 1; $i <= 30; $i++) {
-      $user = User::factory()->create([
-        'name' => "Alumno $i",
-        'email' => "alumno$i@example.com",
-      ]);
-      $alumnos[] = Alumno::create(['user_id' => $user->id]);
-    }*/
+    /* $alumnos = [];
+     for ($i = 1; $i <= 30; $i++) {
+       $user = User::factory()->create([
+         'name' => "Alumno $i",
+         'email' => "alumno$i@example.com",
+       ]);
+       $alumnos[] = Alumno::create(['user_id' => $user->id]);
+     }*/
 
     // -------------------------
     // Crear GrupoCurso y asignar docentes, turnos y cursos
@@ -381,13 +382,14 @@ class TestSeeder extends Seeder
       'dia' => 'miercoles',
       'grupo_curso_id' => $is2_t->id,
       'aula_id' => $aula203->id,
-    ]);BloqueHorario::create([
-    'horaInicio' => '13:10:00',
-    'horaFin' => '14:00:00',
-    'dia' => 'miercoles',
-    'grupo_curso_id' => $is2_t->id,
-    'aula_id' => $aula203->id,
-  ]);
+    ]);
+    BloqueHorario::create([
+      'horaInicio' => '13:10:00',
+      'horaFin' => '14:00:00',
+      'dia' => 'miercoles',
+      'grupo_curso_id' => $is2_t->id,
+      'aula_id' => $aula203->id,
+    ]);
 
     // Jueves
     BloqueHorario::create([
@@ -450,7 +452,7 @@ class TestSeeder extends Seeder
     // Viernes
     BloqueHorario::create([
       'horaInicio' => '08:50:00',
-      'horaFin' => '9:40:00',
+      'horaFin' => '09:40:00',
       'dia' => 'viernes',
       'grupo_curso_id' => $mac_l->id,
       'aula_id' => $lab02->id,
@@ -483,33 +485,28 @@ class TestSeeder extends Seeder
     $yo = Alumno::create([
       'user_id' => User::factory()->create(['name' => 'Esdras Amado Diaz Vasquez', 'email' => 'test@example.com'])->id
     ]);
-    Matricula::create([
-      'alumno_id' => $yo->id,
-      'grupo_curso_id' => $mac_t->id,
-    ]);
-    Matricula::create([
-      'alumno_id' => $yo->id,
-      'grupo_curso_id' => $mac_t->id,
-    ]);
-    Matricula::create([
-      'alumno_id' => $yo->id,
-      'grupo_curso_id' => $is2_t->id,
-    ]);
-    Matricula::create([
-      'alumno_id' => $yo->id,
-      'grupo_curso_id' => $eda_t->id,
-    ]);
-    Matricula::create([
-      'alumno_id' => $yo->id,
-      'grupo_curso_id' => $so_t->id,
-    ]);
-    Matricula::create([
-      'alumno_id' => $yo->id,
-      'grupo_curso_id' => $pc_t->id,
-    ]);
-    Matricula::create([
-      'alumno_id' => $yo->id,
-      'grupo_curso_id' => $ti2_t->id,
-    ]);
+    // Matricular al alumno en sus cursos
+    $matriculas = [
+      $mac_t->id,
+      $is2_t->id,
+      $eda_t->id,
+      $so_t->id,
+      $pc_t->id,
+      $ti2_t->id,
+    ];
+
+    foreach ($matriculas as $grupoId) {
+      Matricula::create([
+        'alumno_id' => $yo->id,
+        'grupo_curso_id' => $grupoId,
+      ]);
+
+      // Crear un registro de notas para este curso
+      Registro::factory()->create([
+        'alumno_id' => $yo->id,
+        'grupo_curso_id' => $grupoId,
+      ]);
+    }
+
   }
 }

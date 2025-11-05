@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Registro;
+use App\Models\Alumno;
 use App\Models\GrupoCurso;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -10,22 +12,20 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class RegistroFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
-    public function definition(): array
-    {
-        return [
-            'grupo_curso_id' => GrupoCurso::factory()->create()->id,
-            'parcial1' => $this->faker->optional()->numberBetween(1, 20),
-            'parcial2' => $this->faker->optional()->numberBetween(1, 20),
-            'parcial3' => $this->faker->optional()->numberBetween(1, 20),
-            'continua1' => $this->faker->optional()->numberBetween(1, 20),
-            'continua2' => $this->faker->optional()->numberBetween(1, 20),
-            'continua3' => $this->faker->optional()->numberBetween(1, 20),
-            'sustitutorio' => $this->faker->optional()->numberBetween(1, 20),
-        ];
-    }
+  protected $model = Registro::class;
+
+  public function definition(): array
+  {
+    return [
+      'alumno_id' => Alumno::factory(),
+      'grupo_curso_id' => GrupoCurso::factory(),
+      'parcial1' => $this->faker->numberBetween(0, 20),
+      'parcial2' => $this->faker->numberBetween(0, 20),
+      'parcial3' => null,
+      'continua1' => null,
+      'continua2' => null,
+      'continua3' => null,
+      'sustitutorio' => null,
+    ];
+  }
 }
