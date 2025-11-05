@@ -1,0 +1,234 @@
+CALCULO EN UNA VARIABLE
+A
+GUTIERREZ RODRIGUEZ, EDDY AUGUSTO#egutierrezro@unsa.edu.pe
+201 / 26.4 - 205
+Lunes#8:50#10:30
+Martes#8:50#10:30
+Jueves#10:40#12:20
+$
+B
+VELASQUEZ CONDORI, ELISEO DANIEL#evelasquezcon@unsa.edu.pe
+201 / 26.4 - 205
+Martes#12:20#14:00
+Miercoles#15:50#17:30
+Viernes#15:50#17:30
+$
+
+INGLES II
+A
+JACOBE AGUIRRE, ROCIO#rjacobe@unsa.edu.pe
+201 / 26.4 - 205
+Lunes#10:40#12:20
+Jueves#8:50#10:30
+$
+B
+PILCO ANDIA, CARLOTA CRISTINA#cpilcoa@unsa.edu.pe
+201 / 26.4 - 205
+Viernes#12:20#14:00
+Viernes#17:40#19:20
+$
+
+ESTRUCTURAS DISCRETAS II
+A
+RAMOS LOVON, WILBER ROBERTO#wramos@unsa.edu.pe
+201 / 26.4 - 205
+Lunes#12:20#14:00
+Miercoles#12:20#14:00
+Jueves#12:20#14:00
+$
+B
+RAMOS LOVON, WILBER ROBERTO#wramos@unsa.edu.pe
+201 / 26.4 - 205
+Lunes#14:00#15:40
+Miercoles#14:00#15:40
+Jueves#14:00#15:40
+$
+
+PROGRAMACION I
+A
+ADRIAZOLA HERRERA, ELIANA MARIA#eadriazola@unsa.edu.pe
+201 / 26.4 - 205
+Lunes#07:00#08:40
+Viernes#8:50#10:30
+$
+B
+ADRIAZOLA HERRERA, ELIANA MARIA#eadriazola@unsa.edu.pe
+201 / 26.4 - 205
+Lunes#15:50#17:30
+Jueves#15:50#17:30
+$
+LA
+ADRIAZOLA HERRERA, ELIANA MARIA#eadriazola@unsa.edu.pe
+2
+Martes#11:30#13:10
+Viernes#10:40#12:20
+$
+LC
+ADRIAZOLA HERRERA, ELIANA MARIA#eadriazola@unsa.edu.pe
+1
+Lunes#17:40#19:20
+Jueves#17:40#19:20
+$
+LB
+ADRIAZOLA HERRERA, ELIANA MARIA#eadriazola@unsa.edu.pe
+1
+Miercoles#17:40#19:20
+Jueves#17:40#19:20
+$
+
+REALIDAD NACIONAL
+A
+LAZO ALARCON, ERIKA PATRICIA#elazoal@unsa.edu.pe
+201 / 26.4 - 205
+Miercoles#7:00#9:40
+$
+B
+LAZO ALARCON, ERIKA PATRICIA#elazoal@unsa.edu.pe
+201 / 26.4 - 205
+Martes#16:40#19:20
+$
+
+LINGUISTICA COMPRENSION Y REDACCION ACADEMICA
+A
+OSORIO MENDOZA DE MONTEZA, NADJA CATALIN#nosoriom@unsa.edu.pe
+201 / 26.4 - 205
+Miercoles#9:40#12:20
+Viernes#7:00#8:40
+$
+B
+ZEBALLOS RAMIREZ, PILAR ELIZABETH#pzeballosra@unsa.edu.pe
+201 / 26.4 - 205
+Martes#14:00#16:40
+Viernes#14:00#15:40
+$
+
+ALGEBRA LINEAL NUMERICA
+A
+MESTAS CHAVEZ, ROGER EDWAR#rmestasc@unsa.edu.pe
+202 / 26.4 - 206
+Lunes#7:00#8:40
+Miercoles#7:00#8:40
+$
+LA
+MESTAS CHAVEZ, ROGER EDWAR#rmestasc@unsa.edu.pe
+2
+Jueves#7:00#8:40
+$
+B
+VIZA HUAYLLASO, JUDID CARINA#jvizah@unsa.edu.pe
+202 / 26.4 - 206
+Martes#12:20#14:00
+Jueves#12:20#14:00
+$
+LB
+OLANDA VELASQUEZ, BERTHA#bolanda@unsa.edu.pe
+2
+Viernes#12:20#14:00
+$
+
+ALGORITMOS Y ESTRUCTURA DE DATOS
+LA
+PAZ VALDERRAMA, ALFREDO#apazv@unsa.edu.pe
+2
+Lunes#8:50#10:30
+$
+LA
+MAMANI ALIAGA, ALVARO HENRY#amamaniali@unsa.edu.pe
+1
+Miercoles#10:40#12:20
+$
+A
+PAZ VALDERRAMA, ALFREDO#apazv@unsa.edu.pe
+202 / 26.4 - 206
+Miercoles#8:50#10:30
+Jueves#8:50#10:30
+$
+LB
+PAZ VALDERRAMA, ALFREDO#apazv@unsa.edu.pe
+1
+Lunes#15:50#17:30
+Martes#15:50#17:30
+$
+B
+PAZ VALDERRAMA, ALFREDO#apazv@unsa.edu.pe
+202 / 26.4 - 206
+Miercoles#15:50#17:30
+Jueves#15:50#17:30
+$
+
+ESTADISTICA Y PROBABILIDADES
+A
+QUISPE MAMANI, ANTONIA#aquispem@unsa.edu.pe
+202 / 26.4 - 206
+Lunes#10:40#12:20
+Martes#9:40#12:20
+$
+B
+QUISPE MAMANI, ANTONIA#aquispem@unsa.edu.pe
+202 / 26.4 - 206
+Lunes#12:20#14:00
+Miercoles#11:30#14:00
+$
+
+BASE DE DATOS I
+A
+HINOJOSA CARDENAS, EDWARD#ehinojosa@unsa.edu.pe
+202 / 26.4 - 206
+Lunes#12:20#14:00
+$
+LA
+HINOJOSA CARDENAS, EDWARD#ehinojosa@unsa.edu.pe
+1
+Miercoles#12:20#14:00
+Jueves#12:20#14:00
+$
+B
+HINOJOSA CARDENAS, EDWARD#ehinojosa@unsa.edu.pe
+202 / 26.4 - 206
+Lunes#14:00#15:40
+$
+LC
+HINOJOSA CARDENAS, EDWARD#ehinojosa@unsa.edu.pe
+1
+Martes#17:40#19:20
+$
+LC
+HINOJOSA CARDENAS, EDWARD#ehinojosa@unsa.edu.pe
+4
+Jueves#17:40#19:20
+$
+LB
+HINOJOSA CARDENAS, EDWARD#ehinojosa@unsa.edu.pe
+1
+Miercoles#14:00#15:40
+Jueves#14:00#15:40
+$
+
+TEORIA DE LA COMPUTACION
+A
+VELAZCO PAREDES, YUBER ELMER#yvelazco@unsa.edu.pe
+202 / 26.4 - 206
+Martes#7:50#9:40
+Jueves#10:40#12:20
+$
+LA
+VELAZCO PAREDES, YUBER ELMER#yvelazco@unsa.edu.pe
+2
+Viernes#10:40#12:20
+$
+B
+QUISPE CRUZ, MARCELA#mquispecr@unsa.edu.pe
+202 / 26.4 - 206
+Lunes#17:40#19:20
+Martes#14:00#15:40
+$
+LB
+QUISPE CRUZ, MARCELA#mquispecr@unsa.edu.pe
+2
+Viernes#14:00#15:40
+$
+LC
+VELAZCO PAREDES, YUBER ELMER#yvelazco@unsa.edu.pe
+2
+Miercoles#17:40#19:20
+$
