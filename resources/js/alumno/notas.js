@@ -15,7 +15,7 @@ export function loadAvailableCourses() {
     success: function(courses) {
       renderCourseButtons(courses);
     },
-    error: function(xhr) {
+    error: function() {
       $('#courses-buttons-container').html(`
                 <div class="text-red-500 bg-red-50 p-3 rounded-lg">
                     Error al cargar cursos. Intenta nuevamente.
@@ -26,8 +26,9 @@ export function loadAvailableCourses() {
 }
 
 function renderCourseButtons(courses) {
+  let container = $('#courses-buttons-container');
   if (courses.length === 0) {
-    $('#courses-buttons-container').html(`
+    container.html(`
             <div class="text-gray-500 italic">
                 No tienes cursos asignados.
             </div>
@@ -49,7 +50,7 @@ function renderCourseButtons(courses) {
   </button>
 `).join('');
 
-  $('#courses-buttons-container').html(buttonsHTML);
+  container.html(buttonsHTML);
 
   // Agregar event listeners a los botones
   $('.course-btn').on('click', function() {
@@ -103,10 +104,6 @@ function hideLoading() {
 let gradeChartDetail;
 
 function renderGradeChart(data) {
-  const yaxis = [
-    'Parcial',
-    'Continua',
-  ];
   const xaxis = ['Nota 1', 'Nota 2', 'Nota 3'];
 
   const generateSeriesList = () => {
