@@ -47,4 +47,58 @@ class AlumnoController extends Controller
       'Continua' => [$notas['continua1'], $notas['continua2'], $notas['continua3']],
     ]);
   }
+
+  public function getHorario() {
+    $alumno = Auth::user()->alumno()->with('grupos.bloqueHorario.aula', 'grupos.curso')->first();
+
+    $res = $alumno->grupos->flatMap(function ($grupo) {
+      return $grupo->bloqueHorario->map(fn($bloque) => [
+          'dia' => $bloque->dia,
+          'horaInicio' => $bloque->horaInicio,
+          'horaFin' => $bloque->horaFin,
+          'nombre' => $grupo->curso->nombre,
+          'tipo' => $grupo->tipo,
+          'turno' => $grupo->turno,
+          'aula' => $bloque->aula->nombre,
+
+      ]);
+    })->values();
+
+    $res = $res->groupBy('dia')->map(function ($dayBlocks) {
+      $sorted = $dayBlocks->sortBy('horaInicio')->values();
+
+      $merged = [];
+      $current = null;
+
+      foreach ($sorted as $block) {
+        if ($current === null) {
+          $current = $block;
+          continue;
+        }
+
+        $currentEnd = strtotime($current['horaFin']);
+        $nextStart = strtotime($block['horaInicio']);
+
+        $isContinuous = $currentEnd === $nextStart &&
+          $current['aula'] === $block['aula'] &&
+          $current['nombre'] === $block['nombre'] &&
+          $current['tipo'] === $block['tipo'];
+
+        if ($isContinuous) {
+          $current['horaFin'] = $block['horaFin'];
+        } else {
+          $merged[] = $current;
+          $current = $block;
+        }
+      }
+
+      if ($current !== null) {
+        $merged[] = $current;
+      }
+
+      return collect($merged);
+    })->flatten(1)->values();
+
+    return response()->json($res);
+  }
 }

@@ -91,8 +91,17 @@
 
     <div id="view-schedule" class="view-content space-y-6 hidden">
       <h2 class="text-2xl font-bold text-gray-800 mb-4">Horario</h2>
-      <div class="bg-white rounded-xl p-6 shadow-lg">
+      <div class="bg-white rounded-xl p-6 shadow-lg relative">
         <div id="calendarContainer" style="min-height:300px"></div>
+        <div
+          id="calendar-loading"
+          class="absolute inset-0 bg-gray-200 bg-opacity-70 flex items-center justify-center rounded-2xl z-10 backdrop-blur-[2px]"
+        >
+          <div class="bg-white px-5 py-4 rounded-xl shadow-md flex items-center space-x-3">
+            <div class="animate-spin rounded-full h-7 w-7 border-b-2 border-blue-600"></div>
+            <span class="text-gray-700 text-sm font-medium">Cargando horario...</span>
+          </div>
+        </div>
       </div>
     </div>
 

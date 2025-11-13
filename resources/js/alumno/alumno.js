@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import {loadAvailableCourses} from "./notas";
+import {loadScheduleCalendar} from "./calendario";
 
 $(document).ready(function() {
   $('.nav-link').on('click', function() {
@@ -7,12 +8,6 @@ $(document).ready(function() {
     changeView(view);
   });
 });
-
-/*
-
-Cursos
-Necesitariamos ver el avance del curso
-*/
 
 const grades = [12, 14, 9, 13, 16, 17];
 const attData = [90, 80, 95, 100, 85, 92];
@@ -62,12 +57,11 @@ function changeView(viewId) {
   setTimeout(() => {
     if (viewId === 'grades') {
       loadAvailableCourses();
-      //initGradeChart();
     }
     if (viewId === 'attendance') {
         initAttChart();
     }
-    if (viewId === 'schedule') renderScheduleCalendar();
+    if (viewId === 'schedule') loadScheduleCalendar();
     if (viewId === 'enrollment') renderEnrollmentView();
   }, 50);
 }
@@ -185,63 +179,6 @@ const rawScheduleData = [
   { dia: 'Viernes', hora: 7, duracion: 120, nombre: 'Tutoría', tipo: 'other' }
 ];
 
-const colorMap = {
-  'class': '#60a5fa',
-  'lab': '#34d399',
-  'lunch': '#fbbf24',
-  'other': '#a78bfa'
-};
-
-function timeToHoursMinutesSeconds(minutes) {
-  const hours = Math.floor(minutes / 60);
-  const mins = minutes % 60;
-  return `${hours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:00`;
-}
-
-const fullCalendarEvents = rawScheduleData.map(item => {
-  const startMin = item.hora * 60;
-  const endMin = startMin + item.duracion;
-  return {
-    title: item.nombre,
-    daysOfWeek: [dayMap[item.dia]],
-    startTime: timeToHoursMinutesSeconds(startMin),
-    endTime: timeToHoursMinutesSeconds(endMin),
-    backgroundColor: colorMap[item.tipo],
-    borderColor: colorMap[item.tipo],
-  };
-});
-
-let fullCalendarInstance;
-
-const gradeChartOptions = {
-  title: { text: 'Rendimiento Final por Materia (Base 20)', left: 'center', textStyle: { color: '#333', fontSize: 16 } },
-  xAxis: { type: 'category', data: subjects, axisLabel: { interval: 0, rotate: 30, color: '#666' } },
-  yAxis: { type: 'value', min: 0, max: 20, interval: 5 },
-  series: [{
-    type: 'bar',
-    data: grades.map(g => ({
-      value: g,
-      itemStyle: {
-        borderRadius: [8, 8, 0, 0],
-        color: g >= 14 ? '#10b981' : (g >= 11 ? '#f59e0b' : '#ef4444')
-      }
-    })),
-    barWidth: '50%',
-    markLine: {
-      data: [{ name: 'Aprobado (11)', yAxis: 11, lineStyle: { type: 'dashed', color: '#4338ca', width: 2 } }]
-    }
-  }],
-  tooltip: {
-    trigger: 'axis',
-    formatter: (params) => {
-      const grade = params[0].value;
-      const status = grade >= 11 ? 'APROBADO' : 'DESAPROBADO';
-      return `<strong>${params[0].name}</strong><br/>Nota: ${grade}<br/>Estado: ${status}`;
-    }
-  },
-  grid: { left: 50, right: 30, bottom: 60 }
-};
-
 const attChartOptions = {
   title: { text: 'Tendencia de Asistencia por Curso (%)', left: 'center' },
   xAxis: { type: 'category', data: subjects, boundaryGap: false },
@@ -276,74 +213,6 @@ document.getElementById('attendanceTableBody').innerHTML = courseList.map(c => {
     </tr>
   `;
 }).join('');
-
-
-function renderScheduleCalendar() {
-  const calendarEl = document.getElementById('calendarContainer');
-  if (!calendarEl) return;
-
-  if (fullCalendarInstance && typeof fullCalendarInstance.destroy === 'function') {
-    fullCalendarInstance.destroy();
-  }
-
-  fullCalendarInstance = new FullCalendar.Calendar(calendarEl, {
-    initialView: 'timeGridWeek',
-    slotMinTime: '07:00:00',
-    slotMaxTime: '20:00:00',
-    weekends: false,
-    allDaySlot: false,
-    nowIndicator: true,
-    height: 'auto',
-    locale: 'es',
-    selectable: true,
-    editable: true,
-    selectMirror: true,
-
-    headerToolbar: {
-      left: 'prev,next today',
-      center: 'title',
-      right: 'timeGridWeek,timeGridDay'
-    },
-
-    events: fullCalendarEvents,
-
-    select: function (info) {
-      const title = prompt('Nombre del evento:');
-      if (title) {
-        fullCalendarInstance.addEvent({
-          title,
-          start: info.start,
-          end: info.end,
-          allDay: info.allDay,
-          backgroundColor: '#60a5fa',
-          borderColor: '#3b82f6'
-        });
-      }
-      fullCalendarInstance.unselect();
-    },
-
-    eventDrop: function (info) {
-      alert(`Evento "${info.event.title}" movido a ${info.event.start.toLocaleString()}`);
-    },
-
-    eventResize: function (info) {
-      alert(`Evento "${info.event.title}" ajustado: termina ${info.event.end.toLocaleString()}`);
-    },
-
-    eventClick: function (info) {
-      if (confirm(`¿Eliminar evento "${info.event.title}"?`)) {
-        info.event.remove();
-      }
-    },
-
-    eventDidMount: function (info) {
-      info.el.style.fontSize = '0.85rem';
-      info.el.style.padding = '3px';
-    }
-  });
-
-  fullCalendarInstance.render();
-}
 
 
 window.addEventListener('resize', () => {

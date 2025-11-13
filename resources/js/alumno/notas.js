@@ -1,6 +1,10 @@
 import $ from 'jquery';
 
+let loaded = false;
+
 export function loadAvailableCourses() {
+  if(loaded) return;
+
   $.ajax({
     url: '/api/student/cursos',
     method: 'GET',
@@ -13,6 +17,7 @@ export function loadAvailableCourses() {
             `);
     },
     success: function(courses) {
+      loaded = true;
       renderCourseButtons(courses);
     },
     error: function() {
