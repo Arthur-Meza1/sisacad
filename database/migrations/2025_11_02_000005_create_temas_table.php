@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Curso::class)->constrained();
             $table->string('titulo');
-            $table->unsignedInteger('orden');
+            $table->unsignedInteger('orden')->index();
         });
     }
 
