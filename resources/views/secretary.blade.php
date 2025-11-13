@@ -101,12 +101,6 @@
                 </div>
             </div>
 
-            <div class="widget chat-widget">
-                <h3>Comunicados y Alertas</h3>
-                <p class="chat-text new-alert">¡Alerta! Conflicto de horario detectado en el curso Álgebra I (Aula F-201).</p>
-                <p class="chat-text">Recordatorio a Docentes: La fecha límite para subir notas parciales es el viernes.</p>
-            </div>
-
         </section>
     </div>
 </x-sidebar_layout>
