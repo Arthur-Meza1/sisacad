@@ -12,10 +12,39 @@ class AlumnoController extends Controller
 
   public function index()
   {
-    $alumno = Alumno::with('user')
-      ->where('user_id', Auth::id())
-      ->firstOrFail();
+    return view('student');
+  }
 
-    return view('student', compact('alumno'));
+  public function getCursos() {
+    $alumno = Auth::user()->alumno;
+    $cursos =
+      $alumno->grupos()
+             ->where('tipo', 'teoria')
+             ->with('curso')
+             ->get()
+             ->map(fn ($grupo) => ['id' => $grupo->id, 'nombre' => $grupo->curso->nombre]);
+    return response()->json($cursos);
+  }
+
+  public function getNotasCurso(int $curso) {
+    $alumno = Auth::user()->alumno;
+    $notas = $alumno->registros()
+                    ->where('grupo_curso_id', $curso)
+                    ->first();
+
+    $parcial1 = $notas['parcial1'];
+    $parcial2 = $notas['parcial2'];
+    if(($sust = $notas['sustitutorio']) != null) {
+      if($parcial1 < $parcial2) {
+        $parcial1 = $sust;
+      } else {
+        $parcial2 = $sust;
+      }
+    }
+
+    return response()->json([
+      'Parcial' => [$parcial1, $parcial2, $notas['parcial3']],
+      'Continua' => [$notas['continua1'], $notas['continua2'], $notas['continua3']],
+    ]);
   }
 }

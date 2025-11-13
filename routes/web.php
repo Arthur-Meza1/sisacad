@@ -59,3 +59,6 @@ Route::get('/docente/asistencia/{grupo}', [AsistenciaController::class, 'mostrar
 Route::post('/docente/asistencia/{grupo}', [AsistenciaController::class, 'guardarAsistencia'])
   ->name('asistencia.guardar')
   ->middleware('role:teacher');
+
+Route::get('/api/student/cursos', [AlumnoController::class, 'getCursos'])->middleware('role:student');
+Route::get('/api/student/cursos/{curso}/notas', [AlumnoController::class, 'getNotasCurso'])->middleware('role:student');
