@@ -461,7 +461,7 @@ class TestSeeder extends Seeder
     // ===========
     // ALUMNO
     // ===========
-    $yo = Alumno::create([
+    /*$yo = Alumno::create([
       'user_id' => User::factory()->create(['name' => 'Esdras Amado Diaz Vasquez', 'email' => 'test@example.com'])->id
     ]);
     // Matricular al alumno en sus cursos
@@ -485,7 +485,40 @@ class TestSeeder extends Seeder
         'alumno_id' => $yo->id,
         'grupo_curso_id' => $grupoId,
       ]);
-    }
+      */
+    // Cursos en los que se matricularán todos los alumnos
+    $matriculas = [
+      $mac_t->id,
+      $is2_t->id,
+      $eda_t->id,
+      $so_t->id,
+      $pc_t->id,
+      $ti2_t->id,
+    ];
 
+// Cantidad de alumnos a crear
+    $cantidadAlumnos = 5;
+
+    for ($i = 0; $i < $cantidadAlumnos; $i++) {
+
+      // Crear usuario y alumno
+      $user = User::factory()->create();
+      $alumno = Alumno::create([
+        'user_id' => $user->id,
+      ]);
+
+      // Matricular al alumno en los cursos y crear registros
+      foreach ($matriculas as $grupoId) {
+        Matricula::create([
+          'alumno_id' => $alumno->id,
+          'grupo_curso_id' => $grupoId,
+        ]);
+
+        Registro::factory()->create([
+          'alumno_id' => $alumno->id,
+          'grupo_curso_id' => $grupoId,
+        ]);
+      }
+    }
   }
 }
