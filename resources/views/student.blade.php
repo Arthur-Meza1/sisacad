@@ -93,15 +93,6 @@
       <h2 class="text-2xl font-bold text-gray-800 mb-4">Horario</h2>
       <div class="bg-white rounded-xl p-6 shadow-lg relative">
         <div id="calendarContainer" style="min-height:300px"></div>
-        <div
-          id="calendar-loading"
-          class="absolute inset-0 bg-gray-200 bg-opacity-70 flex items-center justify-center rounded-2xl z-10 backdrop-blur-[2px]"
-        >
-          <div class="bg-white px-5 py-4 rounded-xl shadow-md flex items-center space-x-3">
-            <div class="animate-spin rounded-full h-7 w-7 border-b-2 border-blue-600"></div>
-            <span class="text-gray-700 text-sm font-medium">Cargando horario...</span>
-          </div>
-        </div>
       </div>
     </div>
 
@@ -111,7 +102,6 @@
       </h2>
 
       <div class="flex flex-col lg:flex-row gap-6">
-        <!-- Contenido principal -->
         <div class="flex-1 space-y-6">
           <!-- Gráfica -->
           <div class="relative bg-white rounded-2xl p-6 shadow-lg border border-gray-100 overflow-hidden">
@@ -121,17 +111,6 @@
 
             <!-- Contenedor del gráfico -->
             <div id="gradeChartDetail" class="h-[380px]"></div>
-
-            <!-- Loading overlay (solo cubre el gráfico) -->
-            <div
-              id="grades-loading"
-              class="absolute inset-0 bg-gray-200 bg-opacity-70 flex items-center justify-center hidden rounded-2xl z-10 backdrop-blur-[2px]"
-            >
-              <div class="bg-white px-5 py-4 rounded-xl shadow-md flex items-center space-x-3">
-                <div class="animate-spin rounded-full h-7 w-7 border-b-2 border-blue-600"></div>
-                <span class="text-gray-700 text-sm font-medium">Cargando datos del curso...</span>
-              </div>
-            </div>
           </div>
         </div>
 
