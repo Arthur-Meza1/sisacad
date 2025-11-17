@@ -1,37 +1,21 @@
 import $ from 'jquery';
+import {ContentLoader} from "../common/ContentLoader.js";
 
-let loaded = false;
+let gradeChartDetail;
+let cursosLoader = new ContentLoader(
+  {
+      url: "/api/student/cursos",
+      containerName: "#courses-buttons-container",
+  }
+);
 
 export function loadAvailableCourses() {
-  if(loaded) return;
-
-  $.ajax({
-    url: '/api/student/cursos',
-    method: 'GET',
-    beforeSend: function() {
-      $('#courses-buttons-container').html(`
-                <div class="flex items-center space-x-2 text-gray-500">
-                    <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
-                    <span>Cargando cursos...</span>
-                </div>
-            `);
-    },
-    success: function(courses) {
-      loaded = true;
-      renderCourseButtons(courses);
-    },
-    error: function() {
-      $('#courses-buttons-container').html(`
-                <div class="text-red-500 bg-red-50 p-3 rounded-lg">
-                    Error al cargar cursos. Intenta nuevamente.
-                </div>
-            `);
-    }
+  cursosLoader.load((data, container) => {
+    renderCourseButtons(data, container);
   });
 }
 
-function renderCourseButtons(courses) {
-  let container = $('#courses-buttons-container');
+function renderCourseButtons(courses, container) {
   if (courses.length === 0) {
     container.html(`
             <div class="text-gray-500 italic">
@@ -42,18 +26,18 @@ function renderCourseButtons(courses) {
   }
 
   const buttonsHTML = courses.map(course => `
-  <button
-    class="course-btn flex items-center justify-center w-full sm:w-auto
-           font-medium px-5 py-2.5 rounded-xl shadow-md
-           transition-all duration-200 ease-out transform
-           hover:text-gray-50
-           hover:bg-blue-700 hover:shadow-lg hover:-translate-y-0.5
-           focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
-    data-course-id="${course.id}"
-    data-course-name="${course.nombre}">
-      <span class="text-base tracking-wide">${course.nombre}</span>
-  </button>
-`).join('');
+    <button
+      class="course-btn flex items-center justify-center w-full sm:w-auto
+             font-medium px-5 py-2.5 rounded-xl shadow-md
+             transition-all duration-200 ease-out transform
+             hover:text-gray-50
+             hover:bg-blue-700 hover:shadow-lg hover:-translate-y-0.5
+             focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
+      data-course-id="${course.id}"
+      data-course-name="${course.nombre}">
+        <span class="text-base tracking-wide">${course.nombre}</span>
+    </button>
+    `).join('');
 
   container.html(buttonsHTML);
 
@@ -82,33 +66,20 @@ function selectCourse(courseId, courseName) {
 }
 
 function loadCourseData(courseId) {
-  showLoading();
-
-  $.ajax({
+  new ContentLoader({
     url: `/api/student/cursos/${courseId}/notas`,
-    method: 'GET',
-    success: function(courseData) {
-      renderGradeChart(courseData);
-      hideLoading();
-    },
-    error: function(xhr) {
-      hideLoading();
-      console.error('Error:', xhr);
+    containerName: '#gradeChartDetail',
+  }).load((data, container) => {
+    renderGradeChart(data, container);
+  }, () => {
+    if(gradeChartDetail) {
+      gradeChartDetail.dispose();
+      gradeChartDetail = null;
     }
   });
 }
 
-function showLoading() {
-  $('#grades-loading').removeClass('hidden');
-}
-
-function hideLoading() {
-  $('#grades-loading').addClass('hidden');
-}
-
-let gradeChartDetail;
-
-function renderGradeChart(data) {
+function renderGradeChart(data, container) {
   const xaxis = ['Nota 1', 'Nota 2', 'Nota 3'];
 
   const generateSeriesList = () => {
@@ -188,10 +159,9 @@ function renderGradeChart(data) {
     ]
   };
 
-  if (!gradeChartDetail) {
-    gradeChartDetail = echarts.init(document.getElementById('gradeChartDetail'));
+  if(!gradeChartDetail) {
+    gradeChartDetail = echarts.init(container[0]);
   }
 
   gradeChartDetail.setOption(gradeChartOptions);
-  gradeChartDetail.resize();
 }

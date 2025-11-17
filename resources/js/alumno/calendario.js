@@ -1,39 +1,22 @@
-import $ from "jquery";
+import {ContentLoader} from "../common/ContentLoader.js";
 import { Calendar } from "fullcalendar";
 import tippy from "tippy.js";
 import 'tippy.js/dist/tippy.css';
-import Swal from 'sweetalert2';
 
-let loaded = false;
 let fullCalendarInstance;
 
-export function loadScheduleCalendar() {
-  if (loaded) return;
+let calendarLoader = new ContentLoader(
+  {
+    "url": "/api/student/horario",
+    "containerName": "#calendarContainer"
+  }
+);
 
-  $.ajax({
-    url: '/api/student/horario',
-    method: 'GET',
-    beforeSend: () => $('#calendar-loading').show(),
-    success: function(data) {
-      loaded = true;
-      $('#calendar-loading').hide();
-      renderScheduleCalendar(data);
-    },
-    error: function() {
-      $('#calendar-loading').hide();
-      $('#calendarContainer').html(`
-        <div class="text-red-500 bg-red-50 p-3 rounded-lg">
-          Error al cargar horario. Intenta nuevamente.
-        </div>
-      `);
-    }
-  });
+export function loadScheduleCalendar() {
+  calendarLoader.load(renderScheduleCalendar);
 }
 
-function renderScheduleCalendar(horarioMap) {
-  const calendarEl = document.getElementById('calendarContainer');
-  if (!calendarEl) return;
-
+function renderScheduleCalendar(horarioMap, container) {
   if (fullCalendarInstance?.destroy) fullCalendarInstance.destroy();
 
   const dayMap = { lunes:1, martes:2, miércoles:3, jueves:4, viernes:5 };
@@ -55,7 +38,7 @@ function renderScheduleCalendar(horarioMap) {
     return toMinutes(curr.endTime) > toMinutes(prev.endTime) ? curr : prev;
   });
 
-  fullCalendarInstance = new Calendar(calendarEl, {
+  fullCalendarInstance = new Calendar(container[0], {
     initialView: 'timeGridWeek',
     slotHeight: 60,
     slotMinTime: '07:00:00',
@@ -93,25 +76,6 @@ function renderScheduleCalendar(horarioMap) {
         theme: 'light'
       });
     },
-
-    eventClick: function(info) {
-      const props = info.event.extendedProps;
-      Swal.fire({
-        title: props.nombre,
-        html: `
-          <div class="text-left space-y-2">
-            <div><strong>Tipo:</strong> ${tipoMap[props.tipo]}</div>
-            <div><strong>Aula:</strong> ${props.aula}</div>
-            <div><strong>Turno:</strong> ${props.turno}</div>
-            <div><strong>Día:</strong> ${props.dia}</div>
-            <div><strong>Horario:</strong> ${props.horaInicio} - ${props.horaFin}</div>
-          </div>
-        `,
-        icon: 'info',
-        confirmButtonText: 'Cerrar',
-        width: '500px'
-      });
-    }
   });
 
   fullCalendarInstance.render();

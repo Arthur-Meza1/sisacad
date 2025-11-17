@@ -54,16 +54,14 @@ function changeView(viewId) {
 
   currentView = viewId;
 
-  setTimeout(() => {
-    if (viewId === 'grades') {
-      loadAvailableCourses();
-    }
-    if (viewId === 'attendance') {
-        initAttChart();
-    }
-    if (viewId === 'schedule') loadScheduleCalendar();
-    if (viewId === 'enrollment') renderEnrollmentView();
-  }, 50);
+  if (viewId === 'grades') {
+    loadAvailableCourses();
+  }
+  if (viewId === 'attendance') {
+      initAttChart();
+  }
+  if (viewId === 'schedule') loadScheduleCalendar();
+  if (viewId === 'enrollment') renderEnrollmentView();
 }
 
 // Inicialización de Gráficos (Global)
