@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Docente;
+use App\Services\DocenteService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,13 +12,21 @@ class DocenteController extends Controller
 {
   use AuthorizesRequests;
 
+  private $service;
+
+  public function __construct(DocenteService $service) {
+    $this->service = $service;
+  }
+
   public function index()
   {
-    $docente = Docente::with('user')
-      ->where('user_id', Auth::id())
-      ->firstOrFail();
+    $grupos = $this->service->getGroupDataFromId(Auth::id());
 
-    return view('teacher', compact('docente'));
+    return view('teacher', compact('grupos'));
+  }
+
+  public function getHorario() {
+    return response()->json($this->service->getHorarioFromId(Auth::id()));
   }
 
   public function registrarNotas(Request $request)
