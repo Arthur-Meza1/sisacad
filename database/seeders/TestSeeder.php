@@ -213,27 +213,13 @@ class TestSeeder extends Seeder
     // Lunes
     BloqueHorario::create([
       'horaInicio' => '07:00:00',
-      'horaFin' => '07:50:00',
-      'dia' => 'lunes',
-      'grupo_curso_id' => $mac_t->id,
-      'aula_id' => $aula203->id,
-    ]);
-    BloqueHorario::create([
-      'horaInicio' => '07:50:00',
-      'horaFin' => '08:40:00',
+      'horaFin' => '04:40:00',
       'dia' => 'lunes',
       'grupo_curso_id' => $mac_t->id,
       'aula_id' => $aula203->id,
     ]);
     BloqueHorario::create([
       'horaInicio' => '08:50:00',
-      'horaFin' => '09:40:00',
-      'dia' => 'lunes',
-      'grupo_curso_id' => $is2_l->id,
-      'aula_id' => $lab04->id,
-    ]);
-    BloqueHorario::create([
-      'horaInicio' => '09:40:00',
       'horaFin' => '10:30:00',
       'dia' => 'lunes',
       'grupo_curso_id' => $is2_l->id,
@@ -241,13 +227,6 @@ class TestSeeder extends Seeder
     ]);
     BloqueHorario::create([
       'horaInicio' => '10:40:00',
-      'horaFin' => '11:30:00',
-      'dia' => 'lunes',
-      'grupo_curso_id' => $eda_t->id,
-      'aula_id' => $aula203->id,
-    ]);
-    BloqueHorario::create([
-      'horaInicio' => '11:30:00',
       'horaFin' => '12:20:00',
       'dia' => 'lunes',
       'grupo_curso_id' => $eda_t->id,
@@ -255,13 +234,6 @@ class TestSeeder extends Seeder
     ]);
     BloqueHorario::create([
       'horaInicio' => '12:20:00',
-      'horaFin' => '13:10:00',
-      'dia' => 'lunes',
-      'grupo_curso_id' => $so_t->id,
-      'aula_id' => $aula203->id,
-    ]);
-    BloqueHorario::create([
-      'horaInicio' => '13:10:00',
       'horaFin' => '14:00:00',
       'dia' => 'lunes',
       'grupo_curso_id' => $so_t->id,
@@ -278,13 +250,6 @@ class TestSeeder extends Seeder
     ]);
     BloqueHorario::create([
       'horaInicio' => '09:40:00',
-      'horaFin' => '10:30:00',
-      'dia' => 'martes',
-      'grupo_curso_id' => $mac_t->id,
-      'aula_id' => $aula203->id,
-    ]);
-    BloqueHorario::create([
-      'horaInicio' => '10:40:00',
       'horaFin' => '11:30:00',
       'dia' => 'martes',
       'grupo_curso_id' => $mac_t->id,
@@ -299,13 +264,6 @@ class TestSeeder extends Seeder
     ]);
     BloqueHorario::create([
       'horaInicio' => '12:20:00',
-      'horaFin' => '13:10:00',
-      'dia' => 'martes',
-      'grupo_curso_id' => $so_l->id,
-      'aula_id' => $lab01->id,
-    ]);
-    BloqueHorario::create([
-      'horaInicio' => '13:10:00',
       'horaFin' => '14:00:00',
       'dia' => 'martes',
       'grupo_curso_id' => $so_l->id,
@@ -315,13 +273,6 @@ class TestSeeder extends Seeder
     // Miercoles
     BloqueHorario::create([
       'horaInicio' => '07:00:00',
-      'horaFin' => '07:50:00',
-      'dia' => 'miercoles',
-      'grupo_curso_id' => $ti2_t->id,
-      'aula_id' => $aula203->id,
-    ]);
-    BloqueHorario::create([
-      'horaInicio' => '07:50:00',
       'horaFin' => '08:40:00',
       'dia' => 'miercoles',
       'grupo_curso_id' => $ti2_t->id,
@@ -329,13 +280,6 @@ class TestSeeder extends Seeder
     ]);
     BloqueHorario::create([
       'horaInicio' => '08:50:00',
-      'horaFin' => '09:40:00',
-      'dia' => 'miercoles',
-      'grupo_curso_id' => $eda_l->id,
-      'aula_id' => $lab01->id,
-    ]);
-    BloqueHorario::create([
-      'horaInicio' => '09:40:00',
       'horaFin' => '10:30:00',
       'dia' => 'miercoles',
       'grupo_curso_id' => $eda_l->id,
@@ -343,13 +287,6 @@ class TestSeeder extends Seeder
     ]);
     BloqueHorario::create([
       'horaInicio' => '10:40:00',
-      'horaFin' => '11:30:00',
-      'dia' => 'miercoles',
-      'grupo_curso_id' => $so_t->id,
-      'aula_id' => $aula203->id,
-    ]);
-    BloqueHorario::create([
-      'horaInicio' => '11:30:00',
       'horaFin' => '12:20:00',
       'dia' => 'miercoles',
       'grupo_curso_id' => $so_t->id,
@@ -357,13 +294,6 @@ class TestSeeder extends Seeder
     ]);
     BloqueHorario::create([
       'horaInicio' => '12:20:00',
-      'horaFin' => '13:10:00',
-      'dia' => 'miercoles',
-      'grupo_curso_id' => $is2_t->id,
-      'aula_id' => $aula203->id,
-    ]);
-    BloqueHorario::create([
-      'horaInicio' => '13:10:00',
       'horaFin' => '14:00:00',
       'dia' => 'miercoles',
       'grupo_curso_id' => $is2_t->id,
@@ -373,13 +303,6 @@ class TestSeeder extends Seeder
     // Jueves
     BloqueHorario::create([
       'horaInicio' => '07:00:00',
-      'horaFin' => '07:50:00',
-      'dia' => 'jueves',
-      'grupo_curso_id' => $pc_t->id,
-      'aula_id' => $aula203->id,
-    ]);
-    BloqueHorario::create([
-      'horaInicio' => '07:50:00',
       'horaFin' => '08:40:00',
       'dia' => 'jueves',
       'grupo_curso_id' => $pc_t->id,
@@ -387,13 +310,6 @@ class TestSeeder extends Seeder
     ]);
     BloqueHorario::create([
       'horaInicio' => '08:50:00',
-      'horaFin' => '09:40:00',
-      'dia' => 'jueves',
-      'grupo_curso_id' => $eda_t->id,
-      'aula_id' => $aula203->id,
-    ]);
-    BloqueHorario::create([
-      'horaInicio' => '09:40:00',
       'horaFin' => '10:30:00',
       'dia' => 'jueves',
       'grupo_curso_id' => $eda_t->id,
@@ -401,13 +317,6 @@ class TestSeeder extends Seeder
     ]);
     BloqueHorario::create([
       'horaInicio' => '10:40:00',
-      'horaFin' => '11:30:00',
-      'dia' => 'jueves',
-      'grupo_curso_id' => $ti2_t->id,
-      'aula_id' => $aula203->id,
-    ]);
-    BloqueHorario::create([
-      'horaInicio' => '11:30:00',
       'horaFin' => '12:20:00',
       'dia' => 'jueves',
       'grupo_curso_id' => $ti2_t->id,
@@ -415,13 +324,6 @@ class TestSeeder extends Seeder
     ]);
     BloqueHorario::create([
       'horaInicio' => '12:20:00',
-      'horaFin' => '13:10:00',
-      'dia' => 'jueves',
-      'grupo_curso_id' => $is2_t->id,
-      'aula_id' => $aula203->id,
-    ]);
-    BloqueHorario::create([
-      'horaInicio' => '13:10:00',
       'horaFin' => '14:00:00',
       'dia' => 'jueves',
       'grupo_curso_id' => $is2_t->id,
@@ -431,13 +333,6 @@ class TestSeeder extends Seeder
     // Viernes
     BloqueHorario::create([
       'horaInicio' => '08:50:00',
-      'horaFin' => '09:40:00',
-      'dia' => 'viernes',
-      'grupo_curso_id' => $mac_l->id,
-      'aula_id' => $lab02->id,
-    ]);
-    BloqueHorario::create([
-      'horaInicio' => '09:40:00',
       'horaFin' => '10:30:00',
       'dia' => 'viernes',
       'grupo_curso_id' => $mac_l->id,
@@ -445,13 +340,6 @@ class TestSeeder extends Seeder
     ]);
     BloqueHorario::create([
       'horaInicio' => '10:40:00',
-      'horaFin' => '11:30:00',
-      'dia' => 'viernes',
-      'grupo_curso_id' => $pc_t->id,
-      'aula_id' => $lab04->id,
-    ]);
-    BloqueHorario::create([
-      'horaInicio' => '11:30:00',
       'horaFin' => '12:20:00',
       'dia' => 'viernes',
       'grupo_curso_id' => $pc_t->id,
@@ -461,7 +349,7 @@ class TestSeeder extends Seeder
     // ===========
     // ALUMNO
     // ===========
-    /*$yo = Alumno::create([
+    $yo = Alumno::create([
       'user_id' => User::factory()->create(['name' => 'Esdras Amado Diaz Vasquez', 'email' => 'test@example.com'])->id
     ]);
     // Matricular al alumno en sus cursos
@@ -485,9 +373,10 @@ class TestSeeder extends Seeder
         'alumno_id' => $yo->id,
         'grupo_curso_id' => $grupoId,
       ]);
-      */
+    }
+  }
     // Cursos en los que se matricularán todos los alumnos
-    $matriculas = [
+    /*$matriculas = [
       $mac_t->id,
       $is2_t->id,
       $eda_t->id,
@@ -520,5 +409,5 @@ class TestSeeder extends Seeder
         ]);
       }
     }
-  }
+  }*/
 }
