@@ -38,6 +38,7 @@ export class ContentLoader {
       },
       success: (data) =>  {
         this.loaded = true;
+        this.container.html('');
         success(data, this.container);
       },
       error: () => {
@@ -48,5 +49,9 @@ export class ContentLoader {
         `);
       }
     });
+  }
+
+  unload() {
+    this.loaded = false;
   }
 }

@@ -3,8 +3,15 @@
 namespace App\Services;
 
 use App\Models\Docente;
+use App\Models\Sesion;
 
 class DocenteService {
+  private $horarioService;
+
+  public function __construct() {
+    $this->horarioService = new HorarioService();
+  }
+
   public function getGroupDataFromId($id) {
     $docente = Docente::where('user_id', $id)->firstOrFail();
 
@@ -24,7 +31,7 @@ class DocenteService {
                         ->avg();
                       return [
                         "curso" => [
-                          "id" => $grupo->curso->id,
+                          "id" => $grupo->id,
                           "nombre" => $grupo->curso->nombre,
                           "tipo" => $grupo->tipo
                         ],
@@ -43,23 +50,6 @@ class DocenteService {
   }
 
   public function getHorarioFromId($id) {
-    $docente =
-      Docente::with('grupos.bloqueHorario', 'grupos.curso')
-        ->where('user_id', $id)
-        ->firstOrFail();
-
-    return $docente->grupos
-                   ->flatMap(function ($grupo) {
-      return $grupo->bloqueHorario->map(fn($bloque) => [
-        'dia' => $bloque->dia,
-        'horaInicio' => $bloque->horaInicio,
-        'horaFin' => $bloque->horaFin,
-        'nombre' => $grupo->curso->nombre,
-        'tipo' => $grupo->tipo,
-        'turno' => $grupo->turno,
-        'aula' => $bloque->aula->nombre,
-
-      ]);
-    })->values();
+    return $this->horarioService->get(Docente::class, $id, true);
   }
 }

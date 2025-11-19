@@ -1,58 +1,188 @@
 import {ContentLoader} from "../common/ContentLoader.js";
 import {Calendar} from "fullcalendar";
+import {
+  formatTime,
+  formatDate,
+  ucfirst,
+  convertDiaToInt,
+  isInNowEvent, sameDay
+} from "../common/Utils.js";
+import $ from "jquery";
 import tippy from "tippy.js";
+import 'tippy.js/dist/tippy.css';
 
 let g_calendarLoader = new ContentLoader({
   "url": "/api/teacher/horario",
   "containerName": "#fullCalendar"
 });
 let g_fullCalendarInstance;
-let g_horarioMap;
+
+export function updateEventButtonState() {
+  const date = document.getElementById('eventDate').value;
+  const start = document.getElementById('eventStart').value;
+  const end = document.getElementById('eventEnd').value;
+  const event_button = document.getElementById('event-submit-button');
+
+  if (!date || !start || !end) {
+    event_button.disabled = true;
+    return;
+  }
+
+  const startDateTime = new Date(`${date}T${start}:00`);
+  const endDateTime = new Date(`${date}T${end}:00`);
+
+  // Verificar AMBAS superposiciones
+  const startOverlap = findFirstStartOverlap(startDateTime);
+  const endOverlap = findFirstEndOverlap(endDateTime);
+
+  const doesOverlap = startOverlap != null || endOverlap != null || !(startDateTime < endDateTime);
+
+  event_button.disabled = doesOverlap;
+
+  const errorLabel = document.getElementById("event-submit-error");
+  if (doesOverlap) {
+    let conflictMessages = [];
+
+    if (startOverlap) {
+      const hora = new Date(startOverlap.start).toLocaleTimeString('es-ES', {
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+      conflictMessages.push(`${startOverlap.title} (${hora})`);
+    }
+
+    if (endOverlap) {
+      const hora = new Date(endOverlap.start).toLocaleTimeString('es-ES', {
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+      conflictMessages.push(`${endOverlap.title} (${hora})`);
+    }
+
+    let str = "Conflicto con: ";
+    str += conflictMessages.join(' y ');
+
+    errorLabel.textContent = str;
+  } else {
+    errorLabel.textContent = "";
+    loadAulasDisponibles(date, start, end);
+  }
+}
+
+function loadAulasDisponibles(date, start, end) {
+  $.post('/api/teacher/aulas', {
+    fecha: date,
+    hora_inicio: start,
+    hora_fin: end,
+    _token: $('meta[name="csrf-token"]').attr('content')
+  }).done(function(data) {
+    const aulasSelect = document.getElementById("eventLocation");
+    aulasSelect.innerHTML = '<option value="">Selecciona un ambiente</option>';
+    data.forEach(function (aula) {
+      console.log(aula);
+      const option = document.createElement('option');
+      option.value = aula.id;
+      option.textContent = aula.nombre;
+      aulasSelect.appendChild(option);
+    });
+
+    if(aulasSelect.children.length === 1) {
+      document.getElementById("event-submit-error").textContent = "No hay aulas disponibles";
+    }
+  });
+}
 
 export function loadScheduleCalendar() {
   g_calendarLoader.load(renderScheduleCalendar);
 }
 
-export function openScheduleModal() {
+export function openScheduleModal(start = new Date(), end = new Date()) {
+  document.getElementById('eventDate').value = formatDate(start);
+  document.getElementById('eventStart').value = formatTime(start);
+  document.getElementById('eventEnd').value = formatTime(end);
   document.getElementById('scheduleModal').classList.remove('hidden');
   document.getElementById('scheduleModal').classList.add('flex');
+  updateEventButtonState();
 }
 export function closeScheduleModal(event) {
-  // Si se hace clic fuera del modal (en el fondo gris), se cierra
   if (event && event.target.id !== 'scheduleModal') return;
   document.getElementById('scheduleModal').classList.remove('flex');
   document.getElementById('scheduleModal').classList.add('hidden');
   document.getElementById('scheduleForm').reset(); // Limpiar el formulario
 }
 
-function renderScheduleCalendar(horarioMap, container) {
+function renderScheduleCalendar(data, container) {
+  console.log(data);
   if (g_fullCalendarInstance?.destroy) g_fullCalendarInstance.destroy();
-  g_horarioMap = horarioMap;
-  console.log(g_horarioMap);
 
-  const dayMap = { lunes:1, martes:2, miércoles:3, jueves:4, viernes:5 };
-  const tipoMap = { teoria: 'Teoría', laboratorio: 'Laboratorio' };
-  const colorMap = { teoria: '#60a5fa', laboratorio: '#2aa87c' };
+  const horario = data.horario.map(function (item) {
+    const colorMap = { teoria: '#60a5fa', laboratorio: '#2aa87c' };
 
-  const fullCalendarEvents = horarioMap.map(item => ({
-    title: `${item.nombre} - ${tipoMap[item.tipo]}`,
-    daysOfWeek: [dayMap[item.dia]],
-    startTime: item.horaInicio,
-    endTime: item.horaFin,
-    backgroundColor: colorMap[item.tipo],
-    borderColor: colorMap[item.tipo],
-    extendedProps: item
-  }));
+    return {
+      title: `${item.nombre} - ${ucfirst(item.tipo)}`,
+      backgroundColor: colorMap[item.tipo],
+      borderColor: colorMap[item.tipo],
+      daysOfWeek: [convertDiaToInt(item.dia)],
+      startTime: item.horaInicio,
+      endTime: item.horaFin,
+      extendedProps: item,
+    }
+  });
+
+  const sesiones = data.sesiones.map(function (item) {
+    return {
+      title: `${item.nombre} - ${ucfirst(item.tipo)}`,
+      backgroundColor: "#ab0647",
+      borderColor: "#ab0647",
+      start: `${item.fecha}T${item.horaInicio}`,
+      end: `${item.fecha}T${item.horaFin}`,
+      extendedProps: item,
+    }
+  });
+
+  const others = data.others.map(function (item) {
+    const props = {
+      title: `${item.aula}`,
+      backgroundColor: "transparent", // Fondo completamente transparente
+      borderColor: "rgba(0, 0, 0, 0.6)", // Negro con transparencia
+      textColor: "rgba(0, 0, 0, 0.7)", // Texto en negro
+      className: 'ec-event-others',
+      borderWidth: 2,
+      extendedProps: {
+        ...item,
+        'other': true
+      }
+    };
+
+    if(item.from_bloque === true) {
+      props.daysOfWeek = [convertDiaToInt(item.fecha)];
+      props.startTime= item.horaInicio;
+      props.endTime = item.horaFin;
+    } else {
+      props.start = `${item.fecha}T${item.horaInicio}`;
+      props.end =`${item.fecha}T${item.horaFin}`;
+    }
+
+    return props;
+  });
+
+  const fullCalendarEvents = [...horario, ...sesiones, ...others];
 
   const oldestEvent = fullCalendarEvents.reduce((prev, curr) => {
-    const toMinutes = t => t.split(':').reduce((h, m) => h*60 + +m, 0);
-    return toMinutes(curr.endTime) > toMinutes(prev.endTime) ? curr : prev;
+    const toMinutes = t => t.split(':').reduce((h, m) => h * 60 + +m, 0);
+
+    // curr.endTime existe solo para eventos recurrentes
+    // si no existe, extraemos los últimos 5 chars de "YYYY-MM-DDTHH:MM"
+    const currEnd = curr.endTime ?? curr.end.slice(-5);
+    const prevEnd = prev.endTime ?? prev.end.slice(-5);
+
+    return toMinutes(currEnd) > toMinutes(prevEnd) ? curr : prev;
   });
 
   g_fullCalendarInstance = new Calendar(container[0], {
     initialView: 'timeGridWeek',
     slotHeight: 60,
-    slotMinTime: '07:00:00',
+    slotMinTime: '06:00:00',
     slotMaxTime: oldestEvent.endTime,
     weekends: false,
     allDaySlot: false,
@@ -60,7 +190,6 @@ function renderScheduleCalendar(horarioMap, container) {
     height: 'auto',
     locale: 'es',
     selectable: true,
-    editable: false,
 
     headerToolbar: {
       left: 'prev,next today',
@@ -71,98 +200,110 @@ function renderScheduleCalendar(horarioMap, container) {
     events: fullCalendarEvents,
 
     eventClick: function(info) {
-      if(isActualEvent(info.event)) {
+      if(!info.event.extendedProps.from_bloque) {
+        console.log("Eliminar esto??");
       }
     },
 
     select: function (info) {
-      openScheduleModal();
+      let start = clampStartEvent(info.start);
+      let end = clampEndEvent(info.end);
+      if(start < end)
+        openScheduleModal(start, end);
     },
 
     eventDidMount: function(info) {
-      if (isActualEvent(info.event))
+      if (isInNowEvent(info.event))
         info.el.classList.add('ec-now');
+
+      const props = info.event.extendedProps;
+      let content = "";
+      if(props.other) {
+        content = `
+          <div>
+            <strong>Aula: ${props.aula}</strong><br>
+            Horario: ${props.horaInicio} - ${props.horaFin}
+          </div>
+        `;
+      } else {
+        content = `
+        <div>
+            <strong>${props.nombre}</strong><br>
+            Tipo: ${props.tipo}<br>
+            Aula: ${props.aula}<br>
+            Turno: ${props.turno}<br>
+            Horario: ${props.horaInicio} - ${props.horaFin}
+          </div>`;
+      }
+      tippy(info.el, {
+        content,
+        allowHTML: true,
+        placement: 'top',
+      });
     }
   });
 
   g_fullCalendarInstance.render();
 }
 
-function isActualEvent(event) {
-  const now = new Date();
-  return event.start <= now && event.end >= now;
+function findFirstStartOverlap(date) {
+  return getCalendarOwnEvents().filter(x =>
+    sameDay(date, x.start) && sameDay(date, x.end)
+  ).find(x => x.start <= date && date < x.end);
+}
+
+function findFirstEndOverlap(date) {
+  return getCalendarOwnEvents().filter(x =>
+    sameDay(date, x.start) && sameDay(date, x.end)
+  ).find(x => x.start < date && date <= x.end);
+}
+
+function getCalendarOwnEvents() {
+  return g_fullCalendarInstance.getEvents().filter(x => x.extendedProps.other == null);
+}
+
+function clampStartEvent(start) {
+  let overlapStart = findFirstStartOverlap(start);
+  if(overlapStart) {
+    return overlapStart.end;
+  }
+  return start;
+}
+
+function clampEndEvent(end) {
+  let overlapEnd = findFirstEndOverlap(end);
+  if(overlapEnd) {
+    return overlapEnd.start;
+  }
+  return end;
 }
 
 export function saveNewScheduleEvent() {
-  const title = document.getElementById('eventTitle').value;
+  const grupoId = document.getElementById('eventCurso').value;
   const date = document.getElementById('eventDate').value;
-  const location = document.getElementById('eventLocation').value;
+  const locationId = document.getElementById('eventLocation').value;
   const start = document.getElementById('eventStart').value;
   const end = document.getElementById('eventEnd').value;
 
-  const startDateTime = `${date}T${start}:00`;
-  const endDateTime = `${date}T${end}:00`;
-
-  // 1. Validación de Horas
-  if (startDateTime >= endDateTime) {
-    alert('Error: La hora de fin debe ser posterior a la hora de inicio.');
-    return;
-  }
-
-  // --- NUEVO: VERIFICACIÓN DE CONFLICTOS PERSONALES ---
-  const isConflict = g_horarioMap.some(existingEvent => {
-    // Ignoramos eventos sin inicio/fin definidos (aunque no debería pasar)
-    if (!existingEvent.horaInicio || !existingEvent.horaFin) return false;
-
-    // Convertimos las fechas/horas a objetos Date para compararlas fácilmente
-    const newStart = new Date(startDateTime);
-    const newEnd = new Date(endDateTime);
-    const existingStart = new Date(existingEvent.horaInicio);
-    const existingEnd = new Date(existingEvent.horaFin);
-
-    // Lógica de superposición: [A empieza antes de B termina] AND [B empieza antes de A termina]
-    const overlap = newStart < existingEnd && existingStart < newEnd;
-
-    return overlap;
-  });
-
-  if (isConflict) {
-    // En lugar de bloquear la reserva, ADVERTIMOS y preguntamos si desea continuar.
-    const confirmation = confirm(
-      'Curse de Horarios\n' +
-      'Esta hora se superpone con una clase/reserva que ya tienes en tu horario.\n\n' +
-      '¿Deseas guardar la reserva de todos modos?'
-    );
-
-    if (!confirmation) {
-      alert('Reserva cancelada');
-      return; // Detiene la función si el usuario cancela
-    }
-  }
-  // --- FIN DE LA VERIFICACIÓN ---
-
-  const newEvent = {
-    id: `custom-${Date.now()}`,
-    title: `${title} (${location})`,
-    start: startDateTime,
-    end: endDateTime,
-    extendedProps: {
-      course: title,
-      location: location,
-      type: 'flexible'
-    },
-    color: isConflict ? '#dc2626' : '#f97316' // Rojo si hay conflicto, Naranja si no hay
+  const props = {
+    "grupo_id": grupoId,
+    "fecha": date,
+    "hora_inicio": start,
+    "hora_fin": end,
+    "aula_id": locationId,
+    "from_bloque": false,
   };
 
-  // 2. Añadir el evento al arreglo de datos
-  // g_horarioMap.push(newEvent);
-  console.log(newEvent);
+  crearSesion(props);
+}
 
-  // 3. Añadir el evento al calendario ya renderizado
-  if (g_fullCalendarInstance) {
-    g_fullCalendarInstance.addEvent(newEvent);
-    alert(`¡Hora reservada con éxito! `);
-    closeScheduleModal();
-  } else {
-  }
+function crearSesion(props) {
+  props._token = $('meta[name="csrf-token"]').attr('content');
+  console.log(props);
+  $.post('/api/teacher/sesion', props)
+    .done(function(data) {
+      closeScheduleModal();
+      g_calendarLoader.unload();
+      loadScheduleCalendar();
+  });
 }

@@ -213,7 +213,7 @@ class TestSeeder extends Seeder
     // Lunes
     BloqueHorario::create([
       'horaInicio' => '07:00:00',
-      'horaFin' => '04:40:00',
+      'horaFin' => '08:40:00',
       'dia' => 'lunes',
       'grupo_curso_id' => $mac_t->id,
       'aula_id' => $aula203->id,

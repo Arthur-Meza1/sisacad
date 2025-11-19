@@ -1,5 +1,11 @@
 import $ from 'jquery';
-import {loadScheduleCalendar, openScheduleModal, closeScheduleModal, saveNewScheduleEvent} from "./calendario.js";
+import {
+  loadScheduleCalendar,
+  openScheduleModal,
+  closeScheduleModal,
+  saveNewScheduleEvent,
+  updateEventButtonState
+} from "./calendario.js";
 
 $(document).ready(function() {
   $('.nav-link').on('click', function() {
@@ -40,6 +46,7 @@ function changeView(viewId) {
   */
 }
 
+window.updateEventButtonState = updateEventButtonState;
 window.openScheduleModal = openScheduleModal;
 window.closeScheduleModal = closeScheduleModal;
 window.saveNewScheduleEvent = saveNewScheduleEvent;
@@ -164,5 +171,3 @@ function renderAttendancePanel(courseId) {
     });
   });
 }
-
-

@@ -189,3 +189,8 @@ body {
   background-color: #1e40af;
   color: #ffffff;
 }
+
+.ec-event-others {
+  background: transparent !important;
+  pointer-events: none !important; /* Desactiva eventos en el evento mismo */
+}

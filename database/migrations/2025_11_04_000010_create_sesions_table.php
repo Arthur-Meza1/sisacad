@@ -4,6 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use \App\Models\GrupoCurso;
+use \App\Models\Aula;
 
 return new class extends Migration
 {
@@ -13,11 +14,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('sesions', function (Blueprint $table) {
-            $table->id();
+            $table->id()->autoIncrement();
             $table->foreignIdFor(GrupoCurso::class)->constrained();
-            $table->dateTime('fecha');
+            $table->foreignIdFor(Aula::class)->constrained();
+            $table->date('fecha');
             $table->time('horaInicio');
             $table->time('horaFin');
+            $table->boolean('from_bloque')->default(false);
+            $table->index(['horaInicio', 'horaFin', 'fecha', 'from_bloque']);
         });
     }
 

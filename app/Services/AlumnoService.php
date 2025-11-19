@@ -3,8 +3,16 @@
 namespace App\Services;
 
 use App\Models\Alumno;
+use App\Models\Docente;
+use App\Models\Sesion;
 
 class AlumnoService {
+  private $horarioService;
+
+  public function __construct() {
+    $this->horarioService = new HorarioService();
+  }
+
   public function getCursosFromId($id) {
     $alumno = Alumno::where('user_id', $id)->firstOrFail();
 
@@ -29,61 +37,6 @@ class AlumnoService {
   }
 
   public function getHorarioFromId($id) {
-    $alumno =
-      Alumno::with('grupos.bloqueHorario.aula', 'grupos.curso')
-          ->where('user_id', $id)
-          ->firstOrFail();
-
-    $horario = $alumno->grupos->flatMap(function ($grupo) {
-      return $grupo->bloqueHorario->map(fn($bloque) => [
-        'dia' => $bloque->dia,
-        'horaInicio' => $bloque->horaInicio,
-        'horaFin' => $bloque->horaFin,
-        'nombre' => $grupo->curso->nombre,
-        'tipo' => $grupo->tipo,
-        'turno' => $grupo->turno,
-        'aula' => $bloque->aula->nombre,
-
-      ]);
-    })->values();
-
-    return $this->collapseHorario($horario);
-  }
-
-  private function collapseHorario($horario) {
-    return $horario->groupBy('dia')->map(function ($dayBlocks) {
-      $sorted = $dayBlocks->sortBy('horaInicio')->values();
-
-      $merged = [];
-      $current = null;
-
-      foreach ($sorted as $block) {
-        if ($current === null) {
-          $current = $block;
-          continue;
-        }
-
-        $currentEnd = strtotime($current['horaFin']);
-        $nextStart = strtotime($block['horaInicio']);
-
-        $isContinuous = $currentEnd === $nextStart &&
-          $current['aula'] === $block['aula'] &&
-          $current['nombre'] === $block['nombre'] &&
-          $current['tipo'] === $block['tipo'];
-
-        if ($isContinuous) {
-          $current['horaFin'] = $block['horaFin'];
-        } else {
-          $merged[] = $current;
-          $current = $block;
-        }
-      }
-
-      if ($current !== null) {
-        $merged[] = $current;
-      }
-
-      return collect($merged);
-    })->flatten(1)->values();
+    return $this->horarioService->mergeWithSessions(Alumno::class, $id);
   }
 }
