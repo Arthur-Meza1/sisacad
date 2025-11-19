@@ -70,22 +70,61 @@ class HorarioService {
                 'aula' => $sesion->aula->nombre,
                 'from_bloque' => false,
               ])
-          )->unique(function ($x) {
-            $diasSemana = [
-              'lunes'     => 1,
-              'martes'    => 2,
-              'miercoles' => 3,
-              'jueves'    => 4,
-              'viernes'   => 5,
-            ];
-
-            $day = $x['from_bloque'] ? $diasSemana[$x['fecha']] : Carbon::parse($x['fecha'])->dayOfWeekIso;
-
+          )
+          ->unique(function ($x) {
+            $day = HorarioService::toDay($x);
             return "{$day}|{$x['horaInicio']}|{$x['horaFin']}|{$x['aula']}";
           })->values();
-      $res['others'] = $otherEvents;
+      $res['others'] = $this->collapseOthers($otherEvents);
     }
 
     return $res;
+  }
+
+  private static function toDay($x) {
+    $diasSemana = [
+      'lunes'     => 1,
+      'martes'    => 2,
+      'miercoles' => 3,
+      'jueves'    => 4,
+      'viernes'   => 5,
+    ];
+
+    return $x['from_bloque'] ? $diasSemana[$x['fecha']] : Carbon::parse($x['fecha'])->dayOfWeekIso;
+  }
+
+  private function collapseOthers($others) {
+    return $others->groupBy(fn ($x) => HorarioService::toDay($x))->map(function ($dayBlocks) {
+      $sorted = $dayBlocks->sortBy('horaInicio')->values();
+
+      $merged = [];
+      $current = null;
+
+      foreach ($sorted as $block) {
+        if ($current === null) {
+          $current = $block;
+          continue;
+        }
+
+        $currentEnd = strtotime($current['horaFin']);
+        $nextStart = strtotime($block['horaInicio']);
+
+        $isContinuous = $currentEnd === $nextStart &&
+          $current['aula'] === $block['aula'];
+
+        if ($isContinuous) {
+          $current['horaFin'] = $block['horaFin'];
+        } else {
+          $merged[] = $current;
+          $current = $block;
+        }
+      }
+
+      if ($current !== null) {
+        $merged[] = $current;
+      }
+
+      return collect($merged);
+    })->flatten(1)->values();
   }
 }
