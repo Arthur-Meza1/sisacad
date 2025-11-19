@@ -205,7 +205,7 @@ function renderScheduleCalendar(data, container) {
         info.el.classList.add('ec-now');
 
       const props = info.event.extendedProps;
-      let content = "";
+      let content;
       if(props.other) {
         info.el.querySelector(".fc-event-time").textContent = info.event.extendedProps.aula;
         content = `
@@ -290,7 +290,7 @@ function crearSesion(props) {
   props._token = $('meta[name="csrf-token"]').attr('content');
   console.log(props);
   $.post('/api/teacher/sesion', props)
-    .done(function(data) {
+    .done(function() {
       closeScheduleModal();
       g_calendarLoader.unload();
       loadScheduleCalendar();
