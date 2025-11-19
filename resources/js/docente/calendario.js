@@ -142,7 +142,6 @@ function renderScheduleCalendar(data, container) {
 
   const others = data.others.map(function (item) {
     const props = {
-      title: `${item.aula}`,
       backgroundColor: "transparent", // Fondo completamente transparente
       borderColor: "rgba(0, 0, 0, 0.6)", // Negro con transparencia
       textColor: "rgba(0, 0, 0, 0.7)", // Texto en negro
@@ -168,22 +167,11 @@ function renderScheduleCalendar(data, container) {
 
   const fullCalendarEvents = [...horario, ...sesiones, ...others];
 
-  const oldestEvent = fullCalendarEvents.reduce((prev, curr) => {
-    const toMinutes = t => t.split(':').reduce((h, m) => h * 60 + +m, 0);
-
-    // curr.endTime existe solo para eventos recurrentes
-    // si no existe, extraemos los últimos 5 chars de "YYYY-MM-DDTHH:MM"
-    const currEnd = curr.endTime ?? curr.end.slice(-5);
-    const prevEnd = prev.endTime ?? prev.end.slice(-5);
-
-    return toMinutes(currEnd) > toMinutes(prevEnd) ? curr : prev;
-  });
-
   g_fullCalendarInstance = new Calendar(container[0], {
     initialView: 'timeGridWeek',
     slotHeight: 60,
     slotMinTime: '06:00:00',
-    slotMaxTime: oldestEvent.endTime,
+    slotMaxTime: "20:00:00",
     weekends: false,
     allDaySlot: false,
     nowIndicator: true,
@@ -213,12 +201,13 @@ function renderScheduleCalendar(data, container) {
     },
 
     eventDidMount: function(info) {
-      if (isInNowEvent(info.event))
+      if (isInNowEvent(info.event) && info.event.extendedProps.other == null)
         info.el.classList.add('ec-now');
 
       const props = info.event.extendedProps;
       let content = "";
       if(props.other) {
+        info.el.querySelector(".fc-event-time").textContent = info.event.extendedProps.aula;
         content = `
           <div>
             <strong>Aula: ${props.aula}</strong><br>
@@ -229,7 +218,7 @@ function renderScheduleCalendar(data, container) {
         content = `
         <div>
             <strong>${props.nombre}</strong><br>
-            Tipo: ${props.tipo}<br>
+            Tipo: ${ucfirst(props.tipo)}<br>
             Aula: ${props.aula}<br>
             Turno: ${props.turno}<br>
             Horario: ${props.horaInicio} - ${props.horaFin}
