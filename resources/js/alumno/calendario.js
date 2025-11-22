@@ -17,31 +17,35 @@ export function loadScheduleCalendar() {
   calendarLoader.load(renderScheduleCalendar);
 }
 
-function renderScheduleCalendar(horarioMap, container) {
+function renderScheduleCalendar(data, container) {
   if (fullCalendarInstance?.destroy) fullCalendarInstance.destroy();
 
-  const colorMap = { teoria: '#60a5fa', laboratorio: '#34d399' };
+  const horario = data.horario.map(function (item) {
+    const colorMap = { teoria: '#60a5fa', laboratorio: '#2aa87c' };
 
-  const fullCalendarEvents = horarioMap.map(function (item) {
-    const props = {
+    return {
       title: `${item.nombre} - ${ucfirst(item.tipo)}`,
       backgroundColor: colorMap[item.tipo],
       borderColor: colorMap[item.tipo],
-      extendedProps: item
-    };
-
-    if (item.from_bloque) {
-      props.daysOfWeek = [convertDiaToInt(item.fecha)];
-      props.startTime = item.horaInicio;
-      props.endTime = item.horaFin;
-    } else {
-      props.backgroundColor = "#ab0647";
-      props.start = `${item.fecha}T${item.horaInicio}`;
-      props.end   = `${item.fecha}T${item.horaFin}`;
+      daysOfWeek: [convertDiaToInt(item.dia)],
+      startTime: item.horaInicio,
+      endTime: item.horaFin,
+      extendedProps: item,
     }
-
-    return props;
   });
+
+  const sesiones = data.sesiones.map(function (item) {
+    return {
+      title: `${item.nombre} - ${ucfirst(item.tipo)}`,
+      backgroundColor: "#ab0647",
+      borderColor: "#ab0647",
+      start: `${item.fecha}T${item.horaInicio}`,
+      end: `${item.fecha}T${item.horaFin}`,
+      extendedProps: item,
+    }
+  });
+
+  const fullCalendarEvents = [...horario, ...sesiones];
 
   const oldestEvent = fullCalendarEvents.reduce((prev, curr) => {
     const toMinutes = t => t.split(':').reduce((h, m) => h * 60 + +m, 0);

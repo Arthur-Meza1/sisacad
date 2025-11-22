@@ -3,8 +3,6 @@
 namespace App\Services;
 
 use App\Models\Alumno;
-use App\Models\Docente;
-use App\Models\Sesion;
 
 class AlumnoService {
   private $horarioService;
@@ -37,6 +35,6 @@ class AlumnoService {
   }
 
   public function getHorarioFromId($id) {
-    return $this->horarioService->mergeWithSessions(Alumno::class, $id);
+    return $this->horarioService->get(Alumno::class, $id, false);
   }
 }
