@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\GrupoCurso;
 use App\Services\AlumnoService;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,7 +20,9 @@ class AlumnoController extends Controller
 
   public function index()
   {
-    return view('student');
+    $grupos = $this->service->getGroupDataFromId(Auth::id());
+
+    return view('student', compact('grupos'));
   }
 
   public function getCursos() {
@@ -31,5 +35,23 @@ class AlumnoController extends Controller
 
   public function getHorario() {
     return response()->json($this->service->getHorarioFromId(Auth::id()));
+  }
+
+  public function getCuposMatricula() {
+    return response()->json($this->service->getCuposDisponibles(Auth::id()));
+  }
+
+  public function matricular(Request $request) {
+    $validated = $request->validate([
+      'id' => 'required|exists:grupo_cursos,id',
+    ]);
+
+    $this->service->matricular(Auth::id(), $validated['id']);
+
+    return response()->json(['success' => true]);
+  }
+
+  public function getLaboratorios() {
+    return response()->json($this->service->getLaboratorios(Auth::id()));
   }
 }

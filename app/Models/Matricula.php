@@ -9,6 +9,8 @@ class Matricula extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['alumno_id', 'grupo_curso_id'];
+
     public $timestamps = false;
 
     public function grupoCurso() {
