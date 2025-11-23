@@ -15,6 +15,7 @@
         "vite": "^7.0.7"
     },
     "dependencies": {
+        "@fullcalendar/timegrid": "^6.1.19",
         "fullcalendar": "^6.1.19",
         "jquery": "^3.7.1",
         "sweetalert2": "^11.26.3",

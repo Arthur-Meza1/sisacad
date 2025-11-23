@@ -20,7 +20,7 @@ export function loadScheduleCalendar() {
 function renderScheduleCalendar(data, container) {
   if (fullCalendarInstance?.destroy) fullCalendarInstance.destroy();
 
-  const horario = data.horario.map(function (item) {
+  const horario = data.horario.map((item) => {
     const colorMap = { teoria: '#60a5fa', laboratorio: '#2aa87c' };
 
     return {
@@ -34,35 +34,12 @@ function renderScheduleCalendar(data, container) {
     }
   });
 
-  const sesiones = data.sesiones.map(function (item) {
-    return {
-      title: `${item.nombre} - ${ucfirst(item.tipo)}`,
-      backgroundColor: "#ab0647",
-      borderColor: "#ab0647",
-      start: `${item.fecha}T${item.horaInicio}`,
-      end: `${item.fecha}T${item.horaFin}`,
-      extendedProps: item,
-    }
-  });
-
-  const fullCalendarEvents = [...horario, ...sesiones];
-
-  const oldestEvent = fullCalendarEvents.reduce((prev, curr) => {
-    const toMinutes = t => t.split(':').reduce((h, m) => h * 60 + +m, 0);
-
-    // curr.endTime existe solo para eventos recurrentes
-    // si no existe, extraemos los últimos 5 chars de "YYYY-MM-DDTHH:MM"
-    const currEnd = curr.endTime ?? curr.end.slice(-5);
-    const prevEnd = prev.endTime ?? prev.end.slice(-5);
-
-    return toMinutes(currEnd) > toMinutes(prevEnd) ? curr : prev;
-  });
+  const fullCalendarEvents = [...horario];
 
   fullCalendarInstance = new Calendar(container[0], {
     initialView: 'timeGridWeek',
-    slotHeight: 60,
-    slotMinTime: '06:00:00',
-    slotMaxTime: oldestEvent.endTime,
+    slotMinTime: '07:00:00',
+    slotMaxTime: '20:10:00',
     weekends: false,
     allDaySlot: false,
     nowIndicator: true,

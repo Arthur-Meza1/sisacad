@@ -18,6 +18,7 @@ class FullSeeder extends Seeder
 {
   public function run(): void
   {
+
     // Crear curso: CALCULO EN UNA VARIABLE
     $curso_1 = Curso::create(['nombre' => 'CALCULO EN UNA VARIABLE']);
 
@@ -37,7 +38,7 @@ class FullSeeder extends Seeder
     ]);
 
 // Crear grupo para CALCULO EN UNA VARIABLE
-    $grupo_2_2 = GrupoCurso::create([
+    $grupo_1_1 = GrupoCurso::create([
       'curso_id' => $curso_1->id,
       'docente_id' => $docente_1->id,
       'turno' => 'A',
@@ -49,7 +50,7 @@ class FullSeeder extends Seeder
       'horaInicio' => '8:50',
       'horaFin' => '10:30',
       'dia' => 'lunes',
-      'grupo_curso_id' => $grupo_2_2->id,
+      'grupo_curso_id' => $grupo_1_1->id,
       'aula_id' => $aula_1->id,
     ]);
 
@@ -63,7 +64,7 @@ class FullSeeder extends Seeder
     ]);
 
 // Crear grupo para CALCULO EN UNA VARIABLE
-    $grupo_2_2 = GrupoCurso::create([
+    $grupo_1_2 = GrupoCurso::create([
       'curso_id' => $curso_1->id,
       'docente_id' => $docente_2->id,
       'turno' => 'B',
@@ -75,7 +76,7 @@ class FullSeeder extends Seeder
       'horaInicio' => '12:20',
       'horaFin' => '14:00',
       'dia' => 'martes',
-      'grupo_curso_id' => $grupo_2_2->id,
+      'grupo_curso_id' => $grupo_1_2->id,
       'aula_id' => $aula_1->id,
     ]);
 
@@ -92,7 +93,7 @@ class FullSeeder extends Seeder
     ]);
 
 // Crear grupo para INGLES II
-    $grupo_3_2 = GrupoCurso::create([
+    $grupo_2_1 = GrupoCurso::create([
       'curso_id' => $curso_2->id,
       'docente_id' => $docente_3->id,
       'turno' => 'A',
@@ -104,7 +105,7 @@ class FullSeeder extends Seeder
       'horaInicio' => '10:40',
       'horaFin' => '12:20',
       'dia' => 'lunes',
-      'grupo_curso_id' => $grupo_3_2->id,
+      'grupo_curso_id' => $grupo_2_1->id,
       'aula_id' => $aula_1->id,
     ]);
 
@@ -118,7 +119,7 @@ class FullSeeder extends Seeder
     ]);
 
 // Crear grupo para INGLES II
-    $grupo_3_2 = GrupoCurso::create([
+    $grupo_2_2 = GrupoCurso::create([
       'curso_id' => $curso_2->id,
       'docente_id' => $docente_4->id,
       'turno' => 'B',
@@ -130,7 +131,7 @@ class FullSeeder extends Seeder
       'horaInicio' => '12:20',
       'horaFin' => '14:00',
       'dia' => 'viernes',
-      'grupo_curso_id' => $grupo_3_2->id,
+      'grupo_curso_id' => $grupo_2_2->id,
       'aula_id' => $aula_1->id,
     ]);
 
@@ -147,7 +148,7 @@ class FullSeeder extends Seeder
     ]);
 
 // Crear grupo para ESTRUCTURAS DISCRETAS II
-    $grupo_4_2 = GrupoCurso::create([
+    $grupo_3_1 = GrupoCurso::create([
       'curso_id' => $curso_3->id,
       'docente_id' => $docente_5->id,
       'turno' => 'A',
@@ -159,12 +160,12 @@ class FullSeeder extends Seeder
       'horaInicio' => '12:20',
       'horaFin' => '14:00',
       'dia' => 'lunes',
-      'grupo_curso_id' => $grupo_4_2->id,
+      'grupo_curso_id' => $grupo_3_1->id,
       'aula_id' => $aula_1->id,
     ]);
 
 // Crear grupo para ESTRUCTURAS DISCRETAS II
-    $grupo_4_2 = GrupoCurso::create([
+    $grupo_3_2 = GrupoCurso::create([
       'curso_id' => $curso_3->id,
       'docente_id' => $docente_5->id,
       'turno' => 'B',
@@ -176,7 +177,7 @@ class FullSeeder extends Seeder
       'horaInicio' => '14:00',
       'horaFin' => '15:40',
       'dia' => 'lunes',
-      'grupo_curso_id' => $grupo_4_2->id,
+      'grupo_curso_id' => $grupo_3_2->id,
       'aula_id' => $aula_1->id,
     ]);
 
@@ -193,7 +194,7 @@ class FullSeeder extends Seeder
     ]);
 
 // Crear grupo para PROGRAMACION I
-    $grupo_5_5 = GrupoCurso::create([
+    $grupo_4_1 = GrupoCurso::create([
       'curso_id' => $curso_4->id,
       'docente_id' => $docente_6->id,
       'turno' => 'A',
@@ -205,12 +206,12 @@ class FullSeeder extends Seeder
       'horaInicio' => '07:00',
       'horaFin' => '08:40',
       'dia' => 'lunes',
-      'grupo_curso_id' => $grupo_5_5->id,
+      'grupo_curso_id' => $grupo_4_1->id,
       'aula_id' => $aula_1->id,
     ]);
 
 // Crear grupo para PROGRAMACION I
-    $grupo_5_5 = GrupoCurso::create([
+    $grupo_4_2 = GrupoCurso::create([
       'curso_id' => $curso_4->id,
       'docente_id' => $docente_6->id,
       'turno' => 'B',
@@ -222,7 +223,7 @@ class FullSeeder extends Seeder
       'horaInicio' => '15:50',
       'horaFin' => '17:30',
       'dia' => 'lunes',
-      'grupo_curso_id' => $grupo_5_5->id,
+      'grupo_curso_id' => $grupo_4_2->id,
       'aula_id' => $aula_1->id,
     ]);
 
@@ -233,7 +234,7 @@ class FullSeeder extends Seeder
     ]);
 
 // Crear grupo para PROGRAMACION I
-    $grupo_5_5 = GrupoCurso::create([
+    $grupo_4_3 = GrupoCurso::create([
       'curso_id' => $curso_4->id,
       'docente_id' => $docente_6->id,
       'turno' => 'A',
@@ -245,7 +246,7 @@ class FullSeeder extends Seeder
       'horaInicio' => '11:30',
       'horaFin' => '13:10',
       'dia' => 'martes',
-      'grupo_curso_id' => $grupo_5_5->id,
+      'grupo_curso_id' => $grupo_4_3->id,
       'aula_id' => $aula_2->id,
     ]);
 
@@ -256,7 +257,7 @@ class FullSeeder extends Seeder
     ]);
 
 // Crear grupo para PROGRAMACION I
-    $grupo_5_5 = GrupoCurso::create([
+    $grupo_4_4 = GrupoCurso::create([
       'curso_id' => $curso_4->id,
       'docente_id' => $docente_6->id,
       'turno' => 'C',
@@ -268,12 +269,12 @@ class FullSeeder extends Seeder
       'horaInicio' => '17:40',
       'horaFin' => '19:20',
       'dia' => 'lunes',
-      'grupo_curso_id' => $grupo_5_5->id,
+      'grupo_curso_id' => $grupo_4_4->id,
       'aula_id' => $aula_3->id,
     ]);
 
 // Crear grupo para PROGRAMACION I
-    $grupo_5_5 = GrupoCurso::create([
+    $grupo_4_5 = GrupoCurso::create([
       'curso_id' => $curso_4->id,
       'docente_id' => $docente_6->id,
       'turno' => 'B',
@@ -285,7 +286,7 @@ class FullSeeder extends Seeder
       'horaInicio' => '17:40',
       'horaFin' => '19:20',
       'dia' => 'miercoles',
-      'grupo_curso_id' => $grupo_5_5->id,
+      'grupo_curso_id' => $grupo_4_5->id,
       'aula_id' => $aula_3->id,
     ]);
 
@@ -302,7 +303,7 @@ class FullSeeder extends Seeder
     ]);
 
 // Crear grupo para REALIDAD NACIONAL
-    $grupo_6_2 = GrupoCurso::create([
+    $grupo_5_1 = GrupoCurso::create([
       'curso_id' => $curso_5->id,
       'docente_id' => $docente_7->id,
       'turno' => 'A',
@@ -314,12 +315,12 @@ class FullSeeder extends Seeder
       'horaInicio' => '7:00',
       'horaFin' => '9:40',
       'dia' => 'miercoles',
-      'grupo_curso_id' => $grupo_6_2->id,
+      'grupo_curso_id' => $grupo_5_1->id,
       'aula_id' => $aula_1->id,
     ]);
 
 // Crear grupo para REALIDAD NACIONAL
-    $grupo_6_2 = GrupoCurso::create([
+    $grupo_5_2 = GrupoCurso::create([
       'curso_id' => $curso_5->id,
       'docente_id' => $docente_7->id,
       'turno' => 'B',
@@ -331,7 +332,7 @@ class FullSeeder extends Seeder
       'horaInicio' => '16:40',
       'horaFin' => '19:20',
       'dia' => 'martes',
-      'grupo_curso_id' => $grupo_6_2->id,
+      'grupo_curso_id' => $grupo_5_2->id,
       'aula_id' => $aula_1->id,
     ]);
 
@@ -348,7 +349,7 @@ class FullSeeder extends Seeder
     ]);
 
 // Crear grupo para LINGUISTICA COMPRENSION Y REDACCION ACADEMICA
-    $grupo_7_2 = GrupoCurso::create([
+    $grupo_6_1 = GrupoCurso::create([
       'curso_id' => $curso_6->id,
       'docente_id' => $docente_8->id,
       'turno' => 'A',
@@ -360,7 +361,7 @@ class FullSeeder extends Seeder
       'horaInicio' => '9:40',
       'horaFin' => '12:20',
       'dia' => 'miercoles',
-      'grupo_curso_id' => $grupo_7_2->id,
+      'grupo_curso_id' => $grupo_6_1->id,
       'aula_id' => $aula_1->id,
     ]);
 
@@ -374,7 +375,7 @@ class FullSeeder extends Seeder
     ]);
 
 // Crear grupo para LINGUISTICA COMPRENSION Y REDACCION ACADEMICA
-    $grupo_7_2 = GrupoCurso::create([
+    $grupo_6_2 = GrupoCurso::create([
       'curso_id' => $curso_6->id,
       'docente_id' => $docente_9->id,
       'turno' => 'B',
@@ -386,7 +387,7 @@ class FullSeeder extends Seeder
       'horaInicio' => '14:00',
       'horaFin' => '16:40',
       'dia' => 'martes',
-      'grupo_curso_id' => $grupo_7_2->id,
+      'grupo_curso_id' => $grupo_6_2->id,
       'aula_id' => $aula_1->id,
     ]);
 
@@ -409,7 +410,7 @@ class FullSeeder extends Seeder
     ]);
 
 // Crear grupo para ALGEBRA LINEAL NUMERICA
-    $grupo_8_4 = GrupoCurso::create([
+    $grupo_7_1 = GrupoCurso::create([
       'curso_id' => $curso_7->id,
       'docente_id' => $docente_10->id,
       'turno' => 'A',
@@ -421,12 +422,12 @@ class FullSeeder extends Seeder
       'horaInicio' => '7:00',
       'horaFin' => '8:40',
       'dia' => 'lunes',
-      'grupo_curso_id' => $grupo_8_4->id,
+      'grupo_curso_id' => $grupo_7_1->id,
       'aula_id' => $aula_4->id,
     ]);
 
 // Crear grupo para ALGEBRA LINEAL NUMERICA
-    $grupo_8_4 = GrupoCurso::create([
+    $grupo_7_2 = GrupoCurso::create([
       'curso_id' => $curso_7->id,
       'docente_id' => $docente_10->id,
       'turno' => 'A',
@@ -438,7 +439,7 @@ class FullSeeder extends Seeder
       'horaInicio' => '7:00',
       'horaFin' => '8:40',
       'dia' => 'jueves',
-      'grupo_curso_id' => $grupo_8_4->id,
+      'grupo_curso_id' => $grupo_7_2->id,
       'aula_id' => $aula_2->id,
     ]);
 
@@ -452,7 +453,7 @@ class FullSeeder extends Seeder
     ]);
 
 // Crear grupo para ALGEBRA LINEAL NUMERICA
-    $grupo_8_4 = GrupoCurso::create([
+    $grupo_7_3 = GrupoCurso::create([
       'curso_id' => $curso_7->id,
       'docente_id' => $docente_11->id,
       'turno' => 'B',
@@ -464,7 +465,7 @@ class FullSeeder extends Seeder
       'horaInicio' => '12:20',
       'horaFin' => '14:00',
       'dia' => 'martes',
-      'grupo_curso_id' => $grupo_8_4->id,
+      'grupo_curso_id' => $grupo_7_3->id,
       'aula_id' => $aula_4->id,
     ]);
 
@@ -478,7 +479,7 @@ class FullSeeder extends Seeder
     ]);
 
 // Crear grupo para ALGEBRA LINEAL NUMERICA
-    $grupo_8_4 = GrupoCurso::create([
+    $grupo_7_4 = GrupoCurso::create([
       'curso_id' => $curso_7->id,
       'docente_id' => $docente_12->id,
       'turno' => 'B',
@@ -490,7 +491,7 @@ class FullSeeder extends Seeder
       'horaInicio' => '12:20',
       'horaFin' => '14:00',
       'dia' => 'viernes',
-      'grupo_curso_id' => $grupo_8_4->id,
+      'grupo_curso_id' => $grupo_7_4->id,
       'aula_id' => $aula_2->id,
     ]);
 
@@ -507,7 +508,7 @@ class FullSeeder extends Seeder
     ]);
 
 // Crear grupo para ALGORITMOS Y ESTRUCTURA DE DATOS
-    $grupo_9_3 = GrupoCurso::create([
+    $grupo_8_1 = GrupoCurso::create([
       'curso_id' => $curso_8->id,
       'docente_id' => $docente_13->id,
       'turno' => 'A',
@@ -519,12 +520,12 @@ class FullSeeder extends Seeder
       'horaInicio' => '8:50',
       'horaFin' => '10:30',
       'dia' => 'miercoles',
-      'grupo_curso_id' => $grupo_9_3->id,
+      'grupo_curso_id' => $grupo_8_1->id,
       'aula_id' => $aula_4->id,
     ]);
 
 // Crear grupo para ALGORITMOS Y ESTRUCTURA DE DATOS
-    $grupo_9_3 = GrupoCurso::create([
+    $grupo_8_2 = GrupoCurso::create([
       'curso_id' => $curso_8->id,
       'docente_id' => $docente_13->id,
       'turno' => 'B',
@@ -536,7 +537,7 @@ class FullSeeder extends Seeder
       'horaInicio' => '12:20',
       'horaFin' => '14:00',
       'dia' => 'miercoles',
-      'grupo_curso_id' => $grupo_9_3->id,
+      'grupo_curso_id' => $grupo_8_2->id,
       'aula_id' => $aula_4->id,
     ]);
 
@@ -550,7 +551,7 @@ class FullSeeder extends Seeder
     ]);
 
 // Crear grupo para ALGORITMOS Y ESTRUCTURA DE DATOS
-    $grupo_9_3 = GrupoCurso::create([
+    $grupo_8_3 = GrupoCurso::create([
       'curso_id' => $curso_8->id,
       'docente_id' => $docente_14->id,
       'turno' => 'A',
@@ -562,7 +563,7 @@ class FullSeeder extends Seeder
       'horaInicio' => '8:50',
       'horaFin' => '10:30',
       'dia' => 'lunes',
-      'grupo_curso_id' => $grupo_9_3->id,
+      'grupo_curso_id' => $grupo_8_3->id,
       'aula_id' => $aula_2->id,
     ]);
 
@@ -576,7 +577,7 @@ class FullSeeder extends Seeder
     ]);
 
 // Crear grupo para ANALISIS Y DISEÑO DE ALGORITMOS
-    $grupo_10_2 = GrupoCurso::create([
+    $grupo_9_1 = GrupoCurso::create([
       'curso_id' => $curso_9->id,
       'docente_id' => $docente_14->id,
       'turno' => 'A',
@@ -588,7 +589,7 @@ class FullSeeder extends Seeder
       'horaInicio' => '17:40',
       'horaFin' => '19:20',
       'dia' => 'lunes',
-      'grupo_curso_id' => $grupo_10_2->id,
+      'grupo_curso_id' => $grupo_9_1->id,
       'aula_id' => $aula_5->id,
     ]);
 
@@ -611,7 +612,7 @@ class FullSeeder extends Seeder
     ]);
 
 // Crear grupo para LENGUA EXTRANJERA V
-    $grupo_11_1 = GrupoCurso::create([
+    $grupo_10_1 = GrupoCurso::create([
       'curso_id' => $curso_10->id,
       'docente_id' => $docente_15->id,
       'turno' => 'A',
@@ -623,7 +624,7 @@ class FullSeeder extends Seeder
       'horaInicio' => '14:00',
       'horaFin' => '15:40',
       'dia' => 'lunes',
-      'grupo_curso_id' => $grupo_11_1->id,
+      'grupo_curso_id' => $grupo_10_1->id,
       'aula_id' => $aula_6->id,
     ]);
 
@@ -640,7 +641,7 @@ class FullSeeder extends Seeder
     ]);
 
 // Crear grupo para ARQUITECTURA DE COMPUTADORES
-    $grupo_12_2 = GrupoCurso::create([
+    $grupo_11_1 = GrupoCurso::create([
       'curso_id' => $curso_11->id,
       'docente_id' => $docente_16->id,
       'turno' => 'A',
@@ -652,12 +653,12 @@ class FullSeeder extends Seeder
       'horaInicio' => '15:50',
       'horaFin' => '17:30',
       'dia' => 'martes',
-      'grupo_curso_id' => $grupo_12_2->id,
+      'grupo_curso_id' => $grupo_11_1->id,
       'aula_id' => $aula_4->id,
     ]);
 
 // Crear grupo para ARQUITECTURA DE COMPUTADORES
-    $grupo_12_2 = GrupoCurso::create([
+    $grupo_11_2 = GrupoCurso::create([
       'curso_id' => $curso_11->id,
       'docente_id' => $docente_16->id,
       'turno' => 'B',
@@ -669,7 +670,7 @@ class FullSeeder extends Seeder
       'horaInicio' => '15:50',
       'horaFin' => '17:30',
       'dia' => 'lunes',
-      'grupo_curso_id' => $grupo_12_2->id,
+      'grupo_curso_id' => $grupo_11_2->id,
       'aula_id' => $aula_4->id,
     ]);
 
@@ -686,7 +687,7 @@ class FullSeeder extends Seeder
     ]);
 
 // Crear grupo para DESARROLLO BASADO EN PLATAFORMAS
-    $grupo_13_2 = GrupoCurso::create([
+    $grupo_12_1 = GrupoCurso::create([
       'curso_id' => $curso_12->id,
       'docente_id' => $docente_17->id,
       'turno' => 'A',
@@ -698,12 +699,12 @@ class FullSeeder extends Seeder
       'horaInicio' => '14:00',
       'horaFin' => '15:40',
       'dia' => 'lunes',
-      'grupo_curso_id' => $grupo_13_2->id,
+      'grupo_curso_id' => $grupo_12_1->id,
       'aula_id' => $aula_4->id,
     ]);
 
 // Crear grupo para DESARROLLO BASADO EN PLATAFORMAS
-    $grupo_13_2 = GrupoCurso::create([
+    $grupo_12_2 = GrupoCurso::create([
       'curso_id' => $curso_12->id,
       'docente_id' => $docente_17->id,
       'turno' => 'B',
@@ -715,7 +716,7 @@ class FullSeeder extends Seeder
       'horaInicio' => '14:00',
       'horaFin' => '15:40',
       'dia' => 'martes',
-      'grupo_curso_id' => $grupo_13_2->id,
+      'grupo_curso_id' => $grupo_12_2->id,
       'aula_id' => $aula_4->id,
     ]);
 
@@ -732,7 +733,7 @@ class FullSeeder extends Seeder
     ]);
 
 // Crear grupo para CIENCIAS DE LA COMPUTACION II
-    $grupo_14_2 = GrupoCurso::create([
+    $grupo_13_1 = GrupoCurso::create([
       'curso_id' => $curso_13->id,
       'docente_id' => $docente_18->id,
       'turno' => 'A',
@@ -744,7 +745,7 @@ class FullSeeder extends Seeder
       'horaInicio' => '8:50',
       'horaFin' => '10:30',
       'dia' => 'lunes',
-      'grupo_curso_id' => $grupo_14_2->id,
+      'grupo_curso_id' => $grupo_13_1->id,
       'aula_id' => $aula_4->id,
     ]);
 
@@ -758,7 +759,7 @@ class FullSeeder extends Seeder
     ]);
 
 // Crear grupo para CIENCIAS DE LA COMPUTACION II
-    $grupo_14_2 = GrupoCurso::create([
+    $grupo_13_2 = GrupoCurso::create([
       'curso_id' => $curso_13->id,
       'docente_id' => $docente_19->id,
       'turno' => 'B',
@@ -770,7 +771,7 @@ class FullSeeder extends Seeder
       'horaInicio' => '8:50',
       'horaFin' => '10:30',
       'dia' => 'martes',
-      'grupo_curso_id' => $grupo_14_2->id,
+      'grupo_curso_id' => $grupo_13_2->id,
       'aula_id' => $aula_4->id,
     ]);
 
@@ -778,7 +779,7 @@ class FullSeeder extends Seeder
     $curso_14 = Curso::create(['nombre' => 'TEORIA DE LA COMPUTACION']);
 
 // Crear grupo para TEORIA DE LA COMPUTACION
-    $grupo_15_2 = GrupoCurso::create([
+    $grupo_14_1 = GrupoCurso::create([
       'curso_id' => $curso_14->id,
       'docente_id' => $docente_18->id,
       'turno' => 'A',
@@ -790,7 +791,7 @@ class FullSeeder extends Seeder
       'horaInicio' => '17:40',
       'horaFin' => '19:20',
       'dia' => 'lunes',
-      'grupo_curso_id' => $grupo_15_2->id,
+      'grupo_curso_id' => $grupo_14_1->id,
       'aula_id' => $aula_4->id,
     ]);
 
@@ -804,7 +805,7 @@ class FullSeeder extends Seeder
     ]);
 
 // Crear grupo para TEORIA DE LA COMPUTACION
-    $grupo_15_2 = GrupoCurso::create([
+    $grupo_14_2 = GrupoCurso::create([
       'curso_id' => $curso_14->id,
       'docente_id' => $docente_20->id,
       'turno' => 'B',
@@ -816,7 +817,7 @@ class FullSeeder extends Seeder
       'horaInicio' => '7:00',
       'horaFin' => '8:40',
       'dia' => 'martes',
-      'grupo_curso_id' => $grupo_15_2->id,
+      'grupo_curso_id' => $grupo_14_2->id,
       'aula_id' => $aula_4->id,
     ]);
 
@@ -833,7 +834,7 @@ class FullSeeder extends Seeder
     ]);
 
 // Crear grupo para TRABAJO INTERDISCIPLINAR I
-    $grupo_16_2 = GrupoCurso::create([
+    $grupo_15_1 = GrupoCurso::create([
       'curso_id' => $curso_15->id,
       'docente_id' => $docente_21->id,
       'turno' => 'A',
@@ -845,12 +846,12 @@ class FullSeeder extends Seeder
       'horaInicio' => '10:40',
       'horaFin' => '12:20',
       'dia' => 'lunes',
-      'grupo_curso_id' => $grupo_16_2->id,
+      'grupo_curso_id' => $grupo_15_1->id,
       'aula_id' => $aula_4->id,
     ]);
 
 // Crear grupo para TRABAJO INTERDISCIPLINAR I
-    $grupo_16_2 = GrupoCurso::create([
+    $grupo_15_2 = GrupoCurso::create([
       'curso_id' => $curso_15->id,
       'docente_id' => $docente_20->id,
       'turno' => 'B',
@@ -862,7 +863,7 @@ class FullSeeder extends Seeder
       'horaInicio' => '17:40',
       'horaFin' => '19:20',
       'dia' => 'lunes',
-      'grupo_curso_id' => $grupo_16_2->id,
+      'grupo_curso_id' => $grupo_15_2->id,
       'aula_id' => $aula_4->id,
     ]);
 
@@ -870,7 +871,7 @@ class FullSeeder extends Seeder
     $curso_16 = Curso::create(['nombre' => 'BASE DE DATOS I']);
 
 // Crear grupo para BASE DE DATOS I
-    $grupo_17_3 = GrupoCurso::create([
+    $grupo_16_1 = GrupoCurso::create([
       'curso_id' => $curso_16->id,
       'docente_id' => $docente_17->id,
       'turno' => 'A',
@@ -882,12 +883,12 @@ class FullSeeder extends Seeder
       'horaInicio' => '12:20',
       'horaFin' => '14:00',
       'dia' => 'lunes',
-      'grupo_curso_id' => $grupo_17_3->id,
+      'grupo_curso_id' => $grupo_16_1->id,
       'aula_id' => $aula_4->id,
     ]);
 
 // Crear grupo para BASE DE DATOS I
-    $grupo_17_3 = GrupoCurso::create([
+    $grupo_16_2 = GrupoCurso::create([
       'curso_id' => $curso_16->id,
       'docente_id' => $docente_17->id,
       'turno' => 'A',
@@ -899,12 +900,12 @@ class FullSeeder extends Seeder
       'horaInicio' => '15:50',
       'horaFin' => '17:30',
       'dia' => 'lunes',
-      'grupo_curso_id' => $grupo_17_3->id,
+      'grupo_curso_id' => $grupo_16_2->id,
       'aula_id' => $aula_3->id,
     ]);
 
 // Crear grupo para BASE DE DATOS I
-    $grupo_17_3 = GrupoCurso::create([
+    $grupo_16_3 = GrupoCurso::create([
       'curso_id' => $curso_16->id,
       'docente_id' => $docente_17->id,
       'turno' => 'B',
@@ -916,7 +917,7 @@ class FullSeeder extends Seeder
       'horaInicio' => '15:50',
       'horaFin' => '17:30',
       'dia' => 'miercoles',
-      'grupo_curso_id' => $grupo_17_3->id,
+      'grupo_curso_id' => $grupo_16_3->id,
       'aula_id' => $aula_4->id,
     ]);
 
@@ -933,7 +934,7 @@ class FullSeeder extends Seeder
     ]);
 
 // Crear grupo para ESTADISTICA Y PROBABILIDADES
-    $grupo_18_2 = GrupoCurso::create([
+    $grupo_17_1 = GrupoCurso::create([
       'curso_id' => $curso_17->id,
       'docente_id' => $docente_22->id,
       'turno' => 'A',
@@ -945,12 +946,12 @@ class FullSeeder extends Seeder
       'horaInicio' => '10:40',
       'horaFin' => '12:20',
       'dia' => 'lunes',
-      'grupo_curso_id' => $grupo_18_2->id,
+      'grupo_curso_id' => $grupo_17_1->id,
       'aula_id' => $aula_4->id,
     ]);
 
 // Crear grupo para ESTADISTICA Y PROBABILIDADES
-    $grupo_18_2 = GrupoCurso::create([
+    $grupo_17_2 = GrupoCurso::create([
       'curso_id' => $curso_17->id,
       'docente_id' => $docente_22->id,
       'turno' => 'B',
@@ -962,7 +963,7 @@ class FullSeeder extends Seeder
       'horaInicio' => '12:20',
       'horaFin' => '14:00',
       'dia' => 'lunes',
-      'grupo_curso_id' => $grupo_18_2->id,
+      'grupo_curso_id' => $grupo_17_2->id,
       'aula_id' => $aula_4->id,
     ]);
 
@@ -970,7 +971,7 @@ class FullSeeder extends Seeder
     $curso_18 = Curso::create(['nombre' => 'SISTEMAS OPERATIVOS']);
 
 // Crear grupo para SISTEMAS OPERATIVOS
-    $grupo_19_2 = GrupoCurso::create([
+    $grupo_18_1 = GrupoCurso::create([
       'curso_id' => $curso_18->id,
       'docente_id' => $docente_21->id,
       'turno' => 'A',
@@ -979,10 +980,10 @@ class FullSeeder extends Seeder
 
 // Crear bloque horario
     BloqueHorario::create([
-      'horaInicio' => '15:50',
-      'horaFin' => '16:40',
+      'horaInicio' => '12:20',
+      'horaFin' => '14:00',
       'dia' => 'lunes',
-      'grupo_curso_id' => $grupo_19_2->id,
+      'grupo_curso_id' => $grupo_18_1->id,
       'aula_id' => $aula_5->id,
     ]);
 
@@ -996,7 +997,7 @@ class FullSeeder extends Seeder
     ]);
 
 // Crear grupo para SISTEMAS OPERATIVOS
-    $grupo_19_2 = GrupoCurso::create([
+    $grupo_18_2 = GrupoCurso::create([
       'curso_id' => $curso_18->id,
       'docente_id' => $docente_23->id,
       'turno' => 'B',
@@ -1008,7 +1009,7 @@ class FullSeeder extends Seeder
       'horaInicio' => '16:40',
       'horaFin' => '17:30',
       'dia' => 'lunes',
-      'grupo_curso_id' => $grupo_19_2->id,
+      'grupo_curso_id' => $grupo_18_2->id,
       'aula_id' => $aula_5->id,
     ]);
 
@@ -1025,7 +1026,7 @@ class FullSeeder extends Seeder
     ]);
 
 // Crear grupo para MATEMATICA APLICADA A LA COMPUTACION
-    $grupo_20_2 = GrupoCurso::create([
+    $grupo_19_1 = GrupoCurso::create([
       'curso_id' => $curso_19->id,
       'docente_id' => $docente_24->id,
       'turno' => 'A',
@@ -1037,7 +1038,7 @@ class FullSeeder extends Seeder
       'horaInicio' => '17:40',
       'horaFin' => '18:30',
       'dia' => 'lunes',
-      'grupo_curso_id' => $grupo_20_2->id,
+      'grupo_curso_id' => $grupo_19_1->id,
       'aula_id' => $aula_5->id,
     ]);
 
@@ -1051,7 +1052,7 @@ class FullSeeder extends Seeder
     ]);
 
 // Crear grupo para MATEMATICA APLICADA A LA COMPUTACION
-    $grupo_20_2 = GrupoCurso::create([
+    $grupo_19_2 = GrupoCurso::create([
       'curso_id' => $curso_19->id,
       'docente_id' => $docente_25->id,
       'turno' => 'B',
@@ -1061,9 +1062,9 @@ class FullSeeder extends Seeder
 // Crear bloque horario
     BloqueHorario::create([
       'horaInicio' => '07:00',
-      'horaFin' => '07:50',
+      'horaFin' => '08:40',
       'dia' => 'lunes',
-      'grupo_curso_id' => $grupo_20_2->id,
+      'grupo_curso_id' => $grupo_19_2->id,
       'aula_id' => $aula_5->id,
     ]);
 
@@ -1080,7 +1081,7 @@ class FullSeeder extends Seeder
     ]);
 
 // Crear grupo para INGENIERIA DE SOFTWARE II
-    $grupo_21_2 = GrupoCurso::create([
+    $grupo_20_1 = GrupoCurso::create([
       'curso_id' => $curso_20->id,
       'docente_id' => $docente_26->id,
       'turno' => 'A',
@@ -1092,12 +1093,12 @@ class FullSeeder extends Seeder
       'horaInicio' => '12:20',
       'horaFin' => '13:10',
       'dia' => 'martes',
-      'grupo_curso_id' => $grupo_21_2->id,
+      'grupo_curso_id' => $grupo_20_1->id,
       'aula_id' => $aula_5->id,
     ]);
 
 // Crear grupo para INGENIERIA DE SOFTWARE II
-    $grupo_21_2 = GrupoCurso::create([
+    $grupo_20_2 = GrupoCurso::create([
       'curso_id' => $curso_20->id,
       'docente_id' => $docente_26->id,
       'turno' => 'B',
@@ -1109,7 +1110,7 @@ class FullSeeder extends Seeder
       'horaInicio' => '13:10',
       'horaFin' => '14:00',
       'dia' => 'martes',
-      'grupo_curso_id' => $grupo_21_2->id,
+      'grupo_curso_id' => $grupo_20_2->id,
       'aula_id' => $aula_5->id,
     ]);
 
@@ -1126,7 +1127,7 @@ class FullSeeder extends Seeder
     ]);
 
 // Crear grupo para TRABAJO INTERDISCIPLINAR II
-    $grupo_22_1 = GrupoCurso::create([
+    $grupo_21_1 = GrupoCurso::create([
       'curso_id' => $curso_21->id,
       'docente_id' => $docente_27->id,
       'turno' => 'A',
@@ -1138,7 +1139,7 @@ class FullSeeder extends Seeder
       'horaInicio' => '11:30',
       'horaFin' => '12:20',
       'dia' => 'martes',
-      'grupo_curso_id' => $grupo_22_1->id,
+      'grupo_curso_id' => $grupo_21_1->id,
       'aula_id' => $aula_5->id,
     ]);
 
@@ -1161,7 +1162,7 @@ class FullSeeder extends Seeder
     ]);
 
 // Crear grupo para METODOLOGIA DEL TRABAJO INTELECTUAL
-    $grupo_23_1 = GrupoCurso::create([
+    $grupo_22_1 = GrupoCurso::create([
       'curso_id' => $curso_22->id,
       'docente_id' => $docente_28->id,
       'turno' => 'A',
@@ -1173,7 +1174,7 @@ class FullSeeder extends Seeder
       'horaInicio' => '07:00',
       'horaFin' => '08:40',
       'dia' => 'lunes',
-      'grupo_curso_id' => $grupo_23_1->id,
+      'grupo_curso_id' => $grupo_22_1->id,
       'aula_id' => $aula_7->id,
     ]);
 
@@ -1181,7 +1182,7 @@ class FullSeeder extends Seeder
     $curso_23 = Curso::create(['nombre' => 'RELACIONES HUMANAS']);
 
 // Crear grupo para RELACIONES HUMANAS
-    $grupo_24_1 = GrupoCurso::create([
+    $grupo_23_1 = GrupoCurso::create([
       'curso_id' => $curso_23->id,
       'docente_id' => $docente_7->id,
       'turno' => 'A',
@@ -1193,7 +1194,7 @@ class FullSeeder extends Seeder
       'horaInicio' => '07:00',
       'horaFin' => '08:40',
       'dia' => 'martes',
-      'grupo_curso_id' => $grupo_24_1->id,
+      'grupo_curso_id' => $grupo_23_1->id,
       'aula_id' => $aula_6->id,
     ]);
 
@@ -1201,7 +1202,7 @@ class FullSeeder extends Seeder
     $curso_24 = Curso::create(['nombre' => 'TOPICOS DE INGENIERIA DE SOFTWARE']);
 
 // Crear grupo para TOPICOS DE INGENIERIA DE SOFTWARE
-    $grupo_25_1 = GrupoCurso::create([
+    $grupo_24_1 = GrupoCurso::create([
       'curso_id' => $curso_24->id,
       'docente_id' => $docente_26->id,
       'turno' => 'A',
@@ -1213,7 +1214,7 @@ class FullSeeder extends Seeder
       'horaInicio' => '10:40',
       'horaFin' => '12:20',
       'dia' => 'lunes',
-      'grupo_curso_id' => $grupo_25_1->id,
+      'grupo_curso_id' => $grupo_24_1->id,
       'aula_id' => $aula_6->id,
     ]);
 
@@ -1221,7 +1222,7 @@ class FullSeeder extends Seeder
     $curso_25 = Curso::create(['nombre' => 'COMPUTACION PARALELA Y DISTRIBUIDA']);
 
 // Crear grupo para COMPUTACION PARALELA Y DISTRIBUIDA
-    $grupo_26_1 = GrupoCurso::create([
+    $grupo_25_1 = GrupoCurso::create([
       'curso_id' => $curso_25->id,
       'docente_id' => $docente_20->id,
       'turno' => 'A',
@@ -1233,7 +1234,7 @@ class FullSeeder extends Seeder
       'horaInicio' => '14:00',
       'horaFin' => '15:40',
       'dia' => 'lunes',
-      'grupo_curso_id' => $grupo_26_1->id,
+      'grupo_curso_id' => $grupo_25_1->id,
       'aula_id' => $aula_6->id,
     ]);
 
@@ -1250,7 +1251,7 @@ class FullSeeder extends Seeder
     ]);
 
 // Crear grupo para INTERACCION HUMANO COMPUTADORA
-    $grupo_27_2 = GrupoCurso::create([
+    $grupo_26_1 = GrupoCurso::create([
       'curso_id' => $curso_26->id,
       'docente_id' => $docente_29->id,
       'turno' => 'A',
@@ -1262,12 +1263,12 @@ class FullSeeder extends Seeder
       'horaInicio' => '08:50',
       'horaFin' => '10:30',
       'dia' => 'martes',
-      'grupo_curso_id' => $grupo_27_2->id,
+      'grupo_curso_id' => $grupo_26_1->id,
       'aula_id' => $aula_6->id,
     ]);
 
 // Crear grupo para INTERACCION HUMANO COMPUTADORA
-    $grupo_27_2 = GrupoCurso::create([
+    $grupo_26_2 = GrupoCurso::create([
       'curso_id' => $curso_26->id,
       'docente_id' => $docente_29->id,
       'turno' => 'B',
@@ -1279,7 +1280,7 @@ class FullSeeder extends Seeder
       'horaInicio' => '10:40',
       'horaFin' => '12:20',
       'dia' => 'martes',
-      'grupo_curso_id' => $grupo_27_2->id,
+      'grupo_curso_id' => $grupo_26_2->id,
       'aula_id' => $aula_6->id,
     ]);
 
@@ -1287,7 +1288,7 @@ class FullSeeder extends Seeder
     $curso_27 = Curso::create(['nombre' => 'PROYECTO FINAL DE CARRERA I']);
 
 // Crear grupo para PROYECTO FINAL DE CARRERA I
-    $grupo_28_1 = GrupoCurso::create([
+    $grupo_27_1 = GrupoCurso::create([
       'curso_id' => $curso_27->id,
       'docente_id' => $docente_21->id,
       'turno' => 'A',
@@ -1299,7 +1300,7 @@ class FullSeeder extends Seeder
       'horaInicio' => '08:50',
       'horaFin' => '10:30',
       'dia' => 'miercoles',
-      'grupo_curso_id' => $grupo_28_1->id,
+      'grupo_curso_id' => $grupo_27_1->id,
       'aula_id' => $aula_6->id,
     ]);
 
@@ -1316,7 +1317,7 @@ class FullSeeder extends Seeder
     ]);
 
 // Crear grupo para FISICA COMPUTACIONAL
-    $grupo_29_2 = GrupoCurso::create([
+    $grupo_28_1 = GrupoCurso::create([
       'curso_id' => $curso_28->id,
       'docente_id' => $docente_30->id,
       'turno' => 'A',
@@ -1328,12 +1329,12 @@ class FullSeeder extends Seeder
       'horaInicio' => '14:00',
       'horaFin' => '15:40',
       'dia' => 'jueves',
-      'grupo_curso_id' => $grupo_29_2->id,
+      'grupo_curso_id' => $grupo_28_1->id,
       'aula_id' => $aula_6->id,
     ]);
 
 // Crear grupo para FISICA COMPUTACIONAL
-    $grupo_29_2 = GrupoCurso::create([
+    $grupo_28_2 = GrupoCurso::create([
       'curso_id' => $curso_28->id,
       'docente_id' => $docente_30->id,
       'turno' => 'B',
@@ -1345,7 +1346,7 @@ class FullSeeder extends Seeder
       'horaInicio' => '14:00',
       'horaFin' => '15:40',
       'dia' => 'miercoles',
-      'grupo_curso_id' => $grupo_29_2->id,
+      'grupo_curso_id' => $grupo_28_2->id,
       'aula_id' => $aula_6->id,
     ]);
 
@@ -1359,7 +1360,7 @@ class FullSeeder extends Seeder
     ]);
 
 // Crear grupo para CLOUD COMPUTING
-    $grupo_30_1 = GrupoCurso::create([
+    $grupo_29_1 = GrupoCurso::create([
       'curso_id' => $curso_29->id,
       'docente_id' => $docente_18->id,
       'turno' => 'A',
@@ -1371,7 +1372,7 @@ class FullSeeder extends Seeder
       'horaInicio' => '12:20',
       'horaFin' => '13:10',
       'dia' => 'martes',
-      'grupo_curso_id' => $grupo_30_1->id,
+      'grupo_curso_id' => $grupo_29_1->id,
       'aula_id' => $aula_8->id,
     ]);
 
@@ -1379,7 +1380,7 @@ class FullSeeder extends Seeder
     $curso_30 = Curso::create(['nombre' => 'TOPICOS EN CIBERSEGURIDAD']);
 
 // Crear grupo para TOPICOS EN CIBERSEGURIDAD
-    $grupo_31_1 = GrupoCurso::create([
+    $grupo_30_1 = GrupoCurso::create([
       'curso_id' => $curso_30->id,
       'docente_id' => $docente_23->id,
       'turno' => 'A',
@@ -1391,7 +1392,7 @@ class FullSeeder extends Seeder
       'horaInicio' => '15:50',
       'horaFin' => '16:40',
       'dia' => 'martes',
-      'grupo_curso_id' => $grupo_31_1->id,
+      'grupo_curso_id' => $grupo_30_1->id,
       'aula_id' => $aula_8->id,
     ]);
 
@@ -1399,7 +1400,7 @@ class FullSeeder extends Seeder
     $curso_31 = Curso::create(['nombre' => 'TRABAJO INTERDISCIPLINAR III']);
 
 // Crear grupo para TRABAJO INTERDISCIPLINAR III
-    $grupo_32_1 = GrupoCurso::create([
+    $grupo_31_1 = GrupoCurso::create([
       'curso_id' => $curso_31->id,
       'docente_id' => $docente_27->id,
       'turno' => 'A',
@@ -1411,7 +1412,7 @@ class FullSeeder extends Seeder
       'horaInicio' => '14:00',
       'horaFin' => '14:50',
       'dia' => 'lunes',
-      'grupo_curso_id' => $grupo_32_1->id,
+      'grupo_curso_id' => $grupo_31_1->id,
       'aula_id' => $aula_8->id,
     ]);
 
@@ -1419,7 +1420,7 @@ class FullSeeder extends Seeder
     $curso_32 = Curso::create(['nombre' => 'INTERNET DE LAS COSAS']);
 
 // Crear grupo para INTERNET DE LAS COSAS
-    $grupo_33_1 = GrupoCurso::create([
+    $grupo_32_1 = GrupoCurso::create([
       'curso_id' => $curso_32->id,
       'docente_id' => $docente_13->id,
       'turno' => 'A',
@@ -1431,7 +1432,7 @@ class FullSeeder extends Seeder
       'horaInicio' => '16:40',
       'horaFin' => '17:30',
       'dia' => 'jueves',
-      'grupo_curso_id' => $grupo_33_1->id,
+      'grupo_curso_id' => $grupo_32_1->id,
       'aula_id' => $aula_8->id,
     ]);
 
@@ -1440,10 +1441,10 @@ class FullSeeder extends Seeder
     ]);
     // Matricular al alumno en sus cursos
     $matriculas = [
-      $grupo_20_2->id,
-      $grupo_21_2->id,
+      $grupo_18_1->id,
       $grupo_19_2->id,
-      $grupo_22_1->id,
+      $grupo_20_1->id,
+      $grupo_21_1->id,
     ];
 
     foreach ($matriculas as $grupoId) {
