@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignIdFor(Docente::class)->constrained();
             $table->foreignIdFor(Curso::class)->constrained();
             $table->enum('tipo', ['teoria', 'laboratorio']);
+            $table->index(['curso_id', 'tipo']);
         });
     }
 
