@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\Alumno;
-use App\Models\GrupoCurso;
+use App\Infrastructure\Shared\Model\GrupoCurso;
+use App\Infrastructure\Student\Model\Alumno;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**

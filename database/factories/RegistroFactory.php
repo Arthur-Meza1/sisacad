@@ -2,14 +2,11 @@
 
 namespace Database\Factories;
 
+use App\Infrastructure\Shared\Model\GrupoCurso;
+use App\Infrastructure\Student\Model\Alumno;
 use App\Models\Registro;
-use App\Models\Alumno;
-use App\Models\GrupoCurso;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Registro>
- */
 class RegistroFactory extends Factory
 {
   protected $model = Registro::class;

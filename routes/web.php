@@ -1,10 +1,10 @@
 <?php
 
-use App\Http\Controllers\DocenteController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\Login;
 use App\Http\Controllers\Auth\Logout;
 use App\Http\Controllers\AlumnoController;
+use App\Infrastructure\Teacher\Controller\DocenteController;
 use App\Http\Controllers\AsistenciaController;
 
 Route::get('/', function () {
@@ -27,7 +27,7 @@ Route::middleware('auth')->group(function () {
     ->name('student')
     ->middleware('role:student');
   Route::view('/admin', 'admin')->middleware('role:admin');
-  Route::get('/teacher', [DocenteController::class, 'index'])
+  Route::get('/teacher', DocenteController::class)
     ->name('teacher')
     ->middleware('role:teacher');
   Route::view('/secretary', 'secretary')->middleware('role:secretary');
@@ -42,7 +42,15 @@ Route::post('/logout', Logout::class)
   ->middleware('auth')
   ->name('logout');
 
-Route::get('/docente/registrar-notas', [DocenteController::class, 'registrarNotas'])
+// =============
+// API
+// =============
+// FIXME: Por alguna razon si lo coloco en api.php no funca los middleware
+Route::get("api/teacher/horario", \App\Infrastructure\Teacher\Controller\GetHorarioController::class)->middleware('role:teacher');
+Route::post('/api/teacher/aulas', \App\Infrastructure\Teacher\Controller\GetAulasDisponiblesController::class)->middleware('role:teacher');
+Route::post('/api/teacher/sesion', \App\Infrastructure\Teacher\Controller\CreateSesionController::class)->middleware('role:teacher');
+
+/*Route::get('/docente/registrar-notas', [DocenteController::class, 'registrarNotas'])
   ->name('docente.registrar_notas')
   ->middleware('role:teacher');
 Route::post('/docente/registrar-notas/{grupoId}', [DocenteController::class, 'guardarNotas'])
@@ -66,8 +74,5 @@ Route::get('/api/student/cursos/{curso}/notas', [AlumnoController::class, 'getNo
 Route::get('/api/student/cupos', [AlumnoController::class, 'getCuposMatricula'])->middleware('role:student');
 Route::get('/api/student/labs', [AlumnoController::class, 'getLaboratorios'])->middleware('role:student');
 
-Route::get("/api/teacher/horario", [DocenteController::class, 'getHorario'])->middleware('role:teacher');
-
-Route::post('/api/teacher/aulas', [DocenteController::class, 'getAulasDisponibles'])->middleware('role:teacher');
 Route::post('/api/teacher/sesion', [DocenteController::class, 'crearSesion'])->middleware('role:teacher');
-Route::post('/api/student/matricular', [AlumnoController::class, 'matricular'])->middleware('role:student');
+Route::post('/api/student/matricular', [AlumnoController::class, 'matricular'])->middleware('role:student');*/

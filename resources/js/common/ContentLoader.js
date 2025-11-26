@@ -41,7 +41,8 @@ export class ContentLoader {
         this.container.html('');
         success(data, this.container);
       },
-      error: () => {
+      error: (data) => {
+        console.error(data.responseText);
         this.container.html(`
             <div class="text-red-500 bg-red-50 p-3 rounded-lg">
                 ${this.errorLabel}

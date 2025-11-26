@@ -2,11 +2,9 @@
 
 namespace App\Services;
 
-use App\Models\BloqueHorario;
-use App\Models\Sesion;
+use App\Infrastructure\Shared\Model\BloqueHorario;
+use App\Infrastructure\Shared\Model\Sesion;
 use Carbon\Carbon;
-use Illuminate\Support\Collection;
-use function PHPSTORM_META\map;
 
 class HorarioService {
   public function get($user_class, $user_id, $withOthers = false) {

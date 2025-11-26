@@ -2,17 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\Aula;
-use App\Models\BloqueHorario;
-use App\Models\Registro;
-use Illuminate\Database\Seeder;
-use App\Models\User;
-use App\Models\Docente;
-use App\Models\Alumno;
-use App\Models\Curso;
-use App\Models\Tema;
-use App\Models\GrupoCurso;
+use App\Infrastructure\Shared\Model\Aula;
+use App\Infrastructure\Shared\Model\BloqueHorario;
+use App\Infrastructure\Shared\Model\Curso;
+use App\Infrastructure\Shared\Model\GrupoCurso;
+use App\Infrastructure\Shared\Model\Tema;
+use App\Infrastructure\Student\Model\Alumno;
+use App\Infrastructure\Teacher\Model\Docente;
 use App\Models\Matricula;
+use App\Models\Registro;
+use App\Models\User;
+use Illuminate\Database\Seeder;
 
 class TestSeeder extends Seeder
 {

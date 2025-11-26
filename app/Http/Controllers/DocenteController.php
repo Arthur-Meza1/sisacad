@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Sesion;
+use App\Infrastructure\Shared\Model\Sesion;
 use App\Services\AulaService;
 use App\Services\DocenteService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;

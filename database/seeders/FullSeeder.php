@@ -2,17 +2,16 @@
 
 namespace Database\Seeders;
 
-use App\Models\Aula;
-use App\Models\BloqueHorario;
-use App\Models\Registro;
-use Illuminate\Database\Seeder;
-use App\Models\User;
-use App\Models\Docente;
-use App\Models\Alumno;
-use App\Models\Curso;
-use App\Models\Tema;
-use App\Models\GrupoCurso;
+use App\Infrastructure\Shared\Model\Aula;
+use App\Infrastructure\Shared\Model\BloqueHorario;
+use App\Infrastructure\Shared\Model\Curso;
+use App\Infrastructure\Shared\Model\GrupoCurso;
+use App\Infrastructure\Student\Model\Alumno;
+use App\Infrastructure\Teacher\Model\Docente;
 use App\Models\Matricula;
+use App\Models\Registro;
+use App\Models\User;
+use Illuminate\Database\Seeder;
 
 class FullSeeder extends Seeder
 {
@@ -31,10 +30,10 @@ class FullSeeder extends Seeder
       ])->id,
     ]);
 
-// Crear aula: Aula 201 / 26.4 - 205
+// Crear aula: Aula 201
     $aula_1 = Aula::create([
       'tipo' => 'teoria',
-      'nombre' => 'Aula 201 / 26.4 - 205'
+      'nombre' => 'Aula 201'
     ]);
 
 // Crear grupo para CALCULO EN UNA VARIABLE
@@ -227,10 +226,10 @@ class FullSeeder extends Seeder
       'aula_id' => $aula_1->id,
     ]);
 
-// Crear aula: Laboratorio 2
+// Crear aula: Lab 2
     $aula_2 = Aula::create([
       'tipo' => 'laboratorio',
-      'nombre' => 'Laboratorio 2'
+      'nombre' => 'Lab 2'
     ]);
 
 // Crear grupo para PROGRAMACION I
@@ -250,10 +249,10 @@ class FullSeeder extends Seeder
       'aula_id' => $aula_2->id,
     ]);
 
-// Crear aula: Laboratorio 1
+// Crear aula: Lab 1
     $aula_3 = Aula::create([
       'tipo' => 'laboratorio',
-      'nombre' => 'Laboratorio 1'
+      'nombre' => 'Lab 1'
     ]);
 
 // Crear grupo para PROGRAMACION I
@@ -403,10 +402,10 @@ class FullSeeder extends Seeder
       ])->id,
     ]);
 
-// Crear aula: Aula 202 / 26.4 - 206
+// Crear aula: Aula 202
     $aula_4 = Aula::create([
       'tipo' => 'teoria',
-      'nombre' => 'Aula 202 / 26.4 - 206'
+      'nombre' => 'Aula 202'
     ]);
 
 // Crear grupo para ALGEBRA LINEAL NUMERICA
@@ -570,10 +569,10 @@ class FullSeeder extends Seeder
 // Crear curso: ANALISIS Y DISEÑO DE ALGORITMOS
     $curso_9 = Curso::create(['nombre' => 'ANALISIS Y DISEÑO DE ALGORITMOS']);
 
-// Crear aula: Aula 26.4-207/AULA 203
+// Crear aula: Aula 203
     $aula_5 = Aula::create([
       'tipo' => 'teoria',
-      'nombre' => 'Aula 26.4-207/AULA 203'
+      'nombre' => 'Aula 203'
     ]);
 
 // Crear grupo para ANALISIS Y DISEÑO DE ALGORITMOS
@@ -605,10 +604,10 @@ class FullSeeder extends Seeder
       ])->id,
     ]);
 
-// Crear aula: Aula 26.4-106/AULA 101
+// Crear aula: Aula 101
     $aula_6 = Aula::create([
       'tipo' => 'teoria',
-      'nombre' => 'Aula 26.4-106/AULA 101'
+      'nombre' => 'Aula 101'
     ]);
 
 // Crear grupo para LENGUA EXTRANJERA V
@@ -1155,10 +1154,10 @@ class FullSeeder extends Seeder
       ])->id,
     ]);
 
-// Crear aula: Aula Lab 2/26.4-105
+// Crear aula: Aula 105
     $aula_7 = Aula::create([
       'tipo' => 'teoria',
-      'nombre' => 'Aula Lab 2/26.4-105'
+      'nombre' => 'Aula 105'
     ]);
 
 // Crear grupo para METODOLOGIA DEL TRABAJO INTELECTUAL
@@ -1353,10 +1352,10 @@ class FullSeeder extends Seeder
 // Crear curso: CLOUD COMPUTING
     $curso_29 = Curso::create(['nombre' => 'CLOUD COMPUTING']);
 
-// Crear aula: Aula 26.4-305/AULA 301
+// Crear aula: Aula 301
     $aula_8 = Aula::create([
       'tipo' => 'teoria',
-      'nombre' => 'Aula 26.4-305/AULA 301'
+      'nombre' => 'Aula 301'
     ]);
 
 // Crear grupo para CLOUD COMPUTING

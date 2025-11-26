@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Infrastructure\Shared\Model\Sesion;
+use App\Infrastructure\Student\Model\Alumno;
 use Illuminate\Database\Eloquent\Model;
 
 class Asistencia extends Model

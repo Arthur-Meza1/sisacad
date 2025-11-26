@@ -10,6 +10,7 @@ import {
 import $ from "jquery";
 import tippy from "tippy.js";
 import 'tippy.js/dist/tippy.css';
+import {loadAsistencia} from "./asistencia.js";
 
 let g_calendarLoader = new ContentLoader({
   "url": "/api/teacher/horario",
@@ -79,7 +80,6 @@ function loadAulasDisponibles(date, start, end) {
     const aulasSelect = document.getElementById("eventLocation");
     aulasSelect.innerHTML = '<option value="">Selecciona un ambiente</option>';
     data.forEach(function (aula) {
-      console.log(aula);
       const option = document.createElement('option');
       option.value = aula.id;
       option.textContent = aula.nombre;
@@ -89,6 +89,8 @@ function loadAulasDisponibles(date, start, end) {
     if(aulasSelect.children.length === 1) {
       document.getElementById("event-submit-error").textContent = "No hay aulas disponibles";
     }
+  }).fail(function (data) {
+    console.error(data.responseText);
   });
 }
 
@@ -112,6 +114,7 @@ export function closeScheduleModal(event) {
 }
 
 function renderScheduleCalendar(data, container) {
+  console.log("Horario:");
   console.log(data);
   if (g_fullCalendarInstance?.destroy) g_fullCalendarInstance.destroy();
 
@@ -172,6 +175,7 @@ function renderScheduleCalendar(data, container) {
     slotHeight: 60,
     slotMinTime: '06:00:00',
     slotMaxTime: "20:00:00",
+    now: "2025-11-25T14:20:00",
     weekends: false,
     allDaySlot: false,
     nowIndicator: true,
@@ -188,9 +192,7 @@ function renderScheduleCalendar(data, container) {
     events: fullCalendarEvents,
 
     eventClick: function(info) {
-      if(!info.event.extendedProps.from_bloque) {
-        console.log("Eliminar esto??");
-      }
+      loadAsistencia(info.event.extendedProps);
     },
 
     select: function (info) {
@@ -294,5 +296,7 @@ function crearSesion(props) {
       closeScheduleModal();
       g_calendarLoader.unload();
       loadScheduleCalendar();
+  }).fail(function (data) {
+    console.error(data.responseText);
   });
 }

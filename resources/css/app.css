@@ -191,6 +191,8 @@ body {
 }
 
 .ec-event-others {
+  writing-mode: vertical-lr; /* texto vertical */
+  white-space: nowrap;       /* evita que se corte raro */
   background: transparent !important;
   pointer-events: none !important; /* Desactiva eventos en el evento mismo */
 }

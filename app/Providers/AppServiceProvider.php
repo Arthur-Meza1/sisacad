@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Domain\Teacher\Repository\IDocenteRepository;
+use App\Domain\Teacher\Repository\IGrupoCursoRepository;
+use App\Infrastructure\Teacher\Repository\EloquentDocenteRepository;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -11,7 +14,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
     }
 
     /**

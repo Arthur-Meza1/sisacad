@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\GrupoCurso;
 use App\Services\AlumnoService;
-use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AlumnoController extends Controller
