@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Infrastructure\Shared\Model\GrupoCurso;
+use App\Infrastructure\Student\Model\Alumno;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 

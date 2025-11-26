@@ -1,10 +1,10 @@
 <?php
 
+use App\Infrastructure\Shared\Model\Aula;
+use App\Infrastructure\Shared\Model\GrupoCurso;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use \App\Models\GrupoCurso;
-use \App\Models\Aula;
 
 return new class extends Migration
 {

@@ -1,10 +1,10 @@
 <?php
 
+use App\Infrastructure\Shared\Model\Sesion;
+use App\Infrastructure\Student\Model\Alumno;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use \App\Models\Sesion;
-use \App\Models\Alumno;
 
 return new class extends Migration {
   /**

@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Curso;
+use App\Infrastructure\Shared\Model\Curso;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;

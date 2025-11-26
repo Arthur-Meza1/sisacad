@@ -2,9 +2,9 @@
 
 namespace App\Services;
 
-use App\Models\Aula;
-use App\Models\BloqueHorario;
-use App\Models\Sesion;
+use App\Infrastructure\Shared\Model\Aula;
+use App\Infrastructure\Shared\Model\BloqueHorario;
+use App\Infrastructure\Shared\Model\Sesion;
 use Carbon\Carbon;
 
 class AulaService {

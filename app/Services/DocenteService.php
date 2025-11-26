@@ -2,8 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\Docente;
-use App\Models\Sesion;
+use App\Infrastructure\Teacher\Model\Docente;
 
 class DocenteService {
   private $horarioService;
