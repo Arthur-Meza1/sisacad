@@ -2,13 +2,12 @@
 
 namespace App\Infrastructure\Shared\Model;
 
-use App\Models\Asistencia;
 use Illuminate\Database\Eloquent\Model;
 
 class Sesion extends Model
 {
   public $timestamps = false;
-  protected $fillable = ['grupo_curso_id', 'aula_id', 'fecha', 'horaInicio', 'horaFin', 'from_bloque'];
+  protected $fillable = ['grupo_curso_id', 'aula_id', 'fecha', 'horaInicio', 'horaFin'];
 
   protected $hidden = ['grupo_curso_id', 'aula_id'];
 

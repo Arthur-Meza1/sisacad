@@ -10,6 +10,18 @@ export function convertDiaToInt(dia) {
   return s_dayMap[dia.toLowerCase()];
 }
 
+export function convertIntToDia(dia) {
+  const s_dayMap = {
+    1: 'lunes',
+    2: 'martes',
+    3: 'miercoles',
+    4: 'jueves',
+    5: 'viernes'
+  };
+
+  return s_dayMap[dia];
+}
+
 export function formatDate(d) {
   return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
 }

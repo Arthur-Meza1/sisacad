@@ -7,7 +7,7 @@ use App\Infrastructure\Student\Model\Alumno;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Matricula>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Infrastructure\Shared\Model\Matricula>
  */
 class MatriculaFactory extends Factory
 {

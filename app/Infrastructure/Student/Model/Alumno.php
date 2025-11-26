@@ -3,9 +3,9 @@
 namespace App\Infrastructure\Student\Model;
 
 use App\Infrastructure\Shared\Model\GrupoCurso;
-use App\Models\Matricula;
+use App\Infrastructure\Shared\Model\Matricula;
+use App\Infrastructure\Shared\Model\User;
 use App\Models\Registro;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 

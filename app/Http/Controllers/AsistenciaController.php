@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Infrastructure\Shared\Model\Asistencia;
 use App\Infrastructure\Shared\Model\GrupoCurso;
 use App\Infrastructure\Shared\Model\Sesion;
-use App\Models\Asistencia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 

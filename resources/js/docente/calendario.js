@@ -10,7 +10,7 @@ import {
 import $ from "jquery";
 import tippy from "tippy.js";
 import 'tippy.js/dist/tippy.css';
-import {loadAsistencia} from "./asistencia.js";
+import {onEventClick} from "./asistencia.js";
 
 let g_calendarLoader = new ContentLoader({
   "url": "/api/teacher/horario",
@@ -122,10 +122,10 @@ function renderScheduleCalendar(data, container) {
     const colorMap = { teoria: '#60a5fa', laboratorio: '#2aa87c' };
 
     return {
-      title: `${item.nombre} - ${ucfirst(item.tipo)}`,
+      title: `${item.grupo.nombre} - ${ucfirst(item.tipo)}`,
       backgroundColor: colorMap[item.tipo],
       borderColor: colorMap[item.tipo],
-      daysOfWeek: [convertDiaToInt(item.dia)],
+      daysOfWeek: [convertDiaToInt(item .dia)],
       startTime: item.horaInicio,
       endTime: item.horaFin,
       extendedProps: item,
@@ -134,7 +134,7 @@ function renderScheduleCalendar(data, container) {
 
   const sesiones = data.sesiones.map(function (item) {
     return {
-      title: `${item.nombre} - ${ucfirst(item.tipo)}`,
+      title: `${item.grupo.nombre} - ${ucfirst(item.tipo)}`,
       backgroundColor: "#ab0647",
       borderColor: "#ab0647",
       start: `${item.fecha}T${item.horaInicio}`,
@@ -192,7 +192,8 @@ function renderScheduleCalendar(data, container) {
     events: fullCalendarEvents,
 
     eventClick: function(info) {
-      loadAsistencia(info.event.extendedProps);
+      let props = {...info.event.extendedProps, fecha: formatDate(info.event.start)};
+      onEventClick(props);
     },
 
     select: function (info) {
@@ -212,16 +213,16 @@ function renderScheduleCalendar(data, container) {
         info.el.querySelector(".fc-event-time").textContent = info.event.extendedProps.aula;
         content = `
           <div>
-            <strong>Aula: ${props.aula}</strong><br>
+            <strong>Aula: ${props.aula.nombre}</strong><br>
             Horario: ${props.horaInicio} - ${props.horaFin}
           </div>
         `;
       } else {
         content = `
         <div>
-            <strong>${props.nombre}</strong><br>
+            <strong>${props.grupo.nombre}</strong><br>
             Tipo: ${ucfirst(props.tipo)}<br>
-            Aula: ${props.aula}<br>
+            Aula: ${props.aula.nombre}<br>
             Turno: ${props.turno}<br>
             Horario: ${props.horaInicio} - ${props.horaFin}
           </div>`;
@@ -288,14 +289,18 @@ export function saveNewScheduleEvent() {
   crearSesion(props);
 }
 
+export function reloadScheduleCalendar() {
+  g_calendarLoader.unload();
+  loadScheduleCalendar();
+}
+
 function crearSesion(props) {
   props._token = $('meta[name="csrf-token"]').attr('content');
   console.log(props);
   $.post('/api/teacher/sesion', props)
     .done(function() {
       closeScheduleModal();
-      g_calendarLoader.unload();
-      loadScheduleCalendar();
+      reloadScheduleCalendar();
   }).fail(function (data) {
     console.error(data.responseText);
   });

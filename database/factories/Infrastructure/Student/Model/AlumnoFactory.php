@@ -2,7 +2,7 @@
 
 namespace Database\Factories\Infrastructure\Student\Model;
 
-use App\Models\User;
+use App\Infrastructure\Shared\Model\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class AlumnoFactory extends Factory

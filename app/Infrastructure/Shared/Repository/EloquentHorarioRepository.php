@@ -5,15 +5,17 @@ namespace App\Infrastructure\Shared\Repository;
 use App\Application\Shared\DTOs\BloqueHorarioDTO;
 use App\Application\Shared\DTOs\HorarioDTO;
 use App\Application\Shared\DTOs\OtherHorarioDTO;
+use App\Application\Shared\DTOs\SesionDTO;
 use App\Domain\Shared\Repository\IHorarioRepository;
 use App\Domain\Shared\ValueObject\CursoTipo;
 use App\Domain\Shared\ValueObject\Dia;
 use App\Domain\Shared\ValueObject\Fecha;
 use App\Domain\Shared\ValueObject\GrupoTurno;
 use App\Domain\Shared\ValueObject\Hora;
+use App\Domain\Shared\ValueObject\Id;
 use App\Infrastructure\Shared\Model\BloqueHorario;
 use App\Infrastructure\Shared\Model\GrupoCurso as EloquentGrupoCurso;
-use App\Infrastructure\Shared\Model\Sesion;
+use App\Infrastructure\Shared\Model\Sesion as EloquentSesion;
 
 class EloquentHorarioRepository implements IHorarioRepository {
   public function getOwnHorario(array $grupoIds): HorarioDTO {
@@ -25,25 +27,28 @@ class EloquentHorarioRepository implements IHorarioRepository {
         fechaOrDia: Dia::fromString($bloque->dia),
         horaInicio: Hora::fromString($bloque->horaInicio),
         horaFin: Hora::fromString($bloque->horaFin),
-        nombre: $grupo->curso->nombre,
+        grupoId: Id::fromInt($grupo->id),
+        grupoNombre: $grupo->curso->nombre,
         tipo: CursoTipo::fromString($grupo->tipo),
         turno: GrupoTurno::fromString($grupo->turno),
-        aula: $bloque->aula->nombre));
+        aulaId: Id::fromInt($bloque->aula->id),
+        aulaNombre: $bloque->aula->nombre));
       });
 
     $sesiones =
-      Sesion::with('grupoCurso.curso', 'aula')
-        ->where('from_bloque', false)
+      EloquentSesion::with('grupoCurso.curso', 'aula')
         ->whereIn('grupo_curso_id', $grupoIds)
         ->get()
         ->map(fn ($sesion) => new BloqueHorarioDTO(
           fechaOrDia: Fecha::fromString($sesion->fecha),
           horaInicio: Hora::fromString($sesion->horaInicio),
           horaFin: Hora::fromString($sesion->horaFin),
-          nombre: $sesion->grupoCurso->curso->nombre,
+          grupoId: Id::fromInt($sesion->grupoCurso->id),
+          grupoNombre: $sesion->grupoCurso->curso->nombre,
           tipo: CursoTipo::fromString($sesion->grupoCurso->tipo),
           turno: GrupoTurno::fromString($sesion->grupoCurso->turno),
-          aula: $sesion->aula->nombre,
+          aulaId: Id::fromInt($sesion->aula->id),
+          aulaNombre: $sesion->aula->nombre,
         ));
 
     return new HorarioDTO(
@@ -64,15 +69,17 @@ class EloquentHorarioRepository implements IHorarioRepository {
           horaInicio: Hora::fromString($bloque->horaInicio),
           horaFin: Hora::fromString($bloque->horaFin),
           aula: $bloque->aula->nombre,
+          fromBloque: true,
         ))->merge(
-          Sesion::with('aula')
+          EloquentSesion::with('aula')
             ->whereNotIn('grupo_curso_id', $grupoIds)
             ->get()
             ->map(fn ($sesion) => new OtherHorarioDTO(
-              fechaOrDia:  Dia::fromString($sesion->fecha),
+              fechaOrDia:  Fecha::fromString($sesion->fecha),
               horaInicio: Hora::fromString($sesion->horaInicio),
               horaFin: Hora::fromString($sesion->horaFin),
               aula: $sesion->aula->nombre,
+              fromBloque: false,
             ))
         )
         ->unique(fn (OtherHorarioDTO $x) => $x->uniqueKey());

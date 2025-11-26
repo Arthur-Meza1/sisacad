@@ -22,10 +22,16 @@ class HorarioTransformer {
 
     foreach ($dtos as $dto ) {
       $val = [
-        'nombre' => $dto->nombre,
+        'grupo' => [
+          'id' => $dto->grupoId->getValue(),
+          'nombre' => $dto->grupoNombre,
+        ],
+        'aula' => [
+          'id' => $dto->aulaId->getValue(),
+          'nombre' => $dto->aulaNombre,
+        ],
         'tipo' => $dto->tipo->getValue(),
         'turno' => $dto->turno->getValue(),
-        'aula' => $dto->aula,
         'horaInicio' => $dto->horaInicio->getValue(),
         'horaFin' => $dto->horaFin->getValue(),
       ];
@@ -51,9 +57,8 @@ class HorarioTransformer {
         'aula' => $dto->aula,
         'horaInicio' => $dto->horaInicio->getValue(),
         'horaFin' => $dto->horaFin->getValue(),
+        'from_bloque' => $dto->fromBloque,
       ];
-
-      $val['from_bloque'] = $dto->fechaOrDia instanceof Dia;
 
       $res[] = $val;
     }

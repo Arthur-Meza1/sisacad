@@ -14,6 +14,7 @@ class OtherHorarioDTO {
     public readonly Hora $horaInicio,
     public readonly Hora $horaFin,
     public readonly string $aula,
+    public readonly bool $fromBloque,
   ) {}
 
   /**

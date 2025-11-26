@@ -3,7 +3,7 @@
 namespace App\Infrastructure\Teacher\Model;
 
 use App\Infrastructure\Shared\Model\GrupoCurso;
-use App\Models\User;
+use App\Infrastructure\Shared\Model\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Docente extends Model
