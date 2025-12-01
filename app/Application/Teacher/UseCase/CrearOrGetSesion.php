@@ -4,7 +4,6 @@ namespace App\Application\Teacher\UseCase;
 
 use App\Application\Shared\DTOs\SesionDTO;
 use App\Application\Teacher\Transformer\SesionTransformer;
-use App\Domain\Shared\Entity\Asistencia;
 use App\Domain\Shared\Exception\SesionNotFound;
 use App\Domain\Shared\Repository\IAsistenciaRepository;
 use App\Domain\Shared\Repository\ISesionRepository;
@@ -21,18 +20,25 @@ class CrearOrGetSesion {
     try {
       $sesion = $this->sesionRepository->findOrFail($dto);
       $asistencias = $this->asistenciaRepository->getBySesionId($sesion->id);
+
       foreach ($asistencias as $asistencia) {
         $sesion->addAsistencia($asistencia);
       }
 
-      return SesionTransformer::toArray($sesion);
+      return [
+        'created' => false,
+        'sesion' => SesionTransformer::toArray($sesion)
+      ];
     } catch (SesionNotFound) {
       $sesion = $this->sesionRepository->save($dto);
       $alumnos = $this->alumnoRepository->getByGrupoCursoId($dto->grupoId);
 
       $sesion->generarAsistencias($alumnos, $this->asistenciaRepository);
 
-      return SesionTransformer::toArray($sesion);
+      return [
+        'created' => true,
+        'sesion' => SesionTransformer::toArray($sesion)
+      ];
     }
   }
 }

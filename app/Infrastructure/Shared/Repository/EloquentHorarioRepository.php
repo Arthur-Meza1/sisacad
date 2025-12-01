@@ -4,8 +4,8 @@ namespace App\Infrastructure\Shared\Repository;
 
 use App\Application\Shared\DTOs\BloqueHorarioDTO;
 use App\Application\Shared\DTOs\HorarioDTO;
+use App\Application\Shared\DTOs\OccuppiedSlotDTO;
 use App\Application\Shared\DTOs\OtherHorarioDTO;
-use App\Application\Shared\DTOs\SesionDTO;
 use App\Domain\Shared\Repository\IHorarioRepository;
 use App\Domain\Shared\ValueObject\CursoTipo;
 use App\Domain\Shared\ValueObject\Dia;
@@ -13,12 +13,14 @@ use App\Domain\Shared\ValueObject\Fecha;
 use App\Domain\Shared\ValueObject\GrupoTurno;
 use App\Domain\Shared\ValueObject\Hora;
 use App\Domain\Shared\ValueObject\Id;
-use App\Infrastructure\Shared\Model\BloqueHorario;
+use App\Infrastructure\Shared\Model\BloqueHorario as EloquentBloqueHorario;
 use App\Infrastructure\Shared\Model\GrupoCurso as EloquentGrupoCurso;
 use App\Infrastructure\Shared\Model\Sesion as EloquentSesion;
+use App\Infrastructure\Shared\Model\Aula as EloquentAula;
+use Illuminate\Support\Collection;
 
 class EloquentHorarioRepository implements IHorarioRepository {
-  public function getOwnHorario(array $grupoIds): HorarioDTO {
+  public function getFromGrupoIds(array $grupoIds): HorarioDTO {
     $grupos = EloquentGrupoCurso::with('registros')
       ->whereIn('id', $grupoIds)->get();
 
@@ -51,13 +53,115 @@ class EloquentHorarioRepository implements IHorarioRepository {
           aulaNombre: $sesion->aula->nombre,
         ));
 
+    $occupied =  self::GetIntervalsWithNonEmptySpace(
+      self::GetOthersFromGrupoIds($grupoIds),
+      EloquentAula::count()
+    );
+
     return new HorarioDTO(
       horario: $horario->all(),
       sesiones: $sesiones->all(),
-      otros: []);
+      occupied: $occupied);
   }
 
-  public function getOwnHorarioAndOthers(array $grupoIds): HorarioDTO {
+  private static function GetIntervalsWithNonEmptySpace(Collection $others, int $totalAulas): array {
+    $events = [];
+    foreach($others as $o) {
+      $events[] = ['fechaOrDia' => $o->fechaOrDia, 't' => $o->horaInicio, 'd' => +1];
+      $events[] = ['fechaOrDia' => $o->fechaOrDia, 't' => $o->horaFin, 'd' => -1];
+    }
+
+    usort($events, function ($a, $b) {
+      $fechaA = $a['fechaOrDia'];
+      $fechaB = $b['fechaOrDia'];
+      [$carbonA, $carbonB] = self::NormalizeDates($fechaA, $fechaB);
+
+      $dateComparison = $carbonA <=> $carbonB;
+      if ($dateComparison !== 0) {
+        return $dateComparison;
+      }
+
+      return $b['t']->toMinutes() <=> $a['t']->toMinutes();
+    });
+
+    $current = 0;
+    $lastTime = null;
+    $lastFecha = null;
+    $intervals = [];
+
+    foreach ($events as $ev) {
+      $t = $ev['t'];
+      $currentFecha = $ev['fechaOrDia'];
+
+      if ($lastTime !== null && $lastFecha !== null) {
+        if (self::AreSameDate($lastFecha, $currentFecha)) {
+          if ($current >= $totalAulas) {
+            $intervals[] = new OccuppiedSlotDTO(
+              fechaOrDia: $lastFecha,
+              horaInicio: $lastTime,
+              horaFin: $t
+            );
+          }
+        }
+      }
+
+      $current += $ev['d'];
+      $lastTime = $t;
+      $lastFecha = $currentFecha;
+    }
+
+    return $intervals;
+  }
+
+  private static function GetOthersFromGrupoIds(array $grupoIds): Collection {
+    return EloquentBloqueHorario::with('aula')
+      ->whereNotIn('grupo_curso_id', $grupoIds)
+      ->get()
+      ->map(fn ($bloque) => new OtherHorarioDTO(
+        fechaOrDia:  Dia::fromString($bloque->dia),
+        horaInicio: Hora::fromString($bloque->horaInicio),
+        horaFin: Hora::fromString($bloque->horaFin),
+        aula: $bloque->aula->nombre,
+      ))->merge(
+        EloquentSesion::with('aula')
+          ->whereNotIn('grupo_curso_id', $grupoIds)
+          ->get()
+          ->map(fn ($sesion) => new OtherHorarioDTO(
+            fechaOrDia:  Fecha::fromString($sesion->fecha),
+            horaInicio: Hora::fromString($sesion->horaInicio),
+            horaFin: Hora::fromString($sesion->horaFin),
+            aula: $sesion->aula->nombre,
+          ))
+      )
+      ->unique(fn (OtherHorarioDTO $x) => $x->uniqueKey());
+  }
+
+  private static function AreSameDate($fechaA, $fechaB): bool {
+    [$carbonA, $carbonB] = self::NormalizeDates($fechaA, $fechaB);
+
+    return $carbonA->format('Y-m-d') === $carbonB->format('Y-m-d');
+  }
+
+  private static function NormalizeDates(Fecha|Dia $fechaA, Fecha|Dia $fechaB) {
+    if($fechaA instanceof Fecha && $fechaB instanceof Dia) {
+      $carbonA = $fechaA->toCarbon();
+      $carbonB = $fechaB->toCarbonWithDate($carbonA);
+    } elseif($fechaA instanceof Dia && $fechaB instanceof Fecha) {
+      $carbonA = $fechaA->toCarbonWithDate($fechaB->toCarbon());
+      $carbonB = $fechaB->toCarbon();
+    } elseif($fechaA instanceof Fecha && $fechaB instanceof Fecha) {
+      $carbonA = $fechaA->toCarbon();
+      $carbonB = $fechaB->toCarbon();
+    } elseif($fechaA instanceof Dia && $fechaB instanceof Dia) {
+      $today = now();
+      $carbonA = $fechaA->toCarbonWithDate($today);
+      $carbonB = $fechaB->toCarbonWithDate($today);
+    }
+
+    return [$carbonA, $carbonB];
+  }
+
+  /*public function getOwnHorarioAndOthers(array $grupoIds): HorarioDTO {
     $res = $this->getOwnHorario($grupoIds);
 
     $other =
@@ -86,5 +190,5 @@ class EloquentHorarioRepository implements IHorarioRepository {
     $res->otros = $other->all();
 
     return $res;
-  }
+  }*/
 }

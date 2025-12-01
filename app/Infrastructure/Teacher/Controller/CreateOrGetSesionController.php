@@ -25,7 +25,7 @@ class CreateOrGetSesionController {
     ]);
 
     try {
-      $sesion = $this->crearOrGetSesion->execute(new SesionDTO(
+      $res = $this->crearOrGetSesion->execute(new SesionDTO(
         fecha:  Fecha::fromString($validated['fecha']),
         horaInicio:  Hora::fromString($validated['hora_inicio']),
         horaFin:  Hora::fromString($validated['hora_fin']),
@@ -34,12 +34,10 @@ class CreateOrGetSesionController {
       ));
 
       return response()->json([
-        'status' => 'sucess',
-        'sesion' => $sesion
-      ], Response::HTTP_CREATED);
+        'sesion' => $res['sesion']
+      ], $res['created'] ? Response::HTTP_CREATED : Response::HTTP_OK);
     } catch (\Exception $e) {
       return response()->json([
-        'status' => 'error',
         'message' => $e->getMessage()
       ], Response::HTTP_INTERNAL_SERVER_ERROR);
     }

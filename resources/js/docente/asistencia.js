@@ -15,11 +15,12 @@ function loadSesiones(props) {
     aula_id: props.aula.id,
     _token: $('meta[name="csrf-token"]').attr('content')
   }
-  console.log(props);
+  console.log(data);
   $.post('/api/teacher/sesion', data)
-    .done(function(data) {
+    .done(function(data, _, jqXHR) {
+      console.log(data);
       document.getElementById('asistencia-table-body').innerHTML = "";
-      if(data.sesion.asistencias.length != 0) {
+      if(data.sesion.asistencias.length !== 0) {
         $("#asistencia-empty").hide();
         $("#asistencia-tabla").show();
       } else {
@@ -29,7 +30,9 @@ function loadSesiones(props) {
       data.sesion.asistencias.forEach(x => addAsistencia(x));
 
       document.getElementById('modal-asistencia').classList.remove('hidden');
-      reloadScheduleCalendar();
+
+      if(jqXHR.status === 201)
+        reloadScheduleCalendar();
     }).fail(function (data) {
     console.error(data.responseText);
   });

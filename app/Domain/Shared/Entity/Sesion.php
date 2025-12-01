@@ -25,8 +25,8 @@ class Sesion {
     foreach ($alumnos as $alumno) {
       $asistencia = Asistencia::create(
         sesionId: $this->id,
-        alumnoId: $alumno->id,
-        alumnoNombre: $alumno->nombre,
+        alumnoId: $alumno['id'],
+        alumnoNombre: $alumno['nombre'],
         status: false
       );
       $repo->save($asistencia);

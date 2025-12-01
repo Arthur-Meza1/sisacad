@@ -47,6 +47,11 @@ export function convertTimeStrToDate(timeStr) {
   return new Date(0, 0, 0, h, m, s);
 }
 
+export function convertDateStringToDate(dateStr) {
+  const [y, m, d] = dateStr.split("-").map(Number);
+  return new Date(y, m-1, d);
+}
+
 export function sameDay(a, b) {
   return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
 }

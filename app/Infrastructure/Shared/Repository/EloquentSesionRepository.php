@@ -14,18 +14,18 @@ class EloquentSesionRepository implements ISesionRepository {
   public function findOrFail(SesionDTO $sesionDTO): Sesion {
     try {
       $sesion = EloquentSesion::query()
-        ->where('fecha', $sesionDTO->fecha->getValue())
+        ->where('fecha', $sesionDTO->fecha->toString())
         ->where('grupo_curso_id', $sesionDTO->grupoId->getValue())
         ->where('aula_id', $sesionDTO->aulaId->getValue())
         ->where(function($query) use ($sesionDTO) {
           // Superposición de rangos
           $query->where(function($q) use ($sesionDTO) {
-            $q->where('horaInicio', '<=', $sesionDTO->horaInicio->getValue())
-              ->where('horaFin', '>=', $sesionDTO->horaInicio->getValue());
+            $q->where('horaInicio', '<=', $sesionDTO->horaInicio->toString())
+              ->where('horaFin', '>=', $sesionDTO->horaInicio->toString());
           })
             ->orWhere(function($q) use ($sesionDTO) {
-              $q->where('horaInicio', '<=', $sesionDTO->horaFin->getValue())
-                ->where('horaFin', '>=', $sesionDTO->horaFin->getValue());
+              $q->where('horaInicio', '<=', $sesionDTO->horaFin->toString())
+                ->where('horaFin', '>=', $sesionDTO->horaFin->toString());
             });
         })
         ->firstOrFail();
@@ -44,9 +44,9 @@ class EloquentSesionRepository implements ISesionRepository {
     $sesion = EloquentSesion::create([
       'grupo_curso_id' => $dto->grupoId->getValue(),
       'aula_id' => $dto->aulaId->getValue(),
-      'fecha' => $dto->fecha->getValue(),
-      'horaInicio' => $dto->horaInicio->getValue(),
-      'horaFin' => $dto->horaFin->getValue(),
+      'fecha' => $dto->fecha->toString(),
+      'horaInicio' => $dto->horaInicio->toString(),
+      'horaFin' => $dto->horaFin->toString(),
     ]);
 
     return Sesion::create(

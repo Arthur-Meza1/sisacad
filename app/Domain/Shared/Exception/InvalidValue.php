@@ -11,8 +11,8 @@ class InvalidValue extends \Exception {
     return new self("String null or empty:");
   }
 
-  public static function invalidDate(): self {
-    return new self("Fecha invalida");
+  public static function invalidDate(string $fecha): self {
+    return new self("Fecha invalida '{$fecha}'");
   }
 
   public static function invalidHour(string $hour): self {

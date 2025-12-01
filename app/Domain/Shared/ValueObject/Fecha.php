@@ -3,16 +3,15 @@
 namespace App\Domain\Shared\ValueObject;
 
 use App\Domain\Shared\Exception\InvalidValue;
+use Carbon\Carbon;
+use Carbon\Exceptions\InvalidFormatException;
 
 class Fecha
 {
   private function __construct(
-    private readonly string $fecha,
+    private readonly Carbon $fecha,
   )
   {
-    if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $fecha)) {
-      throw InvalidValue::invalidDate();
-    }
   }
 
   /**
@@ -21,14 +20,22 @@ class Fecha
    * @throws InvalidValue
    */
   public static function fromString(string $fecha): self {
-    return new self($fecha);
+    try {
+      return new self(Carbon::parse($fecha));
+    } catch(InvalidFormatException $e) {
+      throw InvalidValue::invalidDate($fecha);
+    }
   }
 
-  public function getDay(): int {
-    return \Carbon\Carbon::parse($this->fecha)->dayOfWeekIso;
+  public function toString(): string {
+    return $this->fecha->format('Y-m-d');
   }
 
-  public function getValue(): string {
+  public function getDayOfWeek(): int {
+    return $this->fecha->dayOfWeek;
+  }
+
+  public function toCarbon(): Carbon {
     return $this->fecha;
   }
 }

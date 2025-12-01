@@ -5,7 +5,7 @@ import {
   formatDate,
   ucfirst,
   convertDiaToInt,
-  isInNowEvent, sameDay
+  isInNowEvent, sameDay, convertDateStringToDate
 } from "../common/Utils.js";
 import $ from "jquery";
 import tippy from "tippy.js";
@@ -32,7 +32,6 @@ export function updateEventButtonState() {
   const startDateTime = new Date(`${date}T${start}:00`);
   const endDateTime = new Date(`${date}T${end}:00`);
 
-  // Verificar AMBAS superposiciones
   const startOverlap = findFirstStartOverlap(startDateTime);
   const endOverlap = findFirstEndOverlap(endDateTime);
 
@@ -118,9 +117,27 @@ function renderScheduleCalendar(data, container) {
   console.log(data);
   if (g_fullCalendarInstance?.destroy) g_fullCalendarInstance.destroy();
 
-  const horario = data.horario.map(function (item) {
-    const colorMap = { teoria: '#60a5fa', laboratorio: '#2aa87c' };
+  const sesionSet = new Set();
 
+  const sesiones = data.sesiones.map(function (item) {
+    sesionSet.add(`${convertDateStringToDate(item.fecha).getDay()}${item.horaInicio}${item.horaFin}`);
+    return {
+      title: `${item.grupo.nombre} - ${ucfirst(item.tipo)}`,
+      backgroundColor: "#ab0647",
+      borderColor: "#ab0647",
+      start: `${item.fecha}T${item.horaInicio}`,
+      end: `${item.fecha}T${item.horaFin}`,
+      extendedProps: item,
+    }
+  });
+
+  const horario =
+      data
+        .horario
+        .filter(item => !sesionSet.has(`${convertDiaToInt(item.dia)}${item.horaInicio}${item.horaFin}`))
+        .map(function (item) {
+    const colorMap = { teoria: '#60a5fa', laboratorio: '#2aa87c' };
+console.log(`${convertDiaToInt(item.dia)}${item.horaInicio}${item.horaFin}`);
     return {
       title: `${item.grupo.nombre} - ${ucfirst(item.tipo)}`,
       backgroundColor: colorMap[item.tipo],
@@ -132,28 +149,10 @@ function renderScheduleCalendar(data, container) {
     }
   });
 
-  const sesiones = data.sesiones.map(function (item) {
-    return {
-      title: `${item.grupo.nombre} - ${ucfirst(item.tipo)}`,
-      backgroundColor: "#ab0647",
-      borderColor: "#ab0647",
-      start: `${item.fecha}T${item.horaInicio}`,
-      end: `${item.fecha}T${item.horaFin}`,
-      extendedProps: item,
-    }
-  });
-
-  const others = data.others.map(function (item) {
+  const others = data.occupied.map(function (item) {
     const props = {
-      backgroundColor: "transparent", // Fondo completamente transparente
-      borderColor: "rgba(0, 0, 0, 0.6)", // Negro con transparencia
-      textColor: "rgba(0, 0, 0, 0.7)", // Texto en negro
-      className: 'ec-event-others',
-      borderWidth: 2,
-      extendedProps: {
-        ...item,
-        'other': true
-      }
+      display: 'background',
+      backgroundColor: 'red',
     };
 
     if(item.from_bloque === true) {
@@ -175,6 +174,7 @@ function renderScheduleCalendar(data, container) {
     slotHeight: 60,
     slotMinTime: '06:00:00',
     slotMaxTime: "20:00:00",
+    eventMaxStack: 3,
     now: "2025-11-25T14:20:00",
     weekends: false,
     allDaySlot: false,
@@ -204,29 +204,22 @@ function renderScheduleCalendar(data, container) {
     },
 
     eventDidMount: function(info) {
-      if (isInNowEvent(info.event) && info.event.extendedProps.other == null)
+      const props = info.event.extendedProps || {};
+      if(Object.keys(props).length === 0)
+        return;
+
+      if (isInNowEvent(info.event))
         info.el.classList.add('ec-now');
 
-      const props = info.event.extendedProps;
-      let content;
-      if(props.other) {
-        info.el.querySelector(".fc-event-time").textContent = info.event.extendedProps.aula;
-        content = `
-          <div>
-            <strong>Aula: ${props.aula.nombre}</strong><br>
-            Horario: ${props.horaInicio} - ${props.horaFin}
-          </div>
-        `;
-      } else {
-        content = `
-        <div>
-            <strong>${props.grupo.nombre}</strong><br>
-            Tipo: ${ucfirst(props.tipo)}<br>
-            Aula: ${props.aula.nombre}<br>
-            Turno: ${props.turno}<br>
-            Horario: ${props.horaInicio} - ${props.horaFin}
-          </div>`;
-      }
+      const content = `
+      <div>
+          <strong>${props.grupo.nombre}</strong><br>
+          Tipo: ${ucfirst(props.tipo)}<br>
+          Aula: ${props.aula.nombre}<br>
+          Turno: ${props.turno}<br>
+          Horario: ${props.horaInicio} - ${props.horaFin}
+        </div>`;
+
       tippy(info.el, {
         content,
         allowHTML: true,
@@ -251,7 +244,7 @@ function findFirstEndOverlap(date) {
 }
 
 function getCalendarOwnEvents() {
-  return g_fullCalendarInstance.getEvents().filter(x => x.extendedProps.other == null);
+  return g_fullCalendarInstance.getEvents().filter(x => x.extendedProps.length === 0);
 }
 
 function clampStartEvent(start) {
