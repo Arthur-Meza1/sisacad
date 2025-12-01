@@ -349,11 +349,7 @@ class TestSeeder extends Seeder
     // ===========
     // ALUMNO
     // ===========
-    $yo = Alumno::create([
-      'user_id' => User::factory()->create(['name' => 'Esdras Amado Diaz Vasquez', 'email' => 'test@example.com'])->id
-    ]);
-    // Matricular al alumno en sus cursos
-    $matriculas = [
+    $grupos = [
       $mac_t->id,
       $is2_t->id,
       $eda_t->id,
@@ -362,19 +358,33 @@ class TestSeeder extends Seeder
       $ti2_t->id,
     ];
 
-    foreach ($matriculas as $grupoId) {
-      Matricula::create([
-        'alumno_id' => $yo->id,
-        'grupo_curso_id' => $grupoId,
+    for ($i = 1; $i <= 10; $i++) {
+
+      // Crear usuario
+      $user = User::factory()->create([
+        'name'  => "Alumno $i",
+        'email' => "alumno$i@example.com",
       ]);
 
-      // Crear un registro de notas para este curso
-      Registro::factory()->create([
-        'alumno_id' => $yo->id,
-        'grupo_curso_id' => $grupoId,
+      // Crear alumno
+      $alumno = Alumno::create([
+        'user_id' => $user->id,
       ]);
+
+      // Matricular y crear registros
+      foreach ($grupos as $grupoId) {
+        Matricula::create([
+          'alumno_id' => $alumno->id,
+          'grupo_curso_id' => $grupoId,
+        ]);
+
+        Registro::factory()->create([
+          'alumno_id' => $alumno->id,
+          'grupo_curso_id' => $grupoId,
+        ]);
+      }
     }
-  }
+
     // Cursos en los que se matricularán todos los alumnos
     /*$matriculas = [
       $mac_t->id,
@@ -408,6 +418,6 @@ class TestSeeder extends Seeder
           'grupo_curso_id' => $grupoId,
         ]);
       }
-    }
-  }*/
+    }*/
+  }
 }
