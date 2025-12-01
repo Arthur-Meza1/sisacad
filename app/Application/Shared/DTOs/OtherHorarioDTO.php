@@ -20,6 +20,6 @@ class OtherHorarioDTO {
    * Clave única para usar en ->unique()
    */
   public function uniqueKey(): string {
-    return "{$this->fechaOrDia->getDay()}|{$this->horaInicio->getValue()}|{$this->horaFin->getValue()}|{$this->aula}";
+    return "{$this->fechaOrDia->getDayOfWeek()}|{$this->horaInicio->toString()}|{$this->horaFin->toString()}|{$this->aula}";
   }
 }

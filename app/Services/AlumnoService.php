@@ -105,7 +105,7 @@ class AlumnoService {
   public function matricular($user_id, $grupo_id) {
     $alumno = Alumno::where('user_id', $user_id)->firstOrFail();
 
-    \App\Models\Matricula::create([
+    \App\Infrastructure\Shared\Model\Matricula::create([
       'alumno_id' => $alumno->id,
       'grupo_curso_id' => $grupo_id,
     ]);

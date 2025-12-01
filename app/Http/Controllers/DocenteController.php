@@ -79,7 +79,7 @@ class DocenteController extends Controller
   public function guardarNotas(Request $request, $grupoId)
   {
     foreach ($request->input('registros', []) as $matriculaId => $notas) {
-      $matricula = \App\Models\Matricula::find($matriculaId);
+      $matricula = \App\Infrastructure\Shared\Model\Matricula::find($matriculaId);
 
       $registro = \App\Models\Registro::firstOrNew([
         'alumno_id' => $matricula->alumno_id,

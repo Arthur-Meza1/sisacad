@@ -136,5 +136,6 @@ return [
     App\Providers\RouteServiceProvider::class,
     App\Infrastructure\Shared\Provider\AppServiceProvider::class,
     App\Infrastructure\Teacher\Provider\AppServiceProvider::class,
+    App\Infrastructure\Student\Provider\AppServiceProvider::class,
   ])->toArray(),
 ];

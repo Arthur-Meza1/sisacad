@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Infrastructure\Shared\Model;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Infrastructure\Student\Model\Alumno;

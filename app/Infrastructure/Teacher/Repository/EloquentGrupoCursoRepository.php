@@ -2,10 +2,12 @@
 
 namespace App\Infrastructure\Teacher\Repository;
 
+use App\Application\Teacher\DTOs\AlumnoDTO;
 use App\Application\Teacher\DTOs\GrupoCursoDTO;
 use App\Domain\Shared\ValueObject\Id;
 use App\Domain\Teacher\Repository\IGrupoCursoRepository;
 use App\Infrastructure\Shared\Model\GrupoCurso as EloquentGrupoCurso;
+use App\Infrastructure\Shared\Model\Matricula as EloquentMatricula;
 
 class EloquentGrupoCursoRepository implements IGrupoCursoRepository
 {
@@ -39,5 +41,16 @@ class EloquentGrupoCursoRepository implements IGrupoCursoRepository
           promedio_continua: round($promedio_continua),
         );
       })->toArray();
+  }
+
+  public function getAlumnosFromId(Id $id): array {
+    return EloquentMatricula::with(['alumno.user'])
+      ->where('grupo_curso_id', $id->getValue())
+      ->get()
+      ->map(fn (EloquentMatricula $matricula) =>
+        new AlumnoDTO(
+          id: $matricula->alumno->id,
+          nombre: $matricula->alumno->user->name,
+        ))->toArray();
   }
 }

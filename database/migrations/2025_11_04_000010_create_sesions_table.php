@@ -20,8 +20,7 @@ return new class extends Migration
             $table->date('fecha');
             $table->time('horaInicio');
             $table->time('horaFin');
-            $table->boolean('from_bloque')->default(false);
-            $table->index(['horaInicio', 'horaFin', 'fecha', 'from_bloque']);
+            $table->index(['horaInicio', 'horaFin', 'fecha']);
         });
     }
 

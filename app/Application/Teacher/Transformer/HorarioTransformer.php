@@ -13,7 +13,7 @@ class HorarioTransformer {
     return [
       "horario" => self::bloqueHorarioToArray($dto->horario),
       "sesiones" => self::bloqueHorarioToArray($dto->sesiones),
-      "others" => self::otherToArray($dto->otros),
+      "occupied" => self::occupiedSlotToArray($dto->occupied),
     ];
   }
 
@@ -22,18 +22,24 @@ class HorarioTransformer {
 
     foreach ($dtos as $dto ) {
       $val = [
-        'nombre' => $dto->nombre,
+        'grupo' => [
+          'id' => $dto->grupoId->getValue(),
+          'nombre' => $dto->grupoNombre,
+        ],
+        'aula' => [
+          'id' => $dto->aulaId->getValue(),
+          'nombre' => $dto->aulaNombre,
+        ],
         'tipo' => $dto->tipo->getValue(),
         'turno' => $dto->turno->getValue(),
-        'aula' => $dto->aula,
-        'horaInicio' => $dto->horaInicio->getValue(),
-        'horaFin' => $dto->horaFin->getValue(),
+        'horaInicio' => $dto->horaInicio->toString(),
+        'horaFin' => $dto->horaFin->toString(),
       ];
 
       if($dto->fechaOrDia instanceof Fecha) {
-        $val['fecha'] = $dto->fechaOrDia->getValue();
+        $val['fecha'] = $dto->fechaOrDia->toString();
       } else if($dto->fechaOrDia instanceof Dia) {
-        $val['dia'] = $dto->fechaOrDia->getValue();
+        $val['dia'] = $dto->fechaOrDia->toString();
       }
 
       $res[] = $val;
@@ -42,18 +48,16 @@ class HorarioTransformer {
     return $res;
   }
 
-  private static function otherToArray(array $dtos): array {
+  private static function occupiedSlotToArray(array $dtos): array {
     $res = [];
 
     foreach ($dtos as $dto ) {
       $val = [
-        'fecha' => $dto->fechaOrDia->getValue(),
-        'aula' => $dto->aula,
-        'horaInicio' => $dto->horaInicio->getValue(),
-        'horaFin' => $dto->horaFin->getValue(),
+        'fecha' => $dto->fechaOrDia->toString(),
+        'horaInicio' => $dto->horaInicio->toString(),
+        'horaFin' => $dto->horaFin->toString(),
+        'from_bloque' => $dto->fechaOrDia instanceof Dia
       ];
-
-      $val['from_bloque'] = $dto->fechaOrDia instanceof Dia;
 
       $res[] = $val;
     }

@@ -14,8 +14,8 @@ return new class extends Migration {
   {
     Schema::create('asistencias', function (Blueprint $table) {
       $table->id();
-      $table->foreignIdFor(Sesion::class)->constrained();
-      $table->foreignIdFor(Alumno::class)->constrained();
+      $table->foreignIdFor(Sesion::class)->index()->constrained();
+      $table->foreignIdFor(Alumno::class)->index()->constrained();
       $table->boolean('presente')->default(false);
       $table->timestamps();
     });

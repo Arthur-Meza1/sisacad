@@ -8,18 +8,9 @@ use Carbon\Carbon;
 class Hora
 {
   private function __construct(
-    private readonly string $hora,
+    private readonly Carbon $hora,
   )
-  {
-    $formatosValidos = ['H:i', 'H:i:s'];
-
-    $esValida = collect($formatosValidos)
-      ->contains(fn ($formato) => Carbon::canBeCreatedFromFormat($this->hora, $formato));
-
-    if (!$esValida) {
-      throw InvalidValue::invalidHour($this->hora);
-    }
-  }
+  {}
 
   /**
    * @param string $hora
@@ -27,10 +18,22 @@ class Hora
    * @throws InvalidValue
    */
   public static function fromString(string $hora): self {
-    return new self($hora);
+    try {
+      return new self(Carbon::parse($hora));
+    } catch (\Throwable $th) {
+      throw InvalidValue::invalidHour($hora);
+    }
   }
 
-  public function getValue(): string {
+  public function toMinutes(): int {
+    return $this->hora->diffInMinutes();
+  }
+
+  public function toCarbon(): Carbon {
     return $this->hora;
+  }
+
+  public function toString(): string {
+    return $this->hora->format('H:i');
   }
 }

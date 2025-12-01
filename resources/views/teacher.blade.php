@@ -161,18 +161,32 @@
         </div>
       </div>
     </div>
+
     <div id="view-schedule" class="view-content space-y-6 hidden">
       <div class="flex justify-between items-center mb-4">
         <h2 class="text-2xl font-bold text-gray-800">Mi Horario Semanal</h2>
+
         <button onclick="openScheduleModal()" class="px-4 py-2 rounded-lg text-sm font-medium text-white bg-green-600 hover:bg-green-700 transition flex items-center">
-          <svg class="w-5 h-5 mr-1" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
+          <svg class="w-5 h-5 mr-1" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path>
+          </svg>
           Reservar Hora Extra
         </button>
       </div>
+
       <div class="relative bg-white rounded-xl p-6 shadow-lg">
-        <div id="fullCalendar" class="p-4"></div>
+
+        <div class="flex">
+          <!-- Calendario -->
+          <div id="fullCalendar" class="p-4 flex-1"></div>
+
+          <!-- ⭐ Leyenda a la derecha (vertical) -->
+
+        </div>
+
       </div>
     </div>
+
     <div id="view-analytics" class="view-content space-y-6 hidden">
       <h2 class="text-2xl font-bold text-gray-800 mb-4">Análisis y Estadísticas de Rendimiento</h2>
 
@@ -298,7 +312,7 @@
                   <th class="py-3 px-4 border-b font-medium text-gray-700 text-center w-32">Presente</th>
                 </tr>
                 </thead>
-                <tbody class="text-sm">
+                <tbody id="asistencia-table-body" class="text-sm">
 
                   <tr class="row-select border-b border-gray-100 hover:bg-gray-50 transition-colors">
                     <td class="py-4 px-4 font-semibold text-gray-800">

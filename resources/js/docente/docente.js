@@ -7,6 +7,7 @@ import {
   updateEventButtonState
 } from "./calendario.js";
 
+
 $(document).ready(function() {
   $('.nav-link').on('click', function() {
     let view = $(this).data('view');

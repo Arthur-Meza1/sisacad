@@ -6,12 +6,12 @@ class HorarioDTO {
   /**
    * @param BloqueHorarioDTO[] $horario
    * @param BloqueHorarioDTO[] $sesiones
-   * @param OtherHorarioDTO[] $otros
+   * @param OccuppiedSlotDTO[] $occupied
    */
   public function __construct(
     public array $horario,
     public array $sesiones,
-    public array $otros,
+    public array $occupied,
   ) {
   }
 }

@@ -10,6 +10,18 @@ export function convertDiaToInt(dia) {
   return s_dayMap[dia.toLowerCase()];
 }
 
+export function convertIntToDia(dia) {
+  const s_dayMap = {
+    1: 'lunes',
+    2: 'martes',
+    3: 'miercoles',
+    4: 'jueves',
+    5: 'viernes'
+  };
+
+  return s_dayMap[dia];
+}
+
 export function formatDate(d) {
   return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
 }
@@ -33,6 +45,11 @@ export function isInNowEvent(event) {
 export function convertTimeStrToDate(timeStr) {
   const [h, m, s] = timeStr.split(":").map(Number);
   return new Date(0, 0, 0, h, m, s);
+}
+
+export function convertDateStringToDate(dateStr) {
+  const [y, m, d] = dateStr.split("-").map(Number);
+  return new Date(y, m-1, d);
 }
 
 export function sameDay(a, b) {

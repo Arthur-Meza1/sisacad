@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Models;
+namespace App\Infrastructure\Shared\Model;
 
-use App\Infrastructure\Shared\Model\Sesion;
 use App\Infrastructure\Student\Model\Alumno;
 use Illuminate\Database\Eloquent\Model;
 

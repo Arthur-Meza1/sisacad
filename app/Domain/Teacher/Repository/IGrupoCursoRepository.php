@@ -3,6 +3,7 @@
 namespace App\Domain\Teacher\Repository;
 
 use App\Application\Teacher\DTOs\GrupoCursoDTO;
+use App\Domain\Shared\ValueObject\Id;
 
 interface IGrupoCursoRepository {
   /**
@@ -10,4 +11,5 @@ interface IGrupoCursoRepository {
    * @return GrupoCursoDTO[]
    */
   public function findQueryFromIds(array $ids): array;
+  public function getAlumnosFromId(Id $id): array;
 }
