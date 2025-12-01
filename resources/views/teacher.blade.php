@@ -280,75 +280,90 @@
 
     <!-- Modal fondo -->
     <div id="modal-asistencia"
-         class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+         onclick="if(event.target === this) closeAsistenciaModal()"
+         class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
 
       <!-- Contenido del modal -->
-      <div class="bg-white rounded-xl shadow-xl w-full max-w-4xl p-6 relative">
+      <div class="bg-white rounded-xl shadow-xl w-full max-w-4xl mx-auto p-6 relative
+              max-h-[90vh] overflow-y-auto">
 
         <!-- Botón cerrar -->
         <button onclick="closeAsistenciaModal()"
-                class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
+                class="absolute top-3 right-3 text-gray-500 hover:text-gray-700 text-xl">
           ✕
         </button>
 
-        <h1 id="asistencia-title" class="text-2xl font-bold text-gray-800 mb-2">
-        </h1>
-        <p class="text-gray-600 mb-6">Registre la asistencia de los alumnos para esta sesión</p>
+        <h1 id="asistencia-title" class="text-2xl font-bold text-gray-800 mb-2 text-center md:text-left"></h1>
+        <p class="text-gray-600 mb-6 text-sm md:text-base text-center md:text-left">
+          Registre la asistencia de los alumnos para esta sesión
+        </p>
 
-        <form method="POST" action="route('asistencia.guardar', $grupo->id) ">
+        <form method="POST" action="route('asistencia.guardar', $grupo->id)">
           @csrf
 
-            <div id="asistencia-empty" class="text-center py-12 bg-slate-50 rounded-lg border border-dashed border-slate-200">
-              <i class="fas fa-users-slash text-5xl mb-4 text-slate-400"></i>
-              <p class="text-slate-500 text-lg">No hay alumnos matriculados en este grupo</p>
-              <p class="text-slate-400 text-sm mt-2">Los alumnos aparecerán aquí una vez se matriculen</p>
-            </div>
+          <!-- Estado vacío -->
+          <div id="asistencia-empty"
+               class="text-center py-10 bg-slate-50 rounded-lg border border-dashed border-slate-200">
+            <i class="fas fa-users-slash text-5xl mb-4 text-slate-400"></i>
+            <p class="text-slate-500 text-lg">No hay alumnos matriculados en este grupo</p>
+            <p class="text-slate-400 text-sm mt-2">Los alumnos aparecerán aquí una vez se matriculen</p>
+          </div>
 
-            <div id="asistencia-tabla" class="hidden overflow-x-auto border border-gray-200 rounded-lg mb-6">
-              <table class="w-full text-left border-collapse">
-                <thead>
-                <tr class="bg-gray-50">
-                  <th class="py-3 px-4 border-b font-medium text-gray-700 text-left min-w-[300px]">Alumno</th>
-                  <th class="py-3 px-4 border-b font-medium text-gray-700 text-center w-32">Presente</th>
-                </tr>
-                </thead>
-                <tbody id="asistencia-table-body" class="text-sm">
+          <!-- Tabla -->
+          <div id="asistencia-tabla"
+               class="hidden overflow-x-auto border border-gray-200 rounded-lg mb-6">
 
-                  <tr class="row-select border-b border-gray-100 hover:bg-gray-50 transition-colors">
-                    <td class="py-4 px-4 font-semibold text-gray-800">
-                       $alumno->user->name
-                    </td>
-                    <td class="py-4 px-4 text-center">
-                      <label class="inline-flex items-center cursor-pointer">
-                        <input type="checkbox"
-                               name="asistencia[$alumno->id ]"
-                               value="1"
-                               required
-                               class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500 focus:ring-2">
-                      </label>
-                    </td>
-                  </tr>
+            <table class="w-full text-left border-collapse min-w-[450px]">
+              <thead>
+              <tr class="bg-gray-50">
+                <th class="py-3 px-4 border-b font-medium text-gray-700 min-w-[250px]">Alumno</th>
+                <th class="py-3 px-4 border-b font-medium text-gray-700 text-center w-28">Presente</th>
+              </tr>
+              </thead>
 
-                </tbody>
-              </table>
-            </div>
+              <tbody id="asistencia-table-body" class="text-sm">
 
+              <tr class="row-select border-b border-gray-100 hover:bg-gray-50 transition-colors">
+                <td class="py-4 px-4 font-semibold text-gray-800">
+                  $alumno->user->name
+                </td>
+                <td class="py-4 px-4 text-center">
+                  <label class="inline-flex items-center cursor-pointer">
+                    <input type="checkbox"
+                           name="asistencia[$alumno->id]"
+                           value="1"
+                           class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500 focus:ring-2">
+                  </label>
+                </td>
+              </tr>
 
+              </tbody>
+            </table>
+
+          </div>
+
+          <!-- Footer -->
           <div class="flex flex-col md:flex-row justify-between items-center gap-4 mt-6 pt-6 border-t border-gray-200">
-            <div class="text-sm text-gray-600 flex items-center">
+            <div class="text-sm text-gray-600 flex items-center text-center md:text-left">
               <i class="fas fa-info-circle mr-2 text-blue-500"></i>
               Marque la asistencia para cada alumno
             </div>
-            <div class="flex gap-3">
+
+            <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+
               <button type="button"
                       onclick="document.getElementById('modal-asistencia').classList.add('hidden')"
-                      class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition flex items-center gap-2">
+                      class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg font-medium
+                         hover:bg-gray-50 transition flex items-center gap-2 justify-center">
                 <i class="fas fa-arrow-left"></i> Cerrar
               </button>
-                <button type="submit"
-                        class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-medium transition flex items-center gap-2 shadow-sm">
-                  <i class="fas fa-save"></i> Guardar Asistencia
-                </button>
+
+              <button type="submit"
+                      class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-medium
+                         transition flex items-center gap-2 shadow-sm justify-center">
+                <i class="fas fa-save"></i> Guardar Asistencia
+              </button>
+
             </div>
           </div>
 
@@ -356,6 +371,7 @@
 
       </div>
     </div>
+
 
   </main>
 
