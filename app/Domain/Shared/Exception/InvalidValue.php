@@ -18,4 +18,8 @@ class InvalidValue extends \Exception {
   public static function invalidHour(string $hour): self {
     return new self("Hora invalida '{$hour}'");
   }
+
+  public static function invalidBoolString(string $bool): self {
+    return new self("Bool string invalido '{$bool}'");
+  }
 }

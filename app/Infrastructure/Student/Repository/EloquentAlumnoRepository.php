@@ -16,17 +16,19 @@ class EloquentAlumnoRepository implements IAlumnoRepository {
     return EloquentMatricula::with('alumno.user')
       ->where('grupo_curso_id', $id->getValue())
       ->get()
-      ->map(fn (EloquentMatricula $matricula) => [
-        'id' => Id::fromInt($matricula->alumno->id),
-        'nombre' => $matricula->alumno->user->name
-      ])
-      ->toArray();
+      ->map(fn (EloquentMatricula $matricula) =>
+        Alumno::fromPrimitive(
+        id: Id::fromInt($matricula->alumno->id),
+        nombre: $matricula->alumno->user->name
+      ))->toArray();
   }
 
   public function findFromIdOrFail(Id $id): Alumno {
     try {
-      $alumno = EloquentAlumno::with('grupos')
+      $eloquentAlumno = EloquentAlumno::with('grupos')
         ->where('user_id', $id->getValue())->firstOrFail();
+
+
 
       return ParseAlumnoToDomain::fromEloquent($alumno);
     } catch(ModelNotFoundException $e) {

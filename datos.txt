@@ -127,30 +127,133 @@ Viernes#12:20#14:00
 $
 
 ALGORITMOS Y ESTRUCTURA DE DATOS
+A
+MALDONADO QUISPE, PERCY#pmaldonado@unsa.edu.pe
+202 / 26.4 - 206
+Miercoles#8:50#10:30
+Jueves#10:40#12:20
+$
+B
+MALDONADO QUISPE, PERCY#pmaldonado@unsa.edu.pe
+202 / 26.4 - 206
+Miercoles#12:20#14:00
+Jueves#14:00#15:40
+$
 LA
 PAZ VALDERRAMA, ALFREDO#apazv@unsa.edu.pe
 2
 Lunes#8:50#10:30
 $
-LA
-MAMANI ALIAGA, ALVARO HENRY#amamaniali@unsa.edu.pe
-1
-Miercoles#10:40#12:20
-$
+
+ANALISIS Y DISEÑO DE ALGORITMOS
 A
 PAZ VALDERRAMA, ALFREDO#apazv@unsa.edu.pe
-202 / 26.4 - 206
-Miercoles#8:50#10:30
-Jueves#8:50#10:30
+26.4-207/AULA 203
+Lunes#17:40#19:20
+Jueves#07:00#08:40
 $
-LB
-PAZ VALDERRAMA, ALFREDO#apazv@unsa.edu.pe
+B
+QUISPE CRUZ, MARCELA#mquispecr@unsa.edu.pe
+[Docente encontrado, pero horario no detallado en el archivo de horarios]
+$
+
+LENGUA EXTRANJERA V
+A
+CALLOAPAZA PARI, SONIA BENILDA#scalloapaza@unsa.edu.pe
+26.4-106/AULA 101
+Lunes#14:00#15:40
+Viernes#14:00#15:40
+$
+
+ARQUITECTURA DE COMPUTADORES
+A
+RODRIGUEZ GONZALEZ, PEDRO ALEX#prodriguez@unsa.edu.pe
+202 / 26.4 - 206
+Martes#15:50#17:30
+Miercoles#14:00#15:40
+Jueves#14:00#15:40
+$
+B
+RODRIGUEZ GONZALEZ, PEDRO ALEX#prodriguez@unsa.edu.pe
+202 / 26.4 - 206
+Lunes#15:50#17:30
+Miercoles#10:40#12:20
+Viernes#10:40#12:20
+$
+
+DESARROLLO BASADO EN PLATAFORMAS
+A
+HINOJOSA CARDENAS, EDWARD#ehinojosa@unsa.edu.pe
+202 / 26.4 - 206
+Lunes#14:00#15:40
+Miercoles#8:50#10:30
+Viernes#8:50#10:30
+$
+B
+HINOJOSA CARDENAS, EDWARD#ehinojosa@unsa.edu.pe
+202 / 26.4 - 206
+Martes#14:00#15:40
+Jueves#8:50#10:30
+Viernes#7:00#8:40
+$
+
+CIENCIAS DE LA COMPUTACION II
+A
+MAMANI ALIAGA, ALVARO HENRY#amamaniali@unsa.edu.pe
+202 / 26.4 - 206
+Lunes#8:50#10:30
+Miercoles#12:20#14:00
+Jueves#10:40#12:20
+$
+B
+QUISPE CRUZ, MARCELA#mquispecr@unsa.edu.pe
+202 / 26.4 - 206
+Martes#8:50#10:30
+Miercoles#14:00#15:40
+Viernes#14:00#15:40
+$
+
+TEORIA DE LA COMPUTACION
+A
+MAMANI ALIAGA, ALVARO HENRY#amamaniali@unsa.edu.pe
+202 / 26.4 - 206
+Lunes#17:40#19:20
+$
+B
+VELAZCO PAREDES, YUBER ELMER#yvelazco@unsa.edu.pe
+202 / 26.4 - 206
+Martes#7:00#8:40
+Jueves#17:40#19:20
+$
+
+TRABAJO INTERDISCIPLINAR I
+A
+FLORES QUISPE, ROXANA#rfloresqu@unsa.edu.pe
+202 / 26.4 - 206
+Lunes#10:40#12:20
+Miercoles#15:50#17:30
+$
+B
+VELAZCO PAREDES, YUBER ELMER#yvelazco@unsa.edu.pe
+202 / 26.4 - 206
+Lunes#17:40#19:20
+Viernes#17:40#19:20
+$
+
+BASE DE DATOS I
+A
+HINOJOSA CARDENAS, EDWARD#ehinojosa@unsa.edu.pe
+202 / 26.4 - 206
+Lunes#12:20#14:00
+$
+LA
+HINOJOSA CARDENAS, EDWARD#ehinojosa@unsa.edu.pe
 1
 Lunes#15:50#17:30
 Martes#15:50#17:30
 $
 B
-PAZ VALDERRAMA, ALFREDO#apazv@unsa.edu.pe
+HINOJOSA CARDENAS, EDWARD#ehinojosa@unsa.edu.pe
 202 / 26.4 - 206
 Miercoles#15:50#17:30
 Jueves#15:50#17:30
@@ -170,65 +273,155 @@ Lunes#12:20#14:00
 Miercoles#11:30#14:00
 $
 
-BASE DE DATOS I
+
+
+SISTEMAS OPERATIVOS
 A
-HINOJOSA CARDENAS, EDWARD#ehinojosa@unsa.edu.pe
-202 / 26.4 - 206
-Lunes#12:20#14:00
-$
-LA
-HINOJOSA CARDENAS, EDWARD#ehinojosa@unsa.edu.pe
-1
-Miercoles#12:20#14:00
-Jueves#12:20#14:00
+FLORES QUISPE, ROXANA#rfloresqu@unsa.edu.pe
+26.4-207/AULA 203
+Lunes#15:50#16:40
+Martes#17:40#18:30
 $
 B
-HINOJOSA CARDENAS, EDWARD#ehinojosa@unsa.edu.pe
-202 / 26.4 - 206
-Lunes#14:00#15:40
-$
-LC
-HINOJOSA CARDENAS, EDWARD#ehinojosa@unsa.edu.pe
-1
-Martes#17:40#19:20
-$
-LC
-HINOJOSA CARDENAS, EDWARD#ehinojosa@unsa.edu.pe
-4
-Jueves#17:40#19:20
-$
-LB
-HINOJOSA CARDENAS, EDWARD#ehinojosa@unsa.edu.pe
-1
-Miercoles#14:00#15:40
-Jueves#14:00#15:40
+CARDENAS TALAVERA, ROLANDO JESUS#rcardenastal@unsa.edu.pe
+26.4-207/AULA 203
+Lunes#16:40#17:30
+Jueves#15:50#16:40
 $
 
-TEORIA DE LA COMPUTACION
+MATEMATICA APLICADA A LA COMPUTACION
 A
-VELAZCO PAREDES, YUBER ELMER#yvelazco@unsa.edu.pe
-202 / 26.4 - 206
-Martes#7:50#9:40
-Jueves#10:40#12:20
-$
-LA
-VELAZCO PAREDES, YUBER ELMER#yvelazco@unsa.edu.pe
-2
-Viernes#10:40#12:20
+MORALES MOYA, ADHA#amoralesmo@unsa.edu.pe
+26.4-207/AULA 203
+Lunes#17:40#18:30
+Jueves#16:40#17:30
 $
 B
-QUISPE CRUZ, MARCELA#mquispecr@unsa.edu.pe
-202 / 26.4 - 206
-Lunes#17:40#19:20
-Martes#14:00#15:40
+HANCCO ANCORI, RICARDO JAVIER#rhanccoan@unsa.edu.pe
+26.4-207/AULA 203
+Lunes#07:00#07:50
+Jueves#14:00#14:50
 $
-LB
-QUISPE CRUZ, MARCELA#mquispecr@unsa.edu.pe
-2
-Viernes#14:00#15:40
+
+INGENIERIA DE SOFTWARE II
+A
+SARMIENTO CALISAYA, EDGAR#esarmientoca@unsa.edu.pe
+26.4-207/AULA 203
+Martes#12:20#13:10
+Miercoles#13:10#14:00
 $
-LC
+B
+SARMIENTO CALISAYA, EDGAR#esarmientoca@unsa.edu.pe
+26.4-207/AULA 203
+Martes#13:10#14:00
+Miercoles#14:00#14:50
+$
+
+TRABAJO INTERDISCIPLINAR II
+A
+YARI RAMOS, YESSENIA DEYSI#yyarira@unsa.edu.pe
+26.4-207/AULA 203
+Martes#11:30#12:20
+Miercoles#11:30#12:20
+$
+
+--
+
+METODOLOGIA DEL TRABAJO INTELECTUAL
+A
+VILLAR GARNICA, ELVA EMELINA#evillar@unsa.edu.pe
+Lab 2/26.4-105
+Lunes#07:00#08:40
+Martes#07:00#08:40
+$
+
+RELACIONES HUMANAS
+A
+LAZO ALARCON, ERIKA PATRICIA#elazoal@unsa.edu.pe
+26.4-106/AULA 101
+Martes#07:00#08:40
+$
+
+TOPICOS DE INGENIERIA DE SOFTWARE
+A
+SARMIENTO CALISAYA, EDGAR#esarmientoca@unsa.edu.pe
+26.4-106/AULA 101
+Lunes#10:40#12:20
+Miercoles#07:00#08:40
+$
+
+COMPUTACION PARALELA Y DISTRIBUIDA
+A
 VELAZCO PAREDES, YUBER ELMER#yvelazco@unsa.edu.pe
-2
-Miercoles#17:40#19:20
+26.4-106/AULA 101
+Lunes#14:00#15:40
+Jueves#10:40#12:20
+$
+
+INTERACCION HUMANO COMPUTADORA
+A
+CUADROS VALDIVIA, ANA MARIA#acuadrosv@unsa.edu.pe
+26.4-106/AULA 101
+Martes#08:50#10:30
+Miercoles#07:00#08:40
+$
+B
+CUADROS VALDIVIA, ANA MARIA#acuadrosv@unsa.edu.pe
+26.4-106/AULA 101
+Martes#10:40#12:20
+Jueves#12:20#14:00
+$
+
+PROYECTO FINAL DE CARRERA I
+A
+FLORES QUISPE, ROXANA#rfloresqu@unsa.edu.pe
+26.4-106/AULA 101
+Miercoles#08:50#10:30
+Viernes#11:30#13:10
+$
+
+FISICA COMPUTACIONAL
+A
+CABANA HANCCO, WILSON RICARDO#wcabana@unsa.edu.pe
+26.4-106/AULA 101
+Jueves#14:00#15:40
+Viernes#07:00#08:40
+$
+B
+CABANA HANCCO, WILSON RICARDO#wcabana@unsa.edu.pe
+26.4-106/AULA 101
+Miercoles#14:00#15:40
+Viernes#10:40#12:20
+$
+
+
+CLOUD COMPUTING
+A
+MAMANI ALIAGA, ALVARO HENRY#amamaniali@unsa.edu.pe
+26.4-305/AULA 301
+Martes#12:20#13:10
+Miercoles#12:20#13:10
+$
+
+TOPICOS EN CIBERSEGURIDAD
+A
+CARDENAS TALAVERA, ROLANDO JESUS#rcardenastal@unsa.edu.pe
+26.4-305/AULA 301
+Martes#15:50#16:40
+$
+
+TRABAJO INTERDISCIPLINAR III
+A
+YARI RAMOS, YESSENIA DEYSI#yyarira@unsa.edu.pe
+26.4-305/AULA 301
+Lunes#14:00#14:50
+Lunes#15:50#16:40
+$
+
+INTERNET DE LAS COSAS
+A
+MALDONADO QUISPE, PERCY#pmaldonado@unsa.edu.pe
+26.4-305/AULA 301
+Jueves#16:40#17:30
+Viernes#15:50#16:40
 $

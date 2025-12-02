@@ -2,29 +2,29 @@
 
 namespace App\Domain\Shared\Entity;
 
+use App\Domain\Shared\ValueObject\AsistenciaEstado;
 use App\Domain\Shared\ValueObject\Id;
 
 class Asistencia {
-  private function __construct(
-    public readonly Id $sesionId,
-    public readonly Id $alumnoId,
-    public readonly string $alumnoNombre,
-    private bool $status,
+  public function __construct(
+    private readonly Id $alumnoId,
+    private readonly ?string $alumnoNombre,
+    private AsistenciaEstado $estado,
   ) {}
 
-  public static function create(Id $sesionId, Id $alumnoId, string $alumnoNombre, bool $status): self {
-    return new self($sesionId, $alumnoId, $alumnoNombre,  $status);
+  public function updateStatus(AsistenciaEstado $estado): void {
+    $this->estado = $estado;
   }
 
-  public function presente(): void {
-    $this->status = true;
+  public function alumnoId(): Id {
+    return $this->alumnoId;
   }
 
-  public function falta(): void {
-    $this->status = false;
+  public function estado(): AsistenciaEstado {
+    return $this->estado;
   }
 
-  public function isPresente(): bool {
-    return $this->status;
+  public function alumnoNombre(): ?string {
+    return $this->alumnoNombre;
   }
 }

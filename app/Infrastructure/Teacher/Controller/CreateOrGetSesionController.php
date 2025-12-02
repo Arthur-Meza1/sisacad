@@ -38,7 +38,7 @@ class CreateOrGetSesionController {
       ], $res['created'] ? Response::HTTP_CREATED : Response::HTTP_OK);
     } catch (\Exception $e) {
       return response()->json([
-        'message' => $e->getMessage()
+        'message' => $e->getMessage() . $e->getTraceAsString()
       ], Response::HTTP_INTERNAL_SERVER_ERROR);
     }
   }
