@@ -2,13 +2,8 @@
 
 namespace App\Domain\Shared\Entity;
 
-use App\Application\Shared\DTOs\SesionDTO;
 use App\Domain\Shared\Exception\SesionCerrada;
-use App\Domain\Shared\Exception\SesionInvalida;
-use App\Domain\Shared\Repository\IAsistenciaRepository;
 use App\Domain\Shared\ValueObject\AsistenciaEstado;
-use App\Domain\Shared\ValueObject\Fecha;
-use App\Domain\Shared\ValueObject\Hora;
 use App\Domain\Shared\ValueObject\Id;
 
 class Sesion {

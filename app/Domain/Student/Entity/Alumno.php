@@ -2,27 +2,35 @@
 
 namespace App\Domain\Student\Entity;
 
+use App\Domain\Shared\Exception\InvalidValue;
 use App\Domain\Shared\ValueObject\Id;
 
 class Alumno {
   private function __construct(
-    private readonly Id $userId,
-    private readonly array $grupoIds,
+    private readonly Id $id,
+    private readonly string $nombre,
   ) {
   }
 
-  public static function fromPrimitive(mixed $value): self {
+  public static function fromPrimitive(
+    Id $id,
+    string $nombre,
+  ): self {
+    if(empty($nombre)) {
+      throw InvalidValue::stringNullOrEmpty();
+    }
+
     return new self(
-      userId: Id::fromInt($value->id),
-      grupoIds: $value->grupoIds
+      id: $id,
+      nombre: $nombre,
     );
   }
 
-  public function getGruposId(): array {
-    return $this->gruposId;
+  public function nombre(): ?string {
+    return $this->nombre;
   }
 
-  public function getUserId(): Id {
-    return $this->userId;
+  public function id(): Id {
+    return $this->id;
   }
 }
