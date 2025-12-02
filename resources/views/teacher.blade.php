@@ -298,8 +298,9 @@
           Registre la asistencia de los alumnos para esta sesión
         </p>
 
-        <form method="POST" action="route('asistencia.guardar', $grupo->id)">
+        <form id="asistencia-form" method="POST" action="{{route('asistencia.guardar')}}">
           @csrf
+          <input id="asistencia_input_sesion_id" name="sesion_id" hidden>
 
           <!-- Estado vacío -->
           <div id="asistencia-empty"
@@ -322,21 +323,6 @@
               </thead>
 
               <tbody id="asistencia-table-body" class="text-sm">
-
-              <tr class="row-select border-b border-gray-100 hover:bg-gray-50 transition-colors">
-                <td class="py-4 px-4 font-semibold text-gray-800">
-                  $alumno->user->name
-                </td>
-                <td class="py-4 px-4 text-center">
-                  <label class="inline-flex items-center cursor-pointer">
-                    <input type="checkbox"
-                           name="asistencia[$alumno->id]"
-                           value="1"
-                           class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500 focus:ring-2">
-                  </label>
-                </td>
-              </tr>
-
               </tbody>
             </table>
 

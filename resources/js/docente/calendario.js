@@ -175,7 +175,6 @@ console.log(`${convertDiaToInt(item.dia)}${item.horaInicio}${item.horaFin}`);
     slotMinTime: '06:00:00',
     slotMaxTime: "20:00:00",
     eventMaxStack: 3,
-    now: "2025-11-25T14:20:00",
     weekends: false,
     allDaySlot: false,
     nowIndicator: true,
@@ -192,8 +191,10 @@ console.log(`${convertDiaToInt(item.dia)}${item.horaInicio}${item.horaFin}`);
     events: fullCalendarEvents,
 
     eventClick: function(info) {
-      let props = {...info.event.extendedProps, fecha: formatDate(info.event.start)};
-      onEventClick(props);
+      if(isInNowEvent(info.event)) {
+        let props = {...info.event.extendedProps, fecha: formatDate(info.event.start)};
+        onEventClick(props);
+      }
     },
 
     select: function (info) {
