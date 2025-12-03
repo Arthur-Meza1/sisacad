@@ -18,13 +18,14 @@ export function loadScheduleCalendar() {
 }
 
 function renderScheduleCalendar(data, container) {
+  console.log(data);
   if (fullCalendarInstance?.destroy) fullCalendarInstance.destroy();
 
   const horario = data.horario.map((item) => {
     const colorMap = { teoria: '#60a5fa', laboratorio: '#2aa87c' };
 
     return {
-      title: `${item.nombre} - ${ucfirst(item.tipo)}`,
+      title: `${item.grupo.nombre} - ${ucfirst(item.tipo)}`,
       backgroundColor: colorMap[item.tipo],
       borderColor: colorMap[item.tipo],
       daysOfWeek: [convertDiaToInt(item.dia)],
@@ -61,9 +62,9 @@ function renderScheduleCalendar(data, container) {
       tippy(info.el, {
         content: `
           <div>
-            <strong>${props.nombre}</strong><br>
+            <strong>${props.grupo.nombre}</strong><br>
             Tipo: ${ucfirst(props.tipo)}<br>
-            Aula: ${props.aula}<br>
+            Aula: ${props.aula.nombre}<br>
             Turno: ${props.turno}<br>
             Horario: ${props.horaInicio} - ${props.horaFin}
           </div>

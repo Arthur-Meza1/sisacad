@@ -20,7 +20,7 @@ use App\Infrastructure\Shared\Model\Aula as EloquentAula;
 use Illuminate\Support\Collection;
 
 class EloquentHorarioRepository implements IHorarioRepository {
-  public function getFromGrupoIds(array $grupoIds): HorarioDTO {
+  public function getFromGrupoIds(array $grupoIds, bool $withOthers): HorarioDTO {
     $grupos = EloquentGrupoCurso::with('registros')
       ->whereIn('id', $grupoIds)->get();
 
@@ -53,10 +53,14 @@ class EloquentHorarioRepository implements IHorarioRepository {
           aulaNombre: $sesion->aula->nombre,
         ));
 
-    $occupied =  self::GetIntervalsWithNonEmptySpace(
-      self::GetOthersFromGrupoIds($grupoIds),
-      EloquentAula::count()
-    );
+    if($withOthers) {
+      $occupied =  self::GetIntervalsWithNonEmptySpace(
+        self::GetOthersFromGrupoIds($grupoIds),
+        EloquentAula::count()
+      );
+    } else {
+      $occupied = [];
+    }
 
     return new HorarioDTO(
       horario: $horario->all(),
