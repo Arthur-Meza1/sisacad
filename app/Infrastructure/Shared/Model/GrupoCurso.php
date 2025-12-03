@@ -4,7 +4,6 @@ namespace App\Infrastructure\Shared\Model;
 
 use App\Infrastructure\Student\Model\Alumno;
 use App\Infrastructure\Teacher\Model\Docente;
-use App\Models\Registro;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 

@@ -81,7 +81,7 @@ class DocenteController extends Controller
     foreach ($request->input('registros', []) as $matriculaId => $notas) {
       $matricula = \App\Infrastructure\Shared\Model\Matricula::find($matriculaId);
 
-      $registro = \App\Models\Registro::firstOrNew([
+      $registro = \App\Infrastructure\Shared\Model\Registro::firstOrNew([
         'alumno_id' => $matricula->alumno_id,
         'grupo_curso_id' => $grupoId,
       ]);

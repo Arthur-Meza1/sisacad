@@ -3,8 +3,8 @@
 namespace Database\Factories;
 
 use App\Infrastructure\Shared\Model\GrupoCurso;
+use App\Infrastructure\Shared\Model\Registro;
 use App\Infrastructure\Student\Model\Alumno;
-use App\Models\Registro;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class RegistroFactory extends Factory
