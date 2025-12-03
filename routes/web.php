@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\Login;
 use App\Http\Controllers\Auth\Logout;
-use App\Http\Controllers\AlumnoController;
+use App\Infrastructure\Student\Controller\AlumnoController;
 use App\Infrastructure\Teacher\Controller\DocenteController;
 use App\Http\Controllers\AsistenciaController;
 
@@ -23,7 +23,7 @@ Route::get('/', function () {
 });
 
 Route::middleware('auth')->group(function () {
-  Route::get('/student', [AlumnoController::class, 'index'])
+  Route::get('/student', AlumnoController::class)
     ->name('student')
     ->middleware('role:student');
   Route::view('/admin', 'admin')->middleware('role:admin');
