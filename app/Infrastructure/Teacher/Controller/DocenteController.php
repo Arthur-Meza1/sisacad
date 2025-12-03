@@ -8,12 +8,12 @@ use Illuminate\Support\Facades\Auth;
 
 class DocenteController {
   public function __construct(
-    private readonly GetBasicGruposData $getGruposData
+    private readonly GetBasicGruposData $getBasicGruposData
   ) {
   }
 
   public function __invoke() {
-    $grupos = $this->getGruposData->execute(Id::fromInt(Auth::id()));
+    $grupos = $this->getBasicGruposData->execute(Id::fromInt(Auth::id()));
 
     return view('teacher', compact('grupos'));
   }
