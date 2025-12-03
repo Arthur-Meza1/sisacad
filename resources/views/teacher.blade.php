@@ -48,8 +48,8 @@
           <div id="teacherCourseList" class="space-y-2 text-sm">
             @foreach($grupos as $grupo)
               <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                <span class="font-medium text-indigo-700">{{$grupo['nombre']}} ({{ucfirst($grupo['tipo'])}})</span>
-                <span class="text-xs text-gray-500">Alumnos: {{$grupo['cantidad']}} | P. Parcial: {{$grupo['promedio_parcial']}} | P. Continua: {{$grupo['promedio_continua']}}</span>
+                <span class="font-medium text-indigo-700">{{$grupo['nombre']}} ({{$grupo['turno']}}) - {{ucfirst($grupo['tipo'])}}</span>
+                <span class="text-xs text-gray-500">Alumnos: {{$grupo['cantidad']}}</span>
               </div>
             @endforeach
           </div>
@@ -88,7 +88,6 @@
           <div onclick="selectCourseForManagement({{$grupo['id']}}, '{{$grupo['nombre']}}')" class="p-6 bg-gradient-to-br from-blue-400 to-blue-600 rounded-xl shadow-lg cursor-pointer hover:shadow-xl hover:scale-105 transition text-white">
             <h3 class="text-xl font-bold mb-2">{{$grupo['nombre']}}</h3>
             <p class="text-sm opacity-90">{{$grupo['cantidad']}} Alumnos</p>
-            <p class="text-xs opacity-75 mt-1">P. Parcial: {{$grupo['promedio_parcial']}} | P. Continua: {{$grupo['promedio_continua']}}</p>
           </div>
           @endforeach
         </div>
@@ -195,7 +194,14 @@
         <div class="w-full lg:w-80 flex-shrink-0 space-y-6">
           <div id="courseSelector" class="bg-white p-4 rounded-xl shadow-lg h-min">
             <h3 class="text-lg font-semibold text-gray-700 mb-4 border-b pb-2">Seleccionar Curso</h3>
-            <div id="courseButtonsContainer" class="space-y-3">
+            <div class="space-y-3">
+              @foreach($grupos as $grupo)
+                <button
+                  onclick="loadAnalyticsView(this, {{$grupo['id']}})"
+                  class="w-full text-left p-3 rounded-lg text-gray-600 hover:bg-indigo-100 hover:text-indigo-700 transition duration-150 course-button">
+                  {{$grupo['nombre']}} ({{$grupo['turno']}}) - {{ucfirst($grupo['tipo'])}}
+                </button>
+              @endforeach
             </div>
           </div>
 
