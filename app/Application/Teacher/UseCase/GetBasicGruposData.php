@@ -3,7 +3,7 @@
 namespace App\Application\Teacher\UseCase;
 
 use App\Application\Shared\DTOs\GrupoCursoDTO;
-use App\Application\Shared\Transformer\BasicGrupoDataTransformer;
+use App\Application\Teacher\Transformer\BasicGrupoDataTransformer;
 use App\Domain\Shared\ValueObject\Id;
 use App\Domain\Teacher\Repository\IDocenteRepository;
 use App\Domain\Teacher\Repository\IGrupoCursoRepository;

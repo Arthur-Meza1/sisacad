@@ -17,7 +17,7 @@ class EloquentGrupoCursoRepository implements IGrupoCursoRepository
    */
   public function findQueryFromIds(array $ids): array
   {
-    return EloquentGrupoCurso::with(['registros', 'curso', 'docente.user'])
+    return EloquentGrupoCurso::with(['registros', 'curso'])
       ->withCount('registros')
       ->whereIn('id', $ids)
       ->get()

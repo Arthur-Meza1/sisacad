@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Application\Shared\Transformer;
+namespace App\Application\Student\Transformer;
 
-use App\Application\Shared\DTOs\GrupoCursoDTO;
+use App\Application\Student\DTOs\GrupoCursoDTO;
 
 class BasicGrupoDataTransformer {
   /**
@@ -14,13 +14,10 @@ class BasicGrupoDataTransformer {
 
     foreach ($dtos as $dto) {
       $res[] = [
-        "id" => $dto->id->getValue(),
-        "docente" => $dto->docente,
         "nombre" => $dto->nombre,
-        "turno" => $dto->turno,
+        "docente" => $dto->docente,
         "tipo" => $dto->tipo,
         "turno" => $dto->turno,
-        "cantidad" => $dto->nregistros,
       ];
     }
 
