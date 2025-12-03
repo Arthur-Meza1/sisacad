@@ -6,6 +6,7 @@ import {
   saveNewScheduleEvent,
   updateEventButtonState
 } from "./calendario.js";
+import {loadAnalyticsView} from "./notas.js";
 
 
 $(document).ready(function() {
@@ -43,7 +44,6 @@ function changeView(viewId) {
   if (viewId === 'schedule') loadScheduleCalendar();
   /*
   if (viewId === 'students') initStudentsView();
-  if (viewId === 'analytics') initAnalyticsView();
   */
 }
 
