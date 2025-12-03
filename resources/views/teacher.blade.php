@@ -217,7 +217,7 @@
           <div class="h-[500px]">
             <canvas id="gradeChart"></canvas>
           </div>
-          <div id="chartMessage" class="mt-4 text-center text-gray-500 hidden">
+          <div id="chartMessage" class="mt-4 text-center text-gray-500">
             No hay datos de notas registradas para este curso o los datos son insuficientes.
           </div>
         </div>
