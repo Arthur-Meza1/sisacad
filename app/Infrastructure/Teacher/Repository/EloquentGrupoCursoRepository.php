@@ -22,23 +22,12 @@ class EloquentGrupoCursoRepository implements IGrupoCursoRepository
       ->whereIn('id', $ids)
       ->get()
       ->map(function (EloquentGrupoCurso $grupo) {
-        $nregistros = $grupo->registros_count;
-        $promedio_parcial = $grupo->registros
-          ->flatMap(fn ($registro) => $registro->getNotasParcial())
-          ->filter()
-          ->avg();
-        $promedio_continua = $grupo->registros
-          ->flatMap(fn ($registro) => $registro->getNotasContinua())
-          ->filter()
-          ->avg();
-
-        return GrupoCursoDTO::create(
+        return new GrupoCursoDTO(
           id: Id::fromInt($grupo->id),
           nombre: $grupo->curso->nombre,
+          turno: $grupo->turno,
           tipo: $grupo->tipo,
-          nregistros: $nregistros,
-          promedio_parcial: round($promedio_parcial),
-          promedio_continua: round($promedio_continua),
+          nregistros: $grupo->registros_count,
         );
       })->toArray();
   }
