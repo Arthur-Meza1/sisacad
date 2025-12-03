@@ -28,9 +28,7 @@ class EloquentAlumnoRepository implements IAlumnoRepository {
       $eloquentAlumno = EloquentAlumno::with('grupos')
         ->where('user_id', $id->getValue())->firstOrFail();
 
-
-
-      return ParseAlumnoToDomain::fromEloquent($alumno);
+      return ParseAlumnoToDomain::fromEloquent($eloquentAlumno);
     } catch(ModelNotFoundException $e) {
       throw UserNotFound::execute();
     }
