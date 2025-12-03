@@ -51,8 +51,8 @@
           <div id="courseList" class="space-y-2 text-sm">
             @foreach($grupos as $grupo)
               <div class="flex justify-between items-center p-2 border-b hover:bg-gray-50 rounded-md">
-                <span class="font-medium">{{$grupo['nombre']}} ({{ucfirst($grupo['tipo'])}})</span>
-                <span class="text-xs text-gray-500">Turno: {{$grupo['turno']}} | Docente: {{$grupo['docente']}} | Horario: {{$grupo['horario']['horaInicio']}} - {{$grupo['horario']['horaFin']}}</span>
+                <span class="font-medium">{{$grupo['nombre']}} ({{$grupo['turno']}})</span>
+                <span class="text-xs text-gray-500">{{ucfirst($grupo['tipo'])}} | {{$grupo['docente']}}</span>
               </div>
             @endforeach
           </div>

@@ -6,6 +6,7 @@ use App\Domain\Shared\Exception\InvalidValue;
 use App\Domain\Shared\ValueObject\Id;
 
 class Alumno {
+  private array $grupoIds;
   private function __construct(
     private readonly Id $id,
     private readonly string $nombre,
@@ -24,6 +25,14 @@ class Alumno {
       id: $id,
       nombre: $nombre,
     );
+  }
+
+  public function addGrupoId($id): void {
+    $this->grupoIds[] = $id;
+  }
+
+  public function grupoIds(): array {
+    return $this->grupoIds;
   }
 
   public function nombre(): ?string {

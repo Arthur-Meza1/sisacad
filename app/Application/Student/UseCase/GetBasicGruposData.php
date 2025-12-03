@@ -2,17 +2,21 @@
 
 namespace App\Application\Student\UseCase;
 
+use App\Application\Shared\Transformer\BasicGrupoDataTransformer;
 use App\Domain\Shared\ValueObject\Id;
 use App\Domain\Student\Repository\IAlumnoRepository;
 use App\Domain\Teacher\Repository\IGrupoCursoRepository;
 
-class GetGruposData {
+class GetBasicGruposData {
   public function __construct(
     private readonly IAlumnoRepository $alumnoRepository,
     private readonly IGrupoCursoRepository $grupoCursoRepository,
   ) {}
 
   public function execute(Id $id): array {
+    $alumno = $this->alumnoRepository->findFromIdOrFail($id);
+    $dtos = $this->grupoCursoRepository->findQueryFromIds($alumno->grupoIds());
 
+    return BasicGrupoDataTransformer::toArray($dtos);
   }
 }
