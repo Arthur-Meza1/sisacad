@@ -2,7 +2,7 @@
 
 namespace App\Application\Teacher\UseCase;
 
-use App\Application\Shared\Transformer\RegistroTransformer;
+use App\Application\Teacher\Transformer\RegistroTransformer;
 use App\Domain\Shared\Exception\RegistroNotFound;
 use App\Domain\Shared\Repository\IRegistroRepository;
 use App\Domain\Shared\ValueObject\Id;

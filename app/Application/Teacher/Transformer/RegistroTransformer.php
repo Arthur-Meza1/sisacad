@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Application\Shared\Transformer;
+namespace App\Application\Teacher\Transformer;
 
 use App\Domain\Student\Entity\Alumno;
 
