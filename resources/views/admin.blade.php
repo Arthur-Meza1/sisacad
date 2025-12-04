@@ -1,114 +1,46 @@
-<x-sidebar_layout>
-    <x-slot:title>
-        Dashboard Administrador
-    </x-slot:title>
-    <x-slot:nav_options>
-        <a href="#" class="active"><i class="fas fa-home"></i>Inicio</a>
-        <a href="#"><i class="fas fa-users-cog"></i>Gestión de Usuarios</a>
-        <a href="#"><i class="fas fa-university"></i> Gestión Académica</a>
-        <a href="#"><i class="fas fa-money-bill-wave"></i> Administrativo/Finanzas</a>
-        <a href="#"><i class="fas fa-chart-line"></i> Reportes y Analíticas</a>
-        <a href="#"><i class="fas fa-bell"></i>Notificaciones Globales</a>
-        <a href="#"><i class="fas fa-cogs"></i> Configuración del Sistema</a>
-    </x-slot:nav_options>
+<x-header_layout>
+  <aside class="w-64 p-4 sticky top-20 h-full">
+    <nav class="space-y-2 font-medium">
+      <a href="#" data-view="dashboard" class="nav-link flex items-center p-3 rounded-lg hover:bg-gray-100 active-link">
+        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l-2 2m0 0l-7 7m7-7v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1h3a1 1 0 001-1v-7a1 1 0 00-.293-.707l-2-2"></path></svg>
+        Inicio
+      </a>
+      <a href="#" data-view="users" class="nav-link flex items-center p-3 rounded-lg hover:bg-gray-100 inactive-link">
+        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-3-3h-1m-4 5v-2a3 3 0 00-3-3H9m4 5H5v-2a3 3 0 013-3h1m4 0a3 3 0 01-3-3V9m6 0a3 3 0 00-3-3m-4 0a3 3 0 013-3m0 6a3 3 0 010 6"></path></svg>
+        Usuarios
+      </a>
+      <a href="#" data-view="courses" class="nav-link flex items-center p-3 rounded-lg hover:bg-gray-100 inactive-link">
+        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5zm0 0v7"></path></svg>
+        Cursos
+      </a>
+      <a href="#" data-view="reports" class="nav-link flex items-center p-3 rounded-lg hover:bg-gray-100 inactive-link">
+        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-6a2 2 0 012-2h6m-4 0h4"></path></svg>
+        Reportes
+      </a>
+      <a href="#" data-view="settings" class="nav-link flex items-center p-3 rounded-lg hover:bg-gray-100 inactive-link">
+        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3a2 2 0 012 2v1h-4V5a2 2 0 012-2zM4 8h16M4 12h16M4 16h16"></path></svg>
+        Configuración
+      </a>
+    </nav>
+  </aside>
 
-    <div class="main-content">
-        <header class="header-top">
-            <div class="search-bar">
-                <i class="fas fa-search"></i>
-                <input type="text" placeholder="Buscar usuarios, cursos, o reportes...">
-            </div>
-            <div class="menu-icon">
-                <i class="fas fa-bars"></i>
-            </div>
-        </header>
-
-        <section class="widgets-grid">
-            <div class="widget action-summary-widget">
-                <h3>Estado y Acciones</h3>
-                <div class="system-status">
-                    <p><strong>Periodo Actual:</strong> <span class="status-badge status-active">2025-II</span></p>
-                    <p><strong>Estado del Sistema:</strong> <span
-                            class="status-badge status-system-ok">Activo (100%)</span></p>
-                    <p><strong>Último Backup:</strong> Hace 12 horas</p>
-                </div>
-                <div class="quick-actions">
-                    <button class="action-button primary-btn"><i class="fas fa-user-plus"></i> Crear Nuevo Usuario
-                    </button>
-                    <button class="action-button secondary-btn admin-orange"><i class="fas fa-lock-open"></i> Abrir
-                        Periodo 2026-I
-                    </button>
-                    <button class="action-button default-btn"><i class="fas fa-database"></i> Ejecutar Backup</button>
-                </div>
-            </div>
-
-            <div class="widget metrics-summary-grid schedule-widget">
-                <h3>Métricas del Sistema</h3>
-                <div class="summary-cards-container">
-                    <div class="summary-card student-card">
-                        <i class="fas fa-user-graduate card-icon"></i>
-                        <span class="card-value">210</span>
-                        <span class="card-label">Estudiantes (Total)</span>
-                    </div>
-                    <div class="summary-card teacher-card">
-                        <i class="fas fa-chalkboard-teacher card-icon"></i>
-                        <span class="card-value">35</span>
-                        <span class="card-label">Docentes</span>
-                    </div>
-                    <div class="summary-card course-card">
-                        <i class="fas fa-book card-icon"></i>
-                        <span class="card-value">50</span>
-                        <span class="card-label">Cursos Activos</span>
-                    </div>
-                    <div class="summary-card alert-card">
-                        <i class="fas fa-exclamation-circle card-icon"></i>
-                        <span class="card-value new-alert-value">7</span>
-                        <span class="card-label">Alertas Críticas</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="widget">
-                <h3>Usuarios por Rol</h3>
-                <div class="progress-circles">
-                    <div class="progress-item">
-                        <div class="circle-placeholder c-user-alum">85%</div>
-                        <div>
-                            <strong>Alumnos</strong>
-                            <p class="description">Usuarios principales del sistema.</p>
-                        </div>
-                    </div>
-                    <div class="progress-item">
-                        <div class="circle-placeholder c-user-doc">14%</div>
-                        <div>
-                            <strong>Docentes</strong>
-                            <p class="description">Cuentas con privilegios de notas.</p>
-                        </div>
-                    </div>
-                    <div class="progress-item">
-                        <div class="circle-placeholder c-user-sec">1%</div>
-                        <div>
-                            <strong>Admin/Secretaría</strong>
-                            <p class="description">Cuentas con privilegios de gestión.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="widget schedule-widget">
-                <h3>Alumnos por Carrera</h3>
-                <div class="chart-placeholder placeholder-line" style="height: 150px;">
-                    Gráfico de Barras: Estudiantes por Programa Académico
-                </div>
-            </div>
-
-            <div class="widget chat-widget">
-                <h3>Actividad del Sistema (Logs)</h3>
-                <p class="chat-text new-alert">Error DB: La conexión con el servidor de pagos falló hace 3 minutos.
-                    (Prioridad Alta)</p>
-                <p class="chat-text">Admin: Usuario 'jdiaz' reseteó la contraseña a 'alumno045'.</p>
-                <p class="chat-text">Sistema: Se realizó el cierre parcial del curso 'MAT101'.</p>
-            </div>
-        </section>
+  <main class="flex-1 p-4">
+    <div id="view-dashboard" class="view-content space-y-6">
+      <h2 class="text-2xl font-bold text-gray-800 mb-4">Panel de Administración</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="card bg-white rounded-xl p-5 shadow-lg border-b-4 border-indigo-500">
+          <p class="text-sm font-medium text-gray-500">Usuarios Registrados</p>
+          <strong id="usersCount" class="text-3xl font-extrabold text-indigo-600">{{$users_count}}</strong>
+          <p class="text-xs text-gray-400 mt-1">Incluye docentes y alumnos</p>
+        </div>
+        <div class="card bg-white rounded-xl p-5 shadow-lg border-b-4 border-cyan-500">
+          <p class="text-sm font-medium text-gray-500">Cursos Activos</p>
+          <strong id="coursesCount" class="text-3xl font-extrabold text-cyan-600">{{$courses_count}}</strong>
+          <p class="text-xs text-gray-400 mt-1">En todas las facultades</p>
+        </div>
+      </div>
     </div>
-</x-sidebar_layout>
+  </main>
+
+  @vite(['resources/js/admin/admin.js'])
+</x-header_layout>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\Login;
 use App\Http\Controllers\Auth\Logout;
@@ -28,7 +29,9 @@ Route::middleware('auth')->group(function () {
   Route::get('/student', [AlumnoController::class, 'index'])
     ->name('student')
     ->middleware('role:student');
-  Route::view('/admin', 'admin')->middleware('role:admin');
+  Route::get('/admin', [DashboardController::class, 'index'])
+    ->middleware('role:admin')
+    ->name('admin.dashboard');
   Route::get('/teacher', DocenteController::class)
     ->name('teacher')
     ->middleware('role:teacher');
@@ -52,8 +55,6 @@ Route::get("/api/teacher/horario", \App\Infrastructure\Teacher\Controller\GetHor
 Route::post('/api/teacher/aulas', \App\Infrastructure\Teacher\Controller\GetAulasDisponiblesController::class)->middleware('role:teacher');
 Route::post('/api/teacher/sesion', \App\Infrastructure\Teacher\Controller\CreateOrGetSesionController::class)->middleware('role:teacher');
 Route::post("/api/teacher/asistencia", \App\Infrastructure\Teacher\Controller\GuardarAsistenciaController::class)->middleware('role:teacher')->name("asistencia.guardar");
-
-
 
 
 Route::prefix('admin')

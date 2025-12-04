@@ -23,7 +23,6 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     public $timestamps = false;
-  public mixed $role;
 
   protected $fillable = [
         'name',
