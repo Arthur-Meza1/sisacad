@@ -5,7 +5,9 @@ use App\Http\Controllers\Auth\Login;
 use App\Http\Controllers\Auth\Logout;
 use App\Http\Controllers\AlumnoController;
 use App\Infrastructure\Teacher\Controller\DocenteController;
+use App\Infrastructure\Admin\Controller\UserController;
 use App\Http\Controllers\AsistenciaController;
+
 
 Route::get('/', function () {
   if (!auth()->check()) {
@@ -51,6 +53,17 @@ Route::post('/api/teacher/aulas', \App\Infrastructure\Teacher\Controller\GetAula
 Route::post('/api/teacher/sesion', \App\Infrastructure\Teacher\Controller\CreateOrGetSesionController::class)->middleware('role:teacher');
 Route::post("/api/teacher/asistencia", \App\Infrastructure\Teacher\Controller\GuardarAsistenciaController::class)->middleware('role:teacher')->name("asistencia.guardar");
 
+
+
+
+Route::prefix('admin')
+  ->middleware(['auth', 'role:admin'])
+  ->group(function () {
+    Route::prefix('users')->group(function () {
+      Route::get('/search', [UserController::class, 'search'])
+        ->name('admin.users.search');
+    });
+  });
 /*Route::get('/docente/registrar-notas', [DocenteController::class, 'registrarNotas'])
   ->name('docente.registrar_notas')
   ->middleware('role:teacher');
