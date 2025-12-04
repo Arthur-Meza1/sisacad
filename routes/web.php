@@ -61,6 +61,8 @@ Route::prefix('admin')
   ->middleware(['auth', 'role:admin'])
   ->group(function () {
     Route::prefix('users')->group(function () {
+      Route::get('/', [UserController::class, 'index'])
+        ->name('admin.users.index');
       Route::get('/search', [UserController::class, 'search'])
         ->name('admin.users.search');
     });

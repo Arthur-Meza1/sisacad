@@ -12,6 +12,11 @@ class UserController extends Controller
   // Inyectamos el Caso de Uso
   public function __construct(private readonly FindUsersQuery $findUsersQuery) {}
 
+  public function index(): View
+  {
+    return view('admin.users.index');
+  }
+
   public function search(Request $request):View
   {
     $validated = $request->validate([
