@@ -31,49 +31,13 @@
         <div class="card bg-white rounded-xl p-5 shadow-lg border-b-4 border-indigo-500">
           <p class="text-sm font-medium text-gray-500">Usuarios Registrados</p>
           <strong id="usersCount" class="text-3xl font-extrabold text-indigo-600">{{$users_count}}</strong>
-          <p class="text-xs text-gray-400 mt-1">Incluye docentes y alumnos</p>
+          <p class="text-xs text-gray-400 mt-1">Incluye docentes, alumnos, etc</p>
         </div>
         <div class="card bg-white rounded-xl p-5 shadow-lg border-b-4 border-cyan-500">
           <p class="text-sm font-medium text-gray-500">Cursos Activos</p>
           <strong id="coursesCount" class="text-3xl font-extrabold text-cyan-600">{{$courses_count}}</strong>
-          <p class="text-xs text-gray-400 mt-1">En todas las facultades</p>
+          <p class="text-xs text-gray-400 mt-1">En todos los años</p>
         </div>
-      </div>
-    </div>
-    <div id="view-users" class="view-content space-y-6 hidden">
-      <h2 class="text-2xl font-bold text-gray-800 mb-4">Usuarios</h2>
-
-      <form action="/admin/users/search" method="GET" class="mb-4">
-        <input type="text" name="query" placeholder="Buscar usuarios..."
-               class="border rounded-lg px-3 py-2 w-64" required>
-        <button class="bg-indigo-600 text-white px-4 py-2 rounded-lg ml-2 text-sm">Buscar</button>
-      </form>
-
-      <div class="overflow-x-auto">
-        <table class="min-w-full bg-white rounded-lg shadow">
-          <thead>
-          <tr class="bg-gray-100">
-            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600">Nombre</th>
-            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600">Email</th>
-            <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600">Rol</th>
-          </tr>
-          </thead>
-          <tbody>
-          @forelse($results ?? [] as $user)
-            <tr class="border-b">
-              <td class="px-4 py-3 text-sm text-gray-700">{{ $user->name }}</td>
-              <td class="px-4 py-3 text-sm text-gray-700">{{ $user->email }}</td>
-              <td class="px-4 py-3 text-sm text-gray-700">{{ $user->role }}</td>
-            </tr>
-          @empty
-            <tr>
-              <td colspan="3" class="px-4 py-4 text-center text-gray-400">
-                No se encontraron resultados
-              </td>
-            </tr>
-          @endforelse
-          </tbody>
-        </table>
       </div>
     </div>
   </main>

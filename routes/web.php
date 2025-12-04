@@ -56,17 +56,16 @@ Route::post('/api/teacher/aulas', \App\Infrastructure\Teacher\Controller\GetAula
 Route::post('/api/teacher/sesion', \App\Infrastructure\Teacher\Controller\CreateOrGetSesionController::class)->middleware('role:teacher');
 Route::post("/api/teacher/asistencia", \App\Infrastructure\Teacher\Controller\GuardarAsistenciaController::class)->middleware('role:teacher')->name("asistencia.guardar");
 
-
-Route::prefix('admin')
-  ->middleware(['auth', 'role:admin'])
+Route::middleware(['auth', 'role:admin'])
+  ->prefix('admin/users')
+  ->name('admin.users.')
   ->group(function () {
-    Route::prefix('users')->group(function () {
-      Route::get('/', [UserController::class, 'index'])
-        ->name('admin.users.index');
-      Route::get('/search', [UserController::class, 'search'])
-        ->name('admin.users.search');
-    });
+    Route::get('/', [UserController::class, 'index'])->name('index');
+    Route::get('/create', [UserController::class, 'create'])->name('create');
+    Route::post('/', [UserController::class, 'store'])->name('store');
+    Route::get('/search', [UserController::class, 'search'])->name('search');
   });
+
 /*Route::get('/docente/registrar-notas', [DocenteController::class, 'registrarNotas'])
   ->name('docente.registrar_notas')
   ->middleware('role:teacher');
