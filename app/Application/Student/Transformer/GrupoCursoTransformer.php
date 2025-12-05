@@ -2,11 +2,11 @@
 
 namespace App\Application\Student\Transformer;
 
-use App\Domain\Student\Entity\Curso;
+use App\Domain\Shared\Entity\GrupoCurso;
 
-class CursoTransformer {
+class GrupoCursoTransformer {
   /**
-   * @param Curso[] $cursos
+   * @param GrupoCurso[] $cursos
    * @return array
    */
   public static function toArray(array $cursos): array {
@@ -15,7 +15,9 @@ class CursoTransformer {
     foreach ($cursos as $curso) {
       $res[] = [
         'id' => $curso->id()->getValue(),
-        'nombre' => $curso->nombre()
+        'nombre' => $curso->nombre(),
+        'turno' => $curso->grupoTurno()->getValue(),
+        'tipo' => $curso->cursoTipo()->getValue(),
       ];
     }
 

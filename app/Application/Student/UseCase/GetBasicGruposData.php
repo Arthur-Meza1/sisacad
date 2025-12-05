@@ -15,7 +15,7 @@ class GetBasicGruposData {
 
   public function execute(Id $id): array {
     $alumno = $this->alumnoRepository->findFromIdOrFail($id);
-    $dtos = $this->grupoCursoRepository->findQueryFromIds($alumno->grupoIds());
+    $dtos = $this->grupoCursoRepository->findQueryFromIds($alumno->gruposId());
 
     return BasicGrupoDataTransformer::toArray($dtos);
   }

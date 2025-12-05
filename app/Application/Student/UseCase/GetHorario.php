@@ -15,7 +15,7 @@ class GetHorario
   ) {}
   public function execute(Id $id): array {
     $alumno = $this->alumnoRepository->findFromIdOrFail($id);
-    $horario = $this->horarioRepository->getFromGrupoIds($alumno->grupoIds(), false);
+    $horario = $this->horarioRepository->getFromGrupoIds($alumno->gruposId(), false);
 
     return HorarioTransformer::toArray($horario);
   }

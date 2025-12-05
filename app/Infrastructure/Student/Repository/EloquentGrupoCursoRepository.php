@@ -8,6 +8,9 @@ use App\Infrastructure\Shared\Model\GrupoCurso as EloquentGrupoCurso;
 
 class EloquentGrupoCursoRepository implements IGrupoCursoRepository
 {
+  /**
+   * @inheritDoc
+   */
   public function findQueryFromIds(array $ids): array
   {
     return EloquentGrupoCurso::with('curso', 'docente.user')

@@ -2,14 +2,17 @@
 
 namespace App\Domain\Student\Entity;
 
+use App\Domain\Shared\Entity\GrupoCurso;
 use App\Domain\Shared\Exception\InvalidValue;
+use App\Domain\Shared\ValueObject\CursoTipo;
 use App\Domain\Shared\ValueObject\Id;
 use App\Domain\Shared\ValueObject\NotasContinua;
 use App\Domain\Shared\ValueObject\NotasParcial;
 use App\Domain\Shared\ValueObject\Registro;
 
 class Alumno {
-  private array $grupoIds;
+  /** @var GrupoCurso[] */
+  private array $grupos;
   private Registro $registro;
 
   private function __construct(
@@ -32,12 +35,25 @@ class Alumno {
     );
   }
 
-  public function addGrupoId($id): void {
-    $this->grupoIds[] = $id;
+  public function addGrupo(GrupoCurso $grupoCurso): void {
+    $this->grupos[] = $grupoCurso;
   }
 
-  public function grupoIds(): array {
-    return $this->grupoIds;
+  public function grupos(): array {
+    return $this->grupos;
+  }
+
+  public function filterGruposByTipo(string $tipo): array {
+    return array_filter($this->grupos,
+      function (GrupoCurso $grupoCurso) use ($tipo) {
+        return $grupoCurso->cursoTipo()->getValue() === $tipo;
+      });
+  }
+
+  public function gruposId(): array {
+    return array_map(
+      fn($grupo) => $grupo->id()->getValue(), $this->grupos()
+    );
   }
 
   public function loadRegistro(Registro $registro): void {

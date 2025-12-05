@@ -27,7 +27,7 @@ class EloquentAlumnoRepository implements IAlumnoRepository {
     try {
       $eloquentAlumno =
         EloquentAlumno::
-        with('user', 'grupos')
+        with('user', 'grupos.curso')
         ->where('user_id', $id->getValue())->firstOrFail();
 
       return ParseAlumnoToDomain::fromEloquent($eloquentAlumno);
