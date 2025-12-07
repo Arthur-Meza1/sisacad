@@ -1,14 +1,10 @@
 import {ContentLoader} from "../common/ContentLoader.js";
-import {Calendar} from "fullcalendar";
 import {
   formatTime,
   formatDate,
-  ucfirst,
-  convertDiaToInt,
-  isInNowEvent, sameDay, convertDateStringToDate
+  isInNowEvent, sameDay
 } from "../common/Utils.js";
 import $ from "jquery";
-import tippy from "tippy.js";
 import 'tippy.js/dist/tippy.css';
 import {onEventClick} from "./asistencia.js";
 import {Calendario} from "../shared/calendario.js";
