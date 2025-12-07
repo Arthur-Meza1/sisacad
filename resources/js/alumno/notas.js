@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import {ContentLoader} from "../common/ContentLoader.js";
+import {ucfirst} from "../common/Utils.js";
 
 let gradeChartDetail;
 let cursosLoader = new ContentLoader(
@@ -35,7 +36,7 @@ function renderCourseButtons(courses, container) {
              focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
       data-course-id="${course.id}"
       data-course-name="${course.nombre}">
-        <span class="text-base tracking-wide">${course.nombre}</span>
+        <span class="text-base tracking-wide">${course.nombre} (${course.turno}) - ${ucfirst(course.tipo)}</span>
     </button>
     `).join('');
 

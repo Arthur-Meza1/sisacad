@@ -56,8 +56,10 @@ function enrollLab(labId) {
       g_cuposLoader.unload();
       g_labsLoader.unload();
       loadEnrollmentView();
+    })
+    .fail(function (data) {
+      console.error(data.responseText);
     });
-
   /*const labToEnroll = availableLabs.find(lab => lab.id === labId);
   if (labToEnroll && !enrolledLabs.some(lab => lab.id === labId)) {
     enrolledLabs.push(labToEnroll);
