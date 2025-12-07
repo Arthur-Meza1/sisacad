@@ -3,17 +3,11 @@
 namespace App\Domain\Student\Repository;
 
 
-use App\Application\Student\DTOs\GrupoCursoDTO;
 use App\Domain\Shared\Entity\GrupoCurso;
 use App\Domain\Shared\ValueObject\Id;
 
 interface IGrupoCursoRepository
 {
-  /**
-   * @param int[] $ids
-   * @return GrupoCursoDTO[]
-   */
-  public function findQueryFromIds(array $ids): array;
-
+  public function matricularEnGrupo(Id $alumnoId, Id $grupoId): void;
   public function getAvailableLabsFromCurso(GrupoCurso $curso, array $except): array;
 }
