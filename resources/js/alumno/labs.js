@@ -7,6 +7,7 @@ export function loadEnrollmentView() {
 }
 
 window.enrollLab = enrollLab;
+window.removeEnrollment = removeEnrollment;
 
 let g_cuposLoader = new ContentLoader({
   "url": "/api/student/cupos",
@@ -60,12 +61,23 @@ function enrollLab(labId) {
     .fail(function (data) {
       console.error(data.responseText);
     });
-  /*const labToEnroll = availableLabs.find(lab => lab.id === labId);
-  if (labToEnroll && !enrolledLabs.some(lab => lab.id === labId)) {
-    enrolledLabs.push(labToEnroll);
-    alert(`¡${labToEnroll.name} ha sido matriculado con éxito!`);
-    renderEnrollentView();
-  }*/
+}
+
+function removeEnrollment(labId) {
+  const data = {
+    'id': labId,
+    '_token': $('meta[name="csrf-token"]').attr('content')
+  };
+
+  $.post('/api/student/desmatricular', data)
+    .done(function(data) {
+      g_cuposLoader.unload();
+      g_labsLoader.unload();
+      loadEnrollmentView();
+    })
+    .fail(function (data) {
+      console.error(data.responseText);
+    });
 }
 
 function renderLabs(data, container) {

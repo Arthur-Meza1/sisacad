@@ -28,4 +28,10 @@ class EloquentGrupoCursoRepository implements IGrupoCursoRepository
       'grupo_curso_id' => $grupoId->getValue(),
     ]);
   }
+
+  public function desmatricularEnGrupo(Id $alumnoId, Id $grupoId): void {
+    EloquentMatricula::where('alumno_id', $alumnoId->getValue())
+      ->where('grupo_curso_id', $grupoId->getValue())
+      ->delete();
+  }
 }
