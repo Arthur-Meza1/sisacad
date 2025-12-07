@@ -15,7 +15,7 @@ class GrupoCursoTransformer {
     foreach ($cursos as $curso) {
       $res[] = [
         'id' => $curso->id()->getValue(),
-        'nombre' => $curso->nombre(),
+        'nombre' => $curso->curso()->nombre(),
         'turno' => $curso->grupoTurno()->getValue(),
         'tipo' => $curso->cursoTipo()->getValue(),
       ];
