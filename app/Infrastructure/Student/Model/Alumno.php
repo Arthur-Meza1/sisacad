@@ -4,8 +4,8 @@ namespace App\Infrastructure\Student\Model;
 
 use App\Infrastructure\Shared\Model\GrupoCurso;
 use App\Infrastructure\Shared\Model\Matricula;
+use App\Infrastructure\Shared\Model\Registro;
 use App\Infrastructure\Shared\Model\User;
-use App\Models\Registro;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,6 +14,8 @@ class Alumno extends Model
     use HasFactory;
 
     public $timestamps = false;
+
+    protected $fillable = ['user_id'];
 
     public function user() {
       return $this->belongsTo(User::class);

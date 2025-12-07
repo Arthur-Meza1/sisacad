@@ -4,15 +4,16 @@ namespace App\Application\Student\UseCase;
 
 use App\Domain\Shared\ValueObject\Id;
 use App\Domain\Student\Repository\IAlumnoRepository;
-use App\Domain\Teacher\Repository\IGrupoCursoRepository;
+use App\Domain\Student\Repository\IGrupoCursoRepository;
 
-class GetGruposData {
+class MatricularLab
+{
   public function __construct(
     private readonly IAlumnoRepository $alumnoRepository,
     private readonly IGrupoCursoRepository $grupoCursoRepository,
   ) {}
-
-  public function execute(Id $id): array {
-
+  public function execute(Id $alumnoId, Id $cursoId) {
+    $alumno = $this->alumnoRepository->findFromIdOrFail($alumnoId, false);
+    $this->grupoCursoRepository->matricularEnGrupo($alumno->id(), $cursoId);
   }
 }

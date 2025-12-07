@@ -11,5 +11,5 @@ interface IAlumnoRepository {
    * @return Alumno[]
    */
   public function getByGrupoCursoId(Id $id): array;
-  public function findFromIdOrFail(Id $id): Alumno;
+  public function findFromIdOrFail(Id $id, bool $loadGrupos = true): Alumno;
 }
