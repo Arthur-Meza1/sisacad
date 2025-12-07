@@ -15,6 +15,7 @@ let calendarLoader = new ContentLoader(
 );
 
 export function loadScheduleCalendar() {
+  fullCalendarInstance?.updateSize();
   calendarLoader.load(renderScheduleCalendar);
 }
 
