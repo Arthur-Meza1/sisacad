@@ -43,6 +43,10 @@ class Alumno {
     return $this->grupos;
   }
 
+  /**
+   * @param string $tipo
+   * @return GrupoCurso[]
+   */
   public function filterGruposByTipo(string $tipo): array {
     return array_filter($this->grupos,
       function (GrupoCurso $grupoCurso) use ($tipo) {
