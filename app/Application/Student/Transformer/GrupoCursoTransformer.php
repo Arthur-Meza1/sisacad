@@ -18,6 +18,7 @@ class GrupoCursoTransformer {
         'nombre' => $curso->curso()->nombre(),
         'turno' => $curso->grupoTurno()->getValue(),
         'tipo' => $curso->cursoTipo()->getValue(),
+        'docente' => $curso->docente()
       ];
     }
 

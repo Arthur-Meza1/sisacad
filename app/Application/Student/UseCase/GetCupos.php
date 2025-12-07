@@ -2,7 +2,6 @@
 
 namespace App\Application\Student\UseCase;
 
-use App\Application\Student\Transformer\BasicGrupoDataTransformer;
 use App\Application\Student\Transformer\GrupoCursoTransformer;
 use App\Domain\Shared\ValueObject\CursoTipo;
 use App\Domain\Shared\ValueObject\Id;
@@ -25,6 +24,6 @@ class GetCupos {
       $labs = [...$labs, ...$this->grupoCursoRepository->getAvailableLabsFromCurso($curso, $gruposId)];
     }
 
-    return BasicGrupoDataTransformer::toArray($labs);
+    return GrupoCursoTransformer::toArray($labs);
   }
 }

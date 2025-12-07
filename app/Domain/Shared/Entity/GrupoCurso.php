@@ -2,6 +2,7 @@
 
 namespace App\Domain\Shared\Entity;
 
+use App\Domain\Shared\Exception\InvalidValue;
 use App\Domain\Shared\ValueObject\CursoTipo;
 use App\Domain\Shared\ValueObject\GrupoTurno;
 use App\Domain\Shared\ValueObject\Id;
@@ -12,6 +13,7 @@ readonly class GrupoCurso {
     private Curso      $curso,
     private GrupoTurno $grupoTurno,
     private CursoTipo  $cursoTipo,
+    private string     $docenteNombre,
   ) {}
 
   public static function fromPrimitive(
@@ -19,8 +21,12 @@ readonly class GrupoCurso {
     Curso $curso,
     GrupoTurno $grupoTurno,
     CursoTipo $cursoTipo,
+    string $docenteNombre,
   ): self {
-    return new self($id, $curso, $grupoTurno, $cursoTipo);
+    if(empty($docenteNombre)) {
+      throw InvalidValue::stringNullOrEmpty();
+    }
+    return new self($id, $curso, $grupoTurno, $cursoTipo, $docenteNombre);
   }
 
   public function id(): Id {
@@ -29,6 +35,10 @@ readonly class GrupoCurso {
 
   public function curso(): Curso {
     return $this->curso;
+  }
+
+  public function docente(): string {
+    return $this->docenteNombre;
   }
 
   public function grupoTurno(): GrupoTurno {
