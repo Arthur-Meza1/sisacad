@@ -2,12 +2,12 @@
 
 namespace App\Application\Student\DTOs;
 
-class GrupoCursoDTO {
+readonly class GrupoCursoDTO {
   public function __construct(
-    public readonly string $nombre,
-    public readonly string $docente,
-    public readonly string $turno,
-    public readonly string $tipo,
+    public string $nombre,
+    public string $docente,
+    public string $turno,
+    public string $tipo,
   ) {
   }
 }
