@@ -53,7 +53,7 @@ function enrollLab(labId) {
   };
 
   $.post('/api/student/matricular', data)
-    .done(function(data) {
+    .done(function() {
       g_cuposLoader.unload();
       g_labsLoader.unload();
       loadEnrollmentView();
@@ -70,7 +70,7 @@ function removeEnrollment(labId) {
   };
 
   $.post('/api/student/desmatricular', data)
-    .done(function(data) {
+    .done(function() {
       g_cuposLoader.unload();
       g_labsLoader.unload();
       loadEnrollmentView();
