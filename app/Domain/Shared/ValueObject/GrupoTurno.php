@@ -25,6 +25,14 @@ class GrupoTurno {
     return new self($turno);
   }
 
+  public function getAllowed(): array {
+    if($this->turno === self::A || $this->turno === self::C) {
+      return [self::A, self::C];
+    } else {
+      return [self::B, self::D];
+    }
+  }
+
   public static function allowedTurno(): array {
     return [self::A, self::B, self::C, self::D];
   }
