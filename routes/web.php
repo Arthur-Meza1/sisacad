@@ -1,11 +1,14 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\Login;
 use App\Http\Controllers\Auth\Logout;
 use App\Infrastructure\Student\Controller\AlumnoController;
 use App\Infrastructure\Teacher\Controller\DocenteController;
+use App\Infrastructure\Admin\Controller\UserController;
 use App\Http\Controllers\AsistenciaController;
+
 
 Route::get('/', function () {
   if (!auth()->check()) {
@@ -26,7 +29,9 @@ Route::middleware('auth')->group(function () {
   Route::get('/student', AlumnoController::class)
     ->name('student')
     ->middleware('role:student');
-  Route::view('/admin', 'admin')->middleware('role:admin');
+  Route::get('/admin', [DashboardController::class, 'index'])
+    ->middleware('role:admin')
+    ->name('admin.dashboard');
   Route::get('/teacher', DocenteController::class)
     ->name('teacher')
     ->middleware('role:teacher');
@@ -52,6 +57,15 @@ Route::post('/api/teacher/aulas', \App\Infrastructure\Teacher\Controller\GetAula
 Route::post('/api/teacher/sesion', \App\Infrastructure\Teacher\Controller\CreateOrGetSesionController::class)->middleware('role:teacher');
 Route::post("/api/teacher/asistencia", \App\Infrastructure\Teacher\Controller\GuardarAsistenciaController::class)->middleware('role:teacher')->name("asistencia.guardar");
 
+Route::middleware(['auth', 'role:admin'])
+  ->prefix('admin/users')
+  ->name('admin.users.')
+  ->group(function () {
+    Route::get('/', [UserController::class, 'index'])->name('index');
+    Route::get('/create', [UserController::class, 'create'])->name('create');
+    Route::post('/', [UserController::class, 'store'])->name('store');
+    Route::get('/search', [UserController::class, 'search'])->name('search');
+  });
 Route::get("/api/student/horario", \App\Infrastructure\Student\Controller\GetHorarioController::class)->middleware('role:student');
 Route::get('/api/student/cursos', \App\Infrastructure\Student\Controller\GetCursosController::class)->middleware('role:student');
 Route::get('/api/student/cursos/{curso}/notas', \App\Infrastructure\Student\Controller\GetNotasController::class)->middleware('role:student');

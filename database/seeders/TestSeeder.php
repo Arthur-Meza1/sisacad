@@ -61,6 +61,12 @@ class TestSeeder extends Seeder
       $cursos[] = $curso;
     }
 
+    User::factory()->create([
+      'role' => 'admin',
+      'name' => "ElAdmin",
+      'email' => "admin@example.com",
+    ]);
+
     $rolando = Docente::create(['user_id' =>
       User::factory()->create([
         'role' => 'teacher',
