@@ -56,6 +56,8 @@ Route::get("/api/student/horario", \App\Infrastructure\Student\Controller\GetHor
 Route::get('/api/student/cursos', \App\Infrastructure\Student\Controller\GetCursosController::class)->middleware('role:student');
 Route::get('/api/student/cursos/{curso}/notas', \App\Infrastructure\Student\Controller\GetNotasController::class)->middleware('role:student');
 Route::get('/api/student/cupos', \App\Infrastructure\Student\Controller\GetCuposController::class)->middleware('role:student');
+Route::get('/api/student/labs', \App\Infrastructure\Student\Controller\GetLabsController::class)->middleware('role:student');
+Route::post('/api/student/matricular', \App\Infrastructure\Student\Controller\MatricularController::class)->middleware('role:student');
 
 /*Route::get('/docente/registrar-notas', [DocenteController::class, 'registrarNotas'])
   ->name('docente.registrar_notas')
@@ -75,7 +77,6 @@ Route::post('/docente/asistencia/{grupo}', [AsistenciaController::class, 'guarda
   ->name('asistencia.guardar')
   ->middleware('role:teacher');
 
-Route::get('/api/student/labs', [AlumnoController::class, 'getLaboratorios'])->middleware('role:student');
 
 Route::post('/api/teacher/sesion', [DocenteController::class, 'crearSesion'])->middleware('role:teacher');
 Route::post('/api/student/matricular', [AlumnoController::class, 'matricular'])->middleware('role:student');*/
