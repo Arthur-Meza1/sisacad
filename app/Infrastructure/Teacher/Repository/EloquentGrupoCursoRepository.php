@@ -17,8 +17,8 @@ class EloquentGrupoCursoRepository implements IGrupoCursoRepository
    */
   public function findQueryFromIds(array $ids): array
   {
-    return EloquentGrupoCurso::with(['registros', 'curso'])
-      ->withCount('registros')
+    return EloquentGrupoCurso::with(['curso'])
+      ->withCount('alumnos')
       ->whereIn('id', $ids)
       ->get()
       ->map(function (EloquentGrupoCurso $grupo) {
@@ -27,7 +27,7 @@ class EloquentGrupoCursoRepository implements IGrupoCursoRepository
           nombre: $grupo->curso->nombre,
           turno: $grupo->turno,
           tipo: $grupo->tipo,
-          nregistros: $grupo->registros_count,
+          nregistros: $grupo->alumnos_count,
         );
       })->toArray();
   }
