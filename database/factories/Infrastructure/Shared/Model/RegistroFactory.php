@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Factories\Infrastructure\Shared\Model;
 
 use App\Infrastructure\Shared\Model\GrupoCurso;
 use App\Infrastructure\Shared\Model\Registro;
