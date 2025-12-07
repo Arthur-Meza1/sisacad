@@ -50,9 +50,9 @@
           <h3 class="font-bold text-lg text-gray-700 mb-3">Cursos y Laboratorios Matriculados</h3>
           <div id="courseList" class="space-y-2 text-sm">
             @foreach($grupos as $grupo)
-              <div class="flex justify-between items-center p-2 border-b hover:bg-gray-50 rounded-md">
-                <span class="font-medium">{{$grupo['nombre']}} ({{$grupo['turno']}})</span>
-                <span class="text-xs text-gray-500">{{ucfirst($grupo['tipo'])}} | {{$grupo['docente']}}</span>
+              <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                <span class="font-medium text-indigo-700">{{$grupo['nombre']}} ({{$grupo['turno']}}) - {{ucfirst($grupo['tipo'])}}</span>
+                <span class="text-xs text-gray-500">Docente: {{$grupo['docente']}}</span>
               </div>
             @endforeach
           </div>

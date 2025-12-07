@@ -95,6 +95,7 @@ function loadAulasDisponibles(date, start, end) {
 }
 
 export function loadScheduleCalendar() {
+  g_fullCalendarInstance?.updateSize();
   g_calendarLoader.load(renderScheduleCalendar);
 }
 
