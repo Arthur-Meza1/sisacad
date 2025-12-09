@@ -12,7 +12,7 @@ use App\Domain\Shared\ValueObject\Registro;
 
 class Alumno {
   /** @var GrupoCurso[] */
-  private array $grupos;
+  private array $grupos = [];
   private Registro $registro;
 
   private function __construct(
