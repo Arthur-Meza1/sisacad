@@ -88,8 +88,7 @@ export class Calendario {
       sesionSet.add(`${convertDateStringToDate(item.fecha).getDay()}${item.horaInicio}${item.horaFin}`);
       return {
         title: `${item.grupo.nombre} - ${ucfirst(item.tipo)}`,
-        backgroundColor: "#ab0647",
-        borderColor: "#ab0647",
+        className: "ec-session",
         start: `${item.fecha}T${item.horaInicio}`,
         end: `${item.fecha}T${item.horaFin}`,
         extendedProps: item,
