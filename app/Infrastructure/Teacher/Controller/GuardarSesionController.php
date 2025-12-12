@@ -7,21 +7,20 @@ use App\Domain\Shared\ValueObject\Id;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class GuardarAsistenciaController {
+class GuardarSesionController {
   public function __construct(
     private readonly GuardarAsistencia $guardarAsistencia,
   ) {}
 
-  public function __invoke(Request $request) {
+  public function __invoke(int $id, Request $request) {
     $validated = $request->validate([
-      'sesion_id' => 'required|integer|exists:sesions,id',
       'alumnos' => 'array',
       'alumnos.*' => 'in:0,1',
     ]);
 
     try {
       $this->guardarAsistencia->execute(
-        sesionId:  Id::fromInt($validated['sesion_id']),
+        sesionId:  Id::fromInt($id),
         asistencias:  $validated['alumnos'] ?? []
       );
 

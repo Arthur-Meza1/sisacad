@@ -91,12 +91,11 @@ function onSendAsistencia(e) {
 
   const laravelData = {
     _token: formData[0].value,
-    sesion_id: formData[1].value,
     alumnos: changedMap
   };
 
   $.ajax({
-    url: $form.attr('action'),
+    url: `/api/teacher/sesion/${formData[1].value}/guardar`,
     type: 'POST',
     data: laravelData,
     dataType: 'json',
