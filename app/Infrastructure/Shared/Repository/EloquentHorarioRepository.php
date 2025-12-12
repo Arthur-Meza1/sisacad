@@ -26,6 +26,7 @@ class EloquentHorarioRepository implements IHorarioRepository {
 
     $horario = $grupos->flatMap(function ($grupo) {
       return $grupo->bloqueHorario->map(fn($bloque) => new BloqueHorarioDTO(
+        id: Id::fromInt($bloque->id),
         fechaOrDia: Dia::fromString($bloque->dia),
         horaInicio: Hora::fromString($bloque->horaInicio),
         horaFin: Hora::fromString($bloque->horaFin),
@@ -42,6 +43,7 @@ class EloquentHorarioRepository implements IHorarioRepository {
         ->whereIn('grupo_curso_id', $grupoIds)
         ->get()
         ->map(fn ($sesion) => new BloqueHorarioDTO(
+          id: Id::fromInt($sesion->id),
           fechaOrDia: Fecha::fromString($sesion->fecha),
           horaInicio: Hora::fromString($sesion->horaInicio),
           horaFin: Hora::fromString($sesion->horaFin),

@@ -3,18 +3,18 @@
 namespace App\Infrastructure\Teacher\Controller;
 
 use App\Application\Shared\DTOs\SesionDTO;
-use App\Application\Teacher\UseCase\CrearOrGetSesion;
+use App\Application\Teacher\UseCase\CreateSesion;
 use App\Domain\Shared\ValueObject\Fecha;
 use App\Domain\Shared\ValueObject\Hora;
 use App\Domain\Shared\ValueObject\Id;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class CreateOrGetSesionController {
+class CreateSesionController
+{
   public function __construct(
-    private readonly CrearOrGetSesion $crearOrGetSesion
+    private readonly CreateSesion $createSesion
   ) {}
-
   public function __invoke(Request $request) {
     $validated = $request->validate([
       'grupo_id' => 'required',
@@ -25,7 +25,7 @@ class CreateOrGetSesionController {
     ]);
 
     try {
-      $res = $this->crearOrGetSesion->execute(new SesionDTO(
+      $res = $this->createSesion->execute(new SesionDTO(
         fecha:  Fecha::fromString($validated['fecha']),
         horaInicio:  Hora::fromString($validated['hora_inicio']),
         horaFin:  Hora::fromString($validated['hora_fin']),
@@ -34,8 +34,7 @@ class CreateOrGetSesionController {
       ));
 
       return response()->json([
-        'editable' => $res['editable'],
-        'sesion' => $res['sesion']
+        'sesion' => $res
       ], Response::HTTP_OK);
     } catch (\Exception $e) {
       return response()->json([
