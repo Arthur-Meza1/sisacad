@@ -84,6 +84,8 @@ class EloquentSesionRepository implements ISesionRepository {
 
     return Sesion::fromPrimitives(
       id: Id::fromInt($eloquentSesion->id),
+      fecha: $fecha,
+      horaInicio: $inicio,
     );
   }
 

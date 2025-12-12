@@ -34,8 +34,9 @@ class CreateOrGetSesionController {
       ));
 
       return response()->json([
+        'editable' => $res['editable'],
         'sesion' => $res['sesion']
-      ], $res['created'] ? Response::HTTP_CREATED : Response::HTTP_OK);
+      ], Response::HTTP_OK);
     } catch (\Exception $e) {
       return response()->json([
         'message' => $e->getMessage() . $e->getTraceAsString()

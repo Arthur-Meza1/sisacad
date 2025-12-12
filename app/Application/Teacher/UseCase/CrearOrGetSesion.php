@@ -27,7 +27,7 @@ class CrearOrGetSesion {
           );
 
         return [
-          'created' => false,
+          'editable' => $sesion->editable(),
           'sesion' => SesionTransformer::toArray($sesion),
         ];
       } catch(SesionNotFound) {
@@ -48,7 +48,7 @@ class CrearOrGetSesion {
         $this->sesionRepository->update($sesion);
 
         return [
-          'created' => true,
+          'editable' => true,
           'sesion' => SesionTransformer::toArray($sesion),
         ];
       }
