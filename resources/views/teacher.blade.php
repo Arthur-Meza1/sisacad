@@ -165,9 +165,6 @@
               <span id="saveStatus">Sin cambios por guardar</span>
             </div>
             <div class="flex gap-3">
-              <button onclick="calculateAverages()" class="px-4 py-2 rounded-lg text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 transition">
-                <i class="fas fa-calculator mr-2"></i> Calcular Promedios
-              </button>
               <button onclick="saveAllGrades()" class="px-5 py-2 rounded-lg text-sm font-medium text-white bg-green-600 hover:bg-green-700 transition">
                 <i class="fas fa-save mr-2"></i> Guardar Todo
               </button>
