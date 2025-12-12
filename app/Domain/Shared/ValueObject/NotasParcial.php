@@ -34,6 +34,10 @@ class NotasParcial
     $this->sustitutorio = $sustitutorio;
   }
 
+  public function sustitutorio(): ?int {
+    return $this->sustitutorio;
+  }
+
   public function toArray(): array {
     $unidad1 = $this->unidad1;
     $unidad2 = $this->unidad2;
