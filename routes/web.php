@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\Login;
 use App\Http\Controllers\Auth\Logout;
@@ -29,9 +29,6 @@ Route::middleware('auth')->group(function () {
   Route::get('/student', [AlumnoController::class, 'index'])
     ->name('student')
     ->middleware('role:student');
-  Route::get('/admin', [DashboardController::class, 'index'])
-    ->middleware('role:admin')
-    ->name('admin.dashboard');
   Route::get('/teacher', DocenteController::class)
     ->name('teacher')
     ->middleware('role:teacher');
@@ -62,8 +59,10 @@ Route::middleware(['auth', 'role:teacher'])
   });
 
 Route::middleware(['auth', 'role:admin'])
-  ->prefix('admin')->name('admin.')
+  ->prefix('/admin')->name('admin.')
   ->group(function () {
+    Route::get('/', [AdminDashboardController::class, 'index'])
+      ->name('dashboard');
     Route::prefix('users')->name('users.')
       ->group(function () {
         Route::get('/', [Admin\UserController::class, 'index'])->name('index');
