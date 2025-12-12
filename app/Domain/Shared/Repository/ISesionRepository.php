@@ -17,4 +17,5 @@ interface ISesionRepository {
     Id $grupoId,
     Id $aulaId): Sesion;
   public function update(Sesion $sesion): void;
+  public function deleteOrFail(Id $id): void;
 }

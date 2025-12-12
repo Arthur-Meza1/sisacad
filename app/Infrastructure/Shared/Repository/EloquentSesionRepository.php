@@ -65,4 +65,20 @@ class EloquentSesionRepository implements ISesionRepository {
       throw SesionNotFound::execute();
     }
   }
+
+  public function deleteOrFail(Id $id): void {
+    try {
+      // Buscar sesión
+      $sesion = EloquentSesion::findOrFail($id->getValue());
+
+      // Eliminar asistencias relacionadas (si no tienes cascade en DB)
+      EloquentAsistencia::where('sesion_id', $id->getValue())->delete();
+
+      // Eliminar la sesión
+      $sesion->delete();
+
+    } catch (ModelNotFoundException) {
+      throw SesionNotFound::execute();
+    }
+  }
 }
