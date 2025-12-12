@@ -6,7 +6,7 @@ import {
 } from "../common/Utils.js";
 import $ from "jquery";
 import 'tippy.js/dist/tippy.css';
-import {onEventClick} from "./asistencia.js";
+import {onSessionClick} from "./asistencia.js";
 import {Calendario} from "../shared/calendario.js";
 
 let g_calendarLoader = new ContentLoader({
@@ -103,9 +103,9 @@ export function closeScheduleModal(event) {
 function renderScheduleCalendar(data, container) {
   const calendario = new Calendario(data)
     .eventClick(function(info) {
-      if(isInNowEvent(info.event)) {
-        let props = {...info.event.extendedProps, fecha: formatDate(info.event.start)};
-        onEventClick(props);
+      const props = info.event.extendedProps;
+      if(props.sesion) {
+        onSessionClick(props.id, props.grupo.nombre);
       }
     })
     .select(function(info) {
@@ -179,7 +179,7 @@ export function reloadScheduleCalendar() {
 function crearSesion(props) {
   props._token = $('meta[name="csrf-token"]').attr('content');
   console.log(props);
-  $.post('/api/teacher/sesion', props)
+  $.post('/api/teacher/crear_sesion', props)
     .done(function() {
       closeScheduleModal();
       reloadScheduleCalendar();

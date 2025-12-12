@@ -91,7 +91,10 @@ export class Calendario {
         className: "ec-session",
         start: `${item.fecha}T${item.horaInicio}`,
         end: `${item.fecha}T${item.horaFin}`,
-        extendedProps: item,
+        extendedProps: {
+          sesion: true,
+          ...item
+        },
       }
     });
 
