@@ -14,7 +14,7 @@ class CreateSesion
     private readonly IAlumnoRepository $alumnoRepository,
     private readonly ISesionRepository $sesionRepository,
   ) {}
-  public function execute(SesionDto $dto): array {
+  public function execute(SesionDto $dto): void {
     $sesion = $this->sesionRepository->create(
       fecha: $dto->fecha,
       inicio: $dto->horaInicio,
@@ -30,7 +30,5 @@ class CreateSesion
     }
 
     $this->sesionRepository->update($sesion);
-
-    return SesionTransformer::toArray($sesion);
   }
 }

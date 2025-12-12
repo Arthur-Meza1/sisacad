@@ -25,7 +25,7 @@ class CreateSesionController
     ]);
 
     try {
-      $res = $this->createSesion->execute(new SesionDTO(
+      $this->createSesion->execute(new SesionDTO(
         fecha:  Fecha::fromString($validated['fecha']),
         horaInicio:  Hora::fromString($validated['hora_inicio']),
         horaFin:  Hora::fromString($validated['hora_fin']),
@@ -33,9 +33,7 @@ class CreateSesionController
         aulaId:  Id::fromInt($validated['aula_id']),
       ));
 
-      return response()->json([
-        'sesion' => $res
-      ], Response::HTTP_OK);
+      return response()->json([], Response::HTTP_OK);
     } catch (\Exception $e) {
       return response()->json([
         'message' => $e->getMessage() . $e->getTraceAsString()
