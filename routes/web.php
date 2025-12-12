@@ -6,8 +6,8 @@ use App\Http\Controllers\Auth\Login;
 use App\Http\Controllers\Auth\Logout;
 use App\Http\Controllers\AlumnoController;
 use App\Infrastructure\Teacher\Controller\DocenteController;
-use App\Infrastructure\Admin\Controller\UserController;
-use App\Http\Controllers\AsistenciaController;
+use App\Infrastructure\Teacher\Controller as Teacher;
+use App\Infrastructure\Admin\Controller as Admin;
 
 
 Route::get('/', function () {
@@ -51,19 +51,30 @@ Route::post('/logout', Logout::class)
 // API
 // =============
 // FIXME: Por alguna razon si lo coloco en api.php no funca los middleware
-Route::get("/api/teacher/horario", \App\Infrastructure\Teacher\Controller\GetHorarioController::class)->middleware('role:teacher');
-Route::post('/api/teacher/aulas', \App\Infrastructure\Teacher\Controller\GetAulasDisponiblesController::class)->middleware('role:teacher');
-Route::post('/api/teacher/sesion', \App\Infrastructure\Teacher\Controller\CreateOrGetSesionController::class)->middleware('role:teacher');
-Route::post("/api/teacher/asistencia", \App\Infrastructure\Teacher\Controller\GuardarAsistenciaController::class)->middleware('role:teacher')->name("asistencia.guardar");
+// FIXME: (Alberto) Esto en serio deberia ser refactorizado en un solo controlador que retorne vistas en vez de JSON
+Route::middleware(['auth', 'role:teacher'])
+  ->prefix('/api/teacher')
+  ->group(function () {
+    Route::get("/horario", Teacher\GetHorarioController::class);
+    Route::post('/aulas', Teacher\GetAulasDisponiblesController::class);
+    Route::post('/sesion', Teacher\CreateOrGetSesionController::class);
+    Route::post("/asistencia", Teacher\GuardarAsistenciaController::class)->name("asistencia.guardar");
+  });
 
 Route::middleware(['auth', 'role:admin'])
-  ->prefix('admin/users')
-  ->name('admin.users.')
+  ->prefix('admin')->name('admin.')
   ->group(function () {
-    Route::get('/', [UserController::class, 'index'])->name('index');
-    Route::get('/create', [UserController::class, 'create'])->name('create');
-    Route::post('/', [UserController::class, 'store'])->name('store');
-    Route::get('/search', [UserController::class, 'search'])->name('search');
+    Route::prefix('users')->name('users.')
+      ->group(function () {
+        Route::get('/', [Admin\UserController::class, 'index'])->name('index');
+        Route::get('/create', [Admin\UserController::class, 'create'])->name('create');
+        Route::post('/', [Admin\UserController::class, 'store'])->name('store');
+        Route::get('/search', [Admin\UserController::class, 'search'])->name('search');
+      });
+    Route::prefix('cursos')->name('cursos.')
+      ->group(function () {
+        Route::get('/', [Admin\CursoController::class, 'index'])->name('index');
+      });
   });
 
 /*Route::get('/docente/registrar-notas', [DocenteController::class, 'registrarNotas'])

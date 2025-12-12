@@ -23,7 +23,9 @@
       Usuarios
     </a>
 
-    <a href="#" data-view="courses" class="nav-link flex items-center p-3 rounded-lg hover:bg-gray-100 inactive-link">
+    <a href="{{ route('admin.cursos.index') }}"
+       data-view="cursos"
+       class="nav-link flex items-center p-3 rounded-lg hover:bg-gray-100 {{ request()->routeIs('admin.cursos.*') ? 'active-link' : 'inactive-link' }}">
       <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
               d="M12 14l9-5-9-5-9 5 9 5zm0 0v7">
