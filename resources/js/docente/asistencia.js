@@ -118,6 +118,9 @@ function closeAsistenciaModal() {
 }
 
 function borrarSesion() {
+  if(!confirm("Estás seguro que quieres eliminar esta sesion?"))
+    return;
+
   const data = {
     _token: $('meta[name="csrf-token"]').attr('content')
   };
