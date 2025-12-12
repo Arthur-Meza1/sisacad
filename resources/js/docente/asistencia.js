@@ -11,14 +11,14 @@ let g_id;
 function loadSesion(id) {
   g_id = id;
   $.get(`/api/teacher/sesion/${id}`)
-    .done(function(data) {
+    .done(function(data, _, xhr) {
       resetAsistenciaMap();
 
       $("#asistencia-submit-button").prop("disabled", !data.editable);
 
-      document.getElementById("asistencia_input_sesion_id").value = data.sesion.id;
+      document.getElementById("asistencia_input_sesion_id").value = data.id;
       document.getElementById('asistencia-table-body').innerHTML = "";
-      if(data.sesion.asistencias.length !== 0) {
+      if(data.asistencias.length !== 0) {
         $("#asistencia-empty").hide();
         $("#asistencia-tabla").show();
       } else {
@@ -26,7 +26,7 @@ function loadSesion(id) {
         $("#asistencia-tabla").hide();
       }
 
-      data.sesion.asistencias.forEach(x => addAsistencia(x, data.editable));
+      data.asistencias.forEach(x => addAsistencia(x, data.editable));
 
       document.getElementById('modal-asistencia').classList.remove('hidden');
     }).fail(function (data) {

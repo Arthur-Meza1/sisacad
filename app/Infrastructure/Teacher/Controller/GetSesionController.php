@@ -15,7 +15,7 @@ class GetSesionController
     try {
       $res = $this->getSesion->execute(Id::fromInt($id));
 
-      return response()->json(['sesion' => $res], Response::HTTP_OK);
+      return response()->json($res, Response::HTTP_OK);
     } catch (\Exception $e) {
       return response()->json([
         'message' => $e->getMessage() . $e->getTraceAsString()

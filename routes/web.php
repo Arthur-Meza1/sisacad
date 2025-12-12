@@ -7,7 +7,6 @@ use App\Http\Controllers\Auth\Logout;
 use App\Infrastructure\Student\Controller\AlumnoController;
 use App\Infrastructure\Teacher\Controller\DocenteController;
 use App\Infrastructure\Admin\Controller\UserController;
-use App\Http\Controllers\AsistenciaController;
 
 
 Route::get('/', function () {

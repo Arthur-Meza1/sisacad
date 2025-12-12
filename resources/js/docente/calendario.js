@@ -106,6 +106,14 @@ function renderScheduleCalendar(data, container) {
       const props = info.event.extendedProps;
       if(props.sesion) {
         onSessionClick(props.id, props.grupo.nombre);
+      } else if(isInNowEvent(info.event)) {
+        crearSesion({
+          grupo_id: props.grupo.id,
+          fecha: info.event.start.toISOString().slice(0, 10),
+          hora_inicio: props.horaInicio,
+          hora_fin: props.horaFin,
+          aula_id: props.aula.id
+        });
       }
     })
     .select(function(info) {
@@ -165,7 +173,6 @@ export function saveNewScheduleEvent() {
     "hora_inicio": start,
     "hora_fin": end,
     "aula_id": locationId,
-    "from_bloque": false,
   };
 
   crearSesion(props);
