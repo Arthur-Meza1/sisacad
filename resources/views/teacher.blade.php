@@ -7,7 +7,7 @@
       </a>
       <a href="#" data-view="grades-input" class="nav-link flex items-center p-3 rounded-lg hover:bg-gray-100 inactive-link">
         <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
-        Libreta y Asistencia
+        Libreta
       </a>
       <a href="#" data-view="schedule" class="nav-link flex items-center p-3 rounded-lg hover:bg-gray-100 inactive-link">
         <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
@@ -79,14 +79,16 @@
     </div>
 
     <div id="view-grades-input" class="view-content space-y-6 hidden">
-      <h2 class="text-2xl font-bold text-gray-800 mb-4">Libreta de Notas y Registro de Asistencia</h2>
+      <h2 class="text-2xl font-bold text-gray-800 mb-4">Libreta de Notas</h2>
 
       <div id="courseCardSelector" class="space-y-4">
         <h3 class="font-bold text-xl text-gray-700">Selecciona un Curso para Gestionar</h3>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
           @foreach($grupos as $grupo)
-          <div onclick="selectCourseForManagement({{$grupo['id']}}, '{{$grupo['nombre']}}')" class="p-6 bg-gradient-to-br from-blue-400 to-blue-600 rounded-xl shadow-lg cursor-pointer hover:shadow-xl hover:scale-105 transition text-white">
-            <h3 class="text-xl font-bold mb-2">{{$grupo['nombre']}}</h3>
+          <div onclick="handleCourseCardClick({{$grupo['id']}}, '{{$grupo['nombre']}} ({{$grupo['turno']}}) - {{ucfirst($grupo['tipo'])}}')" class="p-6 bg-gradient-to-br from-blue-400 to-blue-600 rounded-xl shadow-lg cursor-pointer hover:shadow-xl hover:scale-105 transition text-white">
+            <h3 class="text-xl font-bold mb-2">
+              {{$grupo['nombre']}} ({{$grupo['turno']}}) - {{ucfirst($grupo['tipo'])}}
+            </h3>
             <p class="text-sm opacity-90">{{$grupo['cantidad']}} Alumnos</p>
           </div>
           @endforeach
@@ -95,70 +97,85 @@
 
       <div id="courseManagementPanels" class="space-y-6 hidden">
         <div class="bg-white rounded-xl p-4 shadow-lg flex justify-between items-center border-l-4 border-indigo-500">
-          <h3 class="font-semibold text-lg text-gray-700">Opciones de Libreta</h3>
+          <div>
+            <h3 class="font-bold text-lg text-gray-700" id="currentCourseTitle">Curso: </h3>
+            <p class="text-sm text-gray-500" id="currentCourseInfo"></p>
+          </div>
           <div class="flex gap-3">
-            <button onclick="backToCourseSelection()" class="px-4 py-2 rounded-lg text-sm font-medium text-indigo-700 bg-indigo-100 hover:bg-indigo-200 transition">
-              <svg class="inline w-4 h-4 mr-1 mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"></path></svg>
-              Seleccionar Otro Curso
+            <button onclick="showCourseSelection()" class="px-4 py-2 rounded-lg text-sm font-medium text-indigo-700 bg-indigo-100 hover:bg-indigo-200 transition">
+              <i class="fas fa-chevron-left mr-2"></i> Seleccionar Otro Curso
             </button>
-            <button onclick="importNotes()" class="px-4 py-2 rounded-lg text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 transition">
-              Importar Notas (Excel)
-            </button>
-            <button onclick="exportGradebook()" class="px-4 py-2 rounded-lg text-sm font-medium text-gray-700 bg-gray-200 hover:bg-gray-300 transition">
-              Descargar Libreta/Informe
+
+            <div class="relative">
+              <input type="file" id="excelFileInput" accept=".xlsx,.xls" class="hidden" onchange="handleExcelImport(this.files)">
+              <button onclick="document.getElementById('excelFileInput').click()" class="px-4 py-2 rounded-lg text-sm font-medium text-white bg-green-600 hover:bg-green-700 transition">
+                <i class="fas fa-file-excel mr-2"></i> Importar Excel
+              </button>
+            </div>
+
+            <button onclick="exportToExcel()" class="px-4 py-2 rounded-lg text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 transition">
+              <i class="fas fa-download mr-2"></i> Exportar Excel
             </button>
           </div>
         </div>
 
-        <div id="gest-1-asistencia" class="bg-white rounded-xl p-6 shadow-lg">
-          <h3 class="font-bold text-xl text-gray-700 mb-4">1. Gestión de Asistencia y Curso: <span id="currentCourseNameAtt" class="text-indigo-600"></span></h3>
-
-          <div class="flex flex-col md:flex-row gap-4 mb-6">
-            <div class="flex-1">
-              <label for="courseSelectGrades" class="block text-sm font-medium text-gray-700">Curso Seleccionado:</label>
-              <select id="courseSelectGrades" class="mt-1 p-2 border rounded-lg w-full text-lg font-semibold bg-gray-100" disabled>
-              </select>
-            </div>
-            <div class="flex-1">
-              <label for="sessionSelectAttendance" class="block text-sm font-medium text-gray-700">Sesión de Clase (Asistencia):</label>
-              <select id="sessionSelectAttendance" class="mt-1 p-2 border rounded-lg w-full">
-              </select>
+        <div class="bg-white rounded-xl p-6 shadow-lg">
+          <div class="flex justify-between items-center mb-6">
+            <h3 class="font-bold text-xl text-gray-700">Gestión de Notas</h3>
+            <div class="text-sm text-gray-500">
+              <span id="studentCount">0 alumnos</span>
             </div>
           </div>
 
-          <button onclick="saveAttendanceOnly()" class="px-5 py-2 rounded-lg text-sm font-medium text-white bg-green-600 hover:bg-green-700 transition">
-            Guardar Asistencia de la Sesión
-          </button>
-          <div id="attendancePanel" class="hidden mt-6 border-t pt-4">
-            <h4 class="font-bold text-lg text-gray-700 mb-3">Lista de Alumnos - Registrar Asistencia</h4>
-            <div class="overflow-x-auto">
-              <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
-                <tr>
-                  <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                  <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
-                  <th class="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
-                </tr>
-                </thead>
-                <tbody id="attendanceTableBody" class="bg-white divide-y divide-gray-200 text-sm">
-                </tbody>
-              </table>
+          <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead class="bg-gray-800 text-white">
+              <tr>
+                <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider">ID</th>
+                <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider">Nombre</th>
+
+
+                <th class="px-4 py-3 text-center text-xs font-medium uppercase tracking-wider bg-blue-100 text-blue-800">Parcial 1</th>
+                <th class="px-4 py-3 text-center text-xs font-medium uppercase tracking-wider bg-blue-100 text-blue-800">Parcial 2</th>
+                <th class="px-4 py-3 text-center text-xs font-medium uppercase tracking-wider bg-blue-100 text-blue-800">Parcial 3</th>
+
+
+                <th class="px-4 py-3 text-center text-xs font-medium uppercase tracking-wider bg-green-100 text-green-800">Continua 1</th>
+                <th class="px-4 py-3 text-center text-xs font-medium uppercase tracking-wider bg-green-100 text-green-800">Continua 2</th>
+                <th class="px-4 py-3 text-center text-xs font-medium uppercase tracking-wider bg-green-100 text-green-800">Continua 3</th>
+
+
+                <th class="px-4 py-3 text-center text-xs font-medium uppercase tracking-wider bg-red-100 text-red-800">Sustitutorio</th>
+
+
+                <th class="px-4 py-3 text-center text-xs font-medium uppercase tracking-wider bg-purple-100 text-purple-800">Promedio</th>
+
+
+                <th class="px-4 py-3 text-center text-xs font-medium uppercase tracking-wider bg-gray-100 text-gray-800">Estado</th>
+              </tr>
+              </thead>
+              <tbody id="gradeTableBody" class="bg-white divide-y divide-gray-200 text-sm">
+              </tbody>
+            </table>
+          </div>
+
+
+          <div class="mt-6 flex justify-between items-center">
+            <div class="text-sm text-gray-500">
+              <span id="saveStatus">Sin cambios por guardar</span>
             </div>
-          </div>
-        </div>
-
-        <div id="gest-2-notas" class="bg-white rounded-xl p-6 shadow-lg">
-          <h3 class="font-bold text-xl text-gray-700 mb-4">2. Gestión de Notas por Unidad: <span id="currentCourseNameGrades" class="text-indigo-600"></span></h3>
-          <div id="unitButtonsContainer" class="flex gap-4 mb-6">
-          </div>
-        </div>
-
-        <div id="unitGradePanel" class="hidden bg-white rounded-xl p-6 shadow-lg space-y-4">
-          <h3 id="panelTitle" class="font-bold text-xl text-gray-700">Gestión de Notas - Unidad X</h3>
-          <div id="unitGradeContent">
+            <div class="flex gap-3">
+              <button onclick="calculateAverages()" class="px-4 py-2 rounded-lg text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 transition">
+                <i class="fas fa-calculator mr-2"></i> Calcular Promedios
+              </button>
+              <button onclick="saveAllGrades()" class="px-5 py-2 rounded-lg text-sm font-medium text-white bg-green-600 hover:bg-green-700 transition">
+                <i class="fas fa-save mr-2"></i> Guardar Todo
+              </button>
+            </div>
           </div>
         </div>
       </div>
+
     </div>
 
     <div id="view-schedule" class="view-content space-y-6 hidden">
@@ -304,7 +321,7 @@
           Registre la asistencia de los alumnos para esta sesión
         </p>
 
-        <form id="asistencia-form" method="POST" action="{{route('asistencia.guardar')}}">
+        <form id="asistencia-form">
           @csrf
           <input id="asistencia_input_sesion_id" name="sesion_id" hidden>
 
@@ -374,5 +391,8 @@
 
   </main>
 
-  @vite(['resources/js/docente/docente.js'])
+  @vite([
+    'resources/js/docente/docente.js',
+    'resources/js/docente/libreta.js',
+    ])
 </x-header_layout>
