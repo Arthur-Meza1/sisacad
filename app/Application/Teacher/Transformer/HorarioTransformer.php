@@ -22,6 +22,7 @@ class HorarioTransformer {
 
     foreach ($dtos as $dto ) {
       $val = [
+        'id' => $dto->id->getValue(),
         'grupo' => [
           'id' => $dto->grupoId->getValue(),
           'nombre' => $dto->grupoNombre,

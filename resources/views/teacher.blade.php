@@ -344,15 +344,22 @@
             <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
 
               <button type="button"
-                      onclick="document.getElementById('modal-asistencia').classList.add('hidden')"
+                      onclick="closeAsistenciaModal()"
                       class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg font-medium
                          hover:bg-gray-50 transition flex items-center gap-2 justify-center">
                 <i class="fas fa-arrow-left"></i> Cerrar
               </button>
-
-              <button type="submit"
+              <button type="button"
+                      onclick="borrarSesion()"
+                      class="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg font-medium
+               transition flex items-center gap-2 shadow-sm justify-center">
+                <i class="fas fa-trash"></i> Borrar
+              </button>
+              <button id="asistencia-submit-button"
+                      type="submit"
                       class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-medium
-                         transition flex items-center gap-2 shadow-sm justify-center">
+                         transition flex items-center gap-2 shadow-sm justify-center disabled:bg-gray-400
+                  disabled:text-gray-200 disabled:shadow-none">
                 <i class="fas fa-save"></i> Guardar Asistencia
               </button>
 

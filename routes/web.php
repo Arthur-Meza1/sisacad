@@ -53,9 +53,11 @@ Route::post('/logout', Logout::class)
 // FIXME: Por alguna razon si lo coloco en api.php no funca los middleware
 Route::get("/api/teacher/horario", \App\Infrastructure\Teacher\Controller\GetHorarioController::class)->middleware('role:teacher');
 Route::get("/api/teacher/{grupo}/notas", \App\Infrastructure\Teacher\Controller\GetNotasController::class)->middleware('role:teacher');
+Route::get('/api/teacher/sesion/{sesion}', \App\Infrastructure\Teacher\Controller\GetSesionController::class)->middleware('role:teacher');
 Route::post('/api/teacher/aulas', \App\Infrastructure\Teacher\Controller\GetAulasDisponiblesController::class)->middleware('role:teacher');
-Route::post('/api/teacher/sesion', \App\Infrastructure\Teacher\Controller\CreateOrGetSesionController::class)->middleware('role:teacher');
+Route::post('/api/teacher/crear_sesion', \App\Infrastructure\Teacher\Controller\CreateSesionController::class)->middleware('role:teacher');
 Route::post("/api/teacher/asistencia", \App\Infrastructure\Teacher\Controller\GuardarAsistenciaController::class)->middleware('role:teacher')->name("asistencia.guardar");
+Route::post('/api/teacher/sesion/{sesion}/borrar', \App\Infrastructure\Teacher\Controller\BorrarSesionController::class)->middleware('role:teacher');
 
 Route::middleware(['auth', 'role:admin'])
   ->prefix('admin/users')

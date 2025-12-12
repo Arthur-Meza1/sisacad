@@ -8,6 +8,9 @@
         <testsuite name="Domain/Shared/ValueObject">
             <directory>tests/Domain/Shared/ValueObject</directory>
         </testsuite>
+      <testsuite name="Domain/Shared/Entity">
+        <directory>tests/Domain/Shared/Entity</directory>
+      </testsuite>
     </testsuites>
     <source>
         <include>

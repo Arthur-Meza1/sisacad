@@ -1,9 +1,8 @@
 <?php
 
-namespace Tests\App\Domain\Shared\ValueObject;
+namespace Tests\Domain\Shared\ValueObject;
 
 use App\Domain\Shared\ValueObject\Dia;
-use App\Domain\Shared\ValueObject\Fecha;
 use Carbon\Carbon;
 use PHPUnit\Framework\TestCase;
 

@@ -109,18 +109,19 @@ body {
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
 }
 
+.ec-session {
+  background-color: #ab0647;
+  border-color: #ab0647;
+}
+
+.ec-session:hover {
+  cursor: pointer;
+  transform: scale(1);
+}
+
 .ec-now {
   box-shadow: 0 1px 3px rgba(0,0,0,0.5) !important;
   transform: scale(1.01);
-
-}
-
-.ec-now:hover {
-  cursor: pointer;
-}
-
-.ec-now:active {
-  transform: scale(1);
 }
 
 .ec-week-header {
