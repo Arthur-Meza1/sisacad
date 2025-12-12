@@ -11,7 +11,7 @@ export function loadAnalyticsView(self, id) {
   self.classList.remove('text-gray-600', 'hover:bg-indigo-100', 'hover:text-indigo-700');
 
   new ContentLoader({
-    url: `/api/teacher/${id}/notas`,
+    url: `/api/teacher/grupo/${id}/notas`,
     containerName: "#studentButtonsContainer"
   }).load(renderGradeChart);
 }
