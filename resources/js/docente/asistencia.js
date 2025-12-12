@@ -1,4 +1,5 @@
 import $ from "jquery";
+import {reloadScheduleCalendar} from "./calendario.js";
 
 export function onSessionClick(id, nombre) {
   document.getElementById("asistencia-title").textContent = `Asistencia - ${nombre}`;
@@ -6,7 +7,9 @@ export function onSessionClick(id, nombre) {
 }
 
 let g_asistencias;
+let g_id;
 function loadSesion(id) {
+  g_id = id;
   $.get(`/api/teacher/sesion/${id}`)
     .done(function(data) {
       resetAsistenciaMap();
@@ -92,9 +95,6 @@ function onSendAsistencia(e) {
     alumnos: changedMap
   };
 
-  console.log("Cambios:");
-  console.log(changedMap);
-
   $.ajax({
     url: $form.attr('action'),
     type: 'POST',
@@ -118,6 +118,19 @@ function closeAsistenciaModal() {
 }
 
 function borrarSesion() {
+  const data = {
+    _token: $('meta[name="csrf-token"]').attr('content')
+  };
+  $.post(`/api/teacher/sesion/${g_id}/borrar`, data)
+    .done(function () {
+      alert("Sesion eliminada correctamente");
+      closeAsistenciaModal();
+      reloadScheduleCalendar();
+    })
+    .fail(function (xhr) {
+      alert("Error - Ver Consola");
+      console.log(xhr.responseText);
+    })
 }
 
 window.borrarSesion = borrarSesion;
