@@ -1,24 +1,18 @@
 import $ from "jquery";
-import {reloadScheduleCalendar} from "./calendario.js";
 
-export function onEventClick(props) {
-  console.log(props);
-  document.getElementById("asistencia-title").textContent = `Asistencia - ${props.grupo.nombre}`;
-  loadSesiones(props);
+export function onSessionClick(id, nombre) {
+  document.getElementById("asistencia-title").textContent = `Asistencia - ${nombre}`;
+  loadSesion(id);
 }
 
 let g_asistencias;
-function loadSesiones(props) {
-  const data = {
-    fecha: props.fecha,
-    hora_inicio: props.horaInicio,
-    hora_fin: props.horaFin,
-    grupo_id: props.grupo.id,
-    aula_id: props.aula.id,
-    _token: $('meta[name="csrf-token"]').attr('content')
-  }
-  $.post('/api/teacher/sesion', data)
-    .done(function(data, _, jqXHR) {
+function loadSesion(id) {
+  $.get(`/api/teacher/sesion/${id}`)
+    .done(function(data) {
+      resetAsistenciaMap();
+
+      $("#asistencia-submit-button").prop("disabled", !data.editable);
+
       document.getElementById("asistencia_input_sesion_id").value = data.sesion.id;
       document.getElementById('asistencia-table-body').innerHTML = "";
       if(data.sesion.asistencias.length !== 0) {
@@ -28,22 +22,22 @@ function loadSesiones(props) {
         $("#asistencia-empty").show();
         $("#asistencia-tabla").hide();
       }
-      g_asistencias = new Map();
-      data.sesion.asistencias.forEach(x => addAsistencia(x));
+
+      data.sesion.asistencias.forEach(x => addAsistencia(x, data.editable));
 
       document.getElementById('modal-asistencia').classList.remove('hidden');
-
-      if(jqXHR.status === 201)
-        reloadScheduleCalendar();
     }).fail(function (data) {
     console.error(data.responseText);
   });
 }
 
-function addAsistencia(x) {
+function resetAsistenciaMap() {
+  g_asistencias = new Map();
+}
+
+function addAsistencia(x, enabled) {
   document.getElementById('asistencia-table-body').innerHTML += `
   <tr
-    onclick="this.querySelector('input[type=checkbox]').checked = !this.querySelector('input[type=checkbox]').checked"
     class="row-select border-b border-gray-100 hover:bg-gray-50 transition-colors">
                     <td class="py-4 px-4 font-semibold text-gray-800">
                        ${x.alumno.nombre}
@@ -54,6 +48,7 @@ function addAsistencia(x) {
                         <input ${x.presente ? "checked" : ""} type="checkbox"
                                name="${x.alumno.id}"
                                value="1"
+                               ${enabled ? "" : "disabled"}
                                class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500 focus:ring-2">
                       </label>
                     </td>
@@ -122,4 +117,8 @@ function closeAsistenciaModal() {
   document.getElementById('modal-asistencia').classList.add('hidden');
 }
 
+function borrarSesion() {
+}
+
+window.borrarSesion = borrarSesion;
 window.closeAsistenciaModal = closeAsistenciaModal;
