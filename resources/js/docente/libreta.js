@@ -90,16 +90,14 @@ function loadGradeTable(courseId, courseName) {
   });
 }
 
+let g_students;
+
 function renderGradeTable(data) {
   const tbody = document.getElementById('gradeTableBody');
 
   document.getElementById('studentCount').textContent = `${data.length} alumnos`;
 
   tbody.innerHTML = data.map((student, index) => {
-    const promedio = calculateStudentAverage(student);
-    const estado = promedio >= 11 ? 'Aprobado' : 'Desaprobado';
-    const estadoColor = promedio >= 11 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800';
-
     return `
           <tr class="${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'} hover:bg-blue-50">
             <td class="px-4 py-3 whitespace-nowrap font-medium">${student.id}</td>
@@ -107,100 +105,143 @@ function renderGradeTable(data) {
 
             <!-- Parciales -->
             <td class="px-4 py-3 whitespace-nowrap text-center">
-                <input type="number" min="0" max="20" step="0.5"
+                <input type="number" min="0" max="20" step="1"
                        value="${student.parcial[0] || ''}"
                        data-id="${student.id}"
                        data-type="parcial1"
                        class="w-16 p-1 border rounded text-center grade-input"
-                       onchange="markAsChanged()">
+                       >
             </td>
             <td class="px-4 py-3 whitespace-nowrap text-center">
-                <input type="number" min="0" max="20" step="0.5"
+                <input type="number" min="0" max="20" step="1"
                        value="${student.parcial[1] || ''}"
                        data-id="${student.id}"
                        data-type="parcial2"
                        class="w-16 p-1 border rounded text-center grade-input"
-                       onchange="markAsChanged()">
+                       >
             </td>
             <td class="px-4 py-3 whitespace-nowrap text-center">
-                <input type="number" min="0" max="20" step="0.5"
+                <input type="number" min="0" max="20" step="1"
                        value="${student.parcial[2] || ''}"
                        data-id="${student.id}"
                        data-type="parcial3"
                        class="w-16 p-1 border rounded text-center grade-input"
-                       onchange="markAsChanged()">
+                       >
             </td>
 
             <!-- Continuas -->
             <td class="px-4 py-3 whitespace-nowrap text-center">
-                <input type="number" min="0" max="20" step="0.5"
+                <input type="number" min="0" max="20" step="1"
                        value="${student.continua[0] || ''}"
                        data-id="${student.id}"
                        data-type="continua1"
                        class="w-16 p-1 border rounded text-center grade-input"
-                       onchange="markAsChanged()">
+                       >
             </td>
             <td class="px-4 py-3 whitespace-nowrap text-center">
-                <input type="number" min="0" max="20" step="0.5"
+                <input type="number" min="0" max="20" step="1"
                        value="${student.continua[1] || ''}"
                        data-id="${student.id}"
                        data-type="continua2"
                        class="w-16 p-1 border rounded text-center grade-input"
-                       onchange="markAsChanged()">
+                       >
             </td>
             <td class="px-4 py-3 whitespace-nowrap text-center">
-                <input type="number" min="0" max="20" step="0.5"
+                <input type="number" min="0" max="20" step="1"
                        value="${student.continua[2] || ''}"
                        data-id="${student.id}"
                        data-type="continua3"
                        class="w-16 p-1 border rounded text-center grade-input"
-                       onchange="markAsChanged()">
+                       >
             </td>
 
             <!-- Sustitutorio -->
             <td class="px-4 py-3 whitespace-nowrap text-center">
-                <input type="number" min="0" max="20" step="0.5"
+                <input type="number" min="0" max="20" step="1"
                        value="${student.sustitutorio || ''}"
                        data-id="${student.id}"
                        data-type="sustitutorio"
                        class="w-16 p-1 border rounded text-center grade-input"
-                       onchange="markAsChanged()">
+                       >
             </td>
 
             <!-- Promedio (calculado) -->
             <td class="px-4 py-3 whitespace-nowrap text-center font-bold">
-                <span class="average-display" data-id="${student.id}">${promedio.toFixed(1)}</span>
+                <span class="average-display" data-id="${student.id}"></span>
             </td>
 
             <!-- Estado -->
             <td class="px-4 py-3 whitespace-nowrap text-center">
-                <span class="px-3 py-1 rounded-full text-xs font-medium ${estadoColor} estado-display" data-id="${student.id}">
-                    ${estado}
+                <span class="px-3 py-1 rounded-full text-xs font-medium estado-display" data-id="${student.id}">
                 </span>
             </td>
           </tr>
         `;
   }).join('');
 
+  createObserverInputs(tbody);
+
   hasUnsavedChanges = false;
   updateSaveStatus();
 }
 
-function calculateStudentAverage(student) {
-  let parcial1 = student.parcial[0];
-  let parcial2 = student.parcial[1];
-  let parcial3 = student.parcial[2];
-  let continua1 = student.continua[0];
-  let continua2 = student.continua[1];
-  let continua3 = student.continua[2];
-  let sustitutorio = student.sustitutorio;
+function createObserverInputs(tbody) {
+  tbody.addEventListener("input", e => {
+    if(!e.target.matches("input")) return;
+
+    createObserverInputFromRow(e.target.closest("tr"));
+  });
+
+  forceObserverInput(tbody);
+}
+
+function createObserverInputFromRow(row) {
+  if(!row)
+    return;
+
+  const values = new Map();
+  const promLabel = row.querySelector(".average-display");
+  const estadoLabel = row.querySelector(".estado-display");
+  row.querySelectorAll("input").forEach(x => values.set(x.dataset.type, x.value));
+
+  onInputChange(values, promLabel, estadoLabel);
+}
+
+function forceObserverInput(tbody) {
+  tbody.querySelectorAll("tr").forEach(e => createObserverInputFromRow(e));
+}
+
+function onInputChange(values, promLabel, estadoLabel) {
+  hasUnsavedChanges = true;
+  updateSaveStatus();
+
+  const average = calculateStudentAverage(Object.fromEntries(values));
+
+  promLabel.textContent = average.toFixed(1);
+
+  const estado = average >= 10.5 ? 'Aprobado' : 'Desaprobado';
+  const estadoColor = average >= 10.5 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800';
+
+  estadoLabel.textContent = estado;
+  estadoLabel.className = `px-3 py-1 rounded-full text-xs font-medium ${estadoColor} estado-display`;
+}
+
+function calculateStudentAverage(values) {
+  let {
+    parcial1,
+    parcial2,
+    parcial3,
+    continua1,
+    continua2,
+    continua3,
+    sustitutorio
+  } = values;
 
   sustitutorio = (sustitutorio === "" || sustitutorio === null || sustitutorio === undefined)
     ? NaN
     : Number(sustitutorio);
 
   if (!isNaN(sustitutorio)) {
-
     if (Number(parcial1) <= Number(parcial2)) {
       parcial1 = sustitutorio;
     } else {
@@ -223,11 +264,6 @@ function calculateStudentAverage(student) {
   return suma / notas.length;
 }
 
-function markAsChanged() {
-  hasUnsavedChanges = true;
-  updateSaveStatus();
-}
-
 function updateSaveStatus() {
   const statusElement = document.getElementById('saveStatus');
   if (hasUnsavedChanges) {
@@ -241,44 +277,7 @@ function updateSaveStatus() {
   }
 }
 
-function calculateAverages() {
-  const inputs = document.querySelectorAll('.grade-input');
-  const studentData = {};
 
-  inputs.forEach(input => {
-    const studentId = input.dataset.id;
-    const type = input.dataset.type;
-    const value = parseFloat(input.value) || 0;
-
-    if (!studentData[studentId]) {
-      studentData[studentId] = {};
-    }
-    studentData[studentId][type] = value;
-  });
-
-
-  Object.keys(studentData).forEach(studentId => {
-    const grades = studentData[studentId];
-    const promedio = calculateStudentAverage(grades);
-
-
-    const avgDisplay = document.querySelector(`.average-display[data-id="${studentId}"]`);
-    if (avgDisplay) {
-      avgDisplay.textContent = promedio.toFixed(1);
-    }
-
-    const estado = promedio >= 11 ? 'Aprobado' : 'Desaprobado';
-    const estadoColor = promedio >= 11 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800';
-    const estadoDisplay = document.querySelector(`.estado-display[data-id="${studentId}"]`);
-    if (estadoDisplay) {
-      estadoDisplay.textContent = estado;
-      estadoDisplay.className = `px-3 py-1 rounded-full text-xs font-medium ${estadoColor} estado-display`;
-      estadoDisplay.setAttribute('data-id', studentId);
-    }
-  });
-
-  alert('Promedios calculados exitosamente');
-}
 
 function saveAllGrades() {
   if (!selectedCourseForGrades) {
