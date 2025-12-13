@@ -2,32 +2,12 @@ import $ from 'jquery';
 import {ContentLoader} from "../common/ContentLoader.js";
 
 let selectedCourseForGrades = null;
-let hasUnsavedChanges = false;
+let g_updates = new Map();
 
 export function handleCourseCardClick(courseId, courseName) {
   loadGradeTable(courseId, courseName);
 }
 window.handleCourseCardClick = handleCourseCardClick;
-
-export function showCourseSelection() {
-  if (hasUnsavedChanges) {
-    if (!confirm('Tienes cambios sin guardar. ¿Seguro que quieres salir?')) {
-      return;
-    }
-  }
-
-  document.getElementById('courseManagementPanels').classList.add('hidden');
-  document.getElementById('courseCardSelector').classList.remove('hidden');
-  selectedCourseForGrades = null;
-  hasUnsavedChanges = false;
-  updateSaveStatus();
-
-  document.querySelectorAll('.course-card-grades').forEach(card => {
-    card.classList.remove('selected-card-active');
-  });
-}
-
-window.showCourseSelection = showCourseSelection;
 
 function renderCourseCardsForGrades() {
   const container = document.getElementById('courseCardsContainer');
@@ -86,11 +66,15 @@ function loadGradeTable(courseId, courseName) {
     url: `/api/teacher/grupo/${courseId}/notas`,
     containerName: '#gradeTableBody'
   }).load(function(data, container) {
+    resetGlobalData();
     renderGradeTable(data);
   });
 }
 
-let g_students;
+function resetGlobalData() {
+  selectedCourseForGrades = null;
+  g_updates = new Map();
+}
 
 function renderGradeTable(data) {
   const tbody = document.getElementById('gradeTableBody');
@@ -180,14 +164,18 @@ function renderGradeTable(data) {
   }).join('');
 
   createObserverInputs(tbody);
-
-  hasUnsavedChanges = false;
-  updateSaveStatus();
 }
 
 function createObserverInputs(tbody) {
   tbody.addEventListener("input", e => {
     if(!e.target.matches("input")) return;
+
+    const input = e.target;
+    if(!g_updates.has(input.dataset.id)) {
+      g_updates.set(input.dataset.id, new Map());
+    }
+    const map = g_updates.get(input.dataset.id);
+    map.set(input.dataset.type, input.value);
 
     createObserverInputFromRow(e.target.closest("tr"));
   });
@@ -212,7 +200,6 @@ function forceObserverInput(tbody) {
 }
 
 function onInputChange(values, promLabel, estadoLabel) {
-  hasUnsavedChanges = true;
   updateSaveStatus();
 
   const average = calculateStudentAverage(Object.fromEntries(values));
@@ -266,7 +253,7 @@ function calculateStudentAverage(values) {
 
 function updateSaveStatus() {
   const statusElement = document.getElementById('saveStatus');
-  if (hasUnsavedChanges) {
+  if (hasUnsavedChanges()) {
     statusElement.textContent = '⚠️ Tienes cambios sin guardar';
     statusElement.classList.add('text-red-600', 'font-medium');
     statusElement.classList.remove('text-gray-500');
@@ -277,48 +264,23 @@ function updateSaveStatus() {
   }
 }
 
+function hasUnsavedChanges() {
+  return g_updates.size !== 0;
+}
 
-
-function saveAllGrades() {
-  if (!selectedCourseForGrades) {
-    alert('No hay un curso seleccionado');
+export function saveAllGrades() {
+  if(!hasUnsavedChanges()) {
+    alert('No hay cambios que guardar');
     return;
   }
 
-  const course = courses.find(c => c.id === selectedCourseForGrades);
-  const inputs = document.querySelectorAll('.grade-input');
-  const updates = [];
+  console.log(g_updates)
 
-  inputs.forEach(input => {
-    const studentId = input.dataset.id;
-    const type = input.dataset.type;
-    const value = parseFloat(input.value) || null;
-
-    const studentList = allStudents[selectedCourseForGrades];
-    const student = studentList.find(s => s.id == studentId);
-
-    if (student && student.grades[type] !== value) {
-      updates.push({
-        studentId,
-        name: student.name,
-        type,
-        oldValue: student.grades[type],
-        newValue: value
-      });
-
-      student.grades[type] = value;
-    }
-  });
-
-  console.log('Guardando notas para', course.name, ':', updates);
-
-  calculateAverages();
-
-  hasUnsavedChanges = false;
+  resetGlobalData();
   updateSaveStatus();
-
-  alert(`Notas guardadas exitosamente para ${course.name}`);
 }
+
+window.saveAllGrades = saveAllGrades;
 
 function handleExcelImport(files) {
   if (!files.length) return;
