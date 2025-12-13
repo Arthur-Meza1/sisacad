@@ -131,20 +131,18 @@
             <table class="min-w-full divide-y divide-gray-200">
               <thead class="bg-gray-800 text-white">
               <tr>
-                <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider">ID</th>
+                <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider">CUI</th>
                 <th class="px-4 py-3 text-left text-xs font-medium uppercase tracking-wider">Nombre</th>
 
 
                 <th class="px-4 py-3 text-center text-xs font-medium uppercase tracking-wider bg-blue-100 text-blue-800">Parcial 1</th>
-                <th class="px-4 py-3 text-center text-xs font-medium uppercase tracking-wider bg-blue-100 text-blue-800">Parcial 2</th>
-                <th class="px-4 py-3 text-center text-xs font-medium uppercase tracking-wider bg-blue-100 text-blue-800">Parcial 3</th>
-
-
                 <th class="px-4 py-3 text-center text-xs font-medium uppercase tracking-wider bg-green-100 text-green-800">Continua 1</th>
+
+                <th class="px-4 py-3 text-center text-xs font-medium uppercase tracking-wider bg-blue-100 text-blue-800">Parcial 2</th>
                 <th class="px-4 py-3 text-center text-xs font-medium uppercase tracking-wider bg-green-100 text-green-800">Continua 2</th>
+
+                <th class="px-4 py-3 text-center text-xs font-medium uppercase tracking-wider bg-blue-100 text-blue-800">Parcial 3</th>
                 <th class="px-4 py-3 text-center text-xs font-medium uppercase tracking-wider bg-green-100 text-green-800">Continua 3</th>
-
-
                 <th class="px-4 py-3 text-center text-xs font-medium uppercase tracking-wider bg-red-100 text-red-800">Sustitutorio</th>
 
 
@@ -166,7 +164,7 @@
             </div>
             <div class="flex gap-3">
               <button onclick="saveAllGrades()" class="px-5 py-2 rounded-lg text-sm font-medium text-white bg-green-600 hover:bg-green-700 transition">
-                <i class="fas fa-save mr-2"></i> Guardar Todo
+                <i class="fas fa-save mr-2"></i> Guardar
               </button>
             </div>
           </div>

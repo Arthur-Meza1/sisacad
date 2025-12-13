@@ -1,13 +1,30 @@
 import $ from 'jquery';
 import {ContentLoader} from "../common/ContentLoader.js";
 
-let selectedCourseForGrades = null;
 let g_updates = new Map();
 
 export function handleCourseCardClick(courseId, courseName) {
   loadGradeTable(courseId, courseName);
 }
 window.handleCourseCardClick = handleCourseCardClick;
+
+export function showCourseSelection() {
+  if (hasUnsavedChanges()) {
+    if (!confirm('Tienes cambios sin guardar. ¿Seguro que quieres salir?')) {
+      return;
+    }
+  }
+
+  document.getElementById('courseManagementPanels').classList.add('hidden');
+  document.getElementById('courseCardSelector').classList.remove('hidden');
+  updateSaveStatus();
+
+  document.querySelectorAll('.course-card-grades').forEach(card => {
+    card.classList.remove('selected-card-active');
+  });
+}
+
+window.showCourseSelection = showCourseSelection;
 
 function renderCourseCardsForGrades() {
   const container = document.getElementById('courseCardsContainer');
@@ -45,8 +62,6 @@ function renderCourseCardsForGrades() {
 }
 
 function loadGradeTable(courseId, courseName) {
-  selectedCourseForGrades = courseId;
-
   document.getElementById('courseCardSelector').classList.add('hidden');
   document.getElementById('courseManagementPanels').classList.remove('hidden');
 
@@ -67,12 +82,12 @@ function loadGradeTable(courseId, courseName) {
     containerName: '#gradeTableBody'
   }).load(function(data, container) {
     resetGlobalData();
+    console.log(data);
     renderGradeTable(data);
   });
 }
 
 function resetGlobalData() {
-  selectedCourseForGrades = null;
   g_updates = new Map();
 }
 
@@ -84,66 +99,62 @@ function renderGradeTable(data) {
   tbody.innerHTML = data.map((student, index) => {
     return `
           <tr class="${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'} hover:bg-blue-50">
-            <td class="px-4 py-3 whitespace-nowrap font-medium">${student.id}</td>
+            <td class="px-4 py-3 whitespace-nowrap font-medium">${student.alumno_id}</td>
             <td class="px-4 py-3 whitespace-nowrap">${student.nombre}</td>
 
             <!-- Parciales -->
             <td class="px-4 py-3 whitespace-nowrap text-center">
                 <input type="number" min="0" max="20" step="1"
                        value="${student.parcial[0] || ''}"
-                       data-id="${student.id}"
+                       data-id="${student.registro_id}"
                        data-type="parcial1"
                        class="w-16 p-1 border rounded text-center grade-input"
                        >
             </td>
             <td class="px-4 py-3 whitespace-nowrap text-center">
                 <input type="number" min="0" max="20" step="1"
-                       value="${student.parcial[1] || ''}"
-                       data-id="${student.id}"
-                       data-type="parcial2"
-                       class="w-16 p-1 border rounded text-center grade-input"
-                       >
-            </td>
-            <td class="px-4 py-3 whitespace-nowrap text-center">
-                <input type="number" min="0" max="20" step="1"
-                       value="${student.parcial[2] || ''}"
-                       data-id="${student.id}"
-                       data-type="parcial3"
-                       class="w-16 p-1 border rounded text-center grade-input"
-                       >
-            </td>
-
-            <!-- Continuas -->
-            <td class="px-4 py-3 whitespace-nowrap text-center">
-                <input type="number" min="0" max="20" step="1"
                        value="${student.continua[0] || ''}"
-                       data-id="${student.id}"
+                       data-id="${student.registro_id}"
                        data-type="continua1"
                        class="w-16 p-1 border rounded text-center grade-input"
                        >
             </td>
             <td class="px-4 py-3 whitespace-nowrap text-center">
                 <input type="number" min="0" max="20" step="1"
+                       value="${student.parcial[1] || ''}"
+                       data-id="${student.registro_id}"
+                       data-type="parcial2"
+                       class="w-16 p-1 border rounded text-center grade-input"
+                       >
+            </td>
+            <td class="px-4 py-3 whitespace-nowrap text-center">
+                <input type="number" min="0" max="20" step="1"
                        value="${student.continua[1] || ''}"
-                       data-id="${student.id}"
+                       data-id="${student.registro_id}"
                        data-type="continua2"
                        class="w-16 p-1 border rounded text-center grade-input"
                        >
             </td>
             <td class="px-4 py-3 whitespace-nowrap text-center">
                 <input type="number" min="0" max="20" step="1"
+                       value="${student.parcial[2] || ''}"
+                       data-id="${student.registro_id}"
+                       data-type="parcial3"
+                       class="w-16 p-1 border rounded text-center grade-input"
+                       >
+            </td>
+            <td class="px-4 py-3 whitespace-nowrap text-center">
+                <input type="number" min="0" max="20" step="1"
                        value="${student.continua[2] || ''}"
-                       data-id="${student.id}"
+                       data-id="${student.registro_id}"
                        data-type="continua3"
                        class="w-16 p-1 border rounded text-center grade-input"
                        >
             </td>
-
-            <!-- Sustitutorio -->
             <td class="px-4 py-3 whitespace-nowrap text-center">
                 <input type="number" min="0" max="20" step="1"
                        value="${student.sustitutorio || ''}"
-                       data-id="${student.id}"
+                       data-id="${student.registro_id}"
                        data-type="sustitutorio"
                        class="w-16 p-1 border rounded text-center grade-input"
                        >
@@ -151,12 +162,12 @@ function renderGradeTable(data) {
 
             <!-- Promedio (calculado) -->
             <td class="px-4 py-3 whitespace-nowrap text-center font-bold">
-                <span class="average-display" data-id="${student.id}"></span>
+                <span class="average-display" data-id="${student.registro_id}"></span>
             </td>
 
             <!-- Estado -->
             <td class="px-4 py-3 whitespace-nowrap text-center">
-                <span class="px-3 py-1 rounded-full text-xs font-medium estado-display" data-id="${student.id}">
+                <span class="px-3 py-1 rounded-full text-xs font-medium estado-display" data-id="${student.registro_id}">
                 </span>
             </td>
           </tr>
@@ -274,13 +285,36 @@ export function saveAllGrades() {
     return;
   }
 
-  console.log(g_updates)
+  // console.log(JSON.stringify(Object.fromEntries(g_updates)));
+  const data = {
+    _token: $('meta[name="csrf-token"]').attr('content'),
+    data: updatesMapToJSON()
+  };
+  console.log(data);
+  $.post(`/api/teacher/notas/guardar`, data)
+    .done(function (data) {
+      console.log(data);
+    })
+    .fail(function (data) {
+      console.error(data.responseText);
+    })
 
   resetGlobalData();
   updateSaveStatus();
 }
-
 window.saveAllGrades = saveAllGrades;
+
+function updatesMapToJSON() {
+  const payload = [];
+  for(const [registro_id, notasMap] of g_updates) {
+    payload.push({
+      registro_id,
+      notas: Object.fromEntries(notasMap)
+    });
+  }
+
+  return payload;
+}
 
 function handleExcelImport(files) {
   if (!files.length) return;
@@ -377,47 +411,3 @@ function exportToExcel() {
   const fileName = `Notas_${course.name}_${new Date().toISOString().split('T')[0]}.xlsx`;
   XLSX.writeFile(wb, fileName);
 }
-
-function initGradeInputView() {
-  document.getElementById('courseCardSelector').classList.remove('hidden');
-  document.getElementById('courseManagementPanels').classList.add('hidden');
-
-  renderCourseCardsForGrades();
-
-  selectedCourseForGrades = null;
-  hasUnsavedChanges = false;
-  updateSaveStatus();
-}
-
-function initStudentsView() {
-  const select = document.getElementById('courseSelectStudents');
-  select.innerHTML = courses.map(c =>
-    `<option value="${c.id}">${c.name} (${c.students} alumnos)</option>`
-  ).join('');
-  renderStudentList(select.value);
-}
-
-function renderStudentList(courseId) {
-  const studentList = allStudents[courseId] || [];
-  const tbody = document.getElementById('studentTableBody');
-
-  tbody.innerHTML = studentList.map(s => {
-    const attColor = s.attendance >= 85 ? 'text-green-600' : 'text-red-600';
-    const gradeColor = s.grade >= 11 ? 'text-indigo-600' : 'text-red-600';
-    return `
-          <tr>
-            <td class="px-6 py-4 whitespace-nowrap">${s.id}</td>
-            <td class="px-6 py-4 whitespace-nowrap">${s.name}</td>
-            <td class="px-6 py-4 whitespace-nowrap text-center"><span class="${attColor}">${s.attendance}%</span></td>
-            <td class="px-6 py-4 whitespace-nowrap text-center"><span class="${gradeColor}">${s.grade}</span></td>
-          </tr>
-        `;
-  }).join('');
-}
-
-/*document.getElementById('teacherCourseList').innerHTML = courses.map(c => `
-  <div class="flex justify-between items-center p-2 border-b hover:bg-gray-50 rounded-md">
-    <span class="font-medium">${c.name} (${c.id})</span>
-    <span class="text-xs text-gray-500">Alumnos: ${c.students} | Promedio: ${c.avgGrade}</span>
-  </div>
-`).join('');*/
