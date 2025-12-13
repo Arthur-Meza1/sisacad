@@ -34,22 +34,24 @@ class NotasParcial
     $this->sustitutorio = $sustitutorio;
   }
 
+  public function unidad1(): ?int {
+    return $this->unidad1;
+  }
+
+  public function unidad2(): ?int {
+    return $this->unidad2;
+  }
+
+  public function unidad3(): ?int {
+    return $this->unidad3;
+  }
+
   public function sustitutorio(): ?int {
     return $this->sustitutorio;
   }
 
   public function toArray(): array {
-    $unidad1 = $this->unidad1;
-    $unidad2 = $this->unidad2;
-    if(($sust = $this->sustitutorio) != null) {
-      if($unidad1 < $unidad2) {
-        $unidad1 = $sust;
-      } else {
-        $unidad2 = $sust;
-      }
-    }
-
-    return [$unidad1, $unidad2, $this->unidad3];
+    return [$this->unidad1, $this->unidad2, $this->unidad3];
   }
 
   private function validate(int $value): void {
