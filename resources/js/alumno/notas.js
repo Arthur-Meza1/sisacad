@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import * as echarts from 'echarts';
 import {ContentLoader} from "../common/ContentLoader.js";
 import {ucfirst} from "../common/Utils.js";
 
@@ -81,83 +82,79 @@ function loadCourseData(courseId) {
 }
 
 function renderGradeChart(data, container) {
-  const xaxis = ['Nota 1', 'Nota 2', 'Nota 3'];
+  let originalParcial = null;
+  if (data.sustitutorio) {
+    originalParcial = [...data.parcial];
+    if (data.parcial[0] <= data.parcial[1]) {
+      data.parcial[0] = data.sustitutorio;
+    } else {
+      data.parcial[1] = data.sustitutorio;
+    }
+  }
 
-  const generateSeriesList = () => {
-    const seriesList = [];
-    const rankingMap = new Map(Object.entries(data));
-    rankingMap.forEach((data, name) => {
-      const series = {
-        name,
+  let gradeChartOptions = {
+    tooltip: { trigger: 'item' },
+    xAxis: {
+      type: 'category',
+      boundaryGap: false,
+      data: ['Nota 1', 'Nota 2', 'Nota 3']
+    },
+    yAxis: {
+      type: 'value',
+      min: 0,
+      max: 20,
+      interval: 1
+    },
+    series: [
+      {
+        name: "Parcial",
         symbolSize: 12,
         type: 'line',
         smooth: false,
         emphasis: {
           focus: 'series'
         },
-        endLabel: {
-          show: true,
-          formatter: '{a}',
-          distance: 20
+        lineStyle: {
+          width: 4
+        },
+        data: data.parcial
+      },
+      {
+        name: "Continua",
+        symbolSize: 12,
+        type: 'line',
+        smooth: false,
+        emphasis: {
+          focus: 'series'
         },
         lineStyle: {
           width: 4
         },
-        data
-      };
-      seriesList.push(series);
-    });
-    return seriesList;
-  };
-
-  let seriesList = generateSeriesList();
-
-  let legendText = seriesList
-    .map(
-      s => `${s.name}: ${s.data.join(', ')}`
-    )
-    .join('\n');
-
-  let gradeChartOptions = {
-    tooltip: { trigger: 'item' },
-    grid: {
-      top: 80,
-      left: 40,
-      right: 80,
-      bottom: 80,
-      containLabel: true
-    },
-    xAxis: {
-      type: 'category',
-      boundaryGap: false,
-      data: xaxis
-    },
-    yAxis: {
-      type: 'value',
-      min: 0,
-      max: 20
-    },
-    series: seriesList,
-
-    graphic: [
+        data: data.continua
+      },
       {
-        type: 'group',
-        left: 'center',
-        bottom: 10,
-        children: [
-          {
-            type: 'text',
-            style: {
-              text: legendText,
-              fill: '#374151',
-              font: '14px sans-serif',
-              lineHeight: 22,
-              textAlign: 'center'
-            }
-          }
-        ]
-      }
-    ]
+        name: "Parcial",
+        symbolSize: 12,
+        type: 'line',
+        silent: true,
+        smooth: false,
+        itemStyle: {
+          color: '#FFA500',      // relleno
+          opacity: 0.6,
+        },
+        lineStyle: {
+          color: '#FFA500',   // naranja
+          type: 'dashed',     // discontinuo
+          opacity: 0.6,
+          width: 4
+        },
+        z: -10,
+        data: originalParcial
+      },
+    ],
+    legend: {
+      top: 10
+    }
   };
 
   if(!gradeChartDetail) {
