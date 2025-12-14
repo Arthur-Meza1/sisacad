@@ -28,8 +28,8 @@ class GuardarNotasController
         function ($item) {
           $parciales = new NotasParcial(
             $item['notas']['parcial1'] ?? null,
-            $item['notas']['parcial1'] ?? null,
-            $item['notas']['parcial1'] ?? null,
+            $item['notas']['parcial2'] ?? null,
+            $item['notas']['parcial3'] ?? null,
             $item['notas']['sustitutorio'] ?? null,
           );
           $continuas = new NotasContinua(
