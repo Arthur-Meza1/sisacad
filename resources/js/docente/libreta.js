@@ -1,7 +1,10 @@
 import $ from 'jquery';
+import * as XLSX from 'https://cdn.sheetjs.com/xlsx-0.20.3/package/xlsx.mjs';
 import {ContentLoader} from "../common/ContentLoader.js";
+import {setInputValue} from "../common/Utils.js";
 
-let g_updates = new Map();
+let g_updates = null;
+let g_inputs = null;
 
 export function handleCourseCardClick(courseId, courseName) {
   loadGradeTable(courseId, courseName);
@@ -89,6 +92,7 @@ function loadGradeTable(courseId, courseName) {
 
 function resetGlobalData() {
   g_updates = new Map();
+  g_inputs = new Map();
 }
 
 function renderGradeTable(data) {
@@ -99,7 +103,7 @@ function renderGradeTable(data) {
   tbody.innerHTML = data.map((student, index) => {
     return `
           <tr class="${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'} hover:bg-blue-50">
-            <td class="px-4 py-3 whitespace-nowrap font-medium">${student.alumno_id}</td>
+            <td class="px-4 py-3 whitespace-nowrap font-medium cui">${student.alumno_id}</td>
             <td class="px-4 py-3 whitespace-nowrap">${student.nombre}</td>
 
             <!-- Parciales -->
@@ -194,20 +198,26 @@ function createObserverInputs(tbody) {
   forceObserverInput(tbody);
 }
 
+function forceObserverInput(tbody) {
+  tbody.querySelectorAll("tr").forEach(e => createObserverInputFromRow(e));
+}
+
 function createObserverInputFromRow(row) {
   if(!row)
     return;
 
+  const inputs = row.querySelectorAll("input");
   const values = new Map();
   const promLabel = row.querySelector(".average-display");
   const estadoLabel = row.querySelector(".estado-display");
-  row.querySelectorAll("input").forEach(x => values.set(x.dataset.type, x.value));
+  const cui = parseInt(row.querySelector(".cui").textContent);
+  inputs.forEach(x => values.set(x.dataset.type, x.value));
+
+  if(cui && !g_inputs.has(cui)) {
+    g_inputs.set(cui, inputs);
+  }
 
   onInputChange(values, promLabel, estadoLabel);
-}
-
-function forceObserverInput(tbody) {
-  tbody.querySelectorAll("tr").forEach(e => createObserverInputFromRow(e));
 }
 
 function onInputChange(values, promLabel, estadoLabel) {
@@ -285,18 +295,7 @@ export function saveAllGrades() {
     return;
   }
 
-  const data = {
-    _token: $('meta[name="csrf-token"]').attr('content'),
-    data: updatesMapToJSON()
-  };
-  console.log(data);
-  $.post(`/api/teacher/notas/guardar`, data)
-    .done(function (data) {
-      console.log(data);
-    })
-    .fail(function (data) {
-      console.error(data.responseText);
-    })
+  sendUpdateToServer(updatesMapToJSON());
 
   resetGlobalData();
   updateSaveStatus();
@@ -315,13 +314,28 @@ function updatesMapToJSON() {
   return payload;
 }
 
+function sendUpdateToServer(json) {
+  const data = {
+    _token: $('meta[name="csrf-token"]').attr('content'),
+    data: json
+  };
+  $.post(`/api/teacher/notas/guardar`, data)
+    .done(function (data) {
+      alert("Notas guardades exitosamente!");
+    })
+    .fail(function (data) {
+      alert("Error - ver consola");
+      console.error(data.responseText);
+    });
+}
+
 export function downloadLibretaTemplate() {
   window.location.href = '/api/teacher/libreta/descargar';
 }
 
 window.downloadLibretaTemplate = downloadLibretaTemplate;
 
-function handleExcelImport(files) {
+export function handleExcelImport(files) {
   if (!files.length) return;
 
   const file = files[0];
@@ -342,39 +356,29 @@ function handleExcelImport(files) {
   reader.readAsArrayBuffer(file);
 }
 
+window.handleExcelImport = handleExcelImport;
+
 function importGradesFromExcel(data) {
-  if (!selectedCourseForGrades) {
-    alert('Selecciona un curso primero');
-    return;
-  }
-
-  const studentList = allStudents[selectedCourseForGrades];
-  let importedCount = 0;
-
-  for (let i = 1; i < data.length; i++) {
+  for(let i = 1; i < data.length; ++i) {
     const row = data[i];
-    if (!row || row.length < 9) continue;
+    if (!row) continue;
 
-    const studentId = parseInt(row[0]);
-    const student = studentList.find(s => s.id === studentId);
+    const cui = parseInt(row[0]);
+    const inputs = g_inputs.get(cui) ?? null;
+    if(!cui || !inputs) continue;
 
-    if (student) {
-      student.grades.parcial1 = parseFloat(row[2]) || student.grades.parcial1;
-      student.grades.parcial2 = parseFloat(row[3]) || student.grades.parcial2;
-      student.grades.parcial3 = parseFloat(row[4]) || student.grades.parcial3;
-      student.grades.continua1 = parseFloat(row[5]) || student.grades.continua1;
-      student.grades.continua2 = parseFloat(row[6]) || student.grades.continua2;
-      student.grades.continua3 = parseFloat(row[7]) || student.grades.continua3;
-      student.grades.sustitutorio = parseFloat(row[8]) || student.grades.sustitutorio;
-
-      importedCount++;
-    }
+    importGradeFromRow(row, inputs)
   }
+}
 
-  renderGradeTable(selectedCourseForGrades);
-  calculateAverages();
-
-  alert(`Importación completada. ${importedCount} estudiantes actualizados.`);
+function importGradeFromRow(row, inputs) {
+  setInputValue(inputs[0], parseInt(row[1])); // Parcial 1
+  setInputValue(inputs[1], parseInt(row[2])); // Continua 1
+  setInputValue(inputs[2], parseInt(row[3])); // Parcial 2
+  setInputValue(inputs[3], parseInt(row[4])); // Continua 2
+  setInputValue(inputs[4], parseInt(row[5])); // Parcial 3
+  setInputValue(inputs[5], parseInt(row[6])); // Continua 3
+  setInputValue(inputs[6], parseInt(row[7])); // Sustitutorio
 }
 
 function exportToExcel() {
