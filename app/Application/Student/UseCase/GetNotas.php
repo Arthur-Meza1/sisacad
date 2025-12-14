@@ -9,11 +9,14 @@ use App\Domain\Student\Repository\IAlumnoRepository;
 
 class GetNotas {
   public function __construct(
+    private IAlumnoRepository $alumnoRepository,
     private IRegistroRepository $registroRepository
   ) {}
 
-  public function execute(Id $alumnoId, Id $grupoId): array {
-    $registro = $this->registroRepository->getOrCreateByAlumnoInGrupo($alumnoId, $grupoId);
+  public function execute(Id $userId, Id $grupoId): array {
+    $alumno = $this->alumnoRepository->findFromIdOrFail($userId, false);
+
+    $registro = $this->registroRepository->getOrCreateByAlumnoInGrupo($alumno->id(), $grupoId);
 
     return RegistroTransformer::toArray($registro);
   }

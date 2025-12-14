@@ -8,7 +8,8 @@ class RegistroTransformer {
   public static function toArray(Registro $registro): array {
     return [
       'parcial' => $registro->parcial()->toArray(),
-      'continua' => $registro->parcial()->toArray(),
+      'continua' => $registro->continua()->toArray(),
+      'sustitutorio' => $registro->parcial()->sustitutorio(),
     ];
   }
 }
