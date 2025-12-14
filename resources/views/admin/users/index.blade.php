@@ -1,29 +1,37 @@
 <x-header_layout>
-  <div class="p-6 space-y-6">
-    <h2 class="text-2xl font-bold text-gray-800 mb-4">Usuarios</h2>
+  <x-admin.sidebar/>
+
+  <div class="p-6 space-y-8">
+    <h2 class="text-3xl font-semibold text-gray-800">Usuarios</h2>
+    <a href="{{ route('admin.users.create') }}"
+       class="inline-block mt-3 bg-green-600 hover:bg-green-700 text-white px-5 py-2.5 rounded-xl text-sm shadow-sm transition">
+      Nuevo Usuario
+    </a>
 
     @if(session('success'))
-      <div class="bg-green-100 text-green-700 px-4 py-2 rounded mb-4">
+      <div class="bg-green-100 text-green-700 px-4 py-3 rounded-lg shadow-sm border border-green-200">
         {{ session('success') }}
       </div>
     @endif
 
-    <a href="{{ route('admin.users.create') }}"
-       class="inline-block bg-green-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-green-700">
-      Nuevo Usuario
-    </a>
+    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 space-y-4">
+      <p class="text-gray-500 text-sm">
+        Ingresa un nombre para buscar usuarios.
+      </p>
+      <form action="{{ route('admin.users.search') }}" method="GET" class="flex items-center gap-3">
+        <input
+          type="text"
+          name="query"
+          placeholder="Buscar usuarios..."
+          class="border border-gray-300 rounded-lg px-4 py-2 w-80 text-sm focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400"
+          required
+        >
 
-    <form action="{{ route('admin.users.search') }}" method="GET" class="mb-6">
-      <input type="text" name="query" placeholder="Buscar usuarios..."
-             class="border rounded-lg px-3 py-2 w-80" required>
-
-      <button class="bg-indigo-600 text-white px-4 py-2 rounded-lg ml-2 text-sm">
-        Buscar
-      </button>
-    </form>
-
-    <div class="text-gray-500 text-sm">
-      Ingresa un nombre, correo o rol para buscar usuarios.
+        <button
+          class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-lg text-sm shadow-sm transition">
+          Buscar
+        </button>
+      </form>
     </div>
   </div>
 </x-header_layout>
