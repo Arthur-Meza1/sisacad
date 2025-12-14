@@ -32,10 +32,6 @@ function changeView(viewId) {
 
   currentView = viewId;
 
-  if(viewId === 'dashboard') {
-    window.location.href = "/";
-  }
-
   if (viewId === 'grades') {
     loadAvailableCourses();
   }
