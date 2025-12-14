@@ -16,24 +16,6 @@ export function loadAnalyticsView(self, id) {
   }).load(renderGradeChart);
 }
 
-/*
-[
-    {
-        "nombre": "Alumno 1",
-        "parcial": [
-            6,
-            9,
-            4
-        ],
-        "continua": [
-            4,
-            1,
-            15
-        ]
-    },
-]
- */
-
 let gradeChartInstance;
 
 function renderGradeChart(data, container) {
