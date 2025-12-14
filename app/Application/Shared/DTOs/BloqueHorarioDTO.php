@@ -9,16 +9,17 @@ use App\Domain\Shared\ValueObject\GrupoTurno;
 use App\Domain\Shared\ValueObject\Hora;
 use App\Domain\Shared\ValueObject\Id;
 
-class BloqueHorarioDTO {
+readonly class BloqueHorarioDTO {
   public function __construct(
-    public readonly Fecha|Dia $fechaOrDia,
-    public readonly Hora $horaInicio,
-    public readonly Hora $horaFin,
-    public readonly Id $grupoId,
-    public readonly string $grupoNombre,
-    public readonly CursoTipo $tipo,
-    public readonly GrupoTurno $turno,
-    public readonly Id $aulaId,
-    public readonly string $aulaNombre,
+    public Id $id,
+    public Fecha|Dia $fechaOrDia,
+    public Hora $horaInicio,
+    public Hora $horaFin,
+    public Id $grupoId,
+    public string $grupoNombre,
+    public CursoTipo $tipo,
+    public GrupoTurno $turno,
+    public Id $aulaId,
+    public string $aulaNombre,
   ) {}
 }

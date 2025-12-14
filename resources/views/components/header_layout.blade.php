@@ -18,7 +18,6 @@ $title = 'Panel - ' . match (auth()->user()->role) {
   @endif
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.2/dist/echarts.min.js"></script>
 </head>
 <body class="min-h-screen flex flex-col">
   <header class="p-4 bg-white shadow-md fixed w-full z-10">

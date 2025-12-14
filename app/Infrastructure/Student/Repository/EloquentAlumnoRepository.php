@@ -23,14 +23,19 @@ class EloquentAlumnoRepository implements IAlumnoRepository {
       ))->toArray();
   }
 
-  public function findFromIdOrFail(Id $id): Alumno {
+  public function findFromIdOrFail(Id $id, bool $loadGrupos = true): Alumno {
     try {
-      $eloquentAlumno = EloquentAlumno::with('grupos')
+      $tables = ['user'];
+      if($loadGrupos) {
+        $tables[] = 'grupos.curso';
+        $tables[] = 'grupos.docente.user';
+      }
+      $eloquentAlumno =
+        EloquentAlumno::
+        with($tables)
         ->where('user_id', $id->getValue())->firstOrFail();
 
-
-
-      return ParseAlumnoToDomain::fromEloquent($alumno);
+      return ParseAlumnoToDomain::fromEloquent($eloquentAlumno, $loadGrupos);
     } catch(ModelNotFoundException $e) {
       throw UserNotFound::execute();
     }

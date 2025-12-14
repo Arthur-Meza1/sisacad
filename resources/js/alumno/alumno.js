@@ -42,15 +42,6 @@ function changeView(viewId) {
   if (viewId === 'enrollment') loadEnrollmentView();
 }
 
-function removeEnrollment(labId) {
-    const labToRemove = enrolledLabs.find(lab => lab.id === labId);
-    if (confirm(`¿Estás seguro de quitar el laboratorio "${labToRemove.name}" de tu matrícula?`)) {
-        enrolledLabs = enrolledLabs.filter(lab => lab.id !== labId);
-        alert(`Matrícula para ${labToRemove.name} eliminada.`);
-        renderEnrollmentView();
-    }
-}
-
 document.addEventListener('DOMContentLoaded', () => {
   changeView('dashboard');
 });

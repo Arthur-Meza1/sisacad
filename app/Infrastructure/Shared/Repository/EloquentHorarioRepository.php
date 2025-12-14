@@ -20,12 +20,13 @@ use App\Infrastructure\Shared\Model\Aula as EloquentAula;
 use Illuminate\Support\Collection;
 
 class EloquentHorarioRepository implements IHorarioRepository {
-  public function getFromGrupoIds(array $grupoIds): HorarioDTO {
+  public function getFromGrupoIds(array $grupoIds, bool $withOthers): HorarioDTO {
     $grupos = EloquentGrupoCurso::with('registros')
       ->whereIn('id', $grupoIds)->get();
 
     $horario = $grupos->flatMap(function ($grupo) {
       return $grupo->bloqueHorario->map(fn($bloque) => new BloqueHorarioDTO(
+        id: Id::fromInt($bloque->id),
         fechaOrDia: Dia::fromString($bloque->dia),
         horaInicio: Hora::fromString($bloque->horaInicio),
         horaFin: Hora::fromString($bloque->horaFin),
@@ -42,6 +43,7 @@ class EloquentHorarioRepository implements IHorarioRepository {
         ->whereIn('grupo_curso_id', $grupoIds)
         ->get()
         ->map(fn ($sesion) => new BloqueHorarioDTO(
+          id: Id::fromInt($sesion->id),
           fechaOrDia: Fecha::fromString($sesion->fecha),
           horaInicio: Hora::fromString($sesion->horaInicio),
           horaFin: Hora::fromString($sesion->horaFin),
@@ -53,10 +55,14 @@ class EloquentHorarioRepository implements IHorarioRepository {
           aulaNombre: $sesion->aula->nombre,
         ));
 
-    $occupied =  self::GetIntervalsWithNonEmptySpace(
-      self::GetOthersFromGrupoIds($grupoIds),
-      EloquentAula::count()
-    );
+    if($withOthers) {
+      $occupied =  self::GetIntervalsWithNonEmptySpace(
+        self::GetOthersFromGrupoIds($grupoIds),
+        EloquentAula::count()
+      );
+    } else {
+      $occupied = [];
+    }
 
     return new HorarioDTO(
       horario: $horario->all(),

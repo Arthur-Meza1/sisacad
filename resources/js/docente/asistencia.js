@@ -1,49 +1,46 @@
 import $ from "jquery";
 import {reloadScheduleCalendar} from "./calendario.js";
 
-export function onEventClick(props) {
-  console.log(props);
-  document.getElementById("asistencia-title").textContent = `Asistencia - ${props.grupo.nombre}`;
-  loadSesiones(props);
+export function onSessionClick(id, nombre) {
+  document.getElementById("asistencia-title").textContent = `Asistencia - ${nombre}`;
+  loadSesion(id);
 }
 
 let g_asistencias;
-function loadSesiones(props) {
-  const data = {
-    fecha: props.fecha,
-    hora_inicio: props.horaInicio,
-    hora_fin: props.horaFin,
-    grupo_id: props.grupo.id,
-    aula_id: props.aula.id,
-    _token: $('meta[name="csrf-token"]').attr('content')
-  }
-  $.post('/api/teacher/sesion', data)
-    .done(function(data, _, jqXHR) {
-      document.getElementById("asistencia_input_sesion_id").value = data.sesion.id;
+let g_id;
+function loadSesion(id) {
+  g_id = id;
+  $.get(`/api/teacher/sesion/${id}`)
+    .done(function(data, _, xhr) {
+      resetAsistenciaMap();
+
+      $("#asistencia-submit-button").prop("disabled", !data.editable);
+
+      document.getElementById("asistencia_input_sesion_id").value = data.id;
       document.getElementById('asistencia-table-body').innerHTML = "";
-      if(data.sesion.asistencias.length !== 0) {
+      if(data.asistencias.length !== 0) {
         $("#asistencia-empty").hide();
         $("#asistencia-tabla").show();
       } else {
         $("#asistencia-empty").show();
         $("#asistencia-tabla").hide();
       }
-      g_asistencias = new Map();
-      data.sesion.asistencias.forEach(x => addAsistencia(x));
+
+      data.asistencias.forEach(x => addAsistencia(x, data.editable));
 
       document.getElementById('modal-asistencia').classList.remove('hidden');
-
-      if(jqXHR.status === 201)
-        reloadScheduleCalendar();
     }).fail(function (data) {
     console.error(data.responseText);
   });
 }
 
-function addAsistencia(x) {
+function resetAsistenciaMap() {
+  g_asistencias = new Map();
+}
+
+function addAsistencia(x, enabled) {
   document.getElementById('asistencia-table-body').innerHTML += `
   <tr
-    onclick="this.querySelector('input[type=checkbox]').checked = !this.querySelector('input[type=checkbox]').checked"
     class="row-select border-b border-gray-100 hover:bg-gray-50 transition-colors">
                     <td class="py-4 px-4 font-semibold text-gray-800">
                        ${x.alumno.nombre}
@@ -54,6 +51,7 @@ function addAsistencia(x) {
                         <input ${x.presente ? "checked" : ""} type="checkbox"
                                name="${x.alumno.id}"
                                value="1"
+                               ${enabled ? "" : "disabled"}
                                class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500 focus:ring-2">
                       </label>
                     </td>
@@ -93,15 +91,11 @@ function onSendAsistencia(e) {
 
   const laravelData = {
     _token: formData[0].value,
-    sesion_id: formData[1].value,
     alumnos: changedMap
   };
 
-  console.log("Cambios:");
-  console.log(changedMap);
-
   $.ajax({
-    url: $form.attr('action'),
+    url: `/api/teacher/sesion/${formData[1].value}/guardar`,
     type: 'POST',
     data: laravelData,
     dataType: 'json',
@@ -122,4 +116,24 @@ function closeAsistenciaModal() {
   document.getElementById('modal-asistencia').classList.add('hidden');
 }
 
+function borrarSesion() {
+  if(!confirm("Estás seguro que quieres eliminar esta sesion?"))
+    return;
+
+  const data = {
+    _token: $('meta[name="csrf-token"]').attr('content')
+  };
+  $.post(`/api/teacher/sesion/${g_id}/borrar`, data)
+    .done(function () {
+      alert("Sesion eliminada correctamente");
+      closeAsistenciaModal();
+      reloadScheduleCalendar();
+    })
+    .fail(function (xhr) {
+      alert("Error - Ver Consola");
+      console.log(xhr.responseText);
+    })
+}
+
+window.borrarSesion = borrarSesion;
 window.closeAsistenciaModal = closeAsistenciaModal;

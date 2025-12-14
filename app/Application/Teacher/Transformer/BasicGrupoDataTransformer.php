@@ -17,9 +17,8 @@ class BasicGrupoDataTransformer {
         "id" => $dto->id->getValue(),
         "nombre" => $dto->nombre,
         "tipo" => $dto->tipo,
+        "turno" => $dto->turno,
         "cantidad" => $dto->nregistros,
-        "promedio_parcial" => $dto->promedio_parcial,
-        "promedio_continua" => $dto->promedio_continua,
       ];
     }
 

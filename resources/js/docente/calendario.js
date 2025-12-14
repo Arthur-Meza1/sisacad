@@ -1,16 +1,13 @@
 import {ContentLoader} from "../common/ContentLoader.js";
-import {Calendar} from "fullcalendar";
 import {
   formatTime,
   formatDate,
-  ucfirst,
-  convertDiaToInt,
-  isInNowEvent, sameDay, convertDateStringToDate
+  isInNowEvent, sameDay
 } from "../common/Utils.js";
 import $ from "jquery";
-import tippy from "tippy.js";
 import 'tippy.js/dist/tippy.css';
-import {onEventClick} from "./asistencia.js";
+import {onSessionClick} from "./asistencia.js";
+import {Calendario} from "../shared/calendario.js";
 
 let g_calendarLoader = new ContentLoader({
   "url": "/api/teacher/horario",
@@ -32,35 +29,25 @@ export function updateEventButtonState() {
   const startDateTime = new Date(`${date}T${start}:00`);
   const endDateTime = new Date(`${date}T${end}:00`);
 
-  const startOverlap = findFirstStartOverlap(startDateTime);
-  const endOverlap = findFirstEndOverlap(endDateTime);
+  const overlappingEvents = getOverlappingEventsInRange(startDateTime, endDateTime);
 
-  const doesOverlap = startOverlap != null || endOverlap != null || !(startDateTime < endDateTime);
+  const doesOverlap = overlappingEvents.length !== 0 || !(startDateTime < endDateTime);
 
   event_button.disabled = doesOverlap;
-
   const errorLabel = document.getElementById("event-submit-error");
   if (doesOverlap) {
     let conflictMessages = [];
 
-    if (startOverlap) {
-      const hora = new Date(startOverlap.start).toLocaleTimeString('es-ES', {
+    overlappingEvents.forEach(x => {
+      const hora = new Date(x.start).toLocaleTimeString('es-ES', {
         hour: '2-digit',
         minute: '2-digit'
       });
-      conflictMessages.push(`${startOverlap.title} (${hora})`);
-    }
-
-    if (endOverlap) {
-      const hora = new Date(endOverlap.start).toLocaleTimeString('es-ES', {
-        hour: '2-digit',
-        minute: '2-digit'
-      });
-      conflictMessages.push(`${endOverlap.title} (${hora})`);
-    }
+      conflictMessages.push(`${x.title} (${hora})`);
+    });
 
     let str = "Conflicto con: ";
-    str += conflictMessages.join(' y ');
+    str += conflictMessages.join('\n');
 
     errorLabel.textContent = str;
   } else {
@@ -94,6 +81,7 @@ function loadAulasDisponibles(date, start, end) {
 }
 
 export function loadScheduleCalendar() {
+  g_fullCalendarInstance?.updateSize();
   g_calendarLoader.load(renderScheduleCalendar);
 }
 
@@ -113,155 +101,63 @@ export function closeScheduleModal(event) {
 }
 
 function renderScheduleCalendar(data, container) {
-  console.log("Horario:");
-  console.log(data);
-  if (g_fullCalendarInstance?.destroy) g_fullCalendarInstance.destroy();
-
-  const sesionSet = new Set();
-
-  const sesiones = data.sesiones.map(function (item) {
-    sesionSet.add(`${convertDateStringToDate(item.fecha).getDay()}${item.horaInicio}${item.horaFin}`);
-    return {
-      title: `${item.grupo.nombre} - ${ucfirst(item.tipo)}`,
-      backgroundColor: "#ab0647",
-      borderColor: "#ab0647",
-      start: `${item.fecha}T${item.horaInicio}`,
-      end: `${item.fecha}T${item.horaFin}`,
-      extendedProps: item,
-    }
-  });
-
-  const horario =
-      data
-        .horario
-        .filter(item => !sesionSet.has(`${convertDiaToInt(item.dia)}${item.horaInicio}${item.horaFin}`))
-        .map(function (item) {
-    const colorMap = { teoria: '#60a5fa', laboratorio: '#2aa87c' };
-console.log(`${convertDiaToInt(item.dia)}${item.horaInicio}${item.horaFin}`);
-    return {
-      title: `${item.grupo.nombre} - ${ucfirst(item.tipo)}`,
-      backgroundColor: colorMap[item.tipo],
-      borderColor: colorMap[item.tipo],
-      daysOfWeek: [convertDiaToInt(item .dia)],
-      startTime: item.horaInicio,
-      endTime: item.horaFin,
-      extendedProps: item,
-    }
-  });
-
-  const others = data.occupied.map(function (item) {
-    const props = {
-      display: 'background',
-      backgroundColor: 'red',
-    };
-
-    if(item.from_bloque === true) {
-      props.daysOfWeek = [convertDiaToInt(item.fecha)];
-      props.startTime= item.horaInicio;
-      props.endTime = item.horaFin;
-    } else {
-      props.start = `${item.fecha}T${item.horaInicio}`;
-      props.end =`${item.fecha}T${item.horaFin}`;
-    }
-
-    return props;
-  });
-
-  const fullCalendarEvents = [...horario, ...sesiones, ...others];
-
-  g_fullCalendarInstance = new Calendar(container[0], {
-    initialView: 'timeGridWeek',
-    slotHeight: 60,
-    slotMinTime: '06:00:00',
-    slotMaxTime: "20:00:00",
-    eventMaxStack: 3,
-    weekends: false,
-    allDaySlot: false,
-    nowIndicator: true,
-    height: 'auto',
-    locale: 'es',
-    selectable: true,
-
-    headerToolbar: {
-      left: 'prev,next today',
-      center: 'title',
-      right: 'timeGridWeek,timeGridDay'
-    },
-
-    events: fullCalendarEvents,
-
-    eventClick: function(info) {
-      if(isInNowEvent(info.event)) {
-        let props = {...info.event.extendedProps, fecha: formatDate(info.event.start)};
-        onEventClick(props);
+  const calendario = new Calendario(data)
+    .eventClick(function(info) {
+      const props = info.event.extendedProps;
+      if(props.sesion) {
+        onSessionClick(props.id, props.grupo.nombre);
+      } else if(isInNowEvent(info.event)) {
+        crearSesion({
+          grupo_id: props.grupo.id,
+          fecha: info.event.start.toISOString().slice(0, 10),
+          hora_inicio: props.horaInicio,
+          hora_fin: props.horaFin,
+          aula_id: props.aula.id
+        });
       }
-    },
+    })
+    .select(function(info) {
+      const overlappingEvents = getOverlappingEventsInRange(info.start, info.end);
+      let start = info.start;
+      let end = info.end;
 
-    select: function (info) {
-      let start = clampStartEvent(info.start);
-      let end = clampEndEvent(info.end);
+      const firstOverlap = overlappingEvents.at(0);
+      if(firstOverlap && firstOverlap.start < info.start && info.start < firstOverlap.end) {
+        start = firstOverlap.end;
+      }
+
+      const lastOverlap = overlappingEvents.at(-1);
+      if(lastOverlap && lastOverlap.end > info.end && info.end > lastOverlap.start) {
+        end = lastOverlap.start;
+      }
+
       if(start < end)
         openScheduleModal(start, end);
-    },
-
-    eventDidMount: function(info) {
+    })
+    .eventDidMount(function(info) {
       const props = info.event.extendedProps || {};
       if(Object.keys(props).length === 0)
-        return;
+        return false;
 
       if (isInNowEvent(info.event))
         info.el.classList.add('ec-now');
 
-      const content = `
-      <div>
-          <strong>${props.grupo.nombre}</strong><br>
-          Tipo: ${ucfirst(props.tipo)}<br>
-          Aula: ${props.aula.nombre}<br>
-          Turno: ${props.turno}<br>
-          Horario: ${props.horaInicio} - ${props.horaFin}
-        </div>`;
+      return true;
+    })
+    .selectable();
 
-      tippy(info.el, {
-        content,
-        allowHTML: true,
-        placement: 'top',
-      });
-    }
-  });
-
-  g_fullCalendarInstance.render();
+    g_fullCalendarInstance = calendario.render(g_fullCalendarInstance, container[0]);
 }
 
-function findFirstStartOverlap(date) {
-  return getCalendarOwnEvents().filter(x =>
-    sameDay(date, x.start) && sameDay(date, x.end)
-  ).find(x => x.start <= date && date < x.end);
-}
-
-function findFirstEndOverlap(date) {
-  return getCalendarOwnEvents().filter(x =>
-    sameDay(date, x.start) && sameDay(date, x.end)
-  ).find(x => x.start < date && date <= x.end);
+function getOverlappingEventsInRange(start, end) {
+  return getCalendarOwnEvents()
+    .filter(x => sameDay(start, x.start) && sameDay(end, x.end))
+    .filter(x => x.start < end && x.end > start)
+    .sort((a, b) => a.start - b.start);
 }
 
 function getCalendarOwnEvents() {
-  return g_fullCalendarInstance.getEvents().filter(x => x.extendedProps.length === 0);
-}
-
-function clampStartEvent(start) {
-  let overlapStart = findFirstStartOverlap(start);
-  if(overlapStart) {
-    return overlapStart.end;
-  }
-  return start;
-}
-
-function clampEndEvent(end) {
-  let overlapEnd = findFirstEndOverlap(end);
-  if(overlapEnd) {
-    return overlapEnd.start;
-  }
-  return end;
+  return g_fullCalendarInstance.getEvents();
 }
 
 export function saveNewScheduleEvent() {
@@ -277,7 +173,6 @@ export function saveNewScheduleEvent() {
     "hora_inicio": start,
     "hora_fin": end,
     "aula_id": locationId,
-    "from_bloque": false,
   };
 
   crearSesion(props);
@@ -291,7 +186,7 @@ export function reloadScheduleCalendar() {
 function crearSesion(props) {
   props._token = $('meta[name="csrf-token"]').attr('content');
   console.log(props);
-  $.post('/api/teacher/sesion', props)
+  $.post('/api/teacher/crear_sesion', props)
     .done(function() {
       closeScheduleModal();
       reloadScheduleCalendar();

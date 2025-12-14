@@ -9,7 +9,7 @@ class SesionTransformer {
   public static function toArray(Sesion $sesion): array {
     return [
       'id' => $sesion->id()->getValue(),
-      'sesion_id' => $sesion->id()->getValue(),
+      'editable' => $sesion->editable(),
       'asistencias' => self::asistenciaToArray($sesion->asistencias()),
     ];
   }

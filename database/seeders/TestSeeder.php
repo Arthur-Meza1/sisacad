@@ -7,11 +7,11 @@ use App\Infrastructure\Shared\Model\BloqueHorario;
 use App\Infrastructure\Shared\Model\Curso;
 use App\Infrastructure\Shared\Model\GrupoCurso;
 use App\Infrastructure\Shared\Model\Matricula;
+use App\Infrastructure\Shared\Model\Registro;
 use App\Infrastructure\Shared\Model\Tema;
 use App\Infrastructure\Shared\Model\User;
 use App\Infrastructure\Student\Model\Alumno;
 use App\Infrastructure\Teacher\Model\Docente;
-use App\Models\Registro;
 use Illuminate\Database\Seeder;
 
 class TestSeeder extends Seeder

@@ -17,28 +17,17 @@ class EloquentGrupoCursoRepository implements IGrupoCursoRepository
    */
   public function findQueryFromIds(array $ids): array
   {
-    return EloquentGrupoCurso::with(['registros', 'curso', 'docente.user'])
-      ->withCount('registros')
+    return EloquentGrupoCurso::with(['curso'])
+      ->withCount('alumnos')
       ->whereIn('id', $ids)
       ->get()
       ->map(function (EloquentGrupoCurso $grupo) {
-        $nregistros = $grupo->registros_count;
-        $promedio_parcial = $grupo->registros
-          ->flatMap(fn ($registro) => $registro->getNotasParcial())
-          ->filter()
-          ->avg();
-        $promedio_continua = $grupo->registros
-          ->flatMap(fn ($registro) => $registro->getNotasContinua())
-          ->filter()
-          ->avg();
-
-        return GrupoCursoDTO::create(
+        return new GrupoCursoDTO(
           id: Id::fromInt($grupo->id),
           nombre: $grupo->curso->nombre,
+          turno: $grupo->turno,
           tipo: $grupo->tipo,
-          nregistros: $nregistros,
-          promedio_parcial: round($promedio_parcial),
-          promedio_continua: round($promedio_continua),
+          nregistros: $grupo->alumnos_count,
         );
       })->toArray();
   }

@@ -3,8 +3,6 @@
 
 namespace App\Application\Teacher\Transformer;
 
-use App\Application\Teacher\DTOs\GrupoCursoDTO;
-
 class AulaTransformer
 {
   public static function toArray(array $dtos): array

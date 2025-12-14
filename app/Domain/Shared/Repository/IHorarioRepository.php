@@ -10,6 +10,5 @@ interface IHorarioRepository {
    * @param array $grupoIds
    * @return BloqueHorarioDTO
    */
-  public function getFromGrupoIds(array $grupoIds): HorarioDTO;
-
+  public function getFromGrupoIds(array $grupoIds, bool $withOthers): HorarioDTO;
 }

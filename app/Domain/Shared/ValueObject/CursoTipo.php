@@ -10,15 +10,15 @@ class CursoTipo {
 
   private function __construct(
     private readonly string $tipo
-  ) {
-    if(!in_array($tipo, self::allowedTipo())) {
-      throw InvalidCursoTipo::execute($tipo);
-    }
-  }
+  ) {}
 
   public static function fromString(
     string $tipo
   ): self {
+    if(!in_array($tipo, self::allowedTipo())) {
+      throw InvalidCursoTipo::execute($tipo);
+    }
+
     return new self($tipo);
   }
 

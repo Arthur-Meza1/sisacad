@@ -22,4 +22,8 @@ class InvalidValue extends \Exception {
   public static function invalidBoolString(string $bool): self {
     return new self("Bool string invalido '{$bool}'");
   }
+
+  public static function invalidNota(int $value): self {
+    return new self("Nota invalida '{$value}'");
+  }
 }
