@@ -58,6 +58,7 @@ Route::post('/api/teacher/aulas', \App\Infrastructure\Teacher\Controller\GetAula
 Route::post('/api/teacher/crear_sesion', \App\Infrastructure\Teacher\Controller\CreateSesionController::class)->middleware('role:teacher');
 Route::post("/api/teacher/sesion/{sesion}/guardar", \App\Infrastructure\Teacher\Controller\GuardarSesionController::class)->middleware('role:teacher')->name("asistencia.guardar");
 Route::post('/api/teacher/sesion/{sesion}/borrar', \App\Infrastructure\Teacher\Controller\BorrarSesionController::class)->middleware('role:teacher');
+Route::get('/api/teacher/libreta/descargar', \App\Infrastructure\Teacher\Controller\LibretaDescargarController::class)->middleware('role:teacher');
 
 Route::middleware(['auth', 'role:admin'])
   ->prefix('admin/users')

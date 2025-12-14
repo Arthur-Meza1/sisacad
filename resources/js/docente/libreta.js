@@ -285,7 +285,6 @@ export function saveAllGrades() {
     return;
   }
 
-  // console.log(JSON.stringify(Object.fromEntries(g_updates)));
   const data = {
     _token: $('meta[name="csrf-token"]').attr('content'),
     data: updatesMapToJSON()
@@ -315,6 +314,12 @@ function updatesMapToJSON() {
 
   return payload;
 }
+
+export function downloadLibretaTemplate() {
+  window.location.href = '/api/teacher/libreta/descargar';
+}
+
+window.downloadLibretaTemplate = downloadLibretaTemplate;
 
 function handleExcelImport(files) {
   if (!files.length) return;
