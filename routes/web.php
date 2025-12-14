@@ -29,9 +29,6 @@ Route::middleware('auth')->group(function () {
   Route::get('/student', [AlumnoController::class, 'index'])
     ->name('student')
     ->middleware('role:student');
-  Route::get('/teacher', DocenteController::class)
-    ->name('teacher')
-    ->middleware('role:teacher');
   Route::view('/secretary', 'secretary')->middleware('role:secretary');
 });
 
@@ -56,6 +53,13 @@ Route::middleware(['auth', 'role:teacher'])
     Route::post('/aulas', Teacher\GetAulasDisponiblesController::class);
     Route::post('/sesion', Teacher\CreateOrGetSesionController::class);
     Route::post("/asistencia", Teacher\GuardarAsistenciaController::class)->name("asistencia.guardar");
+  });
+
+Route::middleware(['auth', 'role:teacher'])
+  ->prefix('/teacher')->name("teacher.")
+  ->group(function () {
+    Route::get('/', DocenteController::class)
+      ->name('teacher');
   });
 
 Route::middleware(['auth', 'role:admin'])
