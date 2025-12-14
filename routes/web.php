@@ -29,6 +29,7 @@ Route::middleware('auth')->group(function () {
   Route::get('/student', [AlumnoController::class, 'index'])
     ->name('student')
     ->middleware('role:student');
+  // TODO: Secretary view missing
   Route::view('/secretary', 'secretary')->middleware('role:secretary');
 });
 

@@ -2,20 +2,20 @@
   <aside class="w-64 p-4 sticky top-20 h-full">
     <nav class="space-y-2 font-medium">
       <a href="#" data-view="dashboard" class="nav-link flex items-center p-3 rounded-lg hover:bg-gray-100 active-link">
-        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+        <svg class="w-5 h-5 mr-3" stroke="currentColor" viewBox="0 0 24 24"><path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
         Inicio
       </a>
       <a href="#" data-view="grades-input" class="nav-link flex items-center p-3 rounded-lg hover:bg-gray-100 inactive-link">
-        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+        <svg class="w-5 h-5 mr-3" stroke="currentColor" viewBox="0 0 24 24"><path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
         Libreta y Asistencia
       </a>
       <a href="#" data-view="schedule" class="nav-link flex items-center p-3 rounded-lg hover:bg-gray-100 inactive-link">
-        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+        <svg class="w-5 h-5 mr-3" stroke="currentColor" viewBox="0 0 24 24"><path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
         Horario
       </a>
       <nav class="space-y-2 font-medium">
         <a href="#" data-view="analytics" class="nav-link flex items-center p-3 rounded-lg hover:bg-gray-100 inactive-link">
-          <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0v-5a2 2 0 012-2h2a2 2 0 012 2v5m-6 0h.01"></path></svg>
+          <svg class="w-5 h-5 mr-3" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0v-5a2 2 0 012-2h2a2 2 0 012 2v5m-6 0h.01"></path></svg>
           Análisis de Notas
         </a>
       </nav>
@@ -56,7 +56,7 @@
         </div>
         <div class="bg-white rounded-xl p-6 shadow-lg">
           <h3 class="font-bold text-lg text-gray-700 mb-3 flex items-center">
-            <svg class="w-5 h-5 mr-2 text-red-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path></svg>
+            <svg class="w-5 h-5 mr-2 text-red-500" viewBox="0 0 20 20"><path fill="currentColor" fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path></svg>
             Horas Próximas
           </h3>
           <ul id="upcomingClasses" class="mt-2 text-sm text-gray-700 space-y-3">
@@ -99,13 +99,13 @@
           <h3 class="font-semibold text-lg text-gray-700">Opciones de Libreta</h3>
           <div class="flex gap-3">
             <button onclick="backToCourseSelection()" class="px-4 py-2 rounded-lg text-sm font-medium text-indigo-700 bg-indigo-100 hover:bg-indigo-200 transition">
-              <svg class="inline w-4 h-4 mr-1 mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"></path></svg>
+              <svg class="inline w-4 h-4 mr-1 mb-0.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"></path></svg>
               Seleccionar Otro Curso
             </button>
-            <button onclick="importNotes()" class="px-4 py-2 rounded-lg text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 transition">
+            <button onclick="" class="px-4 py-2 rounded-lg text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 transition">
               Importar Notas (Excel)
             </button>
-            <button onclick="exportGradebook()" class="px-4 py-2 rounded-lg text-sm font-medium text-gray-700 bg-gray-200 hover:bg-gray-300 transition">
+            <button onclick="" class="px-4 py-2 rounded-lg text-sm font-medium text-gray-700 bg-gray-200 hover:bg-gray-300 transition">
               Descargar Libreta/Informe
             </button>
           </div>
@@ -127,7 +127,7 @@
             </div>
           </div>
 
-          <button onclick="saveAttendanceOnly()" class="px-5 py-2 rounded-lg text-sm font-medium text-white bg-green-600 hover:bg-green-700 transition">
+          <button onclick="" class="px-5 py-2 rounded-lg text-sm font-medium text-white bg-green-600 hover:bg-green-700 transition">
             Guardar Asistencia de la Sesión
           </button>
           <div id="attendancePanel" class="hidden mt-6 border-t pt-4">
@@ -167,8 +167,8 @@
         <h2 class="text-2xl font-bold text-gray-800">Mi Horario Semanal</h2>
 
         <button onclick="openScheduleModal()" class="px-4 py-2 rounded-lg text-sm font-medium text-white bg-green-600 hover:bg-green-700 transition flex items-center">
-          <svg class="w-5 h-5 mr-1" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path>
+          <svg class="w-5 h-5 mr-1" viewBox="0 0 20 20">
+            <path fill="currentColor" fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path>
           </svg>
           Reservar Hora Extra
         </button>
@@ -218,7 +218,7 @@
       </div>
     </div>
 
-    <div id="scheduleModal" class="fixed inset-0 bg-gray-600 bg-opacity-75 hidden flex items-center justify-center z-50 p-4" onclick="closeScheduleModal(event)">
+    <div id="scheduleModal" class="fixed inset-0 bg-gray-600 bg-opacity-75 hidden items-center justify-center z-50 p-4" onclick="closeScheduleModal(event)">
       <div class="bg-white rounded-xl shadow-2xl w-full max-w-lg transform transition-all duration-300 scale-100" onclick="event.stopPropagation()">
         <div class="p-6 border-b flex justify-between items-center">
           <h3 class="text-xl font-bold text-gray-800">Reservar Clase</h3>
@@ -281,7 +281,7 @@
     <!-- Modal fondo -->
     <div id="modal-asistencia"
          onclick="if(event.target === this) closeAsistenciaModal()"
-         class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+         class="hidden fixed inset-0 z-50 items-center justify-center bg-black/50 p-4">
 
       <!-- Contenido del modal -->
       <div class="bg-white rounded-xl shadow-xl w-full max-w-4xl mx-auto p-6 relative
