@@ -55,3 +55,8 @@ export function convertDateStringToDate(dateStr) {
 export function sameDay(a, b) {
   return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
 }
+
+export function setInputValue(input, value) {
+  input.value = value;
+  input.dispatchEvent(new Event('input', {bubbles: true}));
+}
