@@ -14,8 +14,11 @@ class RegistroTransformer {
 
     foreach ($alumnos as $alumno) {
       $res[] = [
+        "alumno_id" => $alumno->id()->getValue(),
+        "registro_id" => $alumno->registro()->id()->getValue(),
         "nombre" => $alumno->nombre(),
         "parcial" => $alumno->registro()->parcial()->toArray(),
+        "sustitutorio" => $alumno->registro()->parcial()->sustitutorio(),
         "continua" => $alumno->registro()->continua()->toArray()
       ];
     }

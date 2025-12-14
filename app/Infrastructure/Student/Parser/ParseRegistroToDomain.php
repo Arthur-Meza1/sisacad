@@ -12,7 +12,7 @@ class ParseRegistroToDomain
 {
   public static function fromEloquent(EloquentRegistro $eloquentRegistro): Registro{
     return new Registro(
-      grupoId: Id::fromInt($eloquentRegistro->grupo_curso_id),
+      id: Id::fromInt($eloquentRegistro->id),
       parcial: new NotasParcial(
         $eloquentRegistro->parcial1,
         $eloquentRegistro->parcial2,

@@ -28,6 +28,18 @@ class NotasContinua
     $this->unidad3 = $unidad3;
   }
 
+  public function unidad1(): ?int {
+    return $this->unidad1;
+  }
+
+  public function unidad2(): ?int {
+    return $this->unidad2;
+  }
+
+  public function unidad3(): ?int {
+    return $this->unidad3;
+  }
+
   public function toArray(): array {
     return [
       $this->unidad1,

@@ -16,7 +16,6 @@ class BasicGrupoDataTransformer {
       $res[] = [
         "id" => $dto->id->getValue(),
         "nombre" => $dto->nombre,
-        "turno" => $dto->turno,
         "tipo" => $dto->tipo,
         "turno" => $dto->turno,
         "cantidad" => $dto->nregistros,

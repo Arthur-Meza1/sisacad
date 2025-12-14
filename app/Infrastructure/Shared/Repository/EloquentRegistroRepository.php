@@ -2,6 +2,7 @@
 
 namespace App\Infrastructure\Shared\Repository;
 
+use App\Domain\Shared\Exception\RegistroNotFound;
 use App\Domain\Shared\Repository\IRegistroRepository;
 use App\Domain\Shared\ValueObject\Id;
 use App\Domain\Shared\ValueObject\Registro;
@@ -31,6 +32,47 @@ class EloquentRegistroRepository implements IRegistroRepository {
       return ParseRegistroToDomain::fromEloquent($eloquentRegistro);
     } catch(ModelNotFoundException) {
       throw AlumnoNotFound::execute($alumnoId);
+    }
+  }
+
+  public function save(Registro $registro): void
+  {
+    $data = [];
+
+    $parcial = $registro->parcial();
+    if ($parcial->unidad1() !== null) {
+      $data['parcial1'] = $parcial->unidad1();
+    }
+    if ($parcial->unidad2() !== null) {
+      $data['parcial2'] = $parcial->unidad2();
+    }
+    if ($parcial->unidad3() !== null) {
+      $data['parcial3'] = $parcial->unidad3();
+    }
+    if ($parcial->sustitutorio() !== null) {
+      $data['sustitutorio'] = $parcial->sustitutorio();
+    }
+
+    $continua = $registro->continua();
+    if ($continua->unidad1() !== null) {
+      $data['continua1'] = $continua->unidad1();
+    }
+    if ($continua->unidad2() !== null) {
+      $data['continua2'] = $continua->unidad2();
+    }
+    if ($continua->unidad3() !== null) {
+      $data['continua3'] = $continua->unidad3();
+    }
+
+    if (empty($data)) {
+      return; // nada que persistir
+    }
+
+    $updated = EloquentRegistro::whereKey($registro->id()->getValue())
+      ->update($data);
+
+    if ($updated === 0) {
+      throw RegistroNotFound::execute($registro->id());
     }
   }
 }
