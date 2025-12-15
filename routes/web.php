@@ -4,7 +4,6 @@ use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\Login;
 use App\Http\Controllers\Auth\Logout;
-use App\Http\Controllers\AlumnoController;
 use App\Infrastructure\Teacher\Controller\DocenteController;
 use App\Infrastructure\Teacher\Controller as Teacher;
 use App\Infrastructure\Admin\Controller as Admin;
@@ -26,9 +25,10 @@ Route::get('/', function () {
 });
 
 Route::middleware('auth')->group(function () {
-  Route::get('/student', [AlumnoController::class, 'index'])
+  // FIXME: Alberto fix this plz
+  /*Route::get('/student', [AlumnoController::class, 'index'])
     ->name('student')
-    ->middleware('role:student');
+    ->middleware('role:student');*/
   // TODO: Secretary view missing
   Route::view('/secretary', 'secretary')->middleware('role:secretary');
 });
@@ -52,8 +52,9 @@ Route::middleware(['auth', 'role:teacher'])
   ->group(function () {
     Route::get("/horario", Teacher\GetHorarioController::class);
     Route::post('/aulas', Teacher\GetAulasDisponiblesController::class);
-    Route::post('/sesion', Teacher\CreateOrGetSesionController::class);
-    Route::post("/asistencia", Teacher\GuardarAsistenciaController::class)->name("asistencia.guardar");
+    // FIXME: Alberto fix this plz
+    //Route::post('/sesion', Teacher\CreateOrGetSesionController::class);
+    //Route::post("/asistencia", Teacher\GuardarAsistenciaController::class)->name("asistencia.guardar");
   });
 
 Route::middleware(['auth', 'role:teacher'])
