@@ -99,22 +99,112 @@
             <h3 class="font-bold text-lg text-gray-700" id="currentCourseTitle">Curso: </h3>
             <p class="text-sm text-gray-500" id="currentCourseInfo"></p>
           </div>
-          <div class="flex gap-3">
-            <button onclick="showCourseSelection()" class="px-4 py-2 rounded-lg text-sm font-medium text-indigo-700 bg-indigo-100 hover:bg-indigo-200 transition">
-              <i class="fas fa-chevron-left mr-2"></i> Seleccionar Otro Curso
-            </button>
+          <div class="flex items-center gap-2">
 
-            <div class="relative">
-              <input type="file" id="excelFileInput" accept=".xlsx,.xls" class="hidden" onchange="handleExcelImport(this.files)">
-              <button onclick="document.getElementById('excelFileInput').click()" class="px-4 py-2 rounded-lg text-sm font-medium text-white bg-green-600 hover:bg-green-700 transition">
-                <i class="fas fa-file-excel mr-2"></i> Importar Excel
+            <!-- Seleccionar otro curso -->
+            <div class="relative group">
+              <button
+                onclick="showCourseSelection()"
+                aria-label="Seleccionar otro curso"
+                class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-indigo-100 text-indigo-700 hover:bg-indigo-200
+                       transition focus:outline-none focus:ring-2 focus:ring-indigo-300">
+                <i class="fas fa-arrow-left"></i>
               </button>
+
+              <span
+                class="pointer-events-none absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md bg-gray-800 text-white text-xs
+                       px-2 py-1 opacity-0 scale-95 transition group-hover:opacity-100 group-hover:scale-100">
+                Seleccionar otro curso
+              </span>
             </div>
 
-            <button onclick="exportToExcel()" class="px-4 py-2 rounded-lg text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 transition">
-              <i class="fas fa-download mr-2"></i> Exportar Excel
-            </button>
+            <!-- Descargar plantilla -->
+            <div class="relative group">
+              <button
+                onclick="downloadLibretaTemplate()"
+                aria-label="Descargar plantilla"
+                class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-indigo-100 text-indigo-700 hover:bg-indigo-200
+                       transition focus:outline-none focus:ring-2 focus:ring-indigo-300">
+                <i class="fas fa-download"></i>
+              </button>
+              <span
+                class="pointer-events-none absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md bg-gray-800 text-white text-xs
+                       px-2 py-1 opacity-0 scale-95 transition group-hover:opacity-100 group-hover:scale-100">
+                Descargar plantilla
+              </span>
+            </div>
+
+            <!-- Importar Excel -->
+            <div class="relative group">
+              <input
+                type="file"
+                id="excelFileInput"
+                accept=".xlsx,.xls"
+                class="hidden"
+                onchange="handleExcelImport(this.files)"
+              >
+
+              <button
+                onclick="document.getElementById('excelFileInput').click()"
+                aria-label="Importar Excel"
+                class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-green-600 text-white hover:bg-green-700
+                       transition focus:outline-none focus:ring-2 focus:ring-green-400">
+                <i class="fas fa-file-excel"></i>
+              </button>
+
+              <span
+                class="
+        pointer-events-none
+        absolute -top-9 left-1/2 -translate-x-1/2
+        whitespace-nowrap
+        rounded-md
+        bg-gray-800 text-white text-xs
+        px-2 py-1
+        opacity-0 scale-95
+        transition
+        group-hover:opacity-100 group-hover:scale-100
+      "
+              >
+      Importar Excel
+    </span>
+            </div>
+
+            <!-- Exportar Excel -->
+            <div class="relative group">
+              <button
+                onclick="exportToExcel()"
+                aria-label="Exportar Excel"
+                class="
+        inline-flex items-center justify-center
+        w-10 h-10 rounded-xl
+        bg-blue-600 text-white
+        hover:bg-blue-700
+        transition
+        focus:outline-none focus:ring-2 focus:ring-blue-400
+      "
+              >
+                <i class="fas fa-file-export"></i>
+              </button>
+
+              <span
+                class="
+        pointer-events-none
+        absolute -top-9 left-1/2 -translate-x-1/2
+        whitespace-nowrap
+        rounded-md
+        bg-gray-800 text-white text-xs
+        px-2 py-1
+        opacity-0 scale-95
+        transition
+        group-hover:opacity-100 group-hover:scale-100
+      "
+              >
+      Exportar Excel
+    </span>
+            </div>
+
           </div>
+
         </div>
 
         <div class="bg-white rounded-xl p-6 shadow-lg">
