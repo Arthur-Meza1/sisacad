@@ -1,4 +1,5 @@
 <x-header_layout>
+  <x-admin.sidebar/>
   <main class="p-6 max-w-xl mx-auto">
     <h1 class="text-2xl font-bold mb-6">Crear Usuario</h1>
 
@@ -24,8 +25,9 @@
         <label class="font-medium">Rol</label>
         <select name="role" class="w-full border rounded-lg px-3 py-2" required>
           <option value="admin">Admin</option>
-          <option value="teacher">Teacher</option>
-          <option value="student">Student</option>
+          <option value="secretary">Secretario</option>
+          <option value="teacher">Docente</option>
+          <option value="student">Alumno</option>
         </select>
       </div>
 
