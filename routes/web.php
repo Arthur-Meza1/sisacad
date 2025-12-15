@@ -52,9 +52,8 @@ Route::middleware(['auth', 'role:teacher'])
   ->group(function () {
     Route::get("/horario", Teacher\GetHorarioController::class);
     Route::post('/aulas', Teacher\GetAulasDisponiblesController::class);
-    // FIXME: Alberto fix this plz
-    //Route::post('/sesion', Teacher\CreateOrGetSesionController::class);
-    //Route::post("/asistencia", Teacher\GuardarAsistenciaController::class)->name("asistencia.guardar");
+    Route::post('/crear_sesion', Teacher\CreateSesionController::class)->name('crear_sesion');
+    Route::get("/sesion/{id}", Teacher\GetSesionController::class)->name("asistencia.guardar");
   });
 
 Route::middleware(['auth', 'role:teacher'])
