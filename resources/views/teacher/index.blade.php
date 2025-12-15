@@ -2,20 +2,20 @@
   <aside class="w-64 p-4 sticky top-20 h-full">
     <nav class="space-y-2 font-medium">
       <a href="#" data-view="dashboard" class="nav-link flex items-center p-3 rounded-lg hover:bg-gray-100 active-link">
-        <svg class="w-5 h-5 mr-3" stroke="currentColor" viewBox="0 0 24 24"><path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
         Inicio
       </a>
       <a href="#" data-view="grades-input" class="nav-link flex items-center p-3 rounded-lg hover:bg-gray-100 inactive-link">
-        <svg class="w-5 h-5 mr-3" stroke="currentColor" viewBox="0 0 24 24"><path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
         Libreta
       </a>
       <a href="#" data-view="schedule" class="nav-link flex items-center p-3 rounded-lg hover:bg-gray-100 inactive-link">
-        <svg class="w-5 h-5 mr-3" stroke="currentColor" viewBox="0 0 24 24"><path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
         Horario
       </a>
       <nav class="space-y-2 font-medium">
         <a href="#" data-view="analytics" class="nav-link flex items-center p-3 rounded-lg hover:bg-gray-100 inactive-link">
-          <svg class="w-5 h-5 mr-3" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0v-5a2 2 0 012-2h2a2 2 0 012 2v5m-6 0h.01"></path></svg>
+          <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0v-5a2 2 0 012-2h2a2 2 0 012 2v5m-6 0h.01"></path></svg>
           Análisis de Notas
         </a>
       </nav>
@@ -56,7 +56,7 @@
         </div>
         <div class="bg-white rounded-xl p-6 shadow-lg">
           <h3 class="font-bold text-lg text-gray-700 mb-3 flex items-center">
-            <svg class="w-5 h-5 mr-2 text-red-500" viewBox="0 0 20 20"><path fill="currentColor" fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path></svg>
+            <svg class="w-5 h-5 mr-2 text-red-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path></svg>
             Horas Próximas
           </h3>
           <ul id="upcomingClasses" class="mt-2 text-sm text-gray-700 space-y-3">
@@ -85,10 +85,12 @@
         <h3 class="font-bold text-xl text-gray-700">Selecciona un Curso para Gestionar</h3>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
           @foreach($grupos as $grupo)
-          <div onclick="selectCourseForManagement({{$grupo['id']}}, '{{$grupo['nombre']}}')" class="p-6 bg-gradient-to-br from-blue-400 to-blue-600 rounded-xl shadow-lg cursor-pointer hover:shadow-xl hover:scale-105 transition text-white">
-            <h3 class="text-xl font-bold mb-2">{{$grupo['nombre']}}</h3>
-            <p class="text-sm opacity-90">{{$grupo['cantidad']}} Alumnos</p>
-          </div>
+            <div onclick="handleCourseCardClick({{$grupo['id']}}, '{{$grupo['nombre']}} ({{$grupo['turno']}}) - {{ucfirst($grupo['tipo'])}}')" class="p-6 bg-gradient-to-br from-blue-400 to-blue-600 rounded-xl shadow-lg cursor-pointer hover:shadow-xl hover:scale-105 transition text-white">
+              <h3 class="text-xl font-bold mb-2">
+                {{$grupo['nombre']}} ({{$grupo['turno']}}) - {{ucfirst($grupo['tipo'])}}
+              </h3>
+              <p class="text-sm opacity-90">{{$grupo['cantidad']}} Alumnos</p>
+            </div>
           @endforeach
         </div>
       </div>
@@ -258,6 +260,7 @@
           </div>
         </div>
       </div>
+
     </div>
 
     <div id="view-schedule" class="view-content space-y-6 hidden">
@@ -265,8 +268,8 @@
         <h2 class="text-2xl font-bold text-gray-800">Mi Horario Semanal</h2>
 
         <button onclick="openScheduleModal()" class="px-4 py-2 rounded-lg text-sm font-medium text-white bg-green-600 hover:bg-green-700 transition flex items-center">
-          <svg class="w-5 h-5 mr-1" viewBox="0 0 20 20">
-            <path fill="currentColor" fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path>
+          <svg class="w-5 h-5 mr-1" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path>
           </svg>
           Reservar Hora Extra
         </button>
@@ -337,7 +340,7 @@
                       class="mt-1 p-3 border border-gray-300 rounded-lg w-full focus:ring-indigo-500 focus:border-indigo-500 bg-white">
                 <option value="">Selecciona un curso</option>
                 @foreach($grupos as $grupo)
-                <option value="{{$grupo['id']}}">{{$grupo['nombre']}} - {{ucfirst($grupo['tipo'])}}</option>
+                  <option value="{{$grupo['id']}}">{{$grupo['nombre']}} - {{ucfirst($grupo['tipo'])}}</option>
                 @endforeach
               </select>
             </div>
