@@ -61,7 +61,6 @@ Route::middleware(['auth', 'role:teacher'])->prefix('/api/teacher')
 
 Route::middleware(['auth', 'role:student'])->prefix('/api/student')
   ->group(function () {
-    Route::get("/horario", Student\GetHorarioController::class);
     Route::get('/cursos', Student\GetCursosController::class);
     Route::get('/cursos/{curso}/notas', Student\GetNotasController::class);
     Route::post('/matricular', Student\MatricularController::class);
@@ -87,9 +86,9 @@ Route::middleware(['auth', 'role:student'])->prefix('/student')->name("student."
       ->name('dashboard');
     Route::get('/matricula', Student\MatriculaController::class)
       ->name('matricula');
-    /*
-    Route::get('/horario', Teacher\HorarioController::class)
+    Route::get('/horario', Student\HorarioController::class)
       ->name('horario');
+    /*
     Route::get('/notas', Teacher\NotasController::class)
       ->name('notas');*/
   });
