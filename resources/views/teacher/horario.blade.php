@@ -8,8 +8,8 @@
 
         <button onclick="openScheduleModal()"
                 class="px-4 py-2 rounded-lg text-sm font-medium text-white bg-green-600 hover:bg-green-700 transition flex items-center">
-          <svg class="w-5 h-5 mr-1" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd"
+          <svg class="w-5 h-5 mr-1" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" fill="currentColor"
                   d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
                   clip-rule="evenodd"></path>
           </svg>

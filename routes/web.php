@@ -44,7 +44,6 @@ Route::post('/logout', Logout::class)
 // =============
 // API
 // =============
-// FIXME: Por alguna razon si lo coloco en api.php no funca los middleware
 // FIXME: (Alberto) Esto en serio deberia ser refactorizado en un solo controlador que retorne vistas en vez de JSON
 Route::middleware(['auth', 'role:teacher'])->prefix('/api/teacher')
   ->group(function () {
@@ -52,11 +51,13 @@ Route::middleware(['auth', 'role:teacher'])->prefix('/api/teacher')
     Route::get("/grupo/{grupoId}/notas", Teacher\GetNotasController::class);
     Route::post("/notas/guardar", Teacher\GuardarNotasController::class);
     Route::get("/sesion/{id}", Teacher\GetSesionController::class);
-    Route::get("/libreta/descargar", Teacher\LibretaDescargarController::class);
+    Route::get('/libreta/descargar', Teacher\LibretaDescargarController::class)
+      ->name('teacher.libreta.descargar');
     Route::post('/aulas', Teacher\GetAulasDisponiblesController::class);
     Route::post('/crear_sesion', Teacher\CreateSesionController::class);
-    Route::post("/sesion/{sesion}/guardar", Teacher\GuardarSesionController::class)->middleware('role:teacher')->name("asistencia.guardar");
-    Route::post('/sesion/{sesion}/borrar', Teacher\BorrarSesionController::class)->middleware('role:teacher');
+    Route::post("/sesion/{sesion}/guardar", Teacher\GuardarSesionController::class)
+      ->name("asistencia.guardar");
+    Route::post('/sesion/{sesion}/borrar', Teacher\BorrarSesionController::class);
   });
 
 Route::middleware(['auth', 'role:student'])->prefix('/api/student')
