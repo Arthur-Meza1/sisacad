@@ -307,7 +307,14 @@ function updatesMapToJSON() {
   for(const [registro_id, notasMap] of g_updates) {
     payload.push({
       registro_id,
-      notas: Object.fromEntries(notasMap)
+      notas: Object.fromEntries(
+        Array.from(notasMap, ([key, value]) => [
+          key,
+          value === null || value === undefined || value === ''
+            ? null
+            : Number(value)
+        ])
+      )
     });
   }
 
@@ -319,6 +326,7 @@ function sendUpdateToServer(json) {
     _token: $('meta[name="csrf-token"]').attr('content'),
     data: json
   };
+  console.log(json);
   $.post(`/api/teacher/notas/guardar`, data)
     .done(function (data) {
       alert("Notas guardades exitosamente!");
