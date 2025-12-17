@@ -1,7 +1,7 @@
 <x-header_layout>
   <x-admin.sidebar/>
 
-  <div class="p-6 space-y-8 w-full">
+  <div class="p-6 space-y-8">
     <h2 class="text-3xl font-semibold text-gray-800">Cursos</h2>
 
     <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 space-y-4">
@@ -24,14 +24,16 @@
       </form>
     </div>
 
-    <h3 class="text-3  font-semibold text-gray-800">Total de cursos: {{count($cursos)}}</h3>
+    <h3 class="text-3 font-semibold text-gray-800">Total de cursos: {{count($cursos)}}</h3>
 
-    @forelse($cursos as $curso)
-      <x-admin.course_card :curso="$curso"/>
-    @empty
-      <div class="text-center text-gray-500 py-12">
-        No hay cursos registrados.
-      </div>
-    @endforelse
+    <div class="grid grid-cols-2 gap-4">
+      @forelse($cursos as $curso)
+        <x-admin.course_card :curso="$curso"/>
+      @empty
+        <div class="text-center text-gray-500 py-12">
+          No hay cursos registrados.
+        </div>
+      @endforelse
+    </div>
   </div>
 </x-header_layout>

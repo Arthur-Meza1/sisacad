@@ -1,8 +1,8 @@
 <x-header_layout>
   <x-admin.sidebar/>
 
-  <div class="p-6 space-y-8 w-full">
-    <h2 class="text-3xl font-semibold text-gray-800">Resultados de búsqueda:  {{count($results)}}</h2>
+  <div class="p-6 space-y-8">
+    <h2 class="text-3xl font-semibold text-gray-800">Resultados de búsqueda: {{count($results)}}</h2>
 
     <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 space-y-4">
       <p class="text-gray-500 text-sm">
@@ -30,12 +30,14 @@
       </form>
     </div>
 
-    @forelse($results as $curso)
-      <x-admin.course_card :curso="$curso"/>
-    @empty
-      <div class="text-center text-gray-500 py-12">
-        No se han encontrado resultados.
-      </div>
-    @endforelse
+    <div class="grid grid-cols-2 gap-4">
+      @forelse($results as $curso)
+        <x-admin.course_card :curso="$curso"/>
+      @empty
+        <div class="text-center text-gray-500 py-12">
+          No se han encontrado resultados.
+        </div>
+      @endforelse
+    </div>
   </div>
 </x-header_layout>
