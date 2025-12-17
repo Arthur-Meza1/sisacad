@@ -33,5 +33,32 @@
         </button>
       </form>
     </div>
+
+    <div class="overflow-x-auto">
+      <table class="min-w-full bg-white rounded-lg shadow">
+        <thead>
+        <tr class="bg-gray-100">
+          <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600">Nombre</th>
+          <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600">Email</th>
+          <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600">Rol</th>
+        </tr>
+        </thead>
+        <tbody>
+        @forelse($users as $user)
+          <tr class="border-b">
+            <td class="px-4 py-3 text-sm text-gray-700">{{ $user->name }}</td>
+            <td class="px-4 py-3 text-sm text-gray-700">{{ $user->email }}</td>
+            <td class="px-4 py-3 text-sm text-gray-700">{{ $user->role }}</td>
+          </tr>
+        @empty
+          <tr>
+            <td colspan="3" class="px-4 py-4 text-center text-gray-400">
+              No se encontraron resultados
+            </td>
+          </tr>
+        @endforelse
+        </tbody>
+      </table>
+    </div>
   </div>
 </x-header_layout>

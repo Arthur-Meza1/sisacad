@@ -1,7 +1,8 @@
 <x-header_layout>
+  <x-admin.sidebar></x-admin.sidebar>
   <div class="p-6 space-y-6">
 
-    <h2 class="text-2xl font-bold text-gray-800 mb-4">Resultados de búsqueda</h2>
+    <h2 class="text-2xl font-bold text-gray-800 mb-4">Resultados de búsqueda: {{count($results)}}</h2>
 
     {{-- Formulario --}}
     <form action="{{ route('admin.users.search') }}" method="GET" class="mb-6">

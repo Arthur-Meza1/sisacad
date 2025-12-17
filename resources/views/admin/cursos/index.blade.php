@@ -1,7 +1,7 @@
 <x-header_layout>
   <x-admin.sidebar/>
 
-  <div class="p-6 space-y-8">
+  <div class="p-6 space-y-8 w-full">
     <h2 class="text-3xl font-semibold text-gray-800">Cursos</h2>
 
     <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 space-y-4">

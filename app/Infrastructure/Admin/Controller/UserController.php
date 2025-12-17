@@ -4,6 +4,7 @@ namespace App\Infrastructure\Admin\Controller;
 
 use App\Application\Admin\DTOs\NewUserDTO;
 use App\Application\Admin\UseCase\CreateNewUserCommand;
+use App\Application\Admin\UseCase\ListUsers;
 use App\Http\Controllers\Controller;
 use App\Application\Admin\UseCase\FindUsersQuery;
 use Illuminate\Http\Request;
@@ -13,6 +14,7 @@ class UserController extends Controller
 {
   // Inyectamos el Caso de Uso
   public function __construct(
+    private readonly ListUsers            $listUsers,
     private readonly FindUsersQuery       $findUsersQuery,
     private readonly CreateNewUserCommand $createNewUserCommand
   )
@@ -21,7 +23,8 @@ class UserController extends Controller
 
   public function index(): View
   {
-    return view('admin.users.index');
+    $users = $this->listUsers->execute();
+    return view('admin.users.index', compact('users'));
   }
 
   public function search(Request $request): View
