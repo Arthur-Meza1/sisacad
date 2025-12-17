@@ -3,7 +3,7 @@
 namespace App\Application\Teacher\UseCase;
 
 use App\Domain\Shared\Repository\IRegistroRepository;
-use App\Domain\Shared\ValueObject\Registro;
+use App\Domain\Shared\ValueObject\Id;
 
 class GuardarNotas
 {
@@ -11,12 +11,12 @@ class GuardarNotas
     private readonly IRegistroRepository $registroRepository,
   ) {}
 
-  /**
-   * @param Registro[] $registros
-   * @return void
-   */
-  public function execute(array $registros) {
-    foreach ($registros as $registro) {
+  public function execute(array $data) {
+    foreach ($data as $item) {
+      $registro = $this->registroRepository->getById(Id::fromInt($item['registro_id']));
+
+      $registro->update($item['notas'] ?? []);
+
       $this->registroRepository->save($registro);
     }
   }

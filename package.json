@@ -16,6 +16,8 @@
     },
     "dependencies": {
         "@fullcalendar/timegrid": "^6.1.19",
+        "echarts": "^6.0.0",
+        "echarts-stat": "^1.2.0",
         "fullcalendar": "^6.1.19",
         "jquery": "^3.7.1",
         "sweetalert2": "^11.26.3",

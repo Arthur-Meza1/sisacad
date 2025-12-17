@@ -5,6 +5,7 @@ import {setInputValue} from "../common/Utils.js";
 
 let g_updates = null;
 let g_inputs = null;
+let g_courseName = null;
 
 export function handleCourseCardClick(courseId, courseName) {
   loadGradeTable(courseId, courseName);
@@ -84,6 +85,7 @@ function loadGradeTable(courseId, courseName) {
     url: `/api/teacher/grupo/${courseId}/notas`,
     containerName: '#gradeTableBody'
   }).load(function(data, container) {
+    g_courseName = courseName;
     resetGlobalData();
     console.log(data);
     renderGradeTable(data);
@@ -307,7 +309,14 @@ function updatesMapToJSON() {
   for(const [registro_id, notasMap] of g_updates) {
     payload.push({
       registro_id,
-      notas: Object.fromEntries(notasMap)
+      notas: Object.fromEntries(
+        Array.from(notasMap, ([key, value]) => [
+          key,
+          value === null || value === undefined || value === ''
+            ? null
+            : Number(value)
+        ])
+      )
     });
   }
 
@@ -319,6 +328,7 @@ function sendUpdateToServer(json) {
     _token: $('meta[name="csrf-token"]').attr('content'),
     data: json
   };
+  console.log(json);
   $.post(`/api/teacher/notas/guardar`, data)
     .done(function (data) {
       alert("Notas guardades exitosamente!");
@@ -381,42 +391,30 @@ function importGradeFromRow(row, inputs) {
   setInputValue(inputs[6], parseInt(row[7])); // Sustitutorio
 }
 
-function exportToExcel() {
-  if (!selectedCourseForGrades) {
-    alert('Selecciona un curso primero');
-    return;
-  }
-
-  const course = courses.find(c => c.id === selectedCourseForGrades);
-  const studentList = allStudents[selectedCourseForGrades];
-
+export function exportToExcel() {
   const data = [
-    ['ID', 'Nombre', 'Parcial 1', 'Parcial 2', 'Parcial 3', 'Continua 1', 'Continua 2', 'Continua 3', 'Sustitutorio', 'Promedio', 'Estado']
+    ['CUI', 'Parcial 1', 'Continua 1', 'Parcial 2', 'Continua 2', 'Parcial 3', 'Continua 3', 'Sustitutorio']
   ];
 
-  studentList.forEach(student => {
-    const promedio = calculateStudentAverage(student.grades);
-    const estado = promedio >= 11 ? 'Aprobado' : 'Desaprobado';
-
+  const obj = Object.fromEntries(g_inputs);
+  Object.entries(obj).forEach(([k, v]) => {
     data.push([
-      student.id,
-      student.name,
-      student.grades.parcial1 || '',
-      student.grades.parcial2 || '',
-      student.grades.parcial3 || '',
-      student.grades.continua1 || '',
-      student.grades.continua2 || '',
-      student.grades.continua3 || '',
-      student.grades.sustitutorio || '',
-      promedio.toFixed(1),
-      estado
+      k,
+      v[0].value,
+      v[1].value,
+      v[2].value,
+      v[3].value,
+      v[4].value,
+      v[5].value,
+      v[6].value,
     ]);
   });
 
   const ws = XLSX.utils.aoa_to_sheet(data);
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, 'Notas');
-
-  const fileName = `Notas_${course.name}_${new Date().toISOString().split('T')[0]}.xlsx`;
+  const fileName = `Notas_${g_courseName}_${new Date().toISOString().split('T')[0]}.xlsx`;
   XLSX.writeFile(wb, fileName);
 }
+
+window.exportToExcel = exportToExcel;
