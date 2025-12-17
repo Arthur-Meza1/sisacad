@@ -98,6 +98,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('/admin')->name('admin.')
     Route::prefix('cursos')->name('cursos.')
       ->group(function () {
         Route::get('/', [Admin\CursoController::class, 'index'])->name('index');
+        Route::get('/search', [Admin\CursoController::class, 'search'])->name('search');
       });
   });
 
