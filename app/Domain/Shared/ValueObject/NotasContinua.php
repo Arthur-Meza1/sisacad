@@ -13,18 +13,15 @@ class NotasContinua
     private ?int $unidad3,
   ) {}
 
-  public function setUnidad1(int $unidad1): void {
-    $this->validate($unidad1);
+  public function setUnidad1(?int $unidad1): void {
     $this->unidad1 = $unidad1;
   }
 
-  public function setUnidad2(int $unidad2): void {
-    $this->validate($unidad2);
+  public function setUnidad2(?int $unidad2): void {
     $this->unidad2 = $unidad2;
   }
 
-  public function setUnidad3(int $unidad3): void {
-    $this->validate($unidad3);
+  public function setUnidad3(?int $unidad3): void {
     $this->unidad3 = $unidad3;
   }
 
@@ -46,11 +43,5 @@ class NotasContinua
       $this->unidad2,
       $this->unidad3,
     ];
-  }
-
-  private function validate(int $value): void {
-    if($value <= 0 || $value > 20) {
-      throw InvalidValue::invalidNota($value);
-    }
   }
 }
