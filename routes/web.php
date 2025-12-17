@@ -61,7 +61,6 @@ Route::middleware(['auth', 'role:teacher'])->prefix('/api/teacher')
 
 Route::middleware(['auth', 'role:student'])->prefix('/api/student')
   ->group(function () {
-    Route::get('/cursos', Student\GetCursosController::class);
     Route::get('/cursos/{curso}/notas', Student\GetNotasController::class);
     Route::post('/matricular', Student\MatricularController::class);
     Route::post('/desmatricular', Student\DesmatricularController::class);
@@ -88,9 +87,8 @@ Route::middleware(['auth', 'role:student'])->prefix('/student')->name("student."
       ->name('matricula');
     Route::get('/horario', Student\HorarioController::class)
       ->name('horario');
-    /*
-    Route::get('/notas', Teacher\NotasController::class)
-      ->name('notas');*/
+    Route::get('/notas', Student\NotasController::class)
+      ->name('notas');
   });
 
 Route::middleware(['auth', 'role:admin'])->prefix('/admin')->name('admin.')

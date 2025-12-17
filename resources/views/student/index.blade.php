@@ -55,56 +55,6 @@
       </div>
     </div>
 
-    <div id="view-enrollment" class="view-content space-y-6 hidden">
-      <h2 class="text-2xl font-bold text-gray-800 mb-4">Matrícula de Laboratorios</h2>
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div class="lg:col-span-2 bg-white rounded-xl p-6 shadow-lg">
-          <h3 class="font-bold text-xl text-gray-700 mb-4">Laboratorios Disponibles</h3>
-          <div id="availableLabsList" class="space-y-3">
-          </div>
-        </div>
-        <div class="bg-white rounded-xl p-6 shadow-lg">
-          <h3 class="font-bold text-xl text-gray-700 mb-4 text-indigo-600">Mi Matrícula Actual</h3>
-          <div id="enrolledLabsList" class="space-y-3">
-            <p class="text-gray-500 text-sm">Aún no has matriculado laboratorios.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div id="view-schedule" class="view-content space-y-6 hidden">
-      <h2 class="text-2xl font-bold text-gray-800 mb-4">Horario</h2>
-      <div class="bg-white rounded-xl p-6 shadow-lg relative">
-        <div id="calendarContainer" style="min-height:300px"></div>
-      </div>
-    </div>
-
-    <div id="view-grades" class="view-content hidden">
-      <h2 class="text-2xl font-bold text-gray-800 mb-6">
-        Estadísticas de Notas
-      </h2>
-
-      <div class="flex flex-col lg:flex-row gap-6">
-        <div class="flex-1 space-y-6">
-          <!-- Gráfica -->
-          <div class="relative bg-white rounded-2xl p-6 shadow-lg border border-gray-100 overflow-hidden">
-            <h3 id="chart-title" class="font-semibold text-lg text-gray-700 mb-4 text-center">
-              Rendimiento Final por Materia (Base 20)
-            </h3>
-
-            <!-- Contenedor del gráfico -->
-            <div id="gradeChartDetail" class="h-[380px]"></div>
-          </div>
-        </div>
-
-        <aside class="w-full lg:w-72 bg-white rounded-xl p-6 shadow-md h-fit sticky top-6">
-          <h3 class="font-bold text-lg text-gray-700 mb-4">Seleccionar Curso</h3>
-          <div id="courses-buttons-container" class="flex flex-col gap-3">
-            <!-- Botones dinámicos -->
-          </div>
-        </aside>
-      </div>
-    </div>
 
     <div id="view-attendance" class="view-content space-y-6 hidden">
       <h2 class="text-2xl font-bold text-gray-800 mb-4">Estadísticas de Asistencia</h2>
