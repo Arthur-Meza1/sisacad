@@ -1435,6 +1435,12 @@ class FullSeeder extends Seeder
       'aula_id' => $aula_8->id,
     ]);
 
+    User::factory()->create([
+      'role' => 'admin',
+      'name' => "ElAdmin",
+      'email' => "admin@example.com",
+    ]);
+
     $yo = Alumno::create([
       'user_id' => User::factory()->create(['name' => 'Esdras Amado Diaz Vasquez', 'email' => 'test@example.com'])->id
     ]);

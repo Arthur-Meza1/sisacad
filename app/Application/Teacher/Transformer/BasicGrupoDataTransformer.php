@@ -2,7 +2,7 @@
 
 namespace App\Application\Teacher\Transformer;
 
-use App\Application\Teacher\DTOs\GrupoCursoDTO;
+use App\Application\Shared\DTOs\GrupoCursoDTO;
 
 class BasicGrupoDataTransformer {
   /**

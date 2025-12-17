@@ -8,6 +8,7 @@ use App\Infrastructure\Shared\Model\User as EloquentUser;
 use App\Application\Admin\DTOs\UserManagementDTO;
 use App\Application\Admin\DTOs\NewUserDTO;
 use App\Domain\Shared\ValueObject\Id;
+
 class EloquentUserRepository implements IUserRepository
 {
   /**
@@ -17,7 +18,7 @@ class EloquentUserRepository implements IUserRepository
   {
     $searchQuery = "%$query%";
     return EloquentUser::query()
-    ->where('name', 'LIKE', $searchQuery)
+      ->where('name', 'LIKE', $searchQuery)
       ->orWhere('email', 'LIKE', $searchQuery)
       ->get()
       ->map(function (EloquentUser $user) {

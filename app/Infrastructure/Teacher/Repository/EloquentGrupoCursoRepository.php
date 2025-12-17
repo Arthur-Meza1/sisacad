@@ -2,8 +2,8 @@
 
 namespace App\Infrastructure\Teacher\Repository;
 
+use App\Application\Shared\DTOs\GrupoCursoDTO;
 use App\Application\Teacher\DTOs\AlumnoDTO;
-use App\Application\Teacher\DTOs\GrupoCursoDTO;
 use App\Domain\Shared\ValueObject\Id;
 use App\Domain\Teacher\Repository\IGrupoCursoRepository;
 use App\Infrastructure\Shared\Model\GrupoCurso as EloquentGrupoCurso;
