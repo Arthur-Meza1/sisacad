@@ -29,13 +29,21 @@
         </div>
 
         <div class="flex-1 bg-white p-6 rounded-xl shadow-lg">
-          <h3 id="chartTitle" class="text-xl font-semibold text-gray-800 mb-4">Selecciona un curso para ver
-            estadísticas</h3>
-          <div class="h-[500px]">
-            <canvas id="gradeChart"></canvas>
-          </div>
-          <div id="chartMessage" class="mt-4 text-center text-gray-500">
-            No hay datos de notas registradas para este curso o los datos son insuficientes.
+          <h3 id="chartTitle" class="text-xl font-semibold text-gray-800 mb-4">Selecciona un curso para ver estadísticas</h3>
+          <div class="w-full">
+            <!-- Gráficos generales del curso -->
+            <div id="courseChartsContainer" class="space-y-6">
+              <div class="h-[500px]" id="gradeChart1"></div>
+              <div class="h-[500px]" id="gradeChart2"></div>
+              <div class="h-[500px]" id="gradeChart3"></div>
+              <div class="h-[500px]" id="gradeChart4"></div>
+            </div>
+
+            <!-- Gráficos individuales del alumno -->
+            <div id="studentChartsContainer" class="hidden space-y-6">
+              <div class="h-[500px]" id="studentChart1"></div>
+              <div class="h-[500px]" id="studentChart2"></div>
+            </div>
           </div>
         </div>
       </div>
