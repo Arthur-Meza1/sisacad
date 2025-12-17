@@ -381,7 +381,7 @@ function importGradeFromRow(row, inputs) {
   setInputValue(inputs[6], parseInt(row[7])); // Sustitutorio
 }
 
-function exportToExcel() {
+export function exportToExcel() {
   if (!selectedCourseForGrades) {
     alert('Selecciona un curso primero');
     return;
@@ -420,3 +420,5 @@ function exportToExcel() {
   const fileName = `Notas_${course.name}_${new Date().toISOString().split('T')[0]}.xlsx`;
   XLSX.writeFile(wb, fileName);
 }
+
+window.exportToExcel = exportToExcel;

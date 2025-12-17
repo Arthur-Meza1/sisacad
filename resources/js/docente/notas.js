@@ -1,6 +1,6 @@
 import {ContentLoader} from "../common/ContentLoader.js";
 
-export function loadAnalyticsView(self, id) {
+window.loadAnalyticsView =  (self, id) => {
   document.querySelectorAll('.course-button').forEach(btn => {
     btn.classList.remove('bg-indigo-600', 'text-white');
     btn.classList.add('text-gray-600', 'hover:bg-indigo-100', 'hover:text-indigo-700');
@@ -14,7 +14,7 @@ export function loadAnalyticsView(self, id) {
     url: `/api/teacher/grupo/${id}/notas`,
     containerName: "#studentButtonsContainer"
   }).load(renderGradeChart);
-}
+};
 
 let gradeChartInstance;
 
@@ -53,6 +53,7 @@ function renderGradeChart(data, container) {
       studentButton.classList.add('bg-green-600', 'text-white');
       studentButton.classList.remove('text-gray-600', 'hover:bg-green-100', 'hover:text-green-700');
 
+      // TODO: (Esdras) falta implementar esto, mergear de la rama 'estadistica-notas-docente'
       renderStudentChart(student); // Renderiza el gráfico individual
     });
     studentButtonsContainer.appendChild(studentButton);
@@ -67,5 +68,3 @@ function renderGradeChart(data, container) {
 
   chartTitleElement.textContent = "Promedio General del Curso";
 }
-
-window.loadAnalyticsView = loadAnalyticsView;
