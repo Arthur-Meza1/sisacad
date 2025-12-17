@@ -52,6 +52,7 @@ Route::middleware(['auth', 'role:teacher'])->prefix('/api/teacher')
     Route::get("/grupo/{grupoId}/notas", Teacher\GetNotasController::class);
     Route::post("/notas/guardar", Teacher\GuardarNotasController::class);
     Route::get("/sesion/{id}", Teacher\GetSesionController::class);
+    Route::get("/libreta/descargar", Teacher\LibretaDescargarController::class);
     Route::post('/aulas', Teacher\GetAulasDisponiblesController::class);
     Route::post('/crear_sesion', Teacher\CreateSesionController::class);
     Route::post("/sesion/{sesion}/guardar", Teacher\GuardarSesionController::class)->middleware('role:teacher')->name("asistencia.guardar");
