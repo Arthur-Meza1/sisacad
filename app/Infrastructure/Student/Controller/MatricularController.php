@@ -24,9 +24,9 @@ class MatricularController
         Id::fromInt(Auth::id()),
         Id::fromInt($validated['id']));
 
-      return response()->json([], Response::HTTP_OK);
+      return response()->noContent();
     } catch (\Throwable $th) {
-      return response()->json(['error' => $th->getMessage()], Response::HTTP_BAD_REQUEST);
+      return response()->withException($th);
     }
   }
 }
