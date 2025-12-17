@@ -25,9 +25,9 @@ Route::get('/', function () {
 });
 
 Route::middleware('auth')->group(function () {
-  Route::get('/student', Student\AlumnoController::class)
+  /*Route::get('/student', Student\AlumnoController::class)
     ->name('student')
-    ->middleware('role:student');
+    ->middleware('role:student');*/
   // TODO: Secretary view missing
   Route::view('/secretary', 'secretary')->middleware('role:secretary');
 });
@@ -64,8 +64,6 @@ Route::middleware(['auth', 'role:student'])->prefix('/api/student')
     Route::get("/horario", Student\GetHorarioController::class);
     Route::get('/cursos', Student\GetCursosController::class);
     Route::get('/cursos/{curso}/notas', Student\GetNotasController::class);
-    Route::get('/cupos', Student\GetCuposController::class);
-    Route::get('/labs', Student\GetLabsController::class);
     Route::post('/matricular', Student\MatricularController::class);
     Route::post('/desmatricular', Student\DesmatricularController::class);
   });
@@ -81,6 +79,19 @@ Route::middleware(['auth', 'role:teacher'])->prefix('/teacher')->name("teacher."
       ->name('horario');
     Route::get('/notas', Teacher\NotasController::class)
       ->name('notas');
+  });
+
+Route::middleware(['auth', 'role:student'])->prefix('/student')->name("student.")
+  ->group(function () {
+    Route::get('/', Student\AlumnoController::class)
+      ->name('dashboard');
+    Route::get('/matricula', Student\MatriculaController::class)
+      ->name('matricula');
+    /*
+    Route::get('/horario', Teacher\HorarioController::class)
+      ->name('horario');
+    Route::get('/notas', Teacher\NotasController::class)
+      ->name('notas');*/
   });
 
 Route::middleware(['auth', 'role:admin'])->prefix('/admin')->name('admin.')
