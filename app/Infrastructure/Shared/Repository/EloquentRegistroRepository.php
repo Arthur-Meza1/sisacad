@@ -35,44 +35,29 @@ class EloquentRegistroRepository implements IRegistroRepository {
     }
   }
 
+  public function getById(Id $id): Registro
+  {
+    try {
+      $eloquentRegistro = EloquentRegistro::findOrFail($id->getValue());
+      return ParseRegistroToDomain::fromEloquent($eloquentRegistro);
+    } catch(ModelNotFoundException ) {
+      throw RegistroNotFound::execute($id);
+    }
+  }
+
   public function save(Registro $registro): void
   {
-    $data = [];
-
-    $parcial = $registro->parcial();
-    if ($parcial->unidad1() !== null) {
-      $data['parcial1'] = $parcial->unidad1();
-    }
-    if ($parcial->unidad2() !== null) {
-      $data['parcial2'] = $parcial->unidad2();
-    }
-    if ($parcial->unidad3() !== null) {
-      $data['parcial3'] = $parcial->unidad3();
-    }
-    if ($parcial->sustitutorio() !== null) {
-      $data['sustitutorio'] = $parcial->sustitutorio();
-    }
-
-    $continua = $registro->continua();
-    if ($continua->unidad1() !== null) {
-      $data['continua1'] = $continua->unidad1();
-    }
-    if ($continua->unidad2() !== null) {
-      $data['continua2'] = $continua->unidad2();
-    }
-    if ($continua->unidad3() !== null) {
-      $data['continua3'] = $continua->unidad3();
-    }
-
-    if (empty($data)) {
-      return; // nada que persistir
-    }
+    $data = [
+      'parcial1' => $registro->parcial()->unidad1(),
+      'parcial2' => $registro->parcial()->unidad2(),
+      'parcial3' => $registro->parcial()->unidad3(),
+      'sustitutorio' => $registro->parcial()->sustitutorio(),
+      'continua1' => $registro->continua()->unidad1(),
+      'continua2' => $registro->continua()->unidad2(),
+      'continua3' => $registro->continua()->unidad3(),
+    ];
 
     $updated = EloquentRegistro::whereKey($registro->id()->getValue())
       ->update($data);
-
-    if ($updated === 0) {
-      throw RegistroNotFound::execute($registro->id());
-    }
   }
 }
