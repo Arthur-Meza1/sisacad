@@ -52,6 +52,4 @@
       </div>
     </div>
   </main>
-
-  @vite(['resources/js/alumno/labs.js'])
 </x-header_layout>
