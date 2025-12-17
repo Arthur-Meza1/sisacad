@@ -15,6 +15,6 @@ class AlumnoController {
   public function __invoke() {
     $grupos = $this->getBasicGruposData->execute(Id::fromInt(Auth::id()));
 
-    return view('student', compact('grupos'));
+    return view('student.index', compact('grupos'));
   }
 }
