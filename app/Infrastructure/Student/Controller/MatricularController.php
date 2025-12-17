@@ -24,7 +24,7 @@ class MatricularController
         Id::fromInt(Auth::id()),
         Id::fromInt($validated['id']));
 
-      return response()->noContent();
+      return redirect()->back();
     } catch (\Throwable $th) {
       return response()->withException($th);
     }
