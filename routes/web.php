@@ -9,6 +9,10 @@ use App\Infrastructure\Teacher\Controller as Teacher;
 use App\Infrastructure\Admin\Controller as Admin;
 
 
+define('HORARIO_PATH','/horario');
+define('LOGIN_PATH','/login');
+
+
 Route::get('/', function () {
   if (!auth()->check()) {
     return redirect()->route('login');
@@ -20,7 +24,7 @@ Route::get('/', function () {
     'teacher' => redirect('/teacher'),
     'secretary' => redirect('/secretary'),
     'student' => redirect('/student'),
-    default => redirect('/login'),
+    default => redirect(LOGIN_PATH),
   };
 });
 
@@ -35,7 +39,7 @@ Route::middleware('auth')->group(function () {
 Route::view('/login', 'auth.login')
   ->middleware('guest')
   ->name('login');
-Route::post('/login', Login::class)
+Route::post(LOGIN_PATH, Login::class)
   ->middleware('guest');
 Route::post('/logout', Logout::class)
   ->middleware('auth')
@@ -48,7 +52,7 @@ Route::post('/logout', Logout::class)
 // FIXME: (Alberto) Esto en serio deberia ser refactorizado en un solo controlador que retorne vistas en vez de JSON
 Route::middleware(['auth', 'role:teacher'])->prefix('/api/teacher')
   ->group(function () {
-    Route::get("/horario", Teacher\GetHorarioController::class);
+    Route::get(HORARIO_PATH, Teacher\GetHorarioController::class);
     Route::get("/grupo/{grupoId}/notas", Teacher\GetNotasController::class);
     Route::post("/notas/guardar", Teacher\GuardarNotasController::class);
     Route::get("/sesion/{id}", Teacher\GetSesionController::class);
@@ -61,7 +65,7 @@ Route::middleware(['auth', 'role:teacher'])->prefix('/api/teacher')
 
 Route::middleware(['auth', 'role:student'])->prefix('/api/student')
   ->group(function () {
-    Route::get("/horario", Student\GetHorarioController::class);
+    Route::get(HORARIO_PATH, Student\GetHorarioController::class);
     Route::get('/cursos', Student\GetCursosController::class);
     Route::get('/cursos/{curso}/notas', Student\GetNotasController::class);
     Route::get('/cupos', Student\GetCuposController::class);
@@ -77,7 +81,7 @@ Route::middleware(['auth', 'role:teacher'])->prefix('/teacher')->name("teacher."
       ->name('dashboard');
     Route::get('/libreta', Teacher\LibretaController::class)
       ->name('libreta');
-    Route::get('/horario', Teacher\HorarioController::class)
+    Route::get(HORARIO_PATH, Teacher\HorarioController::class)
       ->name('horario');
     Route::get('/notas', Teacher\NotasController::class)
       ->name('notas');
