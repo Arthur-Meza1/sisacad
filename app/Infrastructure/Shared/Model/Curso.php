@@ -16,7 +16,7 @@ class Curso extends Model
         return $this->hasMany(Tema::class);
     }
 
-    public function grupoCurso() {
-        return $this->hasOne(GrupoCurso::class);
+    public function grupoCursos() {
+        return $this->hasMany(GrupoCurso::class);
     }
 }

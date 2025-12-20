@@ -8,27 +8,34 @@ use App\Infrastructure\Shared\Model\User as EloquentUser;
 use App\Application\Admin\DTOs\UserManagementDTO;
 use App\Application\Admin\DTOs\NewUserDTO;
 use App\Domain\Shared\ValueObject\Id;
+
 class EloquentUserRepository implements IUserRepository
 {
   /**
    * @return UserManagementDTO[]
    */
+  public function all(): array
+  {
+    return EloquentUser::query()->get()->map(fn($user) => UserManagementDTO::create(
+      id: Id::fromInt($user->id),
+      name: $user->name,
+      email: $user->email,
+      role: $user->role,
+    ))->all();
+  }
+
   public function search(string $query): array
   {
     $searchQuery = "%$query%";
     return EloquentUser::query()
-    ->where('name', 'LIKE', $searchQuery)
+      ->where('name', 'LIKE', $searchQuery)
       ->orWhere('email', 'LIKE', $searchQuery)
-      ->get()
-      ->map(function (EloquentUser $user) {
-        return UserManagementDTO::create(
-          id: Id::fromInt($user->id),
-          name: $user->name,
-          email: $user->email,
-          role: $user->role,
-        );
-      })
-      ->toArray();
+      ->get()->map(fn($user) => UserManagementDTO::create(
+        id: Id::fromInt($user->id),
+        name: $user->name,
+        email: $user->email,
+        role: $user->role,
+      ))->toArray();
   }
 
   /**

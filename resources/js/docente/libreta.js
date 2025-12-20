@@ -7,12 +7,12 @@ let g_updates = null;
 let g_inputs = null;
 let g_courseName = null;
 
-export function handleCourseCardClick(courseId, courseName) {
+window.handleCourseCardClick = (courseId, courseName) => {
   loadGradeTable(courseId, courseName);
-}
-window.handleCourseCardClick = handleCourseCardClick;
+};
 
-export function showCourseSelection() {
+
+window.showCourseSelection = () => {
   if (hasUnsavedChanges()) {
     if (!confirm('Tienes cambios sin guardar. ¿Seguro que quieres salir?')) {
       return;
@@ -26,44 +26,7 @@ export function showCourseSelection() {
   document.querySelectorAll('.course-card-grades').forEach(card => {
     card.classList.remove('selected-card-active');
   });
-}
-
-window.showCourseSelection = showCourseSelection;
-
-function renderCourseCardsForGrades() {
-  const container = document.getElementById('courseCardsContainer');
-
-  container.innerHTML = courses.map((c) => {
-    const cardStyle = 'p-6 ' + gradientClasses + ' rounded-xl shadow-lg cursor-pointer hover:shadow-xl hover:scale-105 transition text-white';
-
-    return `
-          <div
-            class="course-card-grades ${cardStyle}"
-            data-courseid="${c.id}"
-            onclick="handleCourseCardClick('${c.id}')"
-          >
-            <h3 class="text-xl font-bold mb-2">${c.name}</h3>
-            <p class="text-sm opacity-90">${c.students} Alumnos</p>
-            <p class="text-xs mt-2 opacity-80">Promedio: ${c.avgGrade}</p>
-          </div>
-        `;
-  }).join('');
-
-  // Estilo para tarjetas seleccionadas
-  let style = document.getElementById('gradeCardStyle');
-  if (!style) {
-    style = document.createElement('style');
-    style.id = 'gradeCardStyle';
-    style.innerHTML = `
-            .selected-card-active {
-                box-shadow: 0 0 0 4px #60a5fa !important;
-                opacity: 1 !important;
-                transform: scale(1.05) !important;
-            }
-        `;
-    document.head.appendChild(style);
-  }
-}
+};
 
 function loadGradeTable(courseId, courseName) {
   document.getElementById('courseCardSelector').classList.add('hidden');
@@ -84,7 +47,7 @@ function loadGradeTable(courseId, courseName) {
   new ContentLoader({
     url: `/api/teacher/grupo/${courseId}/notas`,
     containerName: '#gradeTableBody'
-  }).load(function(data, container) {
+  }).load(function (data, container) {
     g_courseName = courseName;
     resetGlobalData();
     console.log(data);
@@ -185,10 +148,10 @@ function renderGradeTable(data) {
 
 function createObserverInputs(tbody) {
   tbody.addEventListener("input", e => {
-    if(!e.target.matches("input")) return;
+    if (!e.target.matches("input")) return;
 
     const input = e.target;
-    if(!g_updates.has(input.dataset.id)) {
+    if (!g_updates.has(input.dataset.id)) {
       g_updates.set(input.dataset.id, new Map());
     }
     const map = g_updates.get(input.dataset.id);
@@ -205,7 +168,7 @@ function forceObserverInput(tbody) {
 }
 
 function createObserverInputFromRow(row) {
-  if(!row)
+  if (!row)
     return;
 
   const inputs = row.querySelectorAll("input");
@@ -215,7 +178,7 @@ function createObserverInputFromRow(row) {
   const cui = parseInt(row.querySelector(".cui").textContent);
   inputs.forEach(x => values.set(x.dataset.type, x.value));
 
-  if(cui && !g_inputs.has(cui)) {
+  if (cui && !g_inputs.has(cui)) {
     g_inputs.set(cui, inputs);
   }
 
@@ -291,8 +254,8 @@ function hasUnsavedChanges() {
   return g_updates.size !== 0;
 }
 
-export function saveAllGrades() {
-  if(!hasUnsavedChanges()) {
+window.saveAllGrades = () => {
+  if (!hasUnsavedChanges()) {
     alert('No hay cambios que guardar');
     return;
   }
@@ -301,12 +264,11 @@ export function saveAllGrades() {
 
   resetGlobalData();
   updateSaveStatus();
-}
-window.saveAllGrades = saveAllGrades;
+};
 
 function updatesMapToJSON() {
   const payload = [];
-  for(const [registro_id, notasMap] of g_updates) {
+  for (const [registro_id, notasMap] of g_updates) {
     payload.push({
       registro_id,
       notas: Object.fromEntries(
@@ -339,43 +301,40 @@ function sendUpdateToServer(json) {
     });
 }
 
-export function downloadLibretaTemplate() {
+
+window.downloadLibretaTemplate = () => {
   window.location.href = '/api/teacher/libreta/descargar';
-}
+};
 
-window.downloadLibretaTemplate = downloadLibretaTemplate;
-
-export function handleExcelImport(files) {
+window.handleExcelImport = (files) => {
   if (!files.length) return;
 
   const file = files[0];
   const reader = new FileReader();
 
-  reader.onload = function(e) {
+  reader.onload = function (e) {
     const data = new Uint8Array(e.target.result);
-    const workbook = XLSX.read(data, { type: 'array' });
+    const workbook = XLSX.read(data, {type: 'array'});
 
     const firstSheetName = workbook.SheetNames[0];
     const worksheet = workbook.Sheets[firstSheetName];
 
-    const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+    const jsonData = XLSX.utils.sheet_to_json(worksheet, {header: 1});
 
     importGradesFromExcel(jsonData);
   };
 
   reader.readAsArrayBuffer(file);
-}
-
-window.handleExcelImport = handleExcelImport;
+};
 
 function importGradesFromExcel(data) {
-  for(let i = 1; i < data.length; ++i) {
+  for (let i = 1; i < data.length; ++i) {
     const row = data[i];
     if (!row) continue;
 
     const cui = parseInt(row[0]);
     const inputs = g_inputs.get(cui) ?? null;
-    if(!cui || !inputs) continue;
+    if (!cui || !inputs) continue;
 
     importGradeFromRow(row, inputs)
   }
@@ -391,7 +350,7 @@ function importGradeFromRow(row, inputs) {
   setInputValue(inputs[6], parseInt(row[7])); // Sustitutorio
 }
 
-export function exportToExcel() {
+window.exportToExcel = () => {
   const data = [
     ['CUI', 'Parcial 1', 'Continua 1', 'Parcial 2', 'Continua 2', 'Parcial 3', 'Continua 3', 'Sustitutorio']
   ];
@@ -415,6 +374,4 @@ export function exportToExcel() {
   XLSX.utils.book_append_sheet(wb, ws, 'Notas');
   const fileName = `Notas_${g_courseName}_${new Date().toISOString().split('T')[0]}.xlsx`;
   XLSX.writeFile(wb, fileName);
-}
-
-window.exportToExcel = exportToExcel;
+};
