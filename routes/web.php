@@ -101,30 +101,3 @@ Route::middleware(['auth', 'role:admin'])->prefix('/admin')->name('admin.')
         Route::get('/search', [Admin\CursoController::class, 'search'])->name('search');
       });
   });
-
-/*Route::get('/docente/registrar-notas', [DocenteController::class, 'registrarNotas'])
-  ->name('docente.registrar_notas')
-  ->middleware('role:teacher');
-Route::post('/docente/registrar-notas/{grupoId}', [DocenteController::class, 'guardarNotas'])
-  ->name('docente.guardar_notas')
-  ->middleware('role:teacher');
-
-
-Route::get('/docente/asistencia', [AsistenciaController::class, 'index'])
-  ->name('asistencia.index')
-  ->middleware('role:teacher');
-Route::get('/docente/asistencia/{grupo}', [AsistenciaController::class, 'mostrarFormulario'])
-  ->name('asistencia.form')
-  ->middleware('role:teacher');
-Route::post('/docente/asistencia/{grupo}', [AsistenciaController::class, 'guardarAsistencia'])
-  ->name('asistencia.guardar')
-  ->middleware('role:teacher');
-
-Route::get('/api/student/cursos', [AlumnoController::class, 'getCursos'])->middleware('role:student');
-Route::get('/api/student/horario', [AlumnoController::class, 'getHorario'])->middleware('role:student');
-Route::get('/api/student/cursos/{curso}/notas', [AlumnoController::class, 'getNotasCurso'])->middleware('role:student');
-Route::get('/api/student/cupos', [AlumnoController::class, 'getCuposMatricula'])->middleware('role:student');
-Route::get('/api/student/labs', [AlumnoController::class, 'getLaboratorios'])->middleware('role:student');
-
-Route::post('/api/teacher/sesion', [DocenteController::class, 'crearSesion'])->middleware('role:teacher');
-Route::post('/api/student/matricular', [AlumnoController::class, 'matricular'])->middleware('role:student');*/
