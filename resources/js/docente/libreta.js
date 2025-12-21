@@ -1,18 +1,17 @@
 import $ from 'jquery';
 import * as XLSX from 'https://cdn.sheetjs.com/xlsx-0.20.3/package/xlsx.mjs';
 import {ContentLoader} from "../common/ContentLoader.js";
-import {setInputValue} from "../common/Utils.js";
 
 let g_updates = null;
 let g_inputs = null;
 let g_courseName = null;
 
-window.handleCourseCardClick = (courseId, courseName) => {
+globalThis.handleCourseCardClick = (courseId, courseName) => {
   loadGradeTable(courseId, courseName);
 };
 
 
-window.showCourseSelection = () => {
+globalThis.showCourseSelection = () => {
   if (hasUnsavedChanges()) {
     if (!confirm('Tienes cambios sin guardar. ¿Seguro que quieres salir?')) {
       return;
@@ -33,8 +32,7 @@ function loadGradeTable(courseId, courseName) {
   document.getElementById('courseManagementPanels').classList.remove('hidden');
 
   document.getElementById('currentCourseTitle').textContent = `Curso: ${courseName}`;
-  document.getElementById('currentCourseInfo').textContent =
-    `Código: ${courseId}`;
+  document.getElementById('currentCourseInfo').textContent = `Código: ${courseId}`;
 
   document.querySelectorAll('.course-card-grades').forEach(card => {
     if (card.dataset.courseid === courseId) {
@@ -45,8 +43,7 @@ function loadGradeTable(courseId, courseName) {
   });
 
   new ContentLoader({
-    url: `/api/teacher/grupo/${courseId}/notas`,
-    containerName: '#gradeTableBody'
+    url: `/api/teacher/grupo/${courseId}/notas`, containerName: '#gradeTableBody'
   }).load(function (data, container) {
     g_courseName = courseName;
     resetGlobalData();
@@ -168,14 +165,13 @@ function forceObserverInput(tbody) {
 }
 
 function createObserverInputFromRow(row) {
-  if (!row)
-    return;
+  if (!row) return;
 
   const inputs = row.querySelectorAll("input");
   const values = new Map();
   const promLabel = row.querySelector(".average-display");
   const estadoLabel = row.querySelector(".estado-display");
-  const cui = parseInt(row.querySelector(".cui").textContent);
+  const cui = Number.parseInt(row.querySelector(".cui").textContent);
   inputs.forEach(x => values.set(x.dataset.type, x.value));
 
   if (cui && !g_inputs.has(cui)) {
@@ -201,20 +197,12 @@ function onInputChange(values, promLabel, estadoLabel) {
 
 function calculateStudentAverage(values) {
   let {
-    parcial1,
-    parcial2,
-    parcial3,
-    continua1,
-    continua2,
-    continua3,
-    sustitutorio
+    parcial1, parcial2, parcial3, continua1, continua2, continua3, sustitutorio
   } = values;
 
-  sustitutorio = (sustitutorio === "" || sustitutorio === null || sustitutorio === undefined)
-    ? NaN
-    : Number(sustitutorio);
+  sustitutorio = (sustitutorio === "" || sustitutorio === null || sustitutorio === undefined) ? Number.NaN : Number(sustitutorio);
 
-  if (!isNaN(sustitutorio)) {
+  if (!Number.isNaN(sustitutorio)) {
     if (Number(parcial1) <= Number(parcial2)) {
       parcial1 = sustitutorio;
     } else {
@@ -222,14 +210,7 @@ function calculateStudentAverage(values) {
     }
   }
 
-  const notas = [
-    Number(parcial1),
-    Number(parcial2),
-    Number(parcial3),
-    Number(continua1),
-    Number(continua2),
-    Number(continua3)
-  ].filter(n => !isNaN(n));
+  const notas = [Number(parcial1), Number(parcial2), Number(parcial3), Number(continua1), Number(continua2), Number(continua3)].filter(n => !Number.isNaN(n));
 
   if (notas.length === 0) return 0;
 
@@ -254,7 +235,7 @@ function hasUnsavedChanges() {
   return g_updates.size !== 0;
 }
 
-window.saveAllGrades = () => {
+globalThis.saveAllGrades = () => {
   if (!hasUnsavedChanges()) {
     alert('No hay cambios que guardar');
     return;
@@ -271,14 +252,7 @@ function updatesMapToJSON() {
   for (const [registro_id, notasMap] of g_updates) {
     payload.push({
       registro_id,
-      notas: Object.fromEntries(
-        Array.from(notasMap, ([key, value]) => [
-          key,
-          value === null || value === undefined || value === ''
-            ? null
-            : Number(value)
-        ])
-      )
+      notas: Object.fromEntries(Array.from(notasMap, ([key, value]) => [key, value === null || value === undefined || value === '' ? null : Number(value)]))
     });
   }
 
@@ -287,8 +261,7 @@ function updatesMapToJSON() {
 
 function sendUpdateToServer(json) {
   const data = {
-    _token: $('meta[name="csrf-token"]').attr('content'),
-    data: json
+    _token: $('meta[name="csrf-token"]').attr('content'), data: json
   };
   console.log(json);
   $.post(`/api/teacher/notas/guardar`, data)
@@ -302,11 +275,11 @@ function sendUpdateToServer(json) {
 }
 
 
-window.downloadLibretaTemplate = () => {
-  window.location.href = '/api/teacher/libreta/descargar';
+globalThis.downloadLibretaTemplate = () => {
+  globalThis.location.href = '/api/teacher/libreta/descargar';
 };
 
-window.handleExcelImport = (files) => {
+globalThis.handleExcelImport = (files) => {
   if (!files.length) return;
 
   const file = files[0];
@@ -332,7 +305,7 @@ function importGradesFromExcel(data) {
     const row = data[i];
     if (!row) continue;
 
-    const cui = parseInt(row[0]);
+    const cui = Number.parseInt(row[0]);
     const inputs = g_inputs.get(cui) ?? null;
     if (!cui || !inputs) continue;
 
@@ -340,33 +313,27 @@ function importGradesFromExcel(data) {
   }
 }
 
-function importGradeFromRow(row, inputs) {
-  setInputValue(inputs[0], parseInt(row[1])); // Parcial 1
-  setInputValue(inputs[1], parseInt(row[2])); // Continua 1
-  setInputValue(inputs[2], parseInt(row[3])); // Parcial 2
-  setInputValue(inputs[3], parseInt(row[4])); // Continua 2
-  setInputValue(inputs[4], parseInt(row[5])); // Parcial 3
-  setInputValue(inputs[5], parseInt(row[6])); // Continua 3
-  setInputValue(inputs[6], parseInt(row[7])); // Sustitutorio
+function setInputValue(input, value) {
+  input.value = value;
+  input.dispatchEvent(new Event('input', {bubbles: true}));
 }
 
-window.exportToExcel = () => {
-  const data = [
-    ['CUI', 'Parcial 1', 'Continua 1', 'Parcial 2', 'Continua 2', 'Parcial 3', 'Continua 3', 'Sustitutorio']
-  ];
+function importGradeFromRow(row, inputs) {
+  setInputValue(inputs[0], Number.parseInt(row[1])); // Parcial 1
+  setInputValue(inputs[1], Number.parseInt(row[2])); // Continua 1
+  setInputValue(inputs[2], Number.parseInt(row[3])); // Parcial 2
+  setInputValue(inputs[3], Number.parseInt(row[4])); // Continua 2
+  setInputValue(inputs[4], Number.parseInt(row[5])); // Parcial 3
+  setInputValue(inputs[5], Number.parseInt(row[6])); // Continua 3
+  setInputValue(inputs[6], Number.parseInt(row[7])); // Sustitutorio
+}
+
+globalThis.exportToExcel = () => {
+  const data = [['CUI', 'Parcial 1', 'Continua 1', 'Parcial 2', 'Continua 2', 'Parcial 3', 'Continua 3', 'Sustitutorio']];
 
   const obj = Object.fromEntries(g_inputs);
   Object.entries(obj).forEach(([k, v]) => {
-    data.push([
-      k,
-      v[0].value,
-      v[1].value,
-      v[2].value,
-      v[3].value,
-      v[4].value,
-      v[5].value,
-      v[6].value,
-    ]);
+    data.push([k, v[0].value, v[1].value, v[2].value, v[3].value, v[4].value, v[5].value, v[6].value,]);
   });
 
   const ws = XLSX.utils.aoa_to_sheet(data);

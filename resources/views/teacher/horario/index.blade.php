@@ -174,5 +174,9 @@
     </div>
   </main>
 
+  <script>
+    globalThis.HORARIO_DATA = @json($horario);
+    globalThis.GRUPOS_DATA = @json($grupos);
+  </script>
   @vite('resources/js/docente/docente.js')
 </x-header_layout>

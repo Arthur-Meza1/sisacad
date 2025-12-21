@@ -1,7 +1,6 @@
 import $ from 'jquery';
 import * as echarts from 'echarts';
 import {ContentLoader} from "../common/ContentLoader.js";
-import {ucfirst} from "../common/Utils.js";
 
 let gradeChartDetail;
 let cursosLoader = new ContentLoader(
@@ -15,6 +14,10 @@ export function loadAvailableCourses() {
   cursosLoader.load((data, container) => {
     renderCourseButtons(data, container);
   });
+}
+
+function ucfirst(val) {
+  return String(val).charAt(0).toUpperCase() + String(val).slice(1);
 }
 
 function renderCourseButtons(courses, container) {
