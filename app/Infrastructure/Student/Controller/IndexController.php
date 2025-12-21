@@ -6,7 +6,7 @@ use App\Application\Student\UseCase\GetBasicGruposData;
 use App\Domain\Shared\ValueObject\Id;
 use Illuminate\Support\Facades\Auth;
 
-class AlumnoController {
+class IndexController {
   public function __construct(
     private readonly GetBasicGruposData $getBasicGruposData
   ) {

@@ -12,7 +12,7 @@ class TeacherPagesDoNotUseAjaxTest extends TestCase
   use RefreshDatabase;
 
   private array $routes = [
-    'teacher.dashboard' => '/teacher',
+    'teacher.index' => '/teacher',
     'teacher.libreta' => '/teacher/libreta',
     'teacher.horario' => '/teacher/horario',
     'teacher.notas' => '/teacher/notas',

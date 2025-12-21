@@ -1,13 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Infrastructure\Admin\Controller;
 
 use App\Http\Controllers\Controller;
-use App\Infrastructure\Shared\Model\User;
 use App\Infrastructure\Shared\Model\Curso;
-class DashboardController extends Controller
+use App\Infrastructure\Shared\Model\User;
+use Illuminate\View\View;
+
+class IndexController extends Controller
 {
-  public function index()
+  public function __invoke(): View
   {
     return view('admin.index', [
       'users_count' => User::count(),

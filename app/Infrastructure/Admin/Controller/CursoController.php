@@ -5,8 +5,8 @@ namespace App\Infrastructure\Admin\Controller;
 use App\Application\Admin\UseCase\ListCourses;
 use App\Application\Admin\UseCase\SearchCourses;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\Request;
 
 class CursoController extends Controller
 {
