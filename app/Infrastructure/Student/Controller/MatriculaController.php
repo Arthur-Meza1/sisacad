@@ -14,9 +14,9 @@ readonly class MatriculaController
     private GetCupos $getCupos,
   ) {}
   public function __invoke() {
-    $id = Id::fromInt(Auth::id());
-    $labs = $this->getLabs->execute($id);
-    $cupos = $this->getCupos->execute($id);
+    $userId = Id::fromInt(Auth::id());
+    $labs = $this->getLabs->execute($userId);
+    $cupos = $this->getCupos->execute($userId);
     return view('student.matricula', compact('labs', 'cupos'));
   }
 }
