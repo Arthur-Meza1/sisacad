@@ -13,8 +13,8 @@ class GetCupos {
     private readonly IAlumnoRepository $alumnoRepository,
     private readonly IGrupoCursoRepository $grupoCursoRepository,
   ) {}
-  public function execute(Id $alumnoId): array {
-    $alumno = $this->alumnoRepository->findFromIdOrFail($alumnoId);
+  public function execute(Id $userId): array {
+    $alumno = $this->alumnoRepository->findFromUserIdOrFail($userId);
 
     $cursos = $alumno->filterGruposByTipo(CursoTipo::TEORIA);
     $gruposId = $alumno->gruposId();

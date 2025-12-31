@@ -12,8 +12,8 @@ class GetCursos {
   public function __construct(
     private readonly IAlumnoRepository $alumnoRepository,
   ) {}
-  public function execute(Id $alumnoId): array {
-    $alumno = $this->alumnoRepository->findFromIdOrFail($alumnoId);
+  public function execute(Id $userId): array {
+    $alumno = $this->alumnoRepository->findFromUserIdOrFail($userId);
 
     $cursos = $alumno->filterGruposByTipo(CursoTipo::TEORIA);
 

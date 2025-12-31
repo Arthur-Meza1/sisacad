@@ -13,8 +13,8 @@ class GetHorario
     private readonly IAlumnoRepository $alumnoRepository,
     private readonly IHorarioRepository $horarioRepository
   ) {}
-  public function execute(Id $id): array {
-    $alumno = $this->alumnoRepository->findFromIdOrFail($id);
+  public function execute(Id $userId): array {
+    $alumno = $this->alumnoRepository->findFromUserIdOrFail($userId);
     $horario = $this->horarioRepository->getFromGrupoIds($alumno->gruposId(), false);
 
     return HorarioTransformer::toArray($horario);

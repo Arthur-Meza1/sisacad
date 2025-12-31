@@ -14,7 +14,7 @@ class GetNotas {
   ) {}
 
   public function execute(Id $userId, Id $grupoId): array {
-    $alumno = $this->alumnoRepository->findFromIdOrFail($userId, false);
+    $alumno = $this->alumnoRepository->findFromUserIdOrFail($userId, false);
 
     $registro = $this->registroRepository->getOrCreateByAlumnoInGrupo($alumno->id(), $grupoId);
 

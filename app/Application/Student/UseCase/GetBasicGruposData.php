@@ -12,7 +12,7 @@ class GetBasicGruposData {
   ) {}
 
   public function execute(Id $id): array {
-    $alumno = $this->alumnoRepository->findFromIdOrFail($id);
+    $alumno = $this->alumnoRepository->findFromUserIdOrFail($id);
 
     return GrupoCursoTransformer::toArray($alumno->grupos());
   }

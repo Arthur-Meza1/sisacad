@@ -12,8 +12,8 @@ class DesmatricularLab
     private readonly IAlumnoRepository $alumnoRepository,
     private readonly IGrupoCursoRepository $grupoCursoRepository,
   ) {}
-  public function execute(Id $alumnoId, Id $cursoId) {
-    $alumno = $this->alumnoRepository->findFromIdOrFail($alumnoId, false);
+  public function execute(Id $userId, Id $cursoId) {
+    $alumno = $this->alumnoRepository->findFromUserIdOrFail($userId, false);
     $this->grupoCursoRepository->desmatricularEnGrupo($alumno->id(), $cursoId);
   }
 }
