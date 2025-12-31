@@ -15,6 +15,23 @@
           </tr>
           </thead>
           <tbody id="attendanceTableBody" class="bg-white divide-y divide-gray-200 text-sm">
+          @foreach($asistencias as $asistencia)
+            <tr>
+              <td class="px-6 py-4 whitespace-nowrap">{{$asistencia['curso_nombre']}}</td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                  @php
+                    $val = round(
+                      $asistencia['presentes'] / max(1, $asistencia['presentes'] + $asistencia['ausentes']),
+                      2
+                    ) * 100;
+                  @endphp
+                <span class="{{$val >= 85 ? 'text-green-600' : 'text-red-600'}}">
+                  {{$val}}%
+                </span>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">{{$asistencia['ausentes']}}</td>
+            </tr>
+          @endforeach
           </tbody>
         </table>
       </div>
