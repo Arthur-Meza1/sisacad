@@ -59,14 +59,6 @@ Route::middleware(['auth', 'role:teacher'])->prefix('/api/teacher')
     Route::post('/sesion/{sesion}/borrar', Teacher\BorrarSesionController::class)->middleware('role:teacher');
   });
 
-Route::middleware(['auth', 'role:student'])->prefix('/api/student')
-  ->group(function () {
-    Route::get('/cursos/{curso}/notas', Student\GetNotasController::class);
-    Route::post('/matricular', Student\MatricularController::class);
-    Route::post('/desmatricular', Student\DesmatricularController::class);
-  });
-
-
 Route::middleware(['auth', 'role:teacher'])->prefix('/teacher')->name("teacher.")
   ->group(function () {
     Route::get('/', Teacher\DocenteController::class)
@@ -79,17 +71,19 @@ Route::middleware(['auth', 'role:teacher'])->prefix('/teacher')->name("teacher."
       ->name('notas');
   });
 
-Route::middleware(['auth', 'role:student'])->prefix('/student')->name("student.")
-  ->group(function () {
-    Route::get('/', Student\AlumnoController::class)
-      ->name('dashboard');
-    Route::get('/matricula', Student\MatriculaController::class)
-      ->name('matricula');
-    Route::get('/horario', Student\HorarioController::class)
-      ->name('horario');
-    Route::get('/notas', Student\NotasController::class)
-      ->name('notas');
-  });
+Route::prefix('/student')->name('student.')->group(function () {
+  Route::get('/', Student\IndexController::class)->name('index');
+  Route::get('/matricula', Student\MatriculaController::class)->name('matricula');
+  Route::get('/horario', Student\HorarioController::class)->name('horario');
+  Route::get('/notas', Student\NotasController::class)->name('notas');
+  Route::get('/asistencias', Student\AsistenciasController::class)->name('asistencias');
+})->middleware(['auth', 'role:student']);
+
+Route::prefix('/api/student')->group(function () {
+  Route::get('/cursos/{curso}/notas', Student\GetNotasController::class);
+  Route::post('/matricular', Student\MatricularController::class);
+  Route::post('/desmatricular', Student\DesmatricularController::class);
+});
 
 Route::middleware(['auth', 'role:admin'])->prefix('/admin')->name('admin.')
   ->group(function () {
