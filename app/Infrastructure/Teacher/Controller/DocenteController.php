@@ -7,16 +7,16 @@ use App\Domain\Shared\ValueObject\Id;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 
-readonly class DocenteController {
-  public function __construct(
-    private GetBasicGruposData $getGruposData
-  ) {
-  }
+readonly class DocenteController
+{
+    public function __construct(
+        private GetBasicGruposData $getGruposData
+    ) {}
 
-  public function __invoke(): View
-  {
-    $grupos = $this->getGruposData->execute(Id::fromInt(Auth::id()));
+    public function __invoke(): View
+    {
+        $grupos = $this->getGruposData->execute(Id::fromInt(Auth::id()));
 
-    return view('teacher.index', compact('grupos'));
-  }
+        return view('teacher.index', compact('grupos'));
+    }
 }

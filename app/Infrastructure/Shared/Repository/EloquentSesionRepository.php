@@ -13,72 +13,77 @@ use App\Infrastructure\Shared\Model\Sesion as EloquentSesion;
 use App\Infrastructure\Shared\Parser\ParseSesionToDomain;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class EloquentSesionRepository implements ISesionRepository {
-  public function findByIdOrFail(Id $id): Sesion {
-    try {
-      $eloquentSesion =
-        EloquentSesion::with("asistencias.alumno.user")
-        ->where("id", $id->getValue())
-        ->firstOrFail();
+class EloquentSesionRepository implements ISesionRepository
+{
+    public function findByIdOrFail(Id $id): Sesion
+    {
+        try {
+            $eloquentSesion =
+              EloquentSesion::with('asistencias.alumno.user')
+                  ->where('id', $id->getValue())
+                  ->firstOrFail();
 
-      return ParseSesionToDomain::fromEloquent($eloquentSesion);
-    } catch (ModelNotFoundException) {
-      throw SesionNotFound::execute();
+            return ParseSesionToDomain::fromEloquent($eloquentSesion);
+        } catch (ModelNotFoundException) {
+            throw SesionNotFound::execute();
+        }
     }
-  }
 
-  public function create(
-    Fecha $fecha,
-    Hora $inicio,
-    Hora $fin,
-    Id $grupoId,
-    Id $aulaId): Sesion {
-    $eloquentSesion= EloquentSesion::create([
-      'grupo_curso_id' => $grupoId->getValue(),
-      'aula_id' => $aulaId->getValue(),
-      'fecha' => $fecha->toString(),
-      'horaInicio' => $inicio->toString(),
-      'horaFin' => $fin->toString(),
-    ]);
+    public function create(
+        Fecha $fecha,
+        Hora $inicio,
+        Hora $fin,
+        Id $grupoId,
+        Id $aulaId): Sesion
+    {
+        $eloquentSesion = EloquentSesion::create([
+            'grupo_curso_id' => $grupoId->getValue(),
+            'aula_id' => $aulaId->getValue(),
+            'fecha' => $fecha->toString(),
+            'horaInicio' => $inicio->toString(),
+            'horaFin' => $fin->toString(),
+        ]);
 
-    return Sesion::fromPrimitives(
-      id: Id::fromInt($eloquentSesion->id),
-      fecha: $fecha,
-      horaInicio: $inicio,
-    );
-  }
-
-  public function update(Sesion $sesion): void {
-    try {
-      foreach ($sesion->asistencias() as $asistencia) {
-        EloquentAsistencia::updateOrCreate(
-          [
-            'alumno_id' => $asistencia->alumnoId()->getValue(), // value() no getValue()
-            'sesion_id' => $sesion->id()->getValue(),
-          ],
-          [
-            'presente' => $asistencia->estado()->isPresente() ? 1 : 0,
-          ]
+        return Sesion::fromPrimitives(
+            id: Id::fromInt($eloquentSesion->id),
+            fecha: $fecha,
+            horaInicio: $inicio,
         );
-      }
-    } catch (ModelNotFoundException) {
-      throw SesionNotFound::execute();
     }
-  }
 
-  public function deleteOrFail(Id $id): void {
-    try {
-      // Buscar sesión
-      $sesion = EloquentSesion::findOrFail($id->getValue());
-
-      // Eliminar asistencias relacionadas (si no tienes cascade en DB)
-      EloquentAsistencia::where('sesion_id', $id->getValue())->delete();
-
-      // Eliminar la sesión
-      $sesion->delete();
-
-    } catch (ModelNotFoundException) {
-      throw SesionNotFound::execute();
+    public function update(Sesion $sesion): void
+    {
+        try {
+            foreach ($sesion->asistencias() as $asistencia) {
+                EloquentAsistencia::updateOrCreate(
+                    [
+                        'alumno_id' => $asistencia->alumnoId()->getValue(), // value() no getValue()
+                        'sesion_id' => $sesion->id()->getValue(),
+                    ],
+                    [
+                        'presente' => $asistencia->estado()->isPresente() ? 1 : 0,
+                    ]
+                );
+            }
+        } catch (ModelNotFoundException) {
+            throw SesionNotFound::execute();
+        }
     }
-  }
+
+    public function deleteOrFail(Id $id): void
+    {
+        try {
+            // Buscar sesión
+            $sesion = EloquentSesion::findOrFail($id->getValue());
+
+            // Eliminar asistencias relacionadas (si no tienes cascade en DB)
+            EloquentAsistencia::where('sesion_id', $id->getValue())->delete();
+
+            // Eliminar la sesión
+            $sesion->delete();
+
+        } catch (ModelNotFoundException) {
+            throw SesionNotFound::execute();
+        }
+    }
 }

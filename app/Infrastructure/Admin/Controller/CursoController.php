@@ -7,9 +7,8 @@ use Illuminate\Contracts\View\View;
 
 class CursoController extends Controller
 {
-
-  public function index(): View
-  {
-    return view('admin.cursos.index');
-  }
+    public function index(): View
+    {
+        return view('admin.cursos.index');
+    }
 }

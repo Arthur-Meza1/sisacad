@@ -6,7 +6,8 @@ use App\Domain\Shared\ValueObject\Id;
 
 class RegistroNotFound extends \Exception
 {
-  public static function execute(Id $id): self {
-    return new self("Registro {$id->getValue()} no encontrado");
-  }
+    public static function execute(Id $id): self
+    {
+        return new self("Registro {$id->getValue()} no encontrado");
+    }
 }

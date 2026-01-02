@@ -8,13 +8,14 @@ use Illuminate\Support\Facades\Auth;
 
 class AsistenciasController
 {
-  public function __construct(
-    private readonly GetAsistencias $getAsistencias,
-  ) {}
+    public function __construct(
+        private readonly GetAsistencias $getAsistencias,
+    ) {}
 
-  public function __invoke() {
-    $asistencias = $this->getAsistencias->execute(Id::fromInt(Auth::id()));
+    public function __invoke()
+    {
+        $asistencias = $this->getAsistencias->execute(Id::fromInt(Auth::id()));
 
-    return view('student.asistencias', compact('asistencias'));
-  }
+        return view('student.asistencias', compact('asistencias'));
+    }
 }

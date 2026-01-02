@@ -10,7 +10,8 @@ class Tema extends Model
 
     protected $fillable = ['titulo', 'orden'];
 
-    public function curso() {
+    public function curso()
+    {
         return $this->belongsTo(Curso::class);
     }
 }

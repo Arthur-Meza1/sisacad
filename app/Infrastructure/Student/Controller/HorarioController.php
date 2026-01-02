@@ -8,12 +8,14 @@ use Illuminate\Support\Facades\Auth;
 
 readonly class HorarioController
 {
-  public function __construct(
-    private GetHorario $getHorario
-  ) {}
-  public function __invoke() {
-    $horario = $this->getHorario->execute(Id::fromInt(Auth::id()));
+    public function __construct(
+        private GetHorario $getHorario
+    ) {}
 
-    return view('student.horario', compact('horario'));
-  }
+    public function __invoke()
+    {
+        $horario = $this->getHorario->execute(Id::fromInt(Auth::id()));
+
+        return view('student.horario', compact('horario'));
+    }
 }

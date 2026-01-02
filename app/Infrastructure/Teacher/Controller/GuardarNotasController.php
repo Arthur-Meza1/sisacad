@@ -7,19 +7,21 @@ use Illuminate\Http\Request;
 
 class GuardarNotasController
 {
-  public function __construct(
-    private readonly GuardarNotas $guardarNotas
-  ) {}
-  public function __invoke(Request $request) {
-    $validated = $request->validate([
-      'data' => ['required', 'array'],
-      'data.*.registro_id' => ['required', 'integer'],
-      'data.*.notas' => ['sometimes', 'array'],
-      'data.*.notas.*' => ['nullable', 'numeric'],
-    ]);
+    public function __construct(
+        private readonly GuardarNotas $guardarNotas
+    ) {}
 
-    $this->guardarNotas->execute($validated['data']);
+    public function __invoke(Request $request)
+    {
+        $validated = $request->validate([
+            'data' => ['required', 'array'],
+            'data.*.registro_id' => ['required', 'integer'],
+            'data.*.notas' => ['sometimes', 'array'],
+            'data.*.notas.*' => ['nullable', 'numeric'],
+        ]);
 
-    return response()->noContent();
-  }
+        $this->guardarNotas->execute($validated['data']);
+
+        return response()->noContent();
+    }
 }

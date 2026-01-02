@@ -4,12 +4,14 @@ namespace App\Application\Student\Transformer;
 
 use App\Domain\Shared\ValueObject\Registro;
 
-class RegistroTransformer {
-  public static function toArray(Registro $registro): array {
-    return [
-      'parcial' => $registro->parcial()->toArray(),
-      'continua' => $registro->continua()->toArray(),
-      'sustitutorio' => $registro->parcial()->sustitutorio(),
-    ];
-  }
+class RegistroTransformer
+{
+    public static function toArray(Registro $registro): array
+    {
+        return [
+            'parcial' => $registro->parcial()->toArray(),
+            'continua' => $registro->continua()->toArray(),
+            'sustitutorio' => $registro->parcial()->sustitutorio(),
+        ];
+    }
 }

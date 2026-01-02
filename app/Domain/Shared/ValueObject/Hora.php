@@ -7,33 +7,34 @@ use Carbon\Carbon;
 
 class Hora
 {
-  private function __construct(
-    private readonly Carbon $hora,
-  )
-  {}
+    private function __construct(
+        private readonly Carbon $hora,
+    ) {}
 
-  /**
-   * @param string $hora
-   * @return self
-   * @throws InvalidValue
-   */
-  public static function fromString(string $hora): self {
-    try {
-      return new self(Carbon::parse($hora));
-    } catch (\Throwable $th) {
-      throw InvalidValue::invalidHour($hora);
+    /**
+     * @throws InvalidValue
+     */
+    public static function fromString(string $hora): self
+    {
+        try {
+            return new self(Carbon::parse($hora));
+        } catch (\Throwable $th) {
+            throw InvalidValue::invalidHour($hora);
+        }
     }
-  }
 
-  public function toMinutes(): int {
-    return $this->hora->diffInMinutes();
-  }
+    public function toMinutes(): int
+    {
+        return $this->hora->diffInMinutes();
+    }
 
-  public function toCarbon(): Carbon {
-    return $this->hora;
-  }
+    public function toCarbon(): Carbon
+    {
+        return $this->hora;
+    }
 
-  public function toString(): string {
-    return $this->hora->format('H:i');
-  }
+    public function toString(): string
+    {
+        return $this->hora->format('H:i');
+    }
 }

@@ -8,18 +8,20 @@ use Illuminate\Http\Response;
 
 class BorrarSesionController
 {
-  public function __construct(
-    private readonly BorrarSesion $borrarSesion
-  ) {}
-  public function __invoke(int $id) {
-    try {
-      $this->borrarSesion->execute(Id::fromInt($id));
+    public function __construct(
+        private readonly BorrarSesion $borrarSesion
+    ) {}
 
-      return response()->json([], Response::HTTP_OK);
-    } catch (\Exception $e) {
-      return response()->json([
-        'message' => $e->getMessage() . $e->getTraceAsString()
-      ], Response::HTTP_INTERNAL_SERVER_ERROR);
+    public function __invoke(int $id)
+    {
+        try {
+            $this->borrarSesion->execute(Id::fromInt($id));
+
+            return response()->json([], Response::HTTP_OK);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage().$e->getTraceAsString(),
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
-  }
 }

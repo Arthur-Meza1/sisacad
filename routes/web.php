@@ -1,45 +1,44 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\Login;
 use App\Http\Controllers\Auth\Logout;
+use App\Infrastructure\Admin\Controller as Admin;
 use App\Infrastructure\Student\Controller as Student;
 use App\Infrastructure\Teacher\Controller as Teacher;
-use App\Infrastructure\Admin\Controller as Admin;
-
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-  if (!auth()->check()) {
-    return redirect()->route('login');
-  }
+    if (! auth()->check()) {
+        return redirect()->route('login');
+    }
 
-  // Redirect based on authenticated user's role
-  return match (auth()->user()->role) {
-    'admin' => redirect('/admin'),
-    'teacher' => redirect('/teacher'),
-    'secretary' => redirect('/secretary'),
-    'student' => redirect('/student'),
-    default => redirect('/login'),
-  };
+    // Redirect based on authenticated user's role
+    return match (auth()->user()->role) {
+        'admin' => redirect('/admin'),
+        'teacher' => redirect('/teacher'),
+        'secretary' => redirect('/secretary'),
+        'student' => redirect('/student'),
+        default => redirect('/login'),
+    };
 });
 
 Route::middleware('auth')->group(function () {
-  /*Route::get('/student', Student\AlumnoController::class)
-    ->name('student')
-    ->middleware('role:student');*/
-  // TODO: Secretary view missing
-  Route::view('/secretary', 'secretary')->middleware('role:secretary');
+    /*Route::get('/student', Student\AlumnoController::class)
+      ->name('student')
+      ->middleware('role:student');*/
+    // TODO: Secretary view missing
+    Route::view('/secretary', 'secretary')->middleware('role:secretary');
 });
 
 Route::view('/login', 'auth.login')
-  ->middleware('guest')
-  ->name('login');
+    ->middleware('guest')
+    ->name('login');
 Route::post('/login', Login::class)
-  ->middleware('guest');
+    ->middleware('guest');
 Route::post('/logout', Logout::class)
-  ->middleware('auth')
-  ->name('logout');
+    ->middleware('auth')
+    ->name('logout');
 
 // =============
 // API
@@ -47,60 +46,60 @@ Route::post('/logout', Logout::class)
 // FIXME: Por alguna razon si lo coloco en api.php no funca los middleware
 // FIXME: (Alberto) Esto en serio deberia ser refactorizado en un solo controlador que retorne vistas en vez de JSON
 Route::middleware(['auth', 'role:teacher'])->prefix('/api/teacher')
-  ->group(function () {
-    Route::get("/horario", Teacher\GetHorarioController::class);
-    Route::get("/grupo/{grupoId}/notas", Teacher\GetNotasController::class);
-    Route::post("/notas/guardar", Teacher\GuardarNotasController::class);
-    Route::get("/sesion/{id}", Teacher\GetSesionController::class);
-    Route::get("/libreta/descargar", Teacher\LibretaDescargarController::class);
-    Route::post('/aulas', Teacher\GetAulasDisponiblesController::class);
-    Route::post('/crear_sesion', Teacher\CreateSesionController::class);
-    Route::post("/sesion/{sesion}/guardar", Teacher\GuardarSesionController::class)->middleware('role:teacher')->name("asistencia.guardar");
-    Route::post('/sesion/{sesion}/borrar', Teacher\BorrarSesionController::class)->middleware('role:teacher');
-  });
+    ->group(function () {
+        Route::get('/horario', Teacher\GetHorarioController::class);
+        Route::get('/grupo/{grupoId}/notas', Teacher\GetNotasController::class);
+        Route::post('/notas/guardar', Teacher\GuardarNotasController::class);
+        Route::get('/sesion/{id}', Teacher\GetSesionController::class);
+        Route::get('/libreta/descargar', Teacher\LibretaDescargarController::class);
+        Route::post('/aulas', Teacher\GetAulasDisponiblesController::class);
+        Route::post('/crear_sesion', Teacher\CreateSesionController::class);
+        Route::post('/sesion/{sesion}/guardar', Teacher\GuardarSesionController::class)->middleware('role:teacher')->name('asistencia.guardar');
+        Route::post('/sesion/{sesion}/borrar', Teacher\BorrarSesionController::class)->middleware('role:teacher');
+    });
 
-Route::middleware(['auth', 'role:teacher'])->prefix('/teacher')->name("teacher.")
-  ->group(function () {
-    Route::get('/', Teacher\DocenteController::class)
-      ->name('dashboard');
-    Route::get('/libreta', Teacher\LibretaController::class)
-      ->name('libreta');
-    Route::get('/horario', Teacher\HorarioController::class)
-      ->name('horario');
-    Route::get('/notas', Teacher\NotasController::class)
-      ->name('notas');
-  });
+Route::middleware(['auth', 'role:teacher'])->prefix('/teacher')->name('teacher.')
+    ->group(function () {
+        Route::get('/', Teacher\DocenteController::class)
+            ->name('dashboard');
+        Route::get('/libreta', Teacher\LibretaController::class)
+            ->name('libreta');
+        Route::get('/horario', Teacher\HorarioController::class)
+            ->name('horario');
+        Route::get('/notas', Teacher\NotasController::class)
+            ->name('notas');
+    });
 
 Route::prefix('/student')->name('student.')->group(function () {
-  Route::get('/', Student\IndexController::class)->name('index');
-  Route::get('/matricula', Student\MatriculaController::class)->name('matricula');
-  Route::get('/horario', Student\HorarioController::class)->name('horario');
-  Route::get('/notas', Student\NotasController::class)->name('notas');
-  Route::get('/asistencias', Student\AsistenciasController::class)->name('asistencias');
+    Route::get('/', Student\IndexController::class)->name('index');
+    Route::get('/matricula', Student\MatriculaController::class)->name('matricula');
+    Route::get('/horario', Student\HorarioController::class)->name('horario');
+    Route::get('/notas', Student\NotasController::class)->name('notas');
+    Route::get('/asistencias', Student\AsistenciasController::class)->name('asistencias');
 })->middleware(['auth', 'role:student']);
 
 Route::prefix('/api/student')->group(function () {
-  Route::get('/cursos/{curso}/notas', Student\GetNotasController::class);
-  Route::post('/matricular', Student\MatricularController::class);
-  Route::post('/desmatricular', Student\DesmatricularController::class);
+    Route::get('/cursos/{curso}/notas', Student\GetNotasController::class);
+    Route::post('/matricular', Student\MatricularController::class);
+    Route::post('/desmatricular', Student\DesmatricularController::class);
 });
 
 Route::middleware(['auth', 'role:admin'])->prefix('/admin')->name('admin.')
-  ->group(function () {
-    Route::get('/', [AdminDashboardController::class, 'index'])
-      ->name('dashboard');
-    Route::prefix('users')->name('users.')
-      ->group(function () {
-        Route::get('/', [Admin\UserController::class, 'index'])->name('index');
-        Route::get('/create', [Admin\UserController::class, 'create'])->name('create');
-        Route::post('/', [Admin\UserController::class, 'store'])->name('store');
-        Route::get('/search', [Admin\UserController::class, 'search'])->name('search');
-      });
-    Route::prefix('cursos')->name('cursos.')
-      ->group(function () {
-        Route::get('/', [Admin\CursoController::class, 'index'])->name('index');
-      });
-  });
+    ->group(function () {
+        Route::get('/', [AdminDashboardController::class, 'index'])
+            ->name('dashboard');
+        Route::prefix('users')->name('users.')
+            ->group(function () {
+                Route::get('/', [Admin\UserController::class, 'index'])->name('index');
+                Route::get('/create', [Admin\UserController::class, 'create'])->name('create');
+                Route::post('/', [Admin\UserController::class, 'store'])->name('store');
+                Route::get('/search', [Admin\UserController::class, 'search'])->name('search');
+            });
+        Route::prefix('cursos')->name('cursos.')
+            ->group(function () {
+                Route::get('/', [Admin\CursoController::class, 'index'])->name('index');
+            });
+    });
 
 /*Route::get('/docente/registrar-notas', [DocenteController::class, 'registrarNotas'])
   ->name('docente.registrar_notas')

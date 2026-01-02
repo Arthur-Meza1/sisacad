@@ -8,24 +8,24 @@ use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-  /**
-   * Register any application services.
-   */
-  public function register(): void
-  {
-    $this->app->bind(
-      IUserRepository::class,
-      EloquentUserRepository::class
-    );
+    /**
+     * Register any application services.
+     */
+    public function register(): void
+    {
+        $this->app->bind(
+            IUserRepository::class,
+            EloquentUserRepository::class
+        );
 
-    // Aquí se agregarían otros bindings específicos del Admin (Cursos, Aulas, etc.)
-  }
+        // Aquí se agregarían otros bindings específicos del Admin (Cursos, Aulas, etc.)
+    }
 
-  /**
-   * Bootstrap any application services.
-   */
-  public function boot(): void
-  {
-    //
-  }
+    /**
+     * Bootstrap any application services.
+     */
+    public function boot(): void
+    {
+        //
+    }
 }

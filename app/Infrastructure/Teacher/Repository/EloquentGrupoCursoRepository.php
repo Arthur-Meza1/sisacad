@@ -11,35 +11,34 @@ use App\Infrastructure\Shared\Model\Matricula as EloquentMatricula;
 
 class EloquentGrupoCursoRepository implements IGrupoCursoRepository
 {
-  /**
-   * @param Id[] $ids
-   * @return array
-   */
-  public function findQueryFromIds(array $ids): array
-  {
-    return EloquentGrupoCurso::with(['curso'])
-      ->withCount('alumnos')
-      ->whereIn('id', $ids)
-      ->get()
-      ->map(function (EloquentGrupoCurso $grupo) {
-        return new GrupoCursoDTO(
-          id: Id::fromInt($grupo->id),
-          nombre: $grupo->curso->nombre,
-          turno: $grupo->turno,
-          tipo: $grupo->tipo,
-          nregistros: $grupo->alumnos_count,
-        );
-      })->toArray();
-  }
+    /**
+     * @param  Id[]  $ids
+     */
+    public function findQueryFromIds(array $ids): array
+    {
+        return EloquentGrupoCurso::with(['curso'])
+            ->withCount('alumnos')
+            ->whereIn('id', $ids)
+            ->get()
+            ->map(function (EloquentGrupoCurso $grupo) {
+                return new GrupoCursoDTO(
+                    id: Id::fromInt($grupo->id),
+                    nombre: $grupo->curso->nombre,
+                    turno: $grupo->turno,
+                    tipo: $grupo->tipo,
+                    nregistros: $grupo->alumnos_count,
+                );
+            })->toArray();
+    }
 
-  public function getAlumnosFromId(Id $id): array {
-    return EloquentMatricula::with(['alumno.user'])
-      ->where('grupo_curso_id', $id->getValue())
-      ->get()
-      ->map(fn (EloquentMatricula $matricula) =>
-        new AlumnoDTO(
-          id: $matricula->alumno->id,
-          nombre: $matricula->alumno->user->name,
-        ))->toArray();
-  }
+    public function getAlumnosFromId(Id $id): array
+    {
+        return EloquentMatricula::with(['alumno.user'])
+            ->where('grupo_curso_id', $id->getValue())
+            ->get()
+            ->map(fn (EloquentMatricula $matricula) => new AlumnoDTO(
+                id: $matricula->alumno->id,
+                nombre: $matricula->alumno->user->name,
+            ))->toArray();
+    }
 }

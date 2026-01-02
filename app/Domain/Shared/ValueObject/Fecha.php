@@ -8,34 +8,34 @@ use Carbon\Exceptions\InvalidFormatException;
 
 class Fecha
 {
-  private function __construct(
-    private readonly Carbon $fecha,
-  )
-  {
-  }
+    private function __construct(
+        private readonly Carbon $fecha,
+    ) {}
 
-  /**
-   * @param string $fecha
-   * @return self
-   * @throws InvalidValue
-   */
-  public static function fromString(string $fecha): self {
-    try {
-      return new self(Carbon::parse($fecha));
-    } catch(InvalidFormatException $e) {
-      throw InvalidValue::invalidDate($fecha);
+    /**
+     * @throws InvalidValue
+     */
+    public static function fromString(string $fecha): self
+    {
+        try {
+            return new self(Carbon::parse($fecha));
+        } catch (InvalidFormatException $e) {
+            throw InvalidValue::invalidDate($fecha);
+        }
     }
-  }
 
-  public function toString(): string {
-    return $this->fecha->format('Y-m-d');
-  }
+    public function toString(): string
+    {
+        return $this->fecha->format('Y-m-d');
+    }
 
-  public function getDayOfWeek(): int {
-    return $this->fecha->dayOfWeek;
-  }
+    public function getDayOfWeek(): int
+    {
+        return $this->fecha->dayOfWeek;
+    }
 
-  public function toCarbon(): Carbon {
-    return $this->fecha;
-  }
+    public function toCarbon(): Carbon
+    {
+        return $this->fecha;
+    }
 }

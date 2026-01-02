@@ -7,10 +7,12 @@ use App\Domain\Shared\ValueObject\Id;
 
 class BorrarSesion
 {
-  public function __construct(
-    private readonly ISesionRepository $sesionRepository,
-  ) {}
-  public function execute(Id $id): void {
-    $this->sesionRepository->deleteOrFail($id);
-  }
+    public function __construct(
+        private readonly ISesionRepository $sesionRepository,
+    ) {}
+
+    public function execute(Id $id): void
+    {
+        $this->sesionRepository->deleteOrFail($id);
+    }
 }

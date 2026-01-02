@@ -21,16 +21,14 @@ pipeline {
       steps {
         echo 'Ejecutando Laravel Pint...'
         // Si alguien sube código mal formateado, el pipeline se detendrá aquí
-        sh 'docker exec pro-laravel.test-1 ./vendor/bin/pint --test'
-      }
+        sh 'docker exec -u sail pro-laravel.test-1 ./vendor/bin/pint --test'      }
     }
 
     stage('Tests (Pest)') {
       steps {
         echo 'Ejecutando tests de Pest...'
         // Usamos "php artisan test" que es el comando estándar de Laravel 12
-        sh 'docker exec pro-laravel.test-1 php artisan test --parallel'
-      }
+        sh 'docker exec -u sail pro-laravel.test-1 ./vendor/bin/pest'      }
     }
   }
 

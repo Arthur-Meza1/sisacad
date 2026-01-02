@@ -17,9 +17,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-      $this->app->bind(IAlumnoRepository::class, EloquentAlumnoRepository::class);
-      $this->app->bind(ICursoRepository::class, EloquentCursoRepository::class);
-      $this->app->bind(IGrupoCursoRepository::class, EloquentGrupoCursoRepository::class);
+        $this->app->bind(IAlumnoRepository::class, EloquentAlumnoRepository::class);
+        $this->app->bind(ICursoRepository::class, EloquentCursoRepository::class);
+        $this->app->bind(IGrupoCursoRepository::class, EloquentGrupoCursoRepository::class);
     }
 
     /**

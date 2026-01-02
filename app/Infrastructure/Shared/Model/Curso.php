@@ -10,13 +10,16 @@ class Curso extends Model
     use HasFactory;
 
     public $timestamps = false;
+
     protected $fillable = ['nombre'];
 
-    public function temas() {
+    public function temas()
+    {
         return $this->hasMany(Tema::class);
     }
 
-    public function grupoCurso() {
+    public function grupoCurso()
+    {
         return $this->hasOne(GrupoCurso::class);
     }
 }

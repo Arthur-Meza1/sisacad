@@ -8,12 +8,14 @@ use App\Domain\Student\Repository\IGrupoCursoRepository;
 
 class DesmatricularLab
 {
-  public function __construct(
-    private readonly IAlumnoRepository $alumnoRepository,
-    private readonly IGrupoCursoRepository $grupoCursoRepository,
-  ) {}
-  public function execute(Id $userId, Id $cursoId) {
-    $alumno = $this->alumnoRepository->findFromUserIdOrFail($userId, false);
-    $this->grupoCursoRepository->desmatricularEnGrupo($alumno->id(), $cursoId);
-  }
+    public function __construct(
+        private readonly IAlumnoRepository $alumnoRepository,
+        private readonly IGrupoCursoRepository $grupoCursoRepository,
+    ) {}
+
+    public function execute(Id $userId, Id $cursoId)
+    {
+        $alumno = $this->alumnoRepository->findFromUserIdOrFail($userId, false);
+        $this->grupoCursoRepository->desmatricularEnGrupo($alumno->id(), $cursoId);
+    }
 }

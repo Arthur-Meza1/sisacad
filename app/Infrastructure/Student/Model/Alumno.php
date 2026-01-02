@@ -17,19 +17,23 @@ class Alumno extends Model
 
     protected $fillable = ['user_id'];
 
-    public function user() {
-      return $this->belongsTo(User::class);
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
-    public function matriculas() {
+    public function matriculas()
+    {
         return $this->hasMany(Matricula::class);
     }
 
-    public function grupos() {
+    public function grupos()
+    {
         return $this->belongsToMany(GrupoCurso::class, 'matriculas');
     }
 
-    public function registros() {
+    public function registros()
+    {
         return $this->hasMany(Registro::class);
     }
 }

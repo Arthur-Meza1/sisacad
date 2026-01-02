@@ -12,32 +12,34 @@ use Illuminate\Http\Response;
 
 class CreateSesionController
 {
-  public function __construct(
-    private readonly CreateSesion $createSesion
-  ) {}
-  public function __invoke(Request $request) {
-    $validated = $request->validate([
-      'grupo_id' => 'required',
-      'fecha' => 'required',
-      'hora_inicio' => 'required',
-      'hora_fin' => 'required',
-      'aula_id' => 'required',
-    ]);
+    public function __construct(
+        private readonly CreateSesion $createSesion
+    ) {}
 
-    try {
-      $this->createSesion->execute(new SesionDTO(
-        fecha:  Fecha::fromString($validated['fecha']),
-        horaInicio:  Hora::fromString($validated['hora_inicio']),
-        horaFin:  Hora::fromString($validated['hora_fin']),
-        grupoId:  Id::fromInt($validated['grupo_id']),
-        aulaId:  Id::fromInt($validated['aula_id']),
-      ));
+    public function __invoke(Request $request)
+    {
+        $validated = $request->validate([
+            'grupo_id' => 'required',
+            'fecha' => 'required',
+            'hora_inicio' => 'required',
+            'hora_fin' => 'required',
+            'aula_id' => 'required',
+        ]);
 
-      return response()->json([], Response::HTTP_OK);
-    } catch (\Exception $e) {
-      return response()->json([
-        'message' => $e->getMessage() . $e->getTraceAsString()
-      ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        try {
+            $this->createSesion->execute(new SesionDTO(
+                fecha: Fecha::fromString($validated['fecha']),
+                horaInicio: Hora::fromString($validated['hora_inicio']),
+                horaFin: Hora::fromString($validated['hora_fin']),
+                grupoId: Id::fromInt($validated['grupo_id']),
+                aulaId: Id::fromInt($validated['aula_id']),
+            ));
+
+            return response()->json([], Response::HTTP_OK);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => $e->getMessage().$e->getTraceAsString(),
+            ], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
-  }
 }
