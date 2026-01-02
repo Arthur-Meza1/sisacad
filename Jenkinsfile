@@ -14,7 +14,6 @@ pipeline {
         sh 'docker ps'
 
         echo 'Instalando dependencias de Composer...'
-        // Ejecutamos dentro del contenedor para asegurar la versión correcta de PHP
         sh 'docker exec pro-laravel.test-1 composer install --no-interaction --prefer-dist --optimize-autoloader'
       }
     }
