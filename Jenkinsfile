@@ -14,8 +14,7 @@ pipeline {
         sh 'docker ps'
 
         echo 'Instalando dependencias de Composer...'
-        sh 'docker exec pro-laravel.test-1 composer install --no-interaction --prefer-dist --optimize-autoloader'
-      }
+        sh 'docker exec pro-laravel.test-1 composer install --no-interaction --prefer-dist --optimize-autoloader --ignore-platform-reqs'      }
     }
 
     stage('Estilo de Código (Pint)') {
