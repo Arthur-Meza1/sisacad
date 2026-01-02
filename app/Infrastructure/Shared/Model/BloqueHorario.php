@@ -18,14 +18,16 @@ class BloqueHorario extends Model
     public $timestamps = false;
 
     protected $fillable = [
-      'dia', 'horaInicio', 'horaFin',
+        'dia', 'horaInicio', 'horaFin',
     ];
 
-    public function aula() {
+    public function aula()
+    {
         return $this->belongsTo(Aula::class);
     }
 
-    public function grupoCurso() {
-      return $this->belongsTo(GrupoCurso::class);
+    public function grupoCurso()
+    {
+        return $this->belongsTo(GrupoCurso::class);
     }
 }

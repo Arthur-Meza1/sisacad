@@ -8,12 +8,14 @@ use App\Domain\Student\Repository\IGrupoCursoRepository;
 
 class MatricularLab
 {
-  public function __construct(
-    private readonly IAlumnoRepository $alumnoRepository,
-    private readonly IGrupoCursoRepository $grupoCursoRepository,
-  ) {}
-  public function execute(Id $alumnoId, Id $cursoId) {
-    $alumno = $this->alumnoRepository->findFromIdOrFail($alumnoId, false);
-    $this->grupoCursoRepository->matricularEnGrupo($alumno->id(), $cursoId);
-  }
+    public function __construct(
+        private readonly IAlumnoRepository $alumnoRepository,
+        private readonly IGrupoCursoRepository $grupoCursoRepository,
+    ) {}
+
+    public function execute(Id $userId, Id $cursoId)
+    {
+        $alumno = $this->alumnoRepository->findFromUserIdOrFail($userId, false);
+        $this->grupoCursoRepository->matricularEnGrupo($alumno->id(), $cursoId);
+    }
 }

@@ -10,7 +10,8 @@ class Aula extends Model
 
     protected $fillable = ['tipo', 'nombre'];
 
-    public function bloqueHorario() {
-      return $this->hasOne(BloqueHorario::class);
+    public function bloqueHorario()
+    {
+        return $this->hasOne(BloqueHorario::class);
     }
 }

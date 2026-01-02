@@ -9,12 +9,15 @@ use App\Domain\Student\Repository\IAlumnoRepository;
 
 class GetLabs
 {
-  public function __construct(
-    private readonly IAlumnoRepository $alumnoRepository,
-  ) {}
-  public function execute(Id $alumnoid): array {
-    $alumno = $this->alumnoRepository->findFromIdOrFail($alumnoid);
-    $labs = $alumno->filterGruposByTipo(CursoTipo::LABORATORIO);
-    return GrupoCursoTransformer::toArray($labs);
-  }
+    public function __construct(
+        private readonly IAlumnoRepository $alumnoRepository,
+    ) {}
+
+    public function execute(Id $userId): array
+    {
+        $alumno = $this->alumnoRepository->findFromUserIdOrFail($userId);
+        $labs = $alumno->filterGruposByTipo(CursoTipo::LABORATORIO);
+
+        return GrupoCursoTransformer::toArray($labs);
+    }
 }

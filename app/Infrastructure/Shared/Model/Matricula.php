@@ -14,11 +14,13 @@ class Matricula extends Model
 
     public $timestamps = false;
 
-    public function grupoCurso() {
+    public function grupoCurso()
+    {
         return $this->belongsTo(GrupoCurso::class);
     }
 
-    public function alumno() {
+    public function alumno()
+    {
         return $this->belongsTo(Alumno::class);
     }
 }

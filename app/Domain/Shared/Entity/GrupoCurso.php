@@ -6,14 +6,16 @@ use App\Domain\Shared\Exception\InvalidValue;
 use App\Domain\Shared\ValueObject\CursoTipo;
 use App\Domain\Shared\ValueObject\GrupoTurno;
 use App\Domain\Shared\ValueObject\Id;
+use Illuminate\Support\Collection;
 
-readonly class GrupoCurso {
+class GrupoCurso {
   private function __construct(
-    private Id         $id,
-    private Curso      $curso,
-    private GrupoTurno $grupoTurno,
-    private CursoTipo  $cursoTipo,
-    private string     $docenteNombre,
+    private readonly Id         $id,
+    private readonly Curso      $curso,
+    private readonly GrupoTurno $grupoTurno,
+    private readonly CursoTipo  $cursoTipo,
+    private readonly string     $docenteNombre,
+    private Collection          $temas,
   ) {}
 
   public static function fromPrimitive(
@@ -26,7 +28,21 @@ readonly class GrupoCurso {
     if(empty($docenteNombre)) {
       throw InvalidValue::stringNullOrEmpty();
     }
-    return new self($id, $curso, $grupoTurno, $cursoTipo, $docenteNombre);
+    return new self(
+      $id,
+      $curso,
+      $grupoTurno,
+      $cursoTipo,
+      $docenteNombre,
+      collect());
+  }
+
+  public function addTema(Tema $tema): void {
+    $this->temas->push($tema);
+  }
+
+  public function temas(): Collection {
+    return $this->temas;
   }
 
   public function id(): Id {

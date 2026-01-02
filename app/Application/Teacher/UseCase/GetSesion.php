@@ -8,13 +8,14 @@ use App\Domain\Shared\ValueObject\Id;
 
 class GetSesion
 {
-  public function __construct(
-    private readonly ISesionRepository $sesionRepository
-  ) {}
+    public function __construct(
+        private readonly ISesionRepository $sesionRepository
+    ) {}
 
-  public function execute(Id $id): array {
-    return SesionTransformer::toArray(
-      $this->sesionRepository->findByIdOrFail($id)
-    );
-  }
+    public function execute(Id $id): array
+    {
+        return SesionTransformer::toArray(
+            $this->sesionRepository->findByIdOrFail($id)
+        );
+    }
 }

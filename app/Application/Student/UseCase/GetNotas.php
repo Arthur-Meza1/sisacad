@@ -7,17 +7,19 @@ use App\Domain\Shared\Repository\IRegistroRepository;
 use App\Domain\Shared\ValueObject\Id;
 use App\Domain\Student\Repository\IAlumnoRepository;
 
-class GetNotas {
-  public function __construct(
-    private IAlumnoRepository $alumnoRepository,
-    private IRegistroRepository $registroRepository
-  ) {}
+class GetNotas
+{
+    public function __construct(
+        private IAlumnoRepository $alumnoRepository,
+        private IRegistroRepository $registroRepository
+    ) {}
 
-  public function execute(Id $userId, Id $grupoId): array {
-    $alumno = $this->alumnoRepository->findFromIdOrFail($userId, false);
+    public function execute(Id $userId, Id $grupoId): array
+    {
+        $alumno = $this->alumnoRepository->findFromUserIdOrFail($userId, false);
 
-    $registro = $this->registroRepository->getOrCreateByAlumnoInGrupo($alumno->id(), $grupoId);
+        $registro = $this->registroRepository->getOrCreateByAlumnoInGrupo($alumno->id(), $grupoId);
 
-    return RegistroTransformer::toArray($registro);
-  }
+        return RegistroTransformer::toArray($registro);
+    }
 }

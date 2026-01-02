@@ -11,29 +11,27 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class EloquentCursoRepository implements ICursoRepository
 {
-
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function getCursoTeoriaByAlumnoId(Id $alumnoId): array
     {
-      try {
-        $eloquentAlumno =
-          EloquentAlumno::
-            where('user_id', $alumnoId->getValue())
-            ->firstOrFail();
+        try {
+            $eloquentAlumno =
+              EloquentAlumno::where('user_id', $alumnoId->getValue())
+                  ->firstOrFail();
 
-        return
-          $eloquentAlumno->grupos()
-            ->where('tipo', 'teoria')
-            ->with('curso')
-            ->get()
-            ->map(fn ($grupo) => new Curso(
-              Id::fromInt($grupo->id),
-              $grupo->curso->nombre,
-            ))->toArray();
-      } catch (ModelNotFoundException) {
-        throw UserNotFound::execute();
-      }
+            return
+              $eloquentAlumno->grupos()
+                  ->where('tipo', 'teoria')
+                  ->with('curso')
+                  ->get()
+                  ->map(fn ($grupo) => new Curso(
+                      Id::fromInt($grupo->id),
+                      $grupo->curso->nombre,
+                  ))->toArray();
+        } catch (ModelNotFoundException) {
+            throw UserNotFound::execute();
+        }
     }
 }

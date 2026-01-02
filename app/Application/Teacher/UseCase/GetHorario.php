@@ -7,15 +7,18 @@ use App\Domain\Shared\Repository\IHorarioRepository;
 use App\Domain\Shared\ValueObject\Id;
 use App\Domain\Teacher\Repository\IDocenteRepository;
 
-class GetHorario {
-  public function __construct(
-    private readonly IDocenteRepository $docenteRepository,
-    private readonly IHorarioRepository $horarioRepository
-  ) {}
-  public function execute(Id $id): array {
-    $docente = $this->docenteRepository->findFromIdOrFail($id);
-    $horario = $this->horarioRepository->getFromGrupoIds($docente->getGruposId(), true);
+class GetHorario
+{
+    public function __construct(
+        private readonly IDocenteRepository $docenteRepository,
+        private readonly IHorarioRepository $horarioRepository
+    ) {}
 
-    return HorarioTransformer::toArray($horario);
-  }
+    public function execute(Id $id): array
+    {
+        $docente = $this->docenteRepository->findFromIdOrFail($id);
+        $horario = $this->horarioRepository->getFromGrupoIds($docente->getGruposId(), true);
+
+        return HorarioTransformer::toArray($horario);
+    }
 }

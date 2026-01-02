@@ -9,15 +9,14 @@ use Illuminate\View\View;
 
 readonly class LibretaController
 {
-  public function __construct(
-    private GetBasicGruposData $getGruposData
-  )
-  {
-  }
+    public function __construct(
+        private GetBasicGruposData $getGruposData
+    ) {}
 
-  public function __invoke(): View
-  {
-    $grupos = $this->getGruposData->execute(Id::fromInt(Auth::id()));
-    return view('teacher.libreta', compact('grupos'));
-  }
+    public function __invoke(): View
+    {
+        $grupos = $this->getGruposData->execute(Id::fromInt(Auth::id()));
+
+        return view('teacher.libreta', compact('grupos'));
+    }
 }

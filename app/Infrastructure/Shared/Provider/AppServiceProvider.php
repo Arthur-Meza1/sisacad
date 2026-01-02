@@ -14,22 +14,22 @@ use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-  /**
-   * Register any application services.
-   */
-  public function register(): void
-  {
-    $this->app->bind(IHorarioRepository::class, EloquentHorarioRepository::class);
-    $this->app->bind(IAulaRepository::class, EloquentAulaRepository::class);
-    $this->app->bind(ISesionRepository::class, EloquentSesionRepository::class);
-    $this->app->bind(IRegistroRepository::class, EloquentRegistroRepository::class);
-  }
+    /**
+     * Register any application services.
+     */
+    public function register(): void
+    {
+        $this->app->bind(IHorarioRepository::class, EloquentHorarioRepository::class);
+        $this->app->bind(IAulaRepository::class, EloquentAulaRepository::class);
+        $this->app->bind(ISesionRepository::class, EloquentSesionRepository::class);
+        $this->app->bind(IRegistroRepository::class, EloquentRegistroRepository::class);
+    }
 
-  /**
-   * Bootstrap any application services.
-   */
-  public function boot(): void
-  {
-    //
-  }
+    /**
+     * Bootstrap any application services.
+     */
+    public function boot(): void
+    {
+        //
+    }
 }

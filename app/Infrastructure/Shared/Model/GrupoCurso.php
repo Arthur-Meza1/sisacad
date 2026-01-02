@@ -15,27 +15,33 @@ class GrupoCurso extends Model
 
     protected $fillable = ['turno', 'tipo'];
 
-    public function docente() {
+    public function docente()
+    {
         return $this->belongsTo(Docente::class);
     }
 
-    public function curso() {
+    public function curso()
+    {
         return $this->belongsTo(Curso::class);
     }
 
-    public function matriculas() {
+    public function matriculas()
+    {
         return $this->hasMany(Matricula::class);
     }
 
-    public function alumnos() {
+    public function alumnos()
+    {
         return $this->belongsToMany(Alumno::class, 'matriculas');
     }
 
-    public function bloqueHorario() {
+    public function bloqueHorario()
+    {
         return $this->hasMany(BloqueHorario::class);
     }
 
-    public function registros() {
+    public function registros()
+    {
         return $this->hasMany(Registro::class);
     }
 }

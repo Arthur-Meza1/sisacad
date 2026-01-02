@@ -6,15 +6,16 @@ use App\Application\Student\UseCase\GetBasicGruposData;
 use App\Domain\Shared\ValueObject\Id;
 use Illuminate\Support\Facades\Auth;
 
-class IndexController {
-  public function __construct(
-    private readonly GetBasicGruposData $getBasicGruposData
-  ) {
-  }
+readonly class IndexController
+{
+    public function __construct(
+        private GetBasicGruposData $getBasicGruposData
+    ) {}
 
-  public function __invoke() {
-    $grupos = $this->getBasicGruposData->execute(Id::fromInt(Auth::id()));
+    public function __invoke()
+    {
+        $grupos = $this->getBasicGruposData->execute(Id::fromInt(Auth::id()));
 
-    return view('student', compact('grupos'));
-  }
+        return view('student.index', compact('grupos'));
+    }
 }

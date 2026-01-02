@@ -10,11 +10,13 @@ class Docente extends Model
 {
     public $timestamps = false;
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function grupos() {
+    public function grupos()
+    {
         return $this->hasMany(GrupoCurso::class);
     }
 }

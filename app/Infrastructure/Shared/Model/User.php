@@ -8,8 +8,10 @@ use App\Infrastructure\Teacher\Model\Docente;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+
 /**
  * @mixin \Illuminate\Database\Eloquent\Builder
+ *
  * @property int $id
  * @property string $name
  * @property string $email
@@ -24,7 +26,7 @@ class User extends Authenticatable
 
     public $timestamps = false;
 
-  protected $fillable = [
+    protected $fillable = [
         'name',
         'email',
         'password',
@@ -44,12 +46,13 @@ class User extends Authenticatable
         ];
     }
 
-    public function docente() {
+    public function docente()
+    {
         return $this->hasOne(Docente::class);
     }
 
     public function alumno()
     {
-      return $this->hasOne(Alumno::class);
+        return $this->hasOne(Alumno::class);
     }
 }

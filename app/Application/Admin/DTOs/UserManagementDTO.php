@@ -10,19 +10,19 @@ use App\Domain\Shared\ValueObject\Id;
  */
 final readonly class UserManagementDTO
 {
-  public function __construct(
-    public Id      $id,
-    public string  $name,
-    public string  $email,
-    public string  $role,
-  ) {}
+    public function __construct(
+        public Id $id,
+        public string $name,
+        public string $email,
+        public string $role,
+    ) {}
 
-  public static function create(
-    Id $id,
-    string $name,
-    string $email,
-    string $role,
-  ): self {
-    return new self($id, $name, $email, $role);
-  }
+    public static function create(
+        Id $id,
+        string $name,
+        string $email,
+        string $role,
+    ): self {
+        return new self($id, $name, $email, $role);
+    }
 }
