@@ -31,7 +31,7 @@ class ParseAlumnoToDomain {
         $grupo->curso->temas->each(function ($tema) use (&$curso) {
           $curso->addTema(
             Tema::fromPrimitives(
-              $tema->nombre,
+              $tema->titulo,
               $tema->orden
             )
           );

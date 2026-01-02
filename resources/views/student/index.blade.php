@@ -2,57 +2,86 @@
   <x-student.sidebar></x-student.sidebar>
 
   <main class="flex-1 p-4">
-    <div id="view-dashboard" class="view-content space-y-6">
-      <h2 class="text-2xl font-bold text-gray-800 mb-4">Resumen General</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="card bg-white rounded-xl p-5 shadow-lg border-b-4 border-indigo-500">
-          <p class="text-sm font-medium text-gray-500">Promedio General</p>
-          <strong id="avgGrade" class="text-3xl font-extrabold text-indigo-600">-</strong>
-          <p class="text-xs text-gray-400 mt-1">Calculado sobre 6 materias</p>
-        </div>
-        <div class="card bg-white rounded-xl p-5 shadow-lg border-b-4 border-cyan-500">
-          <p class="text-sm font-medium text-gray-500">Asistencia Promedio</p>
-          <strong id="attSummary" class="text-3xl font-extrabold text-cyan-600">-</strong>
-          <p class="text-xs text-gray-400 mt-1">En el ciclo actual</p>
-        </div>
-        <div class="card bg-white rounded-xl p-5 shadow-lg border-b-4 border-purple-500">
-          <p class="text-sm font-medium text-gray-500">Cursos Activos</p>
-          <strong id="coursesCount" class="text-3xl font-extrabold text-purple-600">6</strong>
-          <p class="text-xs text-gray-400 mt-1">Incluye laboratorios</p>
-        </div>
-      </div>
+    <div class="space-y-6">
+      <h2 class="text-2xl font-bold text-gray-800 mb-6">Temas y Progreso por Curso</h2>
 
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div class="lg:col-span-2 bg-white rounded-xl p-6 shadow-lg">
-          <h3 class="font-bold text-lg text-gray-700 mb-3">Cursos y Laboratorios Matriculados</h3>
-          <div id="courseList" class="space-y-2 text-sm">
-            @foreach($grupos as $grupo)
-              <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                <span class="font-medium text-indigo-700">{{$grupo['nombre']}} ({{$grupo['turno']}}) - {{ucfirst($grupo['tipo'])}}</span>
-                <span class="text-xs text-gray-500">Docente: {{$grupo['docente']}}</span>
+        <div class="grid grid-cols-1 gap-6">
+          @foreach($grupos as $grupo)
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden border-l-4 border-indigo-500">
+              <!-- Header (toggle button) -->
+              <button type="button"
+                      class="w-full flex justify-between items-center px-6 py-4 accordion-toggle student-accordion-toggle"
+                      data-target="#topics-{{ $grupo['id'] }}"
+                      aria-expanded="false"
+              >
+                <div class="text-left">
+                  <h3 class="text-lg font-bold text-gray-800">{{ $grupo['nombre'] }}</h3>
+                  <p class="text-sm text-gray-500">{{ $grupo['docente'] }} • Turno {{ $grupo['turno'] }}</p>
+                </div>
+                <div class="flex items-center space-x-3">
+                  <div class="text-right mr-2">
+                    <p class="text-sm font-semibold text-indigo-600">0%</p>
+                    <p class="text-xs text-gray-500">0</p>
+                  </div>
+                  <svg class="w-5 h-5 text-gray-400 transition-transform duration-200" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clip-rule="evenodd" />
+                  </svg>
+                </div>
+              </button>
+
+              <!-- Contenido colapsable -->
+              <div id="topics-{{ $grupo['id'] }}" class="hidden p-6 border-t border-gray-100">
+                @if(empty($grupo['temas']))
+                  <p class="text-gray-500 text-sm">Sin temas disponibles</p>
+                @else
+                  <div class="space-y-3 max-h-60 overflow-y-auto pr-2">
+                    @foreach($grupo['temas'] as $tema)
+                      <div class="flex items-start space-x-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                        <div class="flex-shrink-0 mt-1">
+                            <div class="w-5 h-5 border-2 border-gray-300 rounded-full"></div>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                          <p class="text-sm font-medium text-gray-800">{{ $tema['orden'] }}. {{ $tema['nombre'] }}</p>
+                        </div>
+                      </div>
+                    @endforeach
+                  </div>
+
+                  <div class="mt-5 pt-4 border-t border-gray-200">
+                    <div class="flex justify-between items-center mb-2">
+                      <p class="text-xs font-semibold text-gray-600">PROGRESO</p>
+                      <p class="text-xs font-bold text-indigo-600">0</p>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2.5">
+                      <div class="bg-gradient-to-r from-indigo-500 to-indigo-600 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-2">0% completado</p>
+                  </div>
+                @endif
               </div>
-            @endforeach
-          </div>
+            </div>
+          @endforeach
         </div>
-        <div class="bg-white rounded-xl p-6 shadow-lg">
-          <h3 class="font-bold text-lg text-gray-700 mb-3 flex items-center">
-            <svg class="w-5 h-5 mr-2 text-red-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"></path></svg>
-            Próximos Eventos
-          </h3>
-          <ul id="upcomingEvents" class="mt-2 text-sm text-gray-700 space-y-3">
-            <li class="p-2 border-l-4 border-amber-500 bg-amber-50 rounded-r-lg">
-              <p class="font-medium">Clase: Matemáticas</p>
-              <p class="text-xs text-gray-500">Hoy, 3:00 PM</p>
-            </li>
-            <li class="p-2 border-l-4 border-fuchsia-500 bg-fuchsia-50 rounded-r-lg">
-              <p class="font-medium">Laboratorio: Física</p>
-              <p class="text-xs text-gray-500">Mañana, 8:00 AM</p>
-            </li>
-          </ul>
-          <h3 class="font-bold text-lg text-gray-700 mt-5 mb-3">Últimas Actividades</h3>
-          <ul id="activities" class="text-sm text-gray-600 space-y-2"></ul>
-        </div>
-      </div>
     </div>
   </main>
+
+  <script>
+    (function(){
+      // Maneja toggles del acordeón dentro de este componente
+      document.querySelectorAll('.student-accordion-toggle').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          var target = document.querySelector(btn.dataset.target);
+          var expanded = btn.getAttribute('aria-expanded') === 'true';
+          btn.setAttribute('aria-expanded', (!expanded).toString());
+          if(!target) return;
+          target.classList.toggle('hidden');
+          // rotate icon
+          var icon = btn.querySelector('svg');
+          if(icon){
+            icon.style.transform = expanded ? 'rotate(0deg)' : 'rotate(180deg)';
+          }
+        });
+      });
+    })();
+  </script>
 </x-header_layout>
