@@ -8,7 +8,7 @@ import {
 } from "./calendario.js";
 
 $(document).ready(loadScheduleCalendar);
-window.updateEventButtonState = updateEventButtonState;
-window.openScheduleModal = openScheduleModal;
-window.closeScheduleModal = closeScheduleModal;
-window.saveNewScheduleEvent = saveNewScheduleEvent;
+globalThis.updateEventButtonState = updateEventButtonState;
+globalThis.openScheduleModal = openScheduleModal;
+globalThis.closeScheduleModal = closeScheduleModal;
+globalThis.saveNewScheduleEvent = saveNewScheduleEvent;

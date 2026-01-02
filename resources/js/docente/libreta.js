@@ -1,18 +1,17 @@
 import $ from 'jquery';
 import * as XLSX from 'https://cdn.sheetjs.com/xlsx-0.20.3/package/xlsx.mjs';
 import {ContentLoader} from "../common/ContentLoader.js";
-import {setInputValue} from "../common/Utils.js";
 
 let g_updates = null;
 let g_inputs = null;
 let g_courseName = null;
 
-export function handleCourseCardClick(courseId, courseName) {
+globalThis.handleCourseCardClick = (courseId, courseName) => {
   loadGradeTable(courseId, courseName);
-}
-window.handleCourseCardClick = handleCourseCardClick;
+};
 
-export function showCourseSelection() {
+
+globalThis.showCourseSelection = () => {
   if (hasUnsavedChanges()) {
     if (!confirm('Tienes cambios sin guardar. ¿Seguro que quieres salir?')) {
       return;
@@ -26,52 +25,14 @@ export function showCourseSelection() {
   document.querySelectorAll('.course-card-grades').forEach(card => {
     card.classList.remove('selected-card-active');
   });
-}
-
-window.showCourseSelection = showCourseSelection;
-
-function renderCourseCardsForGrades() {
-  const container = document.getElementById('courseCardsContainer');
-
-  container.innerHTML = courses.map((c) => {
-    const cardStyle = 'p-6 ' + gradientClasses + ' rounded-xl shadow-lg cursor-pointer hover:shadow-xl hover:scale-105 transition text-white';
-
-    return `
-          <div
-            class="course-card-grades ${cardStyle}"
-            data-courseid="${c.id}"
-            onclick="handleCourseCardClick('${c.id}')"
-          >
-            <h3 class="text-xl font-bold mb-2">${c.name}</h3>
-            <p class="text-sm opacity-90">${c.students} Alumnos</p>
-            <p class="text-xs mt-2 opacity-80">Promedio: ${c.avgGrade}</p>
-          </div>
-        `;
-  }).join('');
-
-  // Estilo para tarjetas seleccionadas
-  let style = document.getElementById('gradeCardStyle');
-  if (!style) {
-    style = document.createElement('style');
-    style.id = 'gradeCardStyle';
-    style.innerHTML = `
-            .selected-card-active {
-                box-shadow: 0 0 0 4px #60a5fa !important;
-                opacity: 1 !important;
-                transform: scale(1.05) !important;
-            }
-        `;
-    document.head.appendChild(style);
-  }
-}
+};
 
 function loadGradeTable(courseId, courseName) {
   document.getElementById('courseCardSelector').classList.add('hidden');
   document.getElementById('courseManagementPanels').classList.remove('hidden');
 
   document.getElementById('currentCourseTitle').textContent = `Curso: ${courseName}`;
-  document.getElementById('currentCourseInfo').textContent =
-    `Código: ${courseId}`;
+  document.getElementById('currentCourseInfo').textContent = `Código: ${courseId}`;
 
   document.querySelectorAll('.course-card-grades').forEach(card => {
     if (card.dataset.courseid === courseId) {
@@ -82,9 +43,8 @@ function loadGradeTable(courseId, courseName) {
   });
 
   new ContentLoader({
-    url: `/api/teacher/grupo/${courseId}/notas`,
-    containerName: '#gradeTableBody'
-  }).load(function(data, container) {
+    url: `/api/teacher/grupo/${courseId}/notas`, containerName: '#gradeTableBody'
+  }).load(function (data, container) {
     g_courseName = courseName;
     resetGlobalData();
     console.log(data);
@@ -185,10 +145,10 @@ function renderGradeTable(data) {
 
 function createObserverInputs(tbody) {
   tbody.addEventListener("input", e => {
-    if(!e.target.matches("input")) return;
+    if (!e.target.matches("input")) return;
 
     const input = e.target;
-    if(!g_updates.has(input.dataset.id)) {
+    if (!g_updates.has(input.dataset.id)) {
       g_updates.set(input.dataset.id, new Map());
     }
     const map = g_updates.get(input.dataset.id);
@@ -205,17 +165,16 @@ function forceObserverInput(tbody) {
 }
 
 function createObserverInputFromRow(row) {
-  if(!row)
-    return;
+  if (!row) return;
 
   const inputs = row.querySelectorAll("input");
   const values = new Map();
   const promLabel = row.querySelector(".average-display");
   const estadoLabel = row.querySelector(".estado-display");
-  const cui = parseInt(row.querySelector(".cui").textContent);
+  const cui = Number.parseInt(row.querySelector(".cui").textContent);
   inputs.forEach(x => values.set(x.dataset.type, x.value));
 
-  if(cui && !g_inputs.has(cui)) {
+  if (cui && !g_inputs.has(cui)) {
     g_inputs.set(cui, inputs);
   }
 
@@ -238,20 +197,12 @@ function onInputChange(values, promLabel, estadoLabel) {
 
 function calculateStudentAverage(values) {
   let {
-    parcial1,
-    parcial2,
-    parcial3,
-    continua1,
-    continua2,
-    continua3,
-    sustitutorio
+    parcial1, parcial2, parcial3, continua1, continua2, continua3, sustitutorio
   } = values;
 
-  sustitutorio = (sustitutorio === "" || sustitutorio === null || sustitutorio === undefined)
-    ? NaN
-    : Number(sustitutorio);
+  sustitutorio = (sustitutorio === "" || sustitutorio === null || sustitutorio === undefined) ? Number.NaN : Number(sustitutorio);
 
-  if (!isNaN(sustitutorio)) {
+  if (!Number.isNaN(sustitutorio)) {
     if (Number(parcial1) <= Number(parcial2)) {
       parcial1 = sustitutorio;
     } else {
@@ -259,14 +210,7 @@ function calculateStudentAverage(values) {
     }
   }
 
-  const notas = [
-    Number(parcial1),
-    Number(parcial2),
-    Number(parcial3),
-    Number(continua1),
-    Number(continua2),
-    Number(continua3)
-  ].filter(n => !isNaN(n));
+  const notas = [Number(parcial1), Number(parcial2), Number(parcial3), Number(continua1), Number(continua2), Number(continua3)].filter(n => !Number.isNaN(n));
 
   if (notas.length === 0) return 0;
 
@@ -291,8 +235,8 @@ function hasUnsavedChanges() {
   return g_updates.size !== 0;
 }
 
-export function saveAllGrades() {
-  if(!hasUnsavedChanges()) {
+globalThis.saveAllGrades = () => {
+  if (!hasUnsavedChanges()) {
     alert('No hay cambios que guardar');
     return;
   }
@@ -301,22 +245,14 @@ export function saveAllGrades() {
 
   resetGlobalData();
   updateSaveStatus();
-}
-window.saveAllGrades = saveAllGrades;
+};
 
 function updatesMapToJSON() {
   const payload = [];
-  for(const [registro_id, notasMap] of g_updates) {
+  for (const [registro_id, notasMap] of g_updates) {
     payload.push({
       registro_id,
-      notas: Object.fromEntries(
-        Array.from(notasMap, ([key, value]) => [
-          key,
-          value === null || value === undefined || value === ''
-            ? null
-            : Number(value)
-        ])
-      )
+      notas: Object.fromEntries(Array.from(notasMap, ([key, value]) => [key, value === null || value === undefined || value === '' ? null : Number(value)]))
     });
   }
 
@@ -325,8 +261,7 @@ function updatesMapToJSON() {
 
 function sendUpdateToServer(json) {
   const data = {
-    _token: $('meta[name="csrf-token"]').attr('content'),
-    data: json
+    _token: $('meta[name="csrf-token"]').attr('content'), data: json
   };
   console.log(json);
   $.post(`/api/teacher/notas/guardar`, data)
@@ -339,75 +274,66 @@ function sendUpdateToServer(json) {
     });
 }
 
-export function downloadLibretaTemplate() {
-  window.location.href = '/api/teacher/libreta/descargar';
-}
 
-window.downloadLibretaTemplate = downloadLibretaTemplate;
+globalThis.downloadLibretaTemplate = () => {
+  globalThis.location.href = '/api/teacher/libreta/descargar';
+};
 
-export function handleExcelImport(files) {
+globalThis.handleExcelImport = (files) => {
   if (!files.length) return;
 
   const file = files[0];
   const reader = new FileReader();
 
-  reader.onload = function(e) {
+  reader.onload = function (e) {
     const data = new Uint8Array(e.target.result);
-    const workbook = XLSX.read(data, { type: 'array' });
+    const workbook = XLSX.read(data, {type: 'array'});
 
     const firstSheetName = workbook.SheetNames[0];
     const worksheet = workbook.Sheets[firstSheetName];
 
-    const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+    const jsonData = XLSX.utils.sheet_to_json(worksheet, {header: 1});
 
     importGradesFromExcel(jsonData);
   };
 
   reader.readAsArrayBuffer(file);
-}
-
-window.handleExcelImport = handleExcelImport;
+};
 
 function importGradesFromExcel(data) {
-  for(let i = 1; i < data.length; ++i) {
+  for (let i = 1; i < data.length; ++i) {
     const row = data[i];
     if (!row) continue;
 
-    const cui = parseInt(row[0]);
+    const cui = Number.parseInt(row[0]);
     const inputs = g_inputs.get(cui) ?? null;
-    if(!cui || !inputs) continue;
+    if (!cui || !inputs) continue;
 
     importGradeFromRow(row, inputs)
   }
 }
 
-function importGradeFromRow(row, inputs) {
-  setInputValue(inputs[0], parseInt(row[1])); // Parcial 1
-  setInputValue(inputs[1], parseInt(row[2])); // Continua 1
-  setInputValue(inputs[2], parseInt(row[3])); // Parcial 2
-  setInputValue(inputs[3], parseInt(row[4])); // Continua 2
-  setInputValue(inputs[4], parseInt(row[5])); // Parcial 3
-  setInputValue(inputs[5], parseInt(row[6])); // Continua 3
-  setInputValue(inputs[6], parseInt(row[7])); // Sustitutorio
+function setInputValue(input, value) {
+  input.value = value;
+  input.dispatchEvent(new Event('input', {bubbles: true}));
 }
 
-export function exportToExcel() {
-  const data = [
-    ['CUI', 'Parcial 1', 'Continua 1', 'Parcial 2', 'Continua 2', 'Parcial 3', 'Continua 3', 'Sustitutorio']
-  ];
+function importGradeFromRow(row, inputs) {
+  setInputValue(inputs[0], Number.parseInt(row[1])); // Parcial 1
+  setInputValue(inputs[1], Number.parseInt(row[2])); // Continua 1
+  setInputValue(inputs[2], Number.parseInt(row[3])); // Parcial 2
+  setInputValue(inputs[3], Number.parseInt(row[4])); // Continua 2
+  setInputValue(inputs[4], Number.parseInt(row[5])); // Parcial 3
+  setInputValue(inputs[5], Number.parseInt(row[6])); // Continua 3
+  setInputValue(inputs[6], Number.parseInt(row[7])); // Sustitutorio
+}
+
+globalThis.exportToExcel = () => {
+  const data = [['CUI', 'Parcial 1', 'Continua 1', 'Parcial 2', 'Continua 2', 'Parcial 3', 'Continua 3', 'Sustitutorio']];
 
   const obj = Object.fromEntries(g_inputs);
   Object.entries(obj).forEach(([k, v]) => {
-    data.push([
-      k,
-      v[0].value,
-      v[1].value,
-      v[2].value,
-      v[3].value,
-      v[4].value,
-      v[5].value,
-      v[6].value,
-    ]);
+    data.push([k, v[0].value, v[1].value, v[2].value, v[3].value, v[4].value, v[5].value, v[6].value,]);
   });
 
   const ws = XLSX.utils.aoa_to_sheet(data);
@@ -415,6 +341,4 @@ export function exportToExcel() {
   XLSX.utils.book_append_sheet(wb, ws, 'Notas');
   const fileName = `Notas_${g_courseName}_${new Date().toISOString().split('T')[0]}.xlsx`;
   XLSX.writeFile(wb, fileName);
-}
-
-window.exportToExcel = exportToExcel;
+};

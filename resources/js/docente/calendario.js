@@ -1,196 +1,122 @@
-import {ContentLoader} from "../common/ContentLoader.js";
-import {
-  formatTime,
-  formatDate,
-  isInNowEvent, sameDay
-} from "../common/Utils.js";
-import $ from "jquery";
 import 'tippy.js/dist/tippy.css';
 import {onSessionClick} from "./asistencia.js";
 import {Calendario} from "../shared/calendario.js";
 
-let g_calendarLoader = new ContentLoader({
-  "url": "/api/teacher/horario",
-  "containerName": "#fullCalendar"
-});
 let g_fullCalendarInstance;
+
+export function loadScheduleCalendar() {
+  const container = document.getElementById('fullCalendar');
+  renderScheduleCalendar(globalThis.HORARIO_DATA, [container]);
+}
 
 export function updateEventButtonState() {
   const date = document.getElementById('eventDate').value;
   const start = document.getElementById('eventStart').value;
   const end = document.getElementById('eventEnd').value;
-  const event_button = document.getElementById('event-submit-button');
+
+  const button = document.getElementById('event-submit-button');
+  const error = document.getElementById('event-submit-error');
 
   if (!date || !start || !end) {
-    event_button.disabled = true;
+    button.disabled = true;
     return;
   }
 
-  const startDateTime = new Date(`${date}T${start}:00`);
-  const endDateTime = new Date(`${date}T${end}:00`);
+  const startDT = new Date(`${date}T${start}`);
+  const endDT = new Date(`${date}T${end}`);
 
-  const overlappingEvents = getOverlappingEventsInRange(startDateTime, endDateTime);
+  const overlaps = getOverlappingEventsInRange(startDT, endDT);
 
-  const doesOverlap = overlappingEvents.length !== 0 || !(startDateTime < endDateTime);
+  if (startDT >= endDT || overlaps.length > 0) {
+    button.disabled = true;
+    error.textContent = buildOverlapMessage(overlaps);
+    return;
+  }
 
-  event_button.disabled = doesOverlap;
-  const errorLabel = document.getElementById("event-submit-error");
-  if (doesOverlap) {
-    let conflictMessages = [];
+  button.disabled = false;
+  error.textContent = "";
+  loadAulasDisponiblesLocal();
+}
 
-    overlappingEvents.forEach(x => {
-      const hora = new Date(x.start).toLocaleTimeString('es-ES', {
-        hour: '2-digit',
-        minute: '2-digit'
-      });
-      conflictMessages.push(`${x.title} (${hora})`);
-    });
+function loadAulasDisponiblesLocal() {
+  const select = document.getElementById("eventLocation");
+  select.innerHTML = '<option value="">Selecciona un ambiente</option>';
 
-    let str = "Conflicto con: ";
-    str += conflictMessages.join('\n');
+  globalThis.AULAS_DATA.forEach(aula => {
+    const opt = document.createElement('option');
+    opt.value = aula.id;
+    opt.textContent = aula.nombre;
+    select.appendChild(opt);
+  });
 
-    errorLabel.textContent = str;
-  } else {
-    errorLabel.textContent = "";
-    loadAulasDisponibles(date, start, end);
+  if (select.children.length === 1) {
+    document.getElementById("event-submit-error").textContent = "No hay aulas disponibles";
   }
 }
 
-function loadAulasDisponibles(date, start, end) {
-  $.post('/api/teacher/aulas', {
-    fecha: date,
-    hora_inicio: start,
-    hora_fin: end,
-    _token: $('meta[name="csrf-token"]').attr('content')
-  }).done(function(data) {
-    const aulasSelect = document.getElementById("eventLocation");
-    aulasSelect.innerHTML = '<option value="">Selecciona un ambiente</option>';
-    data.forEach(function (aula) {
-      const option = document.createElement('option');
-      option.value = aula.id;
-      option.textContent = aula.nombre;
-      aulasSelect.appendChild(option);
-    });
 
-    if(aulasSelect.children.length === 1) {
-      document.getElementById("event-submit-error").textContent = "No hay aulas disponibles";
-    }
-  }).fail(function (data) {
-    console.error(data.responseText);
-  });
-}
-
-export function loadScheduleCalendar() {
-  g_fullCalendarInstance?.updateSize();
-  g_calendarLoader.load(renderScheduleCalendar);
-}
-
-export function openScheduleModal(start = new Date(), end = new Date()) {
+export function openScheduleModal(start, end) {
   document.getElementById('eventDate').value = formatDate(start);
   document.getElementById('eventStart').value = formatTime(start);
   document.getElementById('eventEnd').value = formatTime(end);
+
   document.getElementById('scheduleModal').classList.remove('hidden');
   document.getElementById('scheduleModal').classList.add('flex');
+
   updateEventButtonState();
 }
-export function closeScheduleModal(event) {
-  if (event && event.target.id !== 'scheduleModal') return;
-  document.getElementById('scheduleModal').classList.remove('flex');
+
+export function closeScheduleModal(e) {
+  if (e && e.target.id !== 'scheduleModal') return;
   document.getElementById('scheduleModal').classList.add('hidden');
-  document.getElementById('scheduleForm').reset(); // Limpiar el formulario
+  document.getElementById('scheduleForm').reset();
 }
 
 function renderScheduleCalendar(data, container) {
-  const calendario = new Calendario(data)
-    .eventClick(function(info) {
+  const calendar = new Calendario(data)
+    .eventClick(info => {
       const props = info.event.extendedProps;
-      if(props.sesion) {
+      if (props.sesion) {
         onSessionClick(props.id, props.grupo.nombre);
-      } else if(isInNowEvent(info.event)) {
-        crearSesion({
-          grupo_id: props.grupo.id,
-          fecha: info.event.start.toISOString().slice(0, 10),
-          hora_inicio: props.horaInicio,
-          hora_fin: props.horaFin,
-          aula_id: props.aula.id
-        });
       }
     })
-    .select(function(info) {
-      const overlappingEvents = getOverlappingEventsInRange(info.start, info.end);
-      let start = info.start;
-      let end = info.end;
-
-      const firstOverlap = overlappingEvents.at(0);
-      if(firstOverlap && firstOverlap.start < info.start && info.start < firstOverlap.end) {
-        start = firstOverlap.end;
+    .select(info => {
+      if (info.start < info.end) {
+        openScheduleModal(info.start, info.end);
       }
-
-      const lastOverlap = overlappingEvents.at(-1);
-      if(lastOverlap && lastOverlap.end > info.end && info.end > lastOverlap.start) {
-        end = lastOverlap.start;
-      }
-
-      if(start < end)
-        openScheduleModal(start, end);
-    })
-    .eventDidMount(function(info) {
-      const props = info.event.extendedProps || {};
-      if(Object.keys(props).length === 0)
-        return false;
-
-      if (isInNowEvent(info.event))
-        info.el.classList.add('ec-now');
-
-      return true;
     })
     .selectable();
 
-    g_fullCalendarInstance = calendario.render(g_fullCalendarInstance, container[0]);
+  g_fullCalendarInstance = calendar.render(g_fullCalendarInstance, container[0]);
+}
+
+function sameDay(a, b) {
+  return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
 }
 
 function getOverlappingEventsInRange(start, end) {
-  return getCalendarOwnEvents()
-    .filter(x => sameDay(start, x.start) && sameDay(end, x.end))
-    .filter(x => x.start < end && x.end > start)
-    .sort((a, b) => a.start - b.start);
+  return g_fullCalendarInstance.getEvents()
+    .filter(e => sameDay(start, e.start) && sameDay(end, e.end))
+    .filter(e => e.start < end && e.end > start);
 }
 
-function getCalendarOwnEvents() {
-  return g_fullCalendarInstance.getEvents();
+function buildOverlapMessage(events) {
+  if (!events.length) return "";
+  return "Conflicto con: " + events.map(e => `${e.title} (${new Date(e.start).toLocaleTimeString('es-ES', {
+    hour: '2-digit', minute: '2-digit'
+  })})`).join(', ');
+}
+
+function formatDate(d) {
+  return d.toISOString().slice(0, 10);
+}
+
+function formatTime(d) {
+  return d.toTimeString().slice(0, 5);
 }
 
 export function saveNewScheduleEvent() {
-  const grupoId = document.getElementById('eventCurso').value;
-  const date = document.getElementById('eventDate').value;
-  const locationId = document.getElementById('eventLocation').value;
-  const start = document.getElementById('eventStart').value;
-  const end = document.getElementById('eventEnd').value;
-
-  const props = {
-    "grupo_id": grupoId,
-    "fecha": date,
-    "hora_inicio": start,
-    "hora_fin": end,
-    "aula_id": locationId,
-  };
-
-  crearSesion(props);
+  document.getElementById('scheduleForm').submit();
 }
 
-export function reloadScheduleCalendar() {
-  g_calendarLoader.unload();
-  loadScheduleCalendar();
-}
-
-function crearSesion(props) {
-  props._token = $('meta[name="csrf-token"]').attr('content');
-  console.log(props);
-  $.post('/api/teacher/crear_sesion', props)
-    .done(function() {
-      closeScheduleModal();
-      reloadScheduleCalendar();
-  }).fail(function (data) {
-    console.error(data.responseText);
-  });
-}
+export function reloadScheduleCalendar() {}

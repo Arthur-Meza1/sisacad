@@ -2,8 +2,8 @@
 <html lang="es">
 
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Login - UNSA</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
@@ -22,11 +22,12 @@
 <div class="bg-white/20 backdrop-blur-xl shadow-2xl rounded-3xl p-10 w-full max-w-md text-white animate-fadeIn">
 
   <div class="text-center mb-6">
-    <div class="mx-auto w-24 h-24 bg-white/30 rounded-2xl flex items-center justify-center shadow-xl mb-4 border border-white/40">
+    <div
+      class="mx-auto w-24 h-24 bg-white/30 rounded-2xl flex items-center justify-center shadow-xl mb-4 border border-white/40">
       <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#1E90FF" stroke-width="1.8"
            stroke-linecap="round" stroke-linejoin="round">
-        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4z" />
-        <path d="M4.73 20a8.94 8.94 0 0 1 14.54 0" />
+        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4z"/>
+        <path d="M4.73 20a8.94 8.94 0 0 1 14.54 0"/>
       </svg>
     </div>
     <h1 class="text-3xl font-bold">Bienvenido</h1>

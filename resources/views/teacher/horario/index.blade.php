@@ -6,90 +6,20 @@
       <div class="flex justify-between items-center mb-4">
         <h2 class="text-2xl font-bold text-gray-800">Mi Horario Semanal</h2>
 
-        <button onclick="openScheduleModal()"
-                class="px-4 py-2 rounded-lg text-sm font-medium text-white bg-green-600 hover:bg-green-700 transition flex items-center">
-          <svg class="w-5 h-5 mr-1" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd"
+        <a href="{{ route('teacher.horario.reservar') }}"
+           class="px-4 py-2 rounded-lg text-sm font-medium text-white bg-green-600 hover:bg-green-700 transition flex items-center">
+          <svg class="w-5 h-5 mr-1" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" fill="currentColor"
                   d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
                   clip-rule="evenodd"></path>
           </svg>
           Reservar Hora Extra
-        </button>
+        </a>
       </div>
 
       <div class="relative bg-white rounded-xl p-6 shadow-lg">
         <div class="flex">
           <div id="fullCalendar" class="p-4 flex-1"></div>
-        </div>
-      </div>
-    </div>
-
-    <div id="scheduleModal"
-         class="fixed inset-0 bg-gray-600 bg-opacity-75 hidden flex items-center justify-center z-50 p-4"
-         onclick="closeScheduleModal(event)">
-      <div class="bg-white rounded-xl shadow-2xl w-full max-w-lg transform transition-all duration-300 scale-100"
-           onclick="event.stopPropagation()">
-        <div class="p-6 border-b flex justify-between items-center">
-          <h3 class="text-xl font-bold text-gray-800">Reservar Clase</h3>
-          <button onclick="closeScheduleModal()" class="text-gray-500 hover:text-gray-800 text-2xl leading-none">
-            &times;
-          </button>
-        </div>
-        <div class="p-6">
-          <form id="scheduleForm" onsubmit="event.preventDefault(); saveNewScheduleEvent()">
-            <div class="mb-4">
-              <label for="eventCurso" class="block text-sm font-medium text-gray-700">Curso:</label>
-              <select id="eventCurso" required
-                      class="mt-1 p-3 border border-gray-300 rounded-lg w-full focus:ring-indigo-500 focus:border-indigo-500 bg-white">
-                <option value="">Selecciona un curso</option>
-                @foreach($grupos as $grupo)
-                  <option value="{{$grupo['id']}}">{{$grupo['nombre']}} - {{ucfirst($grupo['tipo'])}}</option>
-                @endforeach
-              </select>
-            </div>
-
-            <div class="grid grid-cols-2 gap-4 mb-4">
-              <div>
-                <label for="eventDate" class="block text-sm font-medium text-gray-700">Día:</label>
-                <input type="date" id="eventDate" onchange="updateEventButtonState()" required
-                       class="mt-1 p-3 border border-gray-300 rounded-lg w-full focus:ring-indigo-500 focus:border-indigo-500">
-              </div>
-              <div>
-                <label for="eventLocation" class="block text-sm font-medium text-gray-700">Aula/Laboratorio:</label>
-                <select id="eventLocation" required
-                        class="mt-1 p-3 border border-gray-300 rounded-lg w-full focus:ring-indigo-500 focus:border-indigo-500 bg-white">
-                  <option value="">Selecciona un ambiente</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="grid grid-cols-2 gap-4 mb-6">
-              <div>
-                <label for="eventStart" class="block text-sm font-medium text-gray-700">Hora de Inicio:</label>
-                <input type="time" id="eventStart" onchange="updateEventButtonState()" required
-                       class="mt-1 p-3 border border-gray-300 rounded-lg w-full focus:ring-indigo-500 focus:border-indigo-500">
-              </div>
-              <div>
-                <label for="eventEnd" class="block text-sm font-medium text-gray-700">Hora de Fin:</label>
-                <input type="time" id="eventEnd" onchange="updateEventButtonState()" required
-                       class="mt-1 p-3 border border-gray-300 rounded-lg w-full focus:ring-indigo-500 focus:border-indigo-500">
-              </div>
-            </div>
-
-            <div class="mt-6 text-right">
-              <button type="button" onclick="closeScheduleModal()"
-                      class="px-4 py-2 rounded-lg text-sm font-medium text-gray-700 bg-gray-200 hover:bg-gray-300 transition mr-3">
-                Cancelar
-              </button>
-              <button type="submit" id="event-submit-button"
-                      class="px-4 py-2 rounded-lg text-sm font-medium text-white bg-indigo-600 disabled:bg-indigo-400 hover:bg-indigo-700 transition">
-                Reservar Hora
-              </button>
-              <div id="event-submit-error" class="text-red-500">
-
-              </div>
-            </div>
-          </form>
         </div>
       </div>
     </div>
@@ -174,5 +104,9 @@
     </div>
   </main>
 
+  <script>
+    globalThis.HORARIO_DATA = @json($horario);
+    globalThis.GRUPOS_DATA = @json($grupos);
+  </script>
   @vite('resources/js/docente/docente.js')
 </x-header_layout>

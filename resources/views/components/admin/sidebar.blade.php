@@ -1,7 +1,7 @@
 <aside class="w-64 p-4 sticky top-20 h-full">
   <nav class="space-y-2 font-medium">
 
-    <a href="{{ route('admin.dashboard') }}"
+    <a href="{{ route('admin.index') }}"
        data-view="dashboard"
        class="nav-link flex items-center p-3 rounded-lg hover:bg-gray-100 {{ request()->routeIs('admin.dashboard') ? 'active-link' : 'inactive-link' }}">
       <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">

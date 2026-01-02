@@ -2,7 +2,7 @@
 
 namespace App\Domain\Teacher\Repository;
 
-use App\Application\Teacher\DTOs\GrupoCursoDTO;
+use App\Application\Shared\DTOs\GrupoCursoDTO;
 use App\Domain\Shared\ValueObject\Id;
 
 interface IGrupoCursoRepository

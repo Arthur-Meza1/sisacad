@@ -1,18 +1,35 @@
-import {convertDateStringToDate, convertDiaToInt, ucfirst} from "../common/Utils.js";
 import tippy from "tippy.js";
 import {Calendar} from "fullcalendar";
 
+function convertDiaToInt(dia) {
+  const s_dayMap = {
+    'lunes': 1,
+    'martes': 2,
+    'miercoles': 3,
+    'jueves': 4,
+    'viernes': 5
+  };
+
+  return s_dayMap[dia.toLowerCase()];
+}
+
+function convertDateStringToDate(dateStr) {
+  const [y, m, d] = dateStr.split("-").map(Number);
+  return new Date(y, m-1, d);
+}
+
+function ucfirst(val) {
+  return String(val).charAt(0).toUpperCase() + String(val).slice(1);
+}
+
 export class Calendario {
   #fullCalendarOptions;
-  #onEventDidMount = (info) => true;
 
   /**
    * @param data
    */
   constructor(data) {
     const events = this.#createEvents(data);
-    const self = this;
-
     this.#fullCalendarOptions = {
       initialView: 'timeGridWeek',
       slotMinTime: '06:00:00',
@@ -32,10 +49,7 @@ export class Calendario {
 
       events,
 
-      eventDidMount: function(info) {
-        if(!self.#onEventDidMount(info))
-          return;
-
+      eventDidMount: (info) => {
         const props = info.event.extendedProps;
         tippy(info.el, {
           content: `

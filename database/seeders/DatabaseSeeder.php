@@ -1,5 +1,4 @@
 <?php
-
 namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -12,10 +11,9 @@ class DatabaseSeeder extends Seeder
     /**
      * Seed the application's database.
      */
-    public function run()
-    {
-        $this->call(
-            TestSeeder::class,
-        );
+    public function run() {
+      $this->call(
+        FullSeeder::class,
+      );
     }
 }
