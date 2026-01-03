@@ -25,6 +25,6 @@ readonly class HorarioController
     $horario = $this->getHorario->execute(Id::fromInt(Auth::id()));
     $grupos = $this->getGruposData->execute(Id::fromInt(Auth::id()));
 
-    return view('teacher.horario.index', compact('horario', 'grupos'));
+    return view('teacher.horario', compact('horario', 'grupos'));
   }
 }

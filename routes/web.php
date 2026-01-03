@@ -52,6 +52,7 @@ Route::prefix('/api/student')->group(function () {
 });
 
 Route::prefix('/api/teacher')->group(function () {
+  Route::get("/grupo/{grupoId}/notas", Teacher\GetNotasController::class);
   Route::post("/notas/guardar", Teacher\GuardarNotasController::class);
   Route::get("/sesion/{id}", Teacher\GetSesionController::class);
   Route::get('/libreta/descargar', Teacher\LibretaDescargarController::class)

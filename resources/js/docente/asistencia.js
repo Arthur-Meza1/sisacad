@@ -1,5 +1,4 @@
 import $ from "jquery";
-import {reloadScheduleCalendar} from "./calendario.js";
 
 let g_asistencias;
 let g_id;
@@ -120,8 +119,7 @@ function borrarSesion() {
   $.post(`/api/teacher/sesion/${g_id}/borrar`, data)
     .done(function () {
       alert("Sesion eliminada correctamente");
-      closeAsistenciaModal();
-      reloadScheduleCalendar();
+      window.location.reload();
     })
     .fail(function (xhr) {
       alert("Error - Ver Consola");
