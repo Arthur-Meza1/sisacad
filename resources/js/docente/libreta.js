@@ -1,15 +1,9 @@
 import $ from 'jquery';
 import * as XLSX from 'https://cdn.sheetjs.com/xlsx-0.20.3/package/xlsx.mjs';
-import {ContentLoader} from "../common/ContentLoader.js";
 
 let g_updates = null;
 let g_inputs = null;
 let g_courseName = null;
-
-globalThis.handleCourseCardClick = (courseId, courseName) => {
-  loadGradeTable(courseId, courseName);
-};
-
 
 globalThis.showCourseSelection = () => {
   if (hasUnsavedChanges()) {
@@ -27,121 +21,15 @@ globalThis.showCourseSelection = () => {
   });
 };
 
-function loadGradeTable(courseId, courseName) {
-  document.getElementById('courseCardSelector').classList.add('hidden');
-  document.getElementById('courseManagementPanels').classList.remove('hidden');
-
-  document.getElementById('currentCourseTitle').textContent = `Curso: ${courseName}`;
-  document.getElementById('currentCourseInfo').textContent = `Código: ${courseId}`;
-
-  document.querySelectorAll('.course-card-grades').forEach(card => {
-    if (card.dataset.courseid === courseId) {
-      card.classList.add('selected-card-active');
-    } else {
-      card.classList.remove('selected-card-active');
-    }
-  });
-
-  new ContentLoader({
-    url: `/api/teacher/grupo/${courseId}/notas`, containerName: '#gradeTableBody'
-  }).load(function (data, container) {
-    g_courseName = courseName;
-    resetGlobalData();
-    console.log(data);
-    renderGradeTable(data);
-  });
-}
-
 function resetGlobalData() {
   g_updates = new Map();
   g_inputs = new Map();
 }
 
-function renderGradeTable(data) {
-  const tbody = document.getElementById('gradeTableBody');
-
-  document.getElementById('studentCount').textContent = `${data.length} alumnos`;
-
-  tbody.innerHTML = data.map((student, index) => {
-    return `
-          <tr class="${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'} hover:bg-blue-50">
-            <td class="px-4 py-3 whitespace-nowrap font-medium cui">${student.alumno_id}</td>
-            <td class="px-4 py-3 whitespace-nowrap">${student.nombre}</td>
-
-            <!-- Parciales -->
-            <td class="px-4 py-3 whitespace-nowrap text-center">
-                <input type="number" min="0" max="20" step="1"
-                       value="${student.parcial[0] || ''}"
-                       data-id="${student.registro_id}"
-                       data-type="parcial1"
-                       class="w-16 p-1 border rounded text-center grade-input"
-                       >
-            </td>
-            <td class="px-4 py-3 whitespace-nowrap text-center">
-                <input type="number" min="0" max="20" step="1"
-                       value="${student.continua[0] || ''}"
-                       data-id="${student.registro_id}"
-                       data-type="continua1"
-                       class="w-16 p-1 border rounded text-center grade-input"
-                       >
-            </td>
-            <td class="px-4 py-3 whitespace-nowrap text-center">
-                <input type="number" min="0" max="20" step="1"
-                       value="${student.parcial[1] || ''}"
-                       data-id="${student.registro_id}"
-                       data-type="parcial2"
-                       class="w-16 p-1 border rounded text-center grade-input"
-                       >
-            </td>
-            <td class="px-4 py-3 whitespace-nowrap text-center">
-                <input type="number" min="0" max="20" step="1"
-                       value="${student.continua[1] || ''}"
-                       data-id="${student.registro_id}"
-                       data-type="continua2"
-                       class="w-16 p-1 border rounded text-center grade-input"
-                       >
-            </td>
-            <td class="px-4 py-3 whitespace-nowrap text-center">
-                <input type="number" min="0" max="20" step="1"
-                       value="${student.parcial[2] || ''}"
-                       data-id="${student.registro_id}"
-                       data-type="parcial3"
-                       class="w-16 p-1 border rounded text-center grade-input"
-                       >
-            </td>
-            <td class="px-4 py-3 whitespace-nowrap text-center">
-                <input type="number" min="0" max="20" step="1"
-                       value="${student.continua[2] || ''}"
-                       data-id="${student.registro_id}"
-                       data-type="continua3"
-                       class="w-16 p-1 border rounded text-center grade-input"
-                       >
-            </td>
-            <td class="px-4 py-3 whitespace-nowrap text-center">
-                <input type="number" min="0" max="20" step="1"
-                       value="${student.sustitutorio || ''}"
-                       data-id="${student.registro_id}"
-                       data-type="sustitutorio"
-                       class="w-16 p-1 border rounded text-center grade-input"
-                       >
-            </td>
-
-            <!-- Promedio (calculado) -->
-            <td class="px-4 py-3 whitespace-nowrap text-center font-bold">
-                <span class="average-display" data-id="${student.registro_id}"></span>
-            </td>
-
-            <!-- Estado -->
-            <td class="px-4 py-3 whitespace-nowrap text-center">
-                <span class="px-3 py-1 rounded-full text-xs font-medium estado-display" data-id="${student.registro_id}">
-                </span>
-            </td>
-          </tr>
-        `;
-  }).join('');
-
-  createObserverInputs(tbody);
-}
+document.addEventListener("DOMContentLoaded", () => {
+  resetGlobalData();
+  createObserverInputs(document.getElementById('gradeTableBody'));
+});
 
 function createObserverInputs(tbody) {
   tbody.addEventListener("input", e => {
@@ -274,10 +162,6 @@ function sendUpdateToServer(json) {
     });
 }
 
-
-globalThis.downloadLibretaTemplate = () => {
-  globalThis.location.href = '/api/teacher/libreta/descargar';
-};
 
 globalThis.handleExcelImport = (files) => {
   if (!files.length) return;

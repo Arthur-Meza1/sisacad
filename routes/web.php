@@ -52,7 +52,6 @@ Route::prefix('/api/student')->group(function () {
 });
 
 Route::prefix('/api/teacher')->group(function () {
-  Route::get("/grupo/{grupoId}/notas", Teacher\GetNotasController::class);
   Route::post("/notas/guardar", Teacher\GuardarNotasController::class);
   Route::get("/sesion/{id}", Teacher\GetSesionController::class);
   Route::get('/libreta/descargar', Teacher\LibretaDescargarController::class)
@@ -66,7 +65,10 @@ Route::prefix('/api/teacher')->group(function () {
 
 Route::prefix('teacher')->name("teacher.")->group(function () {
   Route::get('/', Teacher\IndexController::class)->name('index');
-  Route::get('libreta', Teacher\LibretaController::class)->name('libreta');
+  Route::prefix('libreta')->name('libreta.')->group(function () {
+    Route::get('/', Teacher\LibretaIndexController::class)->name('index');
+    Route::get('/{grupo}', Teacher\LibretaEditorController::class)->name('editor');
+  });
   Route::prefix('horario')->name('horario.')->group(function () {
     Route::get('/', Teacher\HorarioController::class)->name('index');
     Route::get('reservar', Teacher\ReservarController::class)->name('reservar');

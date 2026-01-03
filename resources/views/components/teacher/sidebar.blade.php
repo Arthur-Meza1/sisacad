@@ -8,7 +8,7 @@
       </svg>
       Inicio
     </a>
-    <a href="{{ route('teacher.libreta') }}" data-view="grades-input"
+    <a href="{{ route('teacher.libreta.index') }}" data-view="grades-input"
        class="nav-link flex items-center p-3 rounded-lg hover:bg-gray-100 {{ request()->routeIs('teacher.libreta*') ? 'active-link' : 'inactive-link' }}">
       <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

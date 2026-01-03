@@ -7,7 +7,7 @@ use App\Domain\Shared\ValueObject\Id;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
-readonly class LibretaController
+readonly class LibretaIndexController
 {
     public function __construct(
         private GetBasicGruposData $getGruposData
@@ -17,6 +17,6 @@ readonly class LibretaController
     {
         $grupos = $this->getGruposData->execute(Id::fromInt(Auth::id()));
 
-        return view('teacher.libreta', compact('grupos'));
+        return view('teacher.libreta.index', compact('grupos'));
     }
 }

@@ -4,14 +4,25 @@ namespace App\Infrastructure\Teacher\Repository;
 
 use App\Application\Shared\DTOs\GrupoCursoDTO;
 use App\Application\Teacher\DTOs\AlumnoDTO;
+use App\Domain\Shared\Entity\GrupoCurso;
 use App\Domain\Shared\ValueObject\Id;
 use App\Domain\Teacher\Repository\IGrupoCursoRepository;
 use App\Infrastructure\Shared\Model\GrupoCurso as EloquentGrupoCurso;
 use App\Infrastructure\Shared\Model\Matricula as EloquentMatricula;
+use App\Infrastructure\Shared\Parser\ParseGrupoCursoToDomain;
 
 class EloquentGrupoCursoRepository implements IGrupoCursoRepository
 {
-    /**
+    public function findOrFail(Id $id): GrupoCurso
+    {
+      $eloquentGrupoCurso =
+        EloquentGrupoCurso::with('curso')
+          ->findOrFail($id->getValue());
+
+      return ParseGrupoCursoToDomain::fromEloquent($eloquentGrupoCurso);
+    }
+
+  /**
      * @param  Id[]  $ids
      */
     public function findQueryFromIds(array $ids): array
