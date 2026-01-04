@@ -27,7 +27,14 @@
           <div id="teacherCourseList" class="space-y-2 text-sm">
             @foreach($grupos as $grupo)
               <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
-                <span class="font-medium text-indigo-700">{{$grupo['nombre']}} ({{$grupo['turno']}}) - {{ucfirst($grupo['tipo'])}}</span>
+                <div>
+                  <span class="font-medium text-indigo-700">{{$grupo['nombre']}} ({{$grupo['turno']}}) - {{ucfirst($grupo['tipo'])}}</span>
+                  <div class="text-xs mt-1">
+                    <a href="{{ route('teacher.temas.index', ['grupo' => $grupo['id'] ?? ($grupo['grupo_id'] ?? 0)]) }}" class="text-indigo-600 hover:underline">Temas</a>
+                    <span class="text-gray-400 mx-1">|</span>
+                    <a href="{{ route('teacher.libreta.editor', ['grupo' => $grupo['id'] ?? ($grupo['grupo_id'] ?? 0)]) }}" class="text-gray-600 hover:underline">Libreta</a>
+                  </div>
+                </div>
                 <span class="text-xs text-gray-500">Alumnos: {{$grupo['cantidad']}}</span>
               </div>
             @endforeach
@@ -53,6 +60,30 @@
             <li class="text-gray-500">• Revisar 12 Tareas de Mat. Discretas</li>
             <li class="text-gray-500">• Ingresar notas de Laboratorio</li>
           </ul>
+          <h3 class="font-bold text-lg text-gray-700 mt-5 mb-3">Sílabo</h3>
+          <div class="mt-2">
+            @if(session('success'))
+              <div class="text-sm text-green-600 mb-2">{{ session('success') }}</div>
+            @endif
+            @if(session('error'))
+              <div class="text-sm text-red-600 mb-2">{{ session('error') }}</div>
+            @endif
+            <form action="{{ route('teacher.silabo.upload') }}" method="POST" enctype="multipart/form-data" class="space-y-2">
+              @csrf
+              <label class="block text-xs text-gray-600">Seleccionar Curso</label>
+              <select name="grupo" class="w-full border rounded p-2 text-sm">
+                @foreach($grupos as $grupo)
+                  <option value="{{$grupo['id'] ?? $grupo['grupo_id'] ?? ''}}">{{$grupo['nombre']}} ({{$grupo['turno']}})</option>
+                @endforeach
+              </select>
+              <label class="block text-xs text-gray-600">Archivo (PDF, DOC, DOCX)</label>
+              <input type="file" name="silabo" accept=".pdf,.doc,.docx" class="w-full text-sm" />
+              <div class="flex items-center space-x-2">
+                <button type="submit" class="px-3 py-1 bg-indigo-600 text-white rounded text-sm">Subir Sílabo</button>
+                <a href="{{ route('teacher.silabo.download', ['grupo' => $grupos[0]['id'] ?? ($grupos[0]['grupo_id'] ?? 0)]) }}" class="px-3 py-1 bg-gray-200 text-gray-700 rounded text-sm">Descargar último</a>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
