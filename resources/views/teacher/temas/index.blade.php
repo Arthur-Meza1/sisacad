@@ -1,44 +1,156 @@
 <x-header_layout>
   <main class="flex-1 p-4">
     <div class="bg-white rounded-xl p-6 shadow-lg">
-      <h2 class="text-2xl font-bold text-gray-800 mb-4">
-        Temas del curso: {{ $grupo->curso->nombre }} ({{ $grupo->turno }})
-      </h2>
+      <!-- Header -->
+      <div class="flex justify-between items-start mb-6">
+        <div>
+          <h2 class="text-2xl font-bold text-gray-800">
+            Temas: {{ $grupo->curso->nombre }} ({{ $grupo->turno }})
+          </h2>
+          <p class="text-gray-600">Docente: {{ Auth::user()->name }}</p>
+        </div>
 
-      {{-- Sección de debug (temporal) --}}
-      @if(isset($debug))
-        <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4">
-          <h3 class="font-bold">Debug Info:</h3>
-          <p>Curso ID: {{ $debug['curso_id'] }}</p>
-          <p>Capítulos en BD: {{ $debug['capitulos_count'] }}</p>
-          <p>Temas en BD: {{ $debug['temas_count'] }}</p>
-          <p>{{ $debug['message'] }}</p>
+        <!-- Progreso -->
+        <div class="bg-blue-50 p-4 rounded-lg">
+          <div class="text-center">
+            <p class="text-sm text-blue-800">Progreso</p>
+            <p class="text-3xl font-bold text-blue-600">{{ $porcentaje }}%</p>
+            <p class="text-sm text-blue-700">
+              {{ $temasEnseñados }} / {{ $totalTemas }} temas
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Unidades -->
+      @foreach($estructura as $unidadId => $unidad)
+        <div class="mb-8">
+          <h3 class="text-xl font-bold text-gray-700 mb-4 p-3 bg-gray-100 rounded-lg">
+            {{ $unidad['nombre'] }}
+          </h3>
+
+          @foreach($unidad['capitulos'] as $capitulo)
+            <div class="ml-4 mb-6">
+              <h4 class="font-bold text-lg text-blue-700 mb-2">{{ $capitulo['nombre'] }}</h4>
+
+              <div class="space-y-2 ml-4">
+                @foreach($capitulo['temas'] as $tema)
+                  <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100">
+                    <div class="flex items-center space-x-3">
+                      <!-- Botón -->
+                      <button
+                        class="marcar-enseñado w-8 h-8 rounded-full flex items-center justify-center border-2
+                               {{ $tema['enseñado'] ? 'bg-green-500 border-green-500 text-white' : 'bg-white border-gray-300 text-gray-600 hover:border-green-400' }}"
+                        data-tema-id="{{ $tema['id'] }}"
+                        data-grupo-id="{{ $grupo->id }}"
+                        data-actualmente="{{ $tema['enseñado'] ? '1' : '0' }}"
+                        title="{{ $tema['enseñado'] ? 'Click para desmarcar' : 'Click para marcar como enseñado' }}">
+
+                        @if($tema['enseñado'])
+                          ✓
+                        @else
+                          {{ $tema['orden'] }}
+                        @endif
+                      </button>
+
+                      <div>
+                        <span class="font-medium text-gray-800">{{ $tema['titulo'] }}</span>
+                        @if($tema['enseñado'] && $tema['fecha_enseñado'])
+                          <p class="text-xs text-green-600 mt-1">
+                            ✓ {{ \Carbon\Carbon::parse($tema['fecha_enseñado'])->format('d/m/Y') }}
+                          </p>
+                        @endif
+                      </div>
+                    </div>
+
+                    @if($tema['enseñado'] && $tema['notas'])
+                      <div class="text-sm text-gray-500 max-w-xs text-right">
+                        <span class="text-xs text-gray-400">Notas:</span><br>
+                        {{ \Illuminate\Support\Str::limit($tema['notas'], 50) }}
+                      </div>
+                    @endif
+                  </div>
+                @endforeach
+              </div>
+            </div>
+          @endforeach
+        </div>
+      @endforeach
+
+      @if(empty($estructura))
+        <div class="text-center py-8 text-gray-500">
+          <p>No hay temas cargados para este curso.</p>
+          <p class="text-sm mt-2">Sube un sílabo PDF para importar los temas.</p>
         </div>
       @endif
-
-      @forelse($grupo->curso->capitulos as $capitulo)
-        <div class="mb-4 p-3 bg-gray-50 rounded">
-          <h3 class="font-bold text-lg text-blue-700">{{ $capitulo->nombre }}</h3>
-          <ul class="list-disc ml-6 mt-2">
-            @forelse($capitulo->temas as $tema)
-              <li class="py-1">{{ $tema->titulo }}</li>
-            @empty
-              <li class="text-gray-500 italic">No hay temas en este capítulo</li>
-            @endforelse
-          </ul>
-        </div>
-      @empty
-        <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4">
-          <p class="font-bold">¡Atención!</p>
-          <p>No hay capítulos para este curso.</p>
-          <p class="text-sm mt-2">Posibles causas:</p>
-          <ul class="list-disc ml-5 text-sm">
-            <li>El sílabo no se procesó correctamente</li>
-            <li>El parser no encontró la sección de contenido temático</li>
-            <li>No hay datos en la base de datos</li>
-          </ul>
-        </div>
-      @endforelse
     </div>
   </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const botones = document.querySelectorAll('.marcar-enseñado');
+      const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+      botones.forEach(boton => {
+        boton.addEventListener('click', async function() {
+          const temaId = this.dataset.temaId;
+          const grupoId = this.dataset.grupoId;
+          const actualmente = this.dataset.actualmente === '1';
+          const nuevoEstado = !actualmente;
+
+          // Loading
+          const originalHTML = this.innerHTML;
+          this.innerHTML = '<div class="w-4 h-4 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>';
+          this.disabled = true;
+
+          try {
+            const response = await fetch('/teacher/tema/toggle-enseñado', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken
+              },
+              body: JSON.stringify({
+                grupo_id: grupoId,
+                tema_id: temaId,
+                enseñado: nuevoEstado
+              })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+              // Actualizar visual
+              this.dataset.actualmente = nuevoEstado ? '1' : '0';
+
+              if (nuevoEstado) {
+                this.classList.remove('bg-white', 'border-gray-300', 'text-gray-600', 'hover:border-green-400');
+                this.classList.add('bg-green-500', 'border-green-500', 'text-white');
+                this.innerHTML = '✓';
+                this.title = 'Click para desmarcar';
+              } else {
+                this.classList.remove('bg-green-500', 'border-green-500', 'text-white');
+                this.classList.add('bg-white', 'border-gray-300', 'text-gray-600', 'hover:border-green-400');
+                this.innerHTML = originalHTML.replace('✓', '{{ $tema["orden"] ?? "" }}');
+                this.title = 'Click para marcar como enseñado';
+              }
+
+              // Recargar para actualizar estadísticas
+              setTimeout(() => location.reload(), 1000);
+
+            } else {
+              alert('Error: ' + (data.message || 'No se pudo guardar'));
+              this.innerHTML = originalHTML;
+            }
+          } catch (error) {
+            console.error('Error:', error);
+            alert('Error de conexión');
+            this.innerHTML = originalHTML;
+          } finally {
+            this.disabled = false;
+          }
+        });
+      });
+    });
+  </script>
 </x-header_layout>
