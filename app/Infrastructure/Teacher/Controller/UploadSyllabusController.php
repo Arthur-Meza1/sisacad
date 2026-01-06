@@ -108,90 +108,71 @@ readonly class UploadSyllabusController
   /**
    * Procesador simplificado sin dependencia de tabla unidades
    */
+
+  // EN UploadSyllabusController, BUSCA y REEMPLAZA el método procesarSyllabusSimple:
+
   private function procesarSyllabusSimple(string $text, $curso): array
   {
     $capitulosCreados = 0;
     $temasCreados = 0;
 
-    // Normalizar texto
     $text = preg_replace('/\r\n/', "\n", $text);
     $text = preg_replace('/\n+/', "\n", $text);
 
     $lines = explode("\n", $text);
 
-    // Variables de estado
     $enContenido = false;
     $capituloActual = null;
-    $unidadNumero = 1; // Número de unidad (1, 2, 3, ...)
+    $unidadNumero = 1;
     $capituloOrden = 1;
     $temaOrden = 1;
-
-    Log::info('Procesando sílabo (método simple)', ['lineas' => count($lines)]);
 
     foreach ($lines as $lineNumber => $line) {
       $line = trim($line);
       if (empty($line)) continue;
 
-      // DEBUG: Ver primeras líneas
-      if ($lineNumber < 20) {
-        Log::debug("Línea {$lineNumber}: " . substr($line, 0, 100));
-      }
-
-      // 1. Buscar inicio de CONTENIDO TEMÁTICO
-      if (preg_match('/5\.[\s\.]*CONTENIDO[\s\.]*TEM[ÁA]TICO/i', $line) ||
-        preg_match('/^CONTENIDO[\s\.]*TEM[ÁA]TICO/i', $line)) {
+      // 1. Buscar CONTENIDO TEMÁTICO
+      if (preg_match('/5\.[\s\.]*CONTENIDO[\s\.]*TEM[ÁA]TICO/i', $line)) {
         $enContenido = true;
-        Log::info("✓ Encontrado CONTENIDO TEMÁTICO en línea {$lineNumber}");
         continue;
       }
 
-      // Si no estamos en contenido, continuar
-      if (!$enContenido) {
-        continue;
-      }
+      if (!$enContenido) continue;
 
-      // 2. Detectar fin de sección
-      if (preg_match('/^6\./i', $line) ||
-        preg_match('/ESTRATEGIAS DE ENSEÑANZA/i', $line) ||
-        preg_match('/CRONOGRAMA ACAD[ÉE]MICO/i', $line)) {
-        Log::info("Fin de sección en línea {$lineNumber}");
-        break;
-      }
+      // 2. Detectar fin
+      if (preg_match('/^6\./i', $line)) break;
 
       // 3. Detectar UNIDADES
-      if (preg_match('/^\s*(PRIMERA|SEGUNDA|TERCERA|CUARTA|QUINTA|SEXTA)\s+UNIDAD/i', $line, $matches)) {
+      if (preg_match('/^\s*(PRIMERA|SEGUNDA|TERCERA|CUARTA)\s+UNIDAD/i', $line, $matches)) {
         $unidadNombre = strtoupper($matches[1]);
         $unidadNumero = match($unidadNombre) {
           'PRIMERA' => 1,
           'SEGUNDA' => 2,
           'TERCERA' => 3,
-          'CUARTA'  => 4,
-          'QUINTA'  => 5,
-          'SEXTA'   => 6,
-          default   => 1
+          'CUARTA' => 4,
+          default => 1
         };
 
-        Log::info("→ Cambio a {$unidadNombre} (Unidad #{$unidadNumero})");
-
-        // Reiniciar contadores
         $capituloOrden = 1;
         $capituloActual = null;
         continue;
       }
 
-      // 4. Detectar CAPÍTULOS (aceptar diferentes formatos)
-      if (preg_match('/Cap[íi]tulo\s+([IVXLCDM]+|[A-Z])\s*[:\-\.]?\s*(.+)/i', $line, $matches)) {
-        $numero = trim($matches[1]);
+      // 4. Detectar CAPÍTULOS - CORREGIDO
+      // Tu PDF tiene: "Capítulo I: Visión General de los SO"
+      if (preg_match('/Capítulo\s+([IVXLCDM]+)\s*:\s*(.+)/i', $line, $matches)) {
+        $numeroRomano = trim($matches[1]);
         $titulo = trim($matches[2]);
 
-        // Limpiar asteriscos si existen
+        // Limpiar si tiene asteriscos
         $titulo = preg_replace('/\*\*/', '', $titulo);
+        $titulo = trim($titulo);
 
-        $nombreCapitulo = "Capítulo {$numero}: {$titulo}";
+        $nombreCapitulo = "Capítulo {$numeroRomano}: {$titulo}";
 
         $capituloActual = Capitulo::create([
           'curso_id'  => $curso->id,
-          'unidad_id' => $unidadNumero, // Solo el número, sin foreign key
+          'unidad_id' => $unidadNumero,
           'nombre'    => $nombreCapitulo,
           'orden'     => $capituloOrden++
         ]);
@@ -199,24 +180,20 @@ readonly class UploadSyllabusController
         $capitulosCreados++;
         $temaOrden = 1;
 
-        Log::info("✓ Capítulo creado: {$nombreCapitulo}", [
-          'unidad' => $unidadNumero,
-          'orden' => $capituloOrden - 1
-        ]);
         continue;
       }
 
-      // 5. Detectar TEMAS (formato: Tema 01:, Tema 02:, etc.)
-      if (preg_match('/Tema\s+(\d{1,3})\s*[:\-\.]?\s*(.+)/i', $line, $matches)) {
+      // 5. Detectar TEMAS - CORREGIDO
+      if (preg_match('/Tema\s+(\d+)\s*:\s*(.+)/i', $line, $matches)) {
         $numeroTema = str_pad(trim($matches[1]), 2, '0', STR_PAD_LEFT);
         $titulo = trim($matches[2]);
 
-        // Limpiar asteriscos
         $titulo = preg_replace('/\*\*/', '', $titulo);
+        $titulo = trim($titulo);
 
         $nombreTema = "Tema {$numeroTema}: {$titulo}";
 
-        // Si no hay capítulo, crear uno automático
+        // Si NO hay capítulo, crear uno
         if (!$capituloActual) {
           $capituloActual = Capitulo::create([
             'curso_id'  => $curso->id,
@@ -227,8 +204,6 @@ readonly class UploadSyllabusController
 
           $capitulosCreados++;
           $temaOrden = 1;
-
-          Log::warning("⚠ Creando capítulo automático para: {$nombreTema}");
         }
 
         Tema::create([
@@ -238,24 +213,12 @@ readonly class UploadSyllabusController
         ]);
 
         $temasCreados++;
-
-        Log::debug("✓ Tema creado: {$nombreTema}", [
-          'capitulo' => $capituloActual->nombre,
-          'orden' => $temaOrden - 1
-        ]);
       }
-    }
-
-    // Si no encontró nada, intentar método de emergencia
-    if ($capitulosCreados === 0) {
-      Log::warning('Método principal no funcionó, intentando búsqueda directa');
-      return $this->busquedaDirectaEnTexto($text, $curso);
     }
 
     return [
       'capitulos' => $capitulosCreados,
-      'temas' => $temasCreados,
-      'lineas' => count($lines)
+      'temas' => $temasCreados
     ];
   }
 
