@@ -1,46 +1,44 @@
 <x-header_layout>
-  <x-teacher.sidebar></x-teacher.sidebar>
-
   <main class="flex-1 p-4">
     <div class="bg-white rounded-xl p-6 shadow-lg">
-      <h2 class="text-2xl font-bold text-gray-800 mb-4">Temas del Curso</h2>
+      <h2 class="text-2xl font-bold text-gray-800 mb-4">
+        Temas del curso: {{ $grupo->curso->nombre }} ({{ $grupo->turno }})
+      </h2>
 
-      @if(session('success'))
-        <div class="text-sm text-green-600 mb-2">{{ session('success') }}</div>
+      {{-- Sección de debug (temporal) --}}
+      @if(isset($debug))
+        <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4">
+          <h3 class="font-bold">Debug Info:</h3>
+          <p>Curso ID: {{ $debug['curso_id'] }}</p>
+          <p>Capítulos en BD: {{ $debug['capitulos_count'] }}</p>
+          <p>Temas en BD: {{ $debug['temas_count'] }}</p>
+          <p>{{ $debug['message'] }}</p>
+        </div>
       @endif
-      @if(session('error'))
-        <div class="text-sm text-red-600 mb-2">{{ session('error') }}</div>
-      @endif
 
-      <div class="mb-4">
-        <form action="{{ route('teacher.temas.upload') }}" method="POST" enctype="multipart/form-data" class="space-y-2">
-          @csrf
-          <input type="hidden" name="grupo" value="{{ $grupo }}" />
-          <label class="block text-xs text-gray-600">Archivo (pdf/doc/docx/zip/txt)</label>
-          <input type="file" name="tema" accept=".pdf,.doc,.docx,.zip,.txt" class="w-full text-sm" />
-          <div class="mt-2">
-            <button class="px-3 py-1 bg-indigo-600 text-white rounded text-sm">Subir Tema</button>
-            <a href="{{ route('teacher.index') }}" class="ml-2 text-sm text-gray-600 hover:underline">Volver</a>
-          </div>
-        </form>
-      </div>
-
-      <h3 class="font-bold text-lg text-gray-700 mb-2">Archivos</h3>
-      <ul class="space-y-2">
-        @forelse($files as $f)
-          <li class="flex justify-between items-center p-2 border rounded">
-            <div>
-              <div class="font-medium">{{ $f['original_name'] ?? $f['name'] }}</div>
-              <div class="text-xs text-gray-500">{{ number_format(($f['size'] ?? 0) / 1024, 2) }} KB</div>
-            </div>
-            <div class="space-x-2">
-              <a href="{{ route('teacher.temas.download', ['grupo' => $grupo, 'file' => urlencode($f['name'])]) }}" class="px-2 py-1 bg-gray-100 rounded text-sm">Descargar</a>
-            </div>
-          </li>
-        @empty
-          <li class="text-sm text-gray-500">No hay archivos para este curso.</li>
-        @endforelse
-      </ul>
+      @forelse($grupo->curso->capitulos as $capitulo)
+        <div class="mb-4 p-3 bg-gray-50 rounded">
+          <h3 class="font-bold text-lg text-blue-700">{{ $capitulo->nombre }}</h3>
+          <ul class="list-disc ml-6 mt-2">
+            @forelse($capitulo->temas as $tema)
+              <li class="py-1">{{ $tema->titulo }}</li>
+            @empty
+              <li class="text-gray-500 italic">No hay temas en este capítulo</li>
+            @endforelse
+          </ul>
+        </div>
+      @empty
+        <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4">
+          <p class="font-bold">¡Atención!</p>
+          <p>No hay capítulos para este curso.</p>
+          <p class="text-sm mt-2">Posibles causas:</p>
+          <ul class="list-disc ml-5 text-sm">
+            <li>El sílabo no se procesó correctamente</li>
+            <li>El parser no encontró la sección de contenido temático</li>
+            <li>No hay datos en la base de datos</li>
+          </ul>
+        </div>
+      @endforelse
     </div>
   </main>
 </x-header_layout>

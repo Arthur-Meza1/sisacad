@@ -8,32 +8,59 @@ use Illuminate\Support\Facades\Storage;
 
 readonly class DownloadSyllabusController
 {
-    public function __invoke($grupo)
-    {
-        $dir = "public/silabos/{$grupo}";
-        if (!Storage::exists($dir)) {
-            return back()->with('error', 'No se encontró sílabo para este grupo.');
-        }
+  public function __invoke($grupo): \Symfony\Component\HttpFoundation\StreamedResponse|RedirectResponse
+  {
+    $result = $this->findLatestSyllabus($grupo);
 
-        $files = Storage::files($dir);
-        if (empty($files)) {
-            return back()->with('error', 'No se encontró sílabo para este grupo.');
-        }
+    return $result['error']
+      ? back()->with('error', $result['message'])
+      : Storage::download($result['file']);
+  }
 
-        $latest = null;
-        $latestTime = 0;
-        foreach ($files as $f) {
-            $t = Storage::lastModified($f);
-            if ($t > $latestTime) {
-                $latestTime = $t;
-                $latest = $f;
-            }
-        }
+  private function findLatestSyllabus($grupo): array
+  {
+    $dir = "public/silabos/{$grupo}";
 
-        if (!$latest) {
-            return back()->with('error', 'No se pudo localizar el archivo.');
-        }
-
-        return Storage::download($latest);
+    $validationResult = $this->validateDirectory($dir);
+    if ($validationResult['error']) {
+      return $validationResult;
     }
+
+    $latestFile = $this->getLatestFile($validationResult['files']);
+
+    return $latestFile
+      ? ['error' => false, 'file' => $latestFile]
+      : ['error' => true, 'message' => 'No se pudo localizar el archivo.'];
+  }
+
+  private function validateDirectory(string $dir): array
+  {
+    if (!Storage::exists($dir)) {
+      return ['error' => true, 'message' => 'No se encontró sílabo para este grupo.'];
+    }
+
+    $files = Storage::files($dir);
+    if (empty($files)) {
+      return ['error' => true, 'message' => 'No se encontró sílabo para este grupo.'];
+    }
+
+    return ['error' => false, 'files' => $files];
+  }
+
+  private function getLatestFile(array $files): ?string
+  {
+    $latest = null;
+    $latestTime = 0;
+
+    foreach ($files as $file) {
+      $modifiedTime = Storage::lastModified($file);
+
+      if ($modifiedTime > $latestTime) {
+        $latestTime = $modifiedTime;
+        $latest = $file;
+      }
+    }
+
+    return $latest;
+  }
 }

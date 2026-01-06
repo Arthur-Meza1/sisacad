@@ -6,12 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tema extends Model
 {
-    public $timestamps = false;
+  public $timestamps = false;
+  protected $fillable = ['capitulo_id', 'titulo', 'orden'];
 
-    protected $fillable = ['titulo', 'orden'];
-
-    public function curso()
-    {
-        return $this->belongsTo(Curso::class);
-    }
+  public function capitulo() {
+    return $this->belongsTo(Capitulo::class);
+  }
 }

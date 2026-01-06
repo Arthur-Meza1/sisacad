@@ -76,11 +76,7 @@ Route::prefix('teacher')->name("teacher.")->group(function () {
     // Route::get('asistencia', Teacher\AsistenciaController::class)->name('asistencia');
   });
   Route::get('notas', Teacher\NotasController::class)->name('notas');
-  // Panel de Temas (archivos en storage, sin BD)
   Route::get('temas/{grupo}', Teacher\TemasIndexController::class)->name('temas.index');
-  Route::post('temas/upload', Teacher\TemasUploadController::class)->name('temas.upload');
-  Route::get('temas/download/{grupo}/{file}', Teacher\TemasDownloadController::class)->name('temas.download');
-  // Sílabo: upload y download
   Route::post('silabo/upload', Teacher\UploadSyllabusController::class)->name('silabo.upload');
   Route::get('silabo/download/{grupo}', Teacher\DownloadSyllabusController::class)->name('silabo.download');
 })->middleware(['auth', 'role:teacher']);
