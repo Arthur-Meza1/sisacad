@@ -7,13 +7,7 @@
 
       <div id="courseManagementPanels" class="space-y-6">
         <div class="bg-white rounded-xl p-4 shadow-lg flex justify-between items-center border-l-4 border-indigo-500">
-          <div>
-            <h3 class="font-bold text-lg text-gray-700" id="currentCourseTitle">Curso: {{$grupo->curso()->nombre()}} ({{$grupo->grupoTurno()->getValue()}}) - {{ucfirst($grupo->cursoTipo()->getValue())}}</h3>
-            <p class="text-sm text-gray-500" id="currentCourseInfo"></p>
-          </div>
           <div class="flex items-center gap-2">
-
-            <!-- Seleccionar otro curso -->
             <div class="relative group">
               <a
                 href="{{route('teacher.libreta.index')}}"
@@ -29,7 +23,9 @@
                 Seleccionar otro curso
               </span>
             </div>
-
+            <h3 class="font-bold text-lg text-gray-700" id="currentCourseTitle">Curso: {{$grupo->curso()->nombre()}} ({{$grupo->grupoTurno()->getValue()}}) - {{ucfirst($grupo->cursoTipo()->getValue())}}</h3>
+          </div>
+          <div class="flex items-center gap-2">
             <!-- Descargar plantilla -->
             <div class="relative group">
               <a
@@ -234,7 +230,7 @@
                   </td>
                   <td class="px-4 py-3 whitespace-nowrap text-center">
                     <input type="number" min="0" max="20" step="1"
-                           value="{{$registro['sustitutorio']}}}"
+                           value="{{$registro['sustitutorio']}}"
                            data-id="{{$registro['registro_id']}}"
                            data-type="sustitutorio"
                            class="w-16 p-1 border rounded text-center grade-input"
