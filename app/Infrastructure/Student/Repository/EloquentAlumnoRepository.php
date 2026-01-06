@@ -30,7 +30,7 @@ class EloquentAlumnoRepository implements IAlumnoRepository {
     try {
       $tables = ['user'];
       if($loadGrupos) {
-        $tables[] = 'grupos.curso.temas';
+        $tables[] = 'grupos.curso.capitulos.temas';
         $tables[] = 'grupos.docente.user';
       }
       $eloquentAlumno =
