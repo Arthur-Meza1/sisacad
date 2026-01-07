@@ -32,3 +32,8 @@ mkdir -p ./storage/framework/cache
 ```shell
 ./vendor/bin/sail npm run dev # Iniciar frontend
 ```
+
+### 3rd_party
+```shell
+./vendor/bin/sail composer require smalot/pdfparser
+```
