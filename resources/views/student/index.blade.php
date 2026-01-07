@@ -21,7 +21,7 @@
                     <span class="font-medium text-indigo-700">{{$grupo['nombre']}} ({{$grupo['turno']}})</span>
                     <span class="text-xs text-gray-500">{{$grupo['docente']}}</span>
                   </div>
-                  <a href="#" onclick="event.stopPropagation()" class="text-xs text-gray-600 hover:underline">Sílabo</a>
+                  <a href="{{route('teacher.silabo.download', $grupo['id'])}}" onclick="event.stopPropagation()" class="text-xs text-gray-600 hover:underline">Sílabo</a>
                 </div>
               </div>
             @endforeach

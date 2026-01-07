@@ -3,6 +3,7 @@
 namespace App\Application\Student\UseCase;
 
 use App\Application\Student\Transformer\GrupoCursoTransformer;
+use App\Domain\Shared\ValueObject\CursoTipo;
 use App\Domain\Shared\ValueObject\Id;
 use App\Domain\Student\Repository\IAlumnoRepository;
 
@@ -16,6 +17,8 @@ class GetBasicGruposData
     {
         $alumno = $this->alumnoRepository->findFromUserIdOrFail($id);
 
-        return GrupoCursoTransformer::toArray($alumno->grupos());
+        return GrupoCursoTransformer::toArray(
+          $alumno->filterGruposByTipo(CursoTipo::TEORIA)
+        );
     }
 }
