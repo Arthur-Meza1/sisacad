@@ -28,14 +28,56 @@ class ParseAlumnoToDomain {
           docenteNombre: $grupo->docente->user->name
         );
 
-        $grupo->curso->temas->each(function ($tema) use (&$curso) {
-          $curso->addTema(
-            Tema::fromPrimitives(
+        // Agrupar capítulos por unidad y luego iterar por unidad->capítulo->temas
+        $unidades = [];
+
+        $grupo->curso->capitulos->sortBy('orden')->each(function ($capitulo) use (&$curso, &$unidades) {
+          $unidadId = $capitulo->unidad_id ?? 1;
+
+          $unidadNombre = match($unidadId) {
+            1 => 'PRIMERA UNIDAD',
+            2 => 'SEGUNDA UNIDAD',
+            3 => 'TERCERA UNIDAD',
+            4 => 'CUARTA UNIDAD',
+            default => 'UNIDAD ' . $unidadId
+          };
+
+          $temasCollection = collect();
+          $capitulo->temas->sortBy('orden')->each(function ($tema) use (&$curso, $temasCollection) {
+            $temaEntity = Tema::fromPrimitives(
               $tema->titulo,
-              $tema->orden
-            )
-          );
+              $tema->orden,
+              $tema->id
+            );
+
+            // Agregar a la lista plana (todos los temas del curso)
+            $curso->addTema($temaEntity);
+            $temasCollection->push($temaEntity);
+          });
+
+          // Preparar estructura de capítulo para la unidad
+          $capArr = [
+            'nombre' => $capitulo->nombre,
+            'temas' => $temasCollection
+          ];
+
+          if (!isset($unidades[$unidadId])) {
+            $unidades[$unidadId] = [
+              'nombre' => $unidadNombre,
+              'capitulos' => []
+            ];
+          }
+
+          $unidades[$unidadId]['capitulos'][] = $capArr;
         });
+
+        // Registrar unidades ordenadas por unidad id
+        ksort($unidades);
+        foreach ($unidades as $u) {
+          // convertir capitulos a Collection de arrays con 'nombre' y 'temas' (Collection)
+          $capCollection = collect($u['capitulos']);
+          $curso->addUnidad($u['nombre'], $capCollection);
+        }
 
         $alumno->addGrupo($curso);
       });

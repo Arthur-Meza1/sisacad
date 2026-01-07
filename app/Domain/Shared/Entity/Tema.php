@@ -8,12 +8,14 @@ readonly class Tema
 {
   private function __construct(
     private string $nombre,
-    private int    $orden
+    private int    $orden,
+    private ?int   $id = null
   ) {}
 
   public static function fromPrimitives(
     string $nombre,
-    int    $orden
+    int    $orden,
+    ?int   $id = null
   ) {
     if(empty($nombre)) {
       throw InvalidValue::stringNullOrEmpty();
@@ -23,7 +25,7 @@ readonly class Tema
       throw InvalidValue::intNegative($orden);
     }
 
-    return new self($nombre, $orden);
+    return new self($nombre, $orden, $id);
   }
 
   public function nombre(): string {
@@ -32,5 +34,9 @@ readonly class Tema
 
   public function orden(): int {
     return $this->orden;
+  }
+
+  public function id(): ?int {
+    return $this->id;
   }
 }

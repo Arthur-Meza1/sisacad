@@ -30,21 +30,66 @@
 
         <div class="bg-white rounded-xl p-6 shadow-lg h-full flex flex-col">
           <h3 class="font-bold text-lg text-gray-700 mb-3">
-            Temas
+            Temas <span id="progreso-badge" class="text-sm text-gray-500 ml-2">(Progreso: --%)</span>
           </h3>
           <div class="flex-1 overflow-y-auto pr-2">
             @foreach($grupos as $grupo)
-              <div class="temas hidden space-y-3" data-id="{{$grupo['id']}}">
-                @foreach($grupo['temas'] as $tema)
-                  <div class="flex items-start space-x-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
-                    <div class="flex-shrink-0 mt-1">
-                      <div class="w-5 h-5 border-2 border-gray-300 rounded-full"></div>
-                    </div>
-                    <div class="flex-1 min-w-0">
-                      <p class="text-sm font-medium text-gray-800">{{ $tema['orden'] }}. {{ $tema['nombre'] }}</p>
-                    </div>
+              <div class="temas hidden space-y-3" data-id="{{$grupo['id']}}" data-progreso="{{ $grupo['progreso'] ?? 0 }}">
+                @if(!empty($grupo['unidades']))
+                  <div class="space-y-4">
+                    @foreach($grupo['unidades'] as $unidad)
+                      <div class="border rounded-lg bg-gray-50">
+                        <button class="w-full text-left px-4 py-2 font-semibold text-gray-700 unidad-toggle">
+                          {{ $unidad['nombre'] }}
+                        </button>
+                        <div class="px-4 py-2 unidad-contenido hidden">
+                          @foreach($unidad['capitulos'] as $cap)
+                            <div class="mb-3">
+                              <p class="text-sm font-semibold text-gray-600">{{ $cap['nombre'] }}</p>
+                              <div class="mt-2 space-y-1">
+                                @foreach($cap['temas'] as $tema)
+                                  <div class="flex items-start space-x-3 p-1 rounded-lg">
+                                    <div class="flex-shrink-0 mt-1">
+                                      @if(!empty($tema['enseñado']))
+                                        <div class="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center text-white text-xs">✓</div>
+                                      @else
+                                        <div class="w-3 h-3 border-2 border-gray-300 rounded-full"></div>
+                                      @endif
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                      <p class="text-sm text-gray-800">{{ $tema['orden'] }}. {{ $tema['nombre'] }}</p>
+                                      @if(!empty($tema['fecha_enseñado']))
+                                        <p class="text-xs text-gray-400">Enseñado: {{ $tema['fecha_enseñado'] }}</p>
+                                      @endif
+                                    </div>
+                                  </div>
+                                @endforeach
+                              </div>
+                            </div>
+                          @endforeach
+                        </div>
+                      </div>
+                    @endforeach
                   </div>
-                @endforeach
+                @else
+                  @foreach($grupo['temas'] as $tema)
+                    <div class="flex items-start space-x-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                      <div class="flex-shrink-0 mt-1">
+                        @if(!empty($tema['enseñado']))
+                          <div class="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center text-white">✓</div>
+                        @else
+                          <div class="w-5 h-5 border-2 border-gray-300 rounded-full"></div>
+                        @endif
+                      </div>
+                      <div class="flex-1 min-w-0">
+                        <p class="text-sm font-medium text-gray-800">{{ $tema['orden'] }}. {{ $tema['nombre'] }}</p>
+                        @if(!empty($tema['fecha_enseñado']))
+                          <p class="text-xs text-gray-400">Enseñado: {{ $tema['fecha_enseñado'] }}</p>
+                        @endif
+                      </div>
+                    </div>
+                  @endforeach
+                @endif
               </div>
             @endforeach
           </div>
@@ -58,6 +103,16 @@
       const cursos = document.querySelectorAll('.curso');
       const temas  = document.querySelectorAll('.temas');
 
+      // Accordion toggles for unidades
+      function initUnidades() {
+        document.querySelectorAll('.unidad-toggle').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const contenido = btn.nextElementSibling;
+            contenido.classList.toggle('hidden');
+          });
+        });
+      }
+
       cursos.forEach(curso => {
         curso.addEventListener('click', e => {
           if (e.target.tagName === 'A') return;
@@ -69,9 +124,14 @@
           curso.classList.add('outline', 'outline-2', 'outline-indigo-500');
 
           temas.forEach(t => t.classList.add('hidden'));
-          document
-            .querySelector(`.temas[data-id="${curso.dataset.id}"]`)
-            .classList.remove('hidden');
+          const temasContainer = document.querySelector(`.temas[data-id="${curso.dataset.id}"]`);
+          temasContainer.classList.remove('hidden');
+          // update progreso badge
+          const progreso = temasContainer.dataset.progreso ?? '--';
+          const badge = document.getElementById('progreso-badge');
+          if (badge) badge.textContent = `(Progreso: ${progreso}%)`;
+          // initialize accordion toggles for the visible temas container
+          initUnidades();
         });
       });
     })();

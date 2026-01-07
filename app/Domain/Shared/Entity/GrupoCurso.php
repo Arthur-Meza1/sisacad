@@ -16,6 +16,8 @@ class GrupoCurso {
     private readonly CursoTipo  $cursoTipo,
     private readonly string     $docenteNombre,
     private Collection          $temas,
+    private Collection          $capitulos,
+    private Collection          $unidades,
   ) {}
 
   public static function fromPrimitive(
@@ -34,6 +36,8 @@ class GrupoCurso {
       $grupoTurno,
       $cursoTipo,
       $docenteNombre,
+      collect(),
+      collect(),
       collect());
   }
 
@@ -41,8 +45,30 @@ class GrupoCurso {
     $this->temas->push($tema);
   }
 
+  public function addCapitulo(string $nombre, Collection $temas): void {
+    $this->capitulos->push([
+      'nombre' => $nombre,
+      'temas' => $temas
+    ]);
+  }
+
+  public function addUnidad(string $nombre, Collection $capitulos): void {
+    $this->unidades->push([
+      'nombre' => $nombre,
+      'capitulos' => $capitulos
+    ]);
+  }
+
   public function temas(): Collection {
     return $this->temas;
+  }
+
+  public function capitulos(): Collection {
+    return $this->capitulos;
+  }
+
+  public function unidades(): Collection {
+    return $this->unidades;
   }
 
   public function id(): Id {

@@ -27,6 +27,6 @@ class Curso extends Model
         'capitulo_id',  // FK en temas
         'id',           // PK en cursos
         'id'            // PK en capitulos
-      );
+      )->orderBy('capitulos.orden')->orderBy('temas.orden');
     }
 }

@@ -28,15 +28,29 @@ class EloquentAlumnoRepository implements IAlumnoRepository {
 
   public function findFromUserIdOrFail(Id $id, bool $loadGrupos = true): Alumno {
     try {
-      $tables = ['user'];
-      if($loadGrupos) {
-        $tables[] = 'grupos.curso.capitulos.temas';
-        $tables[] = 'grupos.docente.user';
+      $query = EloquentAlumno::query();
+
+      if ($loadGrupos) {
+        $query = $query->with([
+          'user',
+          'grupos' => function($q) {
+            $q->with([
+              'docente.user',
+              'curso' => function($qc) {
+                $qc->with(['capitulos' => function($qcap) {
+                  $qcap->orderBy('orden')->with(['temas' => function($qt) {
+                    $qt->orderBy('orden');
+                  }]);
+                }]);
+              }
+            ]);
+          }
+        ]);
+      } else {
+        $query = $query->with('user');
       }
-      $eloquentAlumno =
-        EloquentAlumno::
-        with($tables)
-        ->where('user_id', $id->getValue())->firstOrFail();
+
+      $eloquentAlumno = $query->where('user_id', $id->getValue())->firstOrFail();
 
       return ParseAlumnoToDomain::fromEloquent($eloquentAlumno, $loadGrupos);
     } catch(ModelNotFoundException $e) {
