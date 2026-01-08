@@ -2,15 +2,15 @@
 
 namespace App\Application\Teacher\UseCase;
 
-use App\Application\Teacher\Services\PeruvianPdfTextCleaner;
+use App\Application\Teacher\Services\PdfTextCleaner;
 
 final class ParseSyllabusPdf
 {
-  private PeruvianPdfTextCleaner $textCleaner;
+  private PdfTextCleaner $textCleaner;
 
   public function __construct()
   {
-    $this->textCleaner = new PeruvianPdfTextCleaner();
+    $this->textCleaner = new PdfTextCleaner();
   }
 
   public function execute(string $pdfPath): string
