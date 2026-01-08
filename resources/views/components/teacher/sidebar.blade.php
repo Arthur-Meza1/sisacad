@@ -1,7 +1,20 @@
+@if ($errors->any())
+  <div
+    x-data="{ show: true }"
+    x-show="show"
+    x-init="setTimeout(() => show = false, 3000)"
+    x-transition
+    x-effect="!show && $el.remove()"
+    class="fixed bottom-4 right-4 z-50 bg-red-600 text-white px-4 py-3 rounded-lg shadow-lg"
+  >
+    {{ $errors->first() }}
+  </div>
+@endif
+
 <aside class="w-64 p-4 sticky top-20 h-full">
   <nav class="space-y-2 font-medium">
     <a href="{{ route('teacher.index') }}" data-view="dashboard"
-       class="nav-link flex items-center p-3 rounded-lg hover:bg-gray-100 {{ request()->routeIs('teacher.index*') ? 'active-link' : 'inactive-link' }}">
+       class="nav-link flex items-center p-3 rounded-lg hover:bg-gray-100 {{ request()->routeIs('teacher.index*', 'teacher.temas*') ? 'active-link' : 'inactive-link' }}">
       <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
               d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>

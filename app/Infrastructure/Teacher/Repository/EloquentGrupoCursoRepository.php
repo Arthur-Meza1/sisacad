@@ -34,6 +34,7 @@ class EloquentGrupoCursoRepository implements IGrupoCursoRepository
             ->map(function (EloquentGrupoCurso $grupo) {
                 return new GrupoCursoDTO(
                     id: Id::fromInt($grupo->id),
+                    cursoId: Id::fromInt($grupo->curso->id),
                     nombre: $grupo->curso->nombre,
                     turno: $grupo->turno,
                     tipo: $grupo->tipo,

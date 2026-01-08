@@ -16,6 +16,7 @@ class BasicGrupoDataTransformer
         foreach ($dtos as $dto) {
             $res[] = [
                 'id' => $dto->id->getValue(),
+                'curso_id' => $dto->cursoId->getValue(),
                 'nombre' => $dto->nombre,
                 'tipo' => $dto->tipo,
                 'turno' => $dto->turno,
