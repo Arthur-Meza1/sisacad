@@ -231,7 +231,7 @@
                   </td>
                   <td class="px-4 py-3 whitespace-nowrap text-center">
                     <input type="number" min="0" max="20" step="1"
-                           value="{{$registro['sustitutorio']}}}"
+                           value="{{$registro['sustitutorio']}}"
                            data-id="{{$registro['registro_id']}}"
                            data-type="sustitutorio"
                            class="w-16 p-1 border rounded text-center grade-input"

@@ -14,7 +14,7 @@ class GrupoCurso extends Model
 
   public $timestamps = false;
 
-  protected $fillable = ['turno', 'tipo'];
+  protected $fillable = ['turno', 'tipo', 'docente_id', 'curso_id'];
 
   public function docente()
   {

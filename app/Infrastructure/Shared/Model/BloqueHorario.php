@@ -18,7 +18,7 @@ class BloqueHorario extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'dia', 'horaInicio', 'horaFin',
+        'dia', 'horaInicio', 'horaFin', 'grupo_curso_id', 'aula_id'
     ];
 
     public function aula()

@@ -6,6 +6,7 @@ use App\Application\Admin\DTOs\NewUserDTO;
 use App\Application\Admin\UseCase\CreateNewUserCommand;
 use App\Application\Admin\UseCase\ListUsers;
 use App\Domain\Shared\ValueObject\Id;
+use App\Domain\Teacher\Repository\IDocenteRepository;
 use App\Http\Controllers\Controller;
 use App\Application\Admin\UseCase\FindUsersQuery;
 use App\Infrastructure\Shared\Model\User;
@@ -26,6 +27,7 @@ class UserController extends Controller
     private readonly Student\GetHorario $studentGetHorario,
     private readonly Teacher\GetBasicGruposData $teacherGetBasicGruposData,
     private readonly Teacher\GetHorario $teacherGetHorario,
+    private readonly IDocenteRepository $docenteRepository,
   )
   {
   }
@@ -69,6 +71,7 @@ class UserController extends Controller
     $grupos = $this->teacherGetBasicGruposData->execute($id);
     $horario = $this->teacherGetHorario->execute($id);
 
+
     $gruposDisponibles = DB::table('cursos')
       ->crossJoin(DB::raw("(
       SELECT 'teoria' AS tipo
@@ -88,7 +91,7 @@ class UserController extends Controller
       ->orderBy('cursos.nombre')
       ->get();
 
-    return view('admin.users.edit_teacher', compact('grupos', 'horario', 'gruposDisponibles') );
+    return view('admin.users.edit_teacher', compact('id', 'grupos', 'horario', 'gruposDisponibles') );
   }
 
   public function create(): View

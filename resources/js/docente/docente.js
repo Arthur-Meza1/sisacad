@@ -1,8 +1,6 @@
 import $ from 'jquery';
 import {
   loadScheduleCalendar,
-  openScheduleModal,
-  closeScheduleModal,
   saveNewScheduleEvent,
   updateEventButtonState
 } from "./calendario.js";

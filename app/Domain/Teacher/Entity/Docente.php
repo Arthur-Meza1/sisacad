@@ -19,6 +19,10 @@ class Docente
         );
     }
 
+    public function getId(): Id {
+      return $this->userId;
+    }
+
     public function getGruposId(): array
     {
         return $this->grupoIds;

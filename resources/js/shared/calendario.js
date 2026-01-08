@@ -95,6 +95,11 @@ export class Calendario {
     return this;
   }
 
+  headless() {
+    this.#fullCalendarOptions.headerToolbar = false;
+    return this;
+  }
+
   eventDidMount(callback) {
     this.#eventDidMount = callback;
     return this;

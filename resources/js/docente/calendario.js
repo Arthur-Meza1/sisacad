@@ -78,7 +78,7 @@ export function loadScheduleCalendar() {
   );
 }
 
-export function openScheduleModal(start = new Date(), end = new Date()) {
+window.openScheduleModal = function(start = new Date(), end = new Date()) {
   document.getElementById('eventDate').value = formatDate(start);
   document.getElementById('eventStart').value = formatTime(start);
   document.getElementById('eventEnd').value = formatTime(end);
@@ -86,7 +86,7 @@ export function openScheduleModal(start = new Date(), end = new Date()) {
   document.getElementById('scheduleModal').classList.add('flex');
   updateEventButtonState();
 }
-export function closeScheduleModal(event) {
+window.closeScheduleModal = function(event) {
   if (event && event.target.id !== 'scheduleModal') return;
   document.getElementById('scheduleModal').classList.remove('flex');
   document.getElementById('scheduleModal').classList.add('hidden');
