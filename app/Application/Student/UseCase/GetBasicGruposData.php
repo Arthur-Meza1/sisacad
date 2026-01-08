@@ -18,6 +18,7 @@ class GetBasicGruposData
         $alumno = $this->alumnoRepository->findFromUserIdOrFail($id);
 
         return GrupoCursoTransformer::toArray(
+          // FIXME: Poner todos???
           $alumno->filterGruposByTipo(CursoTipo::TEORIA)
         );
     }

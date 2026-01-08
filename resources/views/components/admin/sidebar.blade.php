@@ -33,23 +33,5 @@
       </svg>
       Cursos
     </a>
-
-    <a href="#" data-view="reports" class="nav-link flex items-center p-3 rounded-lg hover:bg-gray-100 inactive-link">
-      <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M9 17v-6a2 2 0 012-2h6m-4 0h4">
-        </path>
-      </svg>
-      Reportes
-    </a>
-
-    <a href="#" data-view="settings" class="nav-link flex items-center p-3 rounded-lg hover:bg-gray-100 inactive-link">
-      <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M11 3a2 2 0 012 2v1h-4V5a2 2 0 012-2zM4 8h16M4 12h16M4 16h16">
-        </path>
-      </svg>
-      Configuración
-    </a>
   </nav>
 </aside>

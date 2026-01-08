@@ -27,6 +27,7 @@
           <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600">Nombre</th>
           <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600">Email</th>
           <th class="px-4 py-2 text-left text-sm font-semibold text-gray-600">Rol</th>
+          <th class="px-4 py-2 text-center font-semibold text-gray-600">Acciones</th>
         </tr>
         </thead>
         <tbody>
@@ -35,6 +36,22 @@
             <td class="px-4 py-3 text-sm text-gray-700">{{ $user->name }}</td>
             <td class="px-4 py-3 text-sm text-gray-700">{{ $user->email }}</td>
             <td class="px-4 py-3 text-sm text-gray-700">{{ $user->role }}</td>
+            <td class="px-4 py-3 text-center space-x-3">
+              @if($user->role != 'admin')
+                {{-- Ver --}}
+                <a href="{{ route($user->role == 'teacher' ? 'admin.users.show.teacher' :'admin.users.show.student', $user->id->getValue()) }}"
+                   class="text-blue-600 hover:text-blue-800">
+                  <i class="fas fa-eye"></i>
+                </a>
+
+                {{-- Editar --}}
+                <a
+                  href="{{route($user->role == 'teacher' ? 'admin.users.edit.teacher' : 'admin.users.edit.student', $user->id->getValue())}}"
+                  class="text-indigo-600 hover:text-indigo-800">
+                  <i class="fas fa-edit"></i>
+                </a>
+              @endif
+            </td>
           </tr>
         @empty
           <tr>

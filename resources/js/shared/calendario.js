@@ -25,14 +25,14 @@ function ucfirst(val) {
 
 export class Calendario {
   #fullCalendarOptions;
-  #eventDidMount;
+  #eventDidMount = (info) => {};
 
   /**
    * @param data
    */
   constructor(data) {
     const [events, sesionSet] = this.#createEvents(data);
-    const selfEventDidMount = (info) => this?.#eventDidMount(info);
+    const selfEventDidMount = (info) => this.#eventDidMount(info);
     this.#fullCalendarOptions = {
       initialView: 'timeGridWeek',
       slotMinTime: '06:00:00',

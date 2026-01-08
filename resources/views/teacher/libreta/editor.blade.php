@@ -7,13 +7,7 @@
 
       <div id="courseManagementPanels" class="space-y-6">
         <div class="bg-white rounded-xl p-4 shadow-lg flex justify-between items-center border-l-4 border-indigo-500">
-          <div>
-            <h3 class="font-bold text-lg text-gray-700" id="currentCourseTitle">Curso: {{$grupo->curso()->nombre()}} ({{$grupo->grupoTurno()->getValue()}}) - {{ucfirst($grupo->cursoTipo()->getValue())}}</h3>
-            <p class="text-sm text-gray-500" id="currentCourseInfo"></p>
-          </div>
           <div class="flex items-center gap-2">
-
-            <!-- Seleccionar otro curso -->
             <div class="relative group">
               <a
                 href="{{route('teacher.libreta.index')}}"
@@ -29,8 +23,11 @@
                 Seleccionar otro curso
               </span>
             </div>
-
-            <!-- Descargar plantilla -->
+            <h3 class="font-bold text-lg text-gray-700" id="currentCourseTitle">Curso: {{$grupo->curso()->nombre()}} ({{$grupo->grupoTurno()->getValue()}}) - {{ucfirst($grupo->cursoTipo()->getValue())}}</h3>
+            <p class="text-sm text-gray-500" id="currentCourseInfo"></p>
+          </div>
+          <div class="flex items-center gap-2">
+              <!-- Descargar plantilla -->
             <div class="relative group">
               <a
                 href="{{route('teacher.libreta.descargar')}}"

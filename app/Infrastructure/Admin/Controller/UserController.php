@@ -5,10 +5,15 @@ namespace App\Infrastructure\Admin\Controller;
 use App\Application\Admin\DTOs\NewUserDTO;
 use App\Application\Admin\UseCase\CreateNewUserCommand;
 use App\Application\Admin\UseCase\ListUsers;
+use App\Domain\Shared\ValueObject\Id;
 use App\Http\Controllers\Controller;
 use App\Application\Admin\UseCase\FindUsersQuery;
+use App\Infrastructure\Shared\Model\User;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
+use App\Application\Student\UseCase as Student;
+use App\Application\Teacher\UseCase as Teacher;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -16,7 +21,11 @@ class UserController extends Controller
   public function __construct(
     private readonly ListUsers            $listUsers,
     private readonly FindUsersQuery       $findUsersQuery,
-    private readonly CreateNewUserCommand $createNewUserCommand
+    private readonly CreateNewUserCommand $createNewUserCommand,
+    private readonly Student\GetBasicGruposData $studentGetBasicGruposData,
+    private readonly Student\GetHorario $studentGetHorario,
+    private readonly Teacher\GetBasicGruposData $teacherGetBasicGruposData,
+    private readonly Teacher\GetHorario $teacherGetHorario,
   )
   {
   }
@@ -37,6 +46,49 @@ class UserController extends Controller
 
     // El helper 'view()' devuelve un objeto View
     return view('admin.users.search_results', compact('results'));
+  }
+
+  public function edit_student(int $userId): View {
+    $id = Id::fromInt($userId);
+    $grupos = $this->studentGetBasicGruposData->execute($id);
+    $horario = $this->studentGetHorario->execute($id);
+
+    return view('admin.users.show_student', compact('grupos', 'horario'));
+  }
+
+  public function show_teacher(int $userId): View {
+    $id = Id::fromInt($userId);
+    $grupos = $this->teacherGetBasicGruposData->execute($id);
+    $horario = $this->teacherGetHorario->execute($id);
+
+    return view('admin.users.show_teacher', compact('grupos', 'horario'));
+  }
+
+  public function edit_teacher(int $userId) {
+    $id = Id::fromInt($userId);
+    $grupos = $this->teacherGetBasicGruposData->execute($id);
+    $horario = $this->teacherGetHorario->execute($id);
+
+    $gruposDisponibles = DB::table('cursos')
+      ->crossJoin(DB::raw("(
+      SELECT 'teoria' AS tipo
+      UNION ALL
+      SELECT 'laboratorio'
+  ) tipos"))
+      ->leftJoin('grupo_cursos', function ($join) {
+        $join->on('grupo_cursos.curso_id', '=', 'cursos.id')
+          ->on('grupo_cursos.tipo', '=', 'tipos.tipo');
+      })
+      ->whereNull('grupo_cursos.id')
+      ->select(
+        'cursos.id as id',
+        'cursos.nombre',
+        'tipos.tipo'
+      )
+      ->orderBy('cursos.nombre')
+      ->get();
+
+    return view('admin.users.edit_teacher', compact('grupos', 'horario', 'gruposDisponibles') );
   }
 
   public function create(): View

@@ -91,6 +91,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('create', [Admin\UserController::class, 'create'])->name('create');
     Route::post('/', [Admin\UserController::class, 'store'])->name('store');
     Route::get('search', [Admin\UserController::class, 'search'])->name('search');
+    Route::get('show/student/{id}', [Admin\UserController::class, 'show_student'])->name('show.student');
+    Route::get('edit/student/{id}', [Admin\UserController::class, 'edit_student'])->name('edit.student');
+    Route::get('show/teacher/{id}', [Admin\UserController::class, 'show_teacher'])->name('show.teacher');
+    Route::get('edit/teacher/{id}', [Admin\UserController::class, 'edit_teacher'])->name('edit.teacher');
   });
   Route::prefix('cursos')->name('cursos.')->group(function () {
     Route::get('/', [Admin\CursoController::class, 'index'])->name('index');
