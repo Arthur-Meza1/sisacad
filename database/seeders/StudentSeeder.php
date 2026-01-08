@@ -58,10 +58,7 @@ class StudentSeeder extends Seeder
           substr($line, -1),
         ];
 
-        $curso = Curso::whereRaw(
-          'UPPER(nombre) = ?',
-          [$courseName]
-        )->first();
+        $curso = Curso::whereRaw('UPPER(nombre) = ?', [$courseName])->first();
 
         if (!$curso) {
           logger()->warning("Curso not found: {$courseName}");
@@ -70,27 +67,13 @@ class StudentSeeder extends Seeder
 
         $grupo = GrupoCurso::where('curso_id', $curso->id)
           ->where('turno', $turno)
-          ->first();
-
-        if (!$grupo) {
-          logger()->warning("Grupo not found: {$courseName} {$turno}");
-          continue;
-        }
-
-        Registro::factory()->create([
-          'alumno_id' => $student->id,
-          'grupo_curso_id' => $grupo->id,
-        ]);
-
-        Matricula::create([
-          'alumno_id' => $student->id,
-          'grupo_curso_id' => $grupo->id,
-        ]);
-
-        // 5️⃣ Enroll student
-        $grupo->alumnos()->syncWithoutDetaching([
-          $student->id
-        ]);
+          ->get()
+          ->map(function($x) use ($student) {
+            Matricula::create([
+              'alumno_id' => $student->id,
+              'grupo_curso_id' => $x->id,
+            ]);
+          });
       }
     }
   }

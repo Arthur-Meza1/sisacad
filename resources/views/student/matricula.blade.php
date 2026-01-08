@@ -39,11 +39,9 @@
                     <p class="font-medium text-indigo-700">{{$lab['nombre']}} - {{ucfirst($lab['tipo'])}}</p>
                     <p class="text-xs text-indigo-400">Turno: {{$lab['turno']}} | Docente: {{$lab['docente']}}</p>
                   </div>
-                  <!--
                   <button type="submit" class="text-xs px-3 py-1 rounded-full border border-red-400 text-red-600 hover:bg-red-100 transition">
                     Quitar
                   </button>
-                  -->
                 </div>
               </form>
             @empty
