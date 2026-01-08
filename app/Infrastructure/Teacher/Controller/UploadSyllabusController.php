@@ -4,8 +4,8 @@ namespace App\Infrastructure\Teacher\Controller;
 
 use App\Application\Teacher\UseCase\ParseSyllabusPdf;
 use App\Infrastructure\Shared\Model\Capitulo;
+use App\Infrastructure\Shared\Model\Curso;
 use App\Infrastructure\Shared\Model\Tema;
-use App\Infrastructure\Shared\Model\GrupoCurso;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
@@ -21,20 +21,20 @@ readonly class UploadSyllabusController
     // 1. Validación de entrada
     $request->validate([
       'silabo' => 'required|file|mimes:pdf|max:10240',
-      'grupo'  => 'required|integer',
+      'curso'  => 'required|integer',
     ]);
 
-    $grupoId = $request->input('grupo');
+    $cursoId = $request->input('curso');
     $file = $request->file('silabo');
 
     Log::info('Iniciando procesamiento de sílabo', [
-      'grupo_id' => $grupoId,
+      'cursoId' => $cursoId,
       'archivo' => $file->getClientOriginalName()
     ]);
 
     // 2. Guardado del archivo
     $filename = time() . '_' . preg_replace('/[^A-Za-z0-9.-]/', '_', $file->getClientOriginalName());
-    $path = $file->storeAs("public/silabos/{$grupoId}", $filename);
+    $path = $file->storeAs("public/silabos/{$cursoId}", $filename);
 
     if (!$path) {
       Log::error('Error al guardar el archivo');
@@ -50,7 +50,7 @@ readonly class UploadSyllabusController
       Log::info('Texto extraído del PDF', ['tamano' => strlen($text)]);
 
       // Guardar para debug
-      Storage::put("debug/syllabus_text_{$grupoId}.txt", $text);
+      Storage::put("debug/syllabus_text_{$cursoId}.txt", $text);
     } catch (\Exception $e) {
       Log::error('Error al extraer texto del PDF', [
         'error' => $e->getMessage(),
@@ -61,8 +61,7 @@ readonly class UploadSyllabusController
 
     // 4. Obtención de modelos
     try {
-      $grupo = GrupoCurso::with('curso')->findOrFail($grupoId);
-      $curso = $grupo->curso;
+      $curso = Curso::findOrFail($cursoId);
 
       Log::info('Curso encontrado', [
         'curso_id' => $curso->id,
@@ -70,7 +69,7 @@ readonly class UploadSyllabusController
       ]);
     } catch (\Exception $e) {
       Log::error('Error al obtener curso', [
-        'grupo_id' => $grupoId,
+        'curso_id' => $cursoId,
         'error' => $e->getMessage()
       ]);
       return back()->with('error', 'Grupo o curso no encontrado.');

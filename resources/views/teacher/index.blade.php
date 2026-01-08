@@ -13,7 +13,7 @@
                 <div>
                   <span class="font-medium text-indigo-700">{{$grupo['nombre']}} ({{$grupo['turno']}}) - {{ucfirst($grupo['tipo'])}}</span>
                   <div class="text-xs mt-1">
-                    <a href="{{ route('teacher.temas.index', ['grupo' => $grupo['id'] ?? ($grupo['grupo_id'] ?? 0)]) }}" class="text-indigo-600 hover:underline">Temas</a>
+                    <a href="{{ route('teacher.temas.index', [$grupo['id'] ?? -1]) }}" class="text-indigo-600 hover:underline">Temas</a>
                     <span class="text-gray-400 mx-1">|</span>
                     <a href="{{ route('teacher.libreta.editor', ['grupo' => $grupo['id'] ?? ($grupo['grupo_id'] ?? 0)]) }}" class="text-gray-600 hover:underline">Libreta</a>
                   </div>
@@ -35,9 +35,9 @@
             <form action="{{ route('teacher.silabo.upload') }}" method="POST" enctype="multipart/form-data" class="space-y-2">
               @csrf
               <label class="block text-xs text-gray-600">Seleccionar Curso</label>
-              <select name="grupo" class="w-full border rounded p-2 text-sm">
+              <select name="curso" class="w-full border rounded p-2 text-sm">
                 @foreach($grupos as $grupo)
-                  <option value="{{$grupo['id'] ?? $grupo['grupo_id'] ?? ''}}">{{$grupo['nombre']}} ({{$grupo['turno']}})</option>
+                  <option value="{{$grupo['curso_id'] ?? ''}}">{{$grupo['nombre']}} ({{$grupo['turno']}})</option>
                 @endforeach
               </select>
               <label class="block text-xs text-gray-600">Archivo (PDF, DOC, DOCX)</label>
@@ -46,7 +46,7 @@
                 <button type="submit" class="px-3 py-1 bg-indigo-600 text-white rounded text-sm">Subir Sílabo</button>
                 <div class="relative group">
                   <a
-                    href="{{ route('teacher.silabo.download', ['grupo' => $grupos[0]['id'] ?? ($grupos[0]['grupo_id'] ?? 0)]) }}"
+                    href="{{ route('teacher.silabo.download', ['grupo' => $grupos[0]['curso_id'] ?? -1]) }}"
                     aria-label="Descargar sílabo"
                     class="inline-flex items-center justify-center w-7 h-7 rounded text-indigo-700 hover:bg-indigo-100
                        transition focus:outline-none focus:ring-2 focus:ring-indigo-300">
