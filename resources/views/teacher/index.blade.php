@@ -35,7 +35,7 @@
             <form action="{{ route('teacher.silabo.upload') }}" method="POST" enctype="multipart/form-data" class="space-y-2">
               @csrf
               <label class="block text-xs text-gray-600">Seleccionar Curso</label>
-              <select name="curso" class="w-full border rounded p-2 text-sm">
+              <select name="curso" class="w-full border rounded p-2 text-sm" onchange="changeTema(this)">
                 @foreach($grupos as $grupo)
                   <option value="{{$grupo['curso_id'] ?? ''}}">{{$grupo['nombre']}} ({{$grupo['turno']}})</option>
                 @endforeach
@@ -46,7 +46,9 @@
                 <button type="submit" class="px-3 py-1 bg-indigo-600 text-white rounded text-sm">Subir Sílabo</button>
                 <div class="relative group">
                   <a
-                    href="{{ route('teacher.silabo.download', ['grupo' => $grupos[0]['curso_id'] ?? -1]) }}"
+                    id="a-download"
+                    data-route="{{ route('teacher.silabo.download', ['curso' => '__ID__']) }}"
+                    href="{{ route('teacher.silabo.download', ['curso' => $grupos[0]['curso_id'] ?? -1]) }}"
                     aria-label="Descargar sílabo"
                     class="inline-flex items-center justify-center w-7 h-7 rounded text-indigo-700 hover:bg-indigo-100
                        transition focus:outline-none focus:ring-2 focus:ring-indigo-300">
@@ -80,4 +82,13 @@
       </div>
     </div>
   </main>
+
+  <script>
+    const SILABO_TEMPLATE = "{{route('teacher.silabo.download', ['curso' => '__ID__'])}}";
+
+    function changeTema(self) {
+      const a = document.getElementById("a-download");
+      a.href = a.dataset.route.replace('__ID__', self.value);
+    }
+  </script>
 </x-header_layout>

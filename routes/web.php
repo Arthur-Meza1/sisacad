@@ -81,7 +81,7 @@ Route::prefix('teacher')->name("teacher.")->group(function () {
   Route::get('temas/{grupo}', Teacher\TemasIndexController::class)->name('temas.index');
   Route::post('tema/toggle-enseñado', [Teacher\TemaEnseñadoController::class, 'toggle'])->name('tema.toggle');
   Route::post('silabo/upload', Teacher\UploadSyllabusController::class)->name('silabo.upload');
-  Route::get('silabo/download/{grupo}', Teacher\DownloadSyllabusController::class)->name('silabo.download');
+  Route::get('silabo/download/{curso}', Teacher\DownloadSyllabusController::class)->name('silabo.download');
 })->middleware(['auth', 'role:teacher']);
 
 Route::prefix('admin')->name('admin.')->group(function () {
