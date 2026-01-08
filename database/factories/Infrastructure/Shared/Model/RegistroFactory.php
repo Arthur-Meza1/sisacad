@@ -18,10 +18,10 @@ class RegistroFactory extends Factory
             'grupo_curso_id' => GrupoCurso::factory(),
             'parcial1' => $this->faker->numberBetween(1, 20),
             'parcial2' => $this->faker->numberBetween(1, 20),
-            'parcial3' => $this->faker->numberBetween(1, 20),
+            'parcial3' => null,
             'continua1' => $this->faker->numberBetween(1, 20),
             'continua2' => $this->faker->numberBetween(1, 20),
-            'continua3' => $this->faker->numberBetween(1, 20),
+            'continua3' => null,
             'sustitutorio' => null,
         ];
     }
