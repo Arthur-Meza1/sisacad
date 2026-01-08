@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
     $this->call([
       JsonSeeder::class,
       StudentSeeder::class,
+      BulkSeeder::class,
     ]);
   }
 }
