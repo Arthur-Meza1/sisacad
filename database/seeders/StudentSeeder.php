@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use App\Infrastructure\Shared\Model\Aula;
+use App\Infrastructure\Shared\Model\Matricula;
+use App\Infrastructure\Shared\Model\Registro;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\File;
 use App\Infrastructure\Shared\Model\BloqueHorario;
@@ -74,6 +76,16 @@ class StudentSeeder extends Seeder
           logger()->warning("Grupo not found: {$courseName} {$turno}");
           continue;
         }
+
+        Registro::factory()->create([
+          'alumno_id' => $student->id,
+          'grupo_curso_id' => $grupo->id,
+        ]);
+
+        Matricula::create([
+          'alumno_id' => $student->id,
+          'grupo_curso_id' => $grupo->id,
+        ]);
 
         // 5️⃣ Enroll student
         $grupo->alumnos()->syncWithoutDetaching([
