@@ -8,7 +8,8 @@
       <div id="courseManagementPanels" class="space-y-6">
         <div class="bg-white rounded-xl p-4 shadow-lg flex justify-between items-center border-l-4 border-indigo-500">
           <div>
-            <h3 class="font-bold text-lg text-gray-700" id="currentCourseTitle">Curso: {{$grupo->curso()->nombre()}} ({{$grupo->grupoTurno()->getValue()}}) - {{ucfirst($grupo->cursoTipo()->getValue())}}</h3>
+            <h3 class="font-bold text-lg text-gray-700" id="currentCourseTitle">Curso: {{$grupo->curso()->nombre()}}
+              ({{$grupo->grupoTurno()->getValue()}}) - {{ucfirst($grupo->cursoTipo()->getValue())}}</h3>
             <p class="text-sm text-gray-500" id="currentCourseInfo"></p>
           </div>
           <div class="flex items-center gap-2">
@@ -136,29 +137,29 @@
 
                 <th
                   class="px-4 py-3 text-center text-xs font-medium uppercase tracking-wider bg-blue-100 text-blue-800">
-                  Parcial 1
+                  Parcial 1 <br> ({{$pesos["p1"]}}%)
                 </th>
                 <th
                   class="px-4 py-3 text-center text-xs font-medium uppercase tracking-wider bg-green-100 text-green-800">
-                  Continua 1
+                  Continua 1 <br> ({{$pesos["c1"]}}%)
                 </th>
 
                 <th
                   class="px-4 py-3 text-center text-xs font-medium uppercase tracking-wider bg-blue-100 text-blue-800">
-                  Parcial 2
+                  Parcial 2 <br> ({{$pesos["p2"]}}%)
                 </th>
                 <th
                   class="px-4 py-3 text-center text-xs font-medium uppercase tracking-wider bg-green-100 text-green-800">
-                  Continua 2
+                  Continua 2 <br> ({{$pesos["c2"]}}%)
                 </th>
 
                 <th
                   class="px-4 py-3 text-center text-xs font-medium uppercase tracking-wider bg-blue-100 text-blue-800">
-                  Parcial 3
+                  Parcial 3 <br> ({{$pesos["p3"]}}%)
                 </th>
                 <th
                   class="px-4 py-3 text-center text-xs font-medium uppercase tracking-wider bg-green-100 text-green-800">
-                  Continua 3
+                  Continua 3 <br> ({{$pesos["c3"]}}%)
                 </th>
                 <th class="px-4 py-3 text-center text-xs font-medium uppercase tracking-wider bg-red-100 text-red-800">
                   Sustitutorio
@@ -248,7 +249,8 @@
 
                   <!-- Estado -->
                   <td class="px-4 py-3 whitespace-nowrap text-center">
-                  <span class="px-3 py-1 rounded-full text-xs font-medium estado-display" data-id="{{$registro['registro_id']}}">
+                  <span class="px-3 py-1 rounded-full text-xs font-medium estado-display"
+                        data-id="{{$registro['registro_id']}}">
                   </span>
                   </td>
                 </tr>
@@ -275,5 +277,8 @@
     </div>
   </main>
 
+  <script>
+    const pesos = @json($pesos);
+  </script>
   @vite('resources/js/docente/libreta.js')
 </x-header_layout>

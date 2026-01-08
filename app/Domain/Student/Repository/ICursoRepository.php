@@ -11,4 +11,5 @@ interface ICursoRepository
      * @return Curso[]
      */
     public function getCursoTeoriaByAlumnoId(Id $alumnoId): array;
+  public function getPesos(Id $cursoId) : array;
 }

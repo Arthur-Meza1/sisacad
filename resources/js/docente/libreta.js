@@ -98,12 +98,18 @@ function calculateStudentAverage(values) {
     }
   }
 
-  const notas = [Number(parcial1), Number(parcial2), Number(parcial3), Number(continua1), Number(continua2), Number(continua3)].filter(n => !Number.isNaN(n));
+  const notas = [
+    Number(parcial1) * pesos.p1 / 100.0,
+    Number(parcial2) * pesos.p2 / 100.0,
+    Number(parcial3) * pesos.p3 / 100.0,
+    Number(continua1) * pesos.c1 / 100.0,
+    Number(continua2) * pesos.c2 / 100.0,
+    Number(continua3) * pesos.c3 / 100.0
+  ].filter(n => !Number.isNaN(n));
 
   if (notas.length === 0) return 0;
 
-  const suma = notas.reduce((total, n) => total + n, 0);
-  return suma / notas.length;
+  return notas.reduce((total, n) => total + n, 0);
 }
 
 function updateSaveStatus() {
