@@ -99,7 +99,8 @@ function renderScheduleCalendar(data, container) {
       const props = info.event.extendedProps;
       if(props.sesion) {
         onSessionClick(props.id, props.grupo.nombre);
-      } else if(isInNowEvent(info.event)) {
+      } else if(1) {
+      //} else if(isInNowEvent(info.event)) {
         crearSesion({
           grupo_id: props.grupo.id,
           fecha: info.event.start.toISOString().slice(0, 10),
