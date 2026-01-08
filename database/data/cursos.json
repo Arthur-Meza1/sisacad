@@ -1,0 +1,1138 @@
+[
+  {
+    "id": 1701208,
+    "name": "ESTRUCTURAS DISCRETAS II",
+    "creditos": 5,
+    "turnos": [
+      {
+        "tipo": "teoria",
+        "turno": "A",
+        "docente": "RAMOS LOVON, WILBER ROBERTO",
+        "salon": "201",
+        "horario": {
+          "lunes": [
+            "12:20-14:00"
+          ],
+          "miercoles": [
+            "12:20-14:00"
+          ],
+          "jueves": [
+            "12:20-14:00"
+          ]
+        }
+      },
+      {
+        "tipo": "teoria",
+        "turno": "B",
+        "docente": "RAMOS LOVON, WILBER ROBERTO",
+        "salon": "201",
+        "horario": {
+          "lunes": [
+            "14:00-15:40"
+          ],
+          "miercoles": [
+            "14:00-15:40"
+          ],
+          "jueves": [
+            "14:00-15:40"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": 1701209,
+    "name": "PROGRAMACION I",
+    "creditos": 5,
+    "turnos": [
+      {
+        "tipo": "teoria",
+        "turno": "A",
+        "docente": "ADRIAZOLA HERRERA, ELIANA MARIA",
+        "salon": "201",
+        "horario": {
+          "lunes": [
+            "07:00-08:40"
+          ],
+          "viernes": [
+            "08:50-10:30"
+          ]
+        }
+      },
+      {
+        "tipo": "teoria",
+        "turno": "B",
+        "docente": "ADRIAZOLA HERRERA, ELIANA MARIA",
+        "salon": "201",
+        "horario": {
+          "lunes": [
+            "15:50-17:30"
+          ],
+          "jueves": [
+            "15:50-10730"
+          ]
+        }
+      },
+      {
+        "tipo": "laboratorio",
+        "turno": "A",
+        "docente": "ADRIAZOLA HERRERA, ELIANA MARIA",
+        "salon": "Lab 2",
+        "horario": {
+          "martes": [
+            "11:30-13:10"
+          ],
+          "viernes": [
+            "10:40-12:20"
+          ]
+        }
+      },
+      {
+        "tipo": "laboratorio",
+        "turno": "B",
+        "docente": "ADRIAZOLA HERRERA, ELIANA MARIA",
+        "salon": "Lab 1",
+        "horario": {
+          "miercoles": [
+            "17:40-19:20"
+          ],
+          "jueves": [
+            "17:40-19:20"
+          ]
+        }
+      },
+      {
+        "tipo": "laboratorio",
+        "turno": "C",
+        "docente": "ADRIAZOLA HERRERA, ELIANA MARIA",
+        "salon": "Lab 1",
+        "horario": {
+          "lunes": [
+            "15:50-17:30"
+          ],
+          "jueves": [
+            "15:50-10730"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": 1701210,
+    "name": "CALCULO EN UNA VARIABLE",
+    "creditos": 5,
+    "turnos": [
+      {
+        "tipo": "teoria",
+        "turno": "A",
+        "docente": "GUTIERREZ RODRIGUEZ, EDDY AUGUSTO",
+        "salon": "201",
+        "horario": {
+          "lunes": [
+            "8:50-10:30"
+          ],
+          "martes": [
+            "8:50-10:30"
+          ],
+          "jueves": [
+            "10:40-12:20"
+          ]
+        }
+      },
+      {
+        "tipo": "teoria",
+        "turno": "B",
+        "docente": "VELASQUEZ CONDORI, ELISEO DANIEL",
+        "salon": "201",
+        "horario": {
+          "martes": [
+            "12:20-14:00"
+          ],
+          "miercoles": [
+            "15:50-17:30"
+          ],
+          "viernes": [
+            "15:50-17:30"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": 1701212,
+    "name": "INGLES II",
+    "creditos": 3,
+    "turnos": [
+      {
+        "tipo": "teoria",
+        "turno": "A",
+        "docente": "JACOBE AGUIRRE, ROCIO",
+        "salon": "201",
+        "horario": {
+          "lunes": [
+            "10:40-12:20"
+          ],
+          "jueves": [
+            "8:50-10:30"
+          ]
+        }
+      },
+      {
+        "tipo": "teoria",
+        "turno": "B",
+        "docente": "PILCO ANDIA, CARLOTA CRISTINA",
+        "salon": "201",
+        "horario": {
+          "viernes": [
+            "12:20-14:00",
+            "17:40-19:20"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": 1701215,
+    "name": "LINGUISTICA, COMPRENSION Y REDACCION ACADEMICA",
+    "creditos": 3,
+    "turnos": [
+      {
+        "tipo": "teoria",
+        "turno": "A",
+        "docente": "OSORIO MENDOZA DE MONTEZA, NADJA CATALIN",
+        "salon": "201",
+        "horario": {
+          "miercoles": [
+            "9:40-12:20"
+          ],
+          "viernes": [
+            "7:00-8:40"
+          ]
+        }
+      },
+      {
+        "tipo": "teoria",
+        "turno": "B",
+        "docente": "ZEBALLOS RAMIREZ, PILAR ELIZABETH",
+        "salon": "201",
+        "horario": {
+          "martes": [
+            "14:00-16:40"
+          ],
+          "viernes": [
+            "14:00-15:40"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": 1701216,
+    "name": "REALIDAD NACIONAL",
+    "creditos": 2,
+    "turnos": [
+      {
+        "tipo": "teoria",
+        "turno": "A",
+        "docente": "LAZO ALARCON, ERIKA PATRICIA",
+        "salon": "201",
+        "horario": {
+          "miercoles": [
+            "7:00-9:40"
+          ]
+        }
+      },
+      {
+        "tipo": "teoria",
+        "turno": "B",
+        "docente": "LAZO ALARCON, ERIKA PATRICIA",
+        "salon": "201",
+        "horario": {
+          "martes": [
+            "16:40-19:20"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": 1702224,
+    "name": "ALGORITMOS Y ESTRUCTURAS DE DATOS",
+    "creditos": 5,
+    "turnos": [
+      {
+        "tipo": "teoria",
+        "turno": "A",
+        "docente": "MALDONADO QUISPE, PERCY",
+        "salon": "202",
+        "horario": {
+          "miercoles": [
+            "8:50-10:30"
+          ],
+          "jueves": [
+            "10:40-12:20"
+          ]
+        }
+      },
+      {
+        "tipo": "teoria",
+        "turno": "B",
+        "docente": "MALDONADO QUISPE, PERCY",
+        "salon": "202",
+        "horario": {
+          "miercoles": [
+            "12:20-14:00"
+          ],
+          "jueves": [
+            "14:00-15:40"
+          ]
+        }
+      },
+      {
+        "tipo": "laboratorio",
+        "turno": "A",
+        "docente": "PAZ VALDERRAMA, ALFREDO",
+        "salon": "Lab 2",
+        "horario": {
+          "lunes": [
+            "8:50-10:30"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": 1702225,
+    "name": "TEORIA DE LA COMPUTACION",
+    "creditos": 4,
+    "turnos": [
+      {
+        "tipo": "teoria",
+        "turno": "A",
+        "docente": "MAMANI ALIAGA, ALVARO HENRY",
+        "salon": "202",
+        "horario": {
+          "lunes": [
+            "17:40-19:20"
+          ]
+        }
+      },
+      {
+        "tipo": "teoria",
+        "turno": "B",
+        "docente": "VELAZCO PAREDES, YUBER ELMER",
+        "salon": "202",
+        "horario": {
+          "martes": [
+            "7:00-8:40"
+          ],
+          "jueves": [
+            "17:40-19:20"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": 1702226,
+    "name": "BASE DE DATOS I",
+    "creditos": 4,
+    "turnos": [
+      {
+        "tipo": "teoria",
+        "turno": "A",
+        "docente": "HINOJOSA CARDENAS, EDWARD",
+        "salon": "202",
+        "horario": {
+          "lunes": [
+            "12:20-14:00"
+          ]
+        }
+      },
+      {
+        "tipo": "teoria",
+        "turno": "B",
+        "docente": "HINOJOSA CARDENAS, EDWARD",
+        "salon": "202",
+        "horario": {
+          "miercoles": [
+            "15:50-17:30"
+          ],
+          "jueves": [
+            "15:50-17:30"
+          ]
+        }
+      },
+      {
+        "tipo": "laboratorio",
+        "turno": "A",
+        "docente": "HINOJOSA CARDENAS, EDWARD",
+        "salon": "Lab 1",
+        "horario": {
+          "lunes": [
+            "15:50-17:30"
+          ],
+          "martes": [
+            "15:50-17:30"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": 1702227,
+    "name": "ALGEBRA LINEAL NUMERICA",
+    "creditos": 4,
+    "turnos": [
+      {
+        "tipo": "teoria",
+        "turno": "A",
+        "docente": "MESTAS CHAVEZ, ROGER EDWAR",
+        "salon": "202",
+        "horario": {
+          "lunes": [
+            "7:00-8:40"
+          ],
+          "miercoles": [
+            "7:00-8:40"
+          ]
+        }
+      },
+      {
+        "tipo": "teoria",
+        "turno": "B",
+        "docente": "VIZA HUAYLLASO, JUDID CARINA",
+        "salon": "202",
+        "horario": {
+          "martes": [
+            "12:20-14:00"
+          ],
+          "jueves": [
+            "12:20-14:00"
+          ]
+        }
+      },
+      {
+        "tipo": "laboratorio",
+        "turno": "A",
+        "docente": "MESTAS CHAVEZ, ROGER EDWAR",
+        "salon": "Lab 2",
+        "horario": {
+          "jueves": [
+            "7:00-8:40"
+          ]
+        }
+      },
+      {
+        "tipo": "laboratorio",
+        "turno": "B",
+        "docente": "OLANDA VELASQUEZ, BERTHA",
+        "salon": "Lab 2",
+        "horario": {
+          "viernes": [
+            "12:20-14:00"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": 1702228,
+    "name": "ESTADISTICA Y PROBABILIDADES",
+    "creditos": 4,
+    "turnos": [
+      {
+        "tipo": "teoria",
+        "turno": "A",
+        "docente": "QUISPE MAMANI, ANTONIA",
+        "salon": "202",
+        "horario": {
+          "lunes": [
+            "10:40-12:20"
+          ],
+          "martes": [
+            "9:40-12:20"
+          ]
+        }
+      },
+      {
+        "tipo": "teoria",
+        "turno": "B",
+        "docente": "QUISPE MAMANI, ANTONIA",
+        "salon": "202",
+        "horario": {
+          "lunes": [
+            "12:20-14:00"
+          ],
+          "miercoles": [
+            "11:30-14:00"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": 1702229,
+    "name": "ECOLOGIA Y CONSERVACION AMBIENTAL",
+    "creditos": 2,
+    "turnos": [
+      {
+        "tipo": "teoria",
+        "turno": "A",
+        "docente": "VALDIVIA MALAGA, MARCO ANTONIO",
+        "salon": "202",
+        "horario": {
+          "viernes": [
+            "7:00-09:40"
+          ]
+        }
+      },
+      {
+        "tipo": "teoria",
+        "turno": "B",
+        "docente": "LUQUE FERNANDEZ, CESAR RAUL",
+        "salon": "202",
+        "horario": {
+          "viernes": [
+            "16:40-19:20"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": 1703131,
+    "name": "ANALISIS Y DISENO DE ALGORITMOS",
+    "creditos": 4,
+    "turnos": [
+      {
+        "tipo": "teoria",
+        "turno": "A",
+        "docente": "QUISPE CRUZ, MARCELA",
+        "salon": "203",
+        "horario": {
+          "lunes": [
+            "15:50-17:30"
+          ],
+          "viernes": [
+            "07:00-08:40"
+          ]
+        }
+      },
+      {
+        "tipo": "laboratorio",
+        "turno": "A",
+        "docente": "QUISPE CRUZ, MARCELA",
+        "salon": "Lab 1",
+        "horario": {
+          "martes": [
+            "07:00-08:40"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": 1703236,
+    "name": "PROGRAMACION COMPETITIVA",
+    "creditos": 3,
+    "turnos": [
+      {
+        "tipo": "teoria",
+        "turno": "A",
+        "docente": "CARDENAS TALAVERA, ROLANDO JESUS",
+        "salon": "203",
+        "horario": {
+          "martes": [
+            "08:50-09:40",
+            "11:30-12:20"
+          ],
+          "jueves": [
+            "07:00-08:40"
+          ]
+        }
+      },
+      {
+        "tipo": "laboratorio",
+        "turno": "A",
+        "docente": "CARDENAS TALAVERA, ROLANDO JESUS",
+        "salon": "Lab 4",
+        "horario": {
+          "martes": [
+            "10:40-12:20"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": 1703237,
+    "name": "INGENIERIA DE SOFTWARE II",
+    "creditos": 4,
+    "turnos": [
+      {
+        "tipo": "teoria",
+        "turno": "A",
+        "docente": "SARMIENTO CALISAYA, EDGAR",
+        "salon": "203",
+        "horario": {
+          "martes": [
+            "12:20-13:10"
+          ],
+          "miercoles": [
+            "13:10-14:00"
+          ]
+        }
+      },
+      {
+        "tipo": "teoria",
+        "turno": "B",
+        "docente": "SARMIENTO CALISAYA, EDGAR",
+        "salon": "203",
+        "horario": {
+          "martes": [
+            "13:10-14:00"
+          ],
+          "miercoles": [
+            "14:00-14:50"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": 1703238,
+    "name": "ESTRUCTURAS DE DATOS AVANZADOS",
+    "creditos": 4,
+    "turnos": [
+      {
+        "tipo": "teoria",
+        "turno": "A",
+        "docente": "YARI RAMOS, YESSENIA DAISY",
+        "salon": "203",
+        "horario": {
+          "lunes": [
+            "10:40-12:20"
+          ],
+          "jueves": [
+            "08:50-10:30"
+          ]
+        }
+      },
+      {
+        "tipo": "laboratorio",
+        "turno": "A",
+        "docente": "YARI RAMOS, YESSENIA DAISY",
+        "salon": "Lab 1",
+        "horario": {
+          "miercoles": [
+            "08:50-10:30"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": 1703239,
+    "name": "SISTEMAS OPERATIVOS",
+    "creditos": 4,
+    "turnos": [
+      {
+        "tipo": "teoria",
+        "turno": "A",
+        "docente": "FLORES QUISPE, ROXANA",
+        "salon": "203",
+        "horario": {
+          "lunes": [
+            "15:50-16:40"
+          ],
+          "martes": [
+            "17:40-18:30"
+          ]
+        }
+      },
+      {
+        "tipo": "teoria",
+        "turno": "B",
+        "docente": "CARDENAS TALAVERA, ROLANDO JESUS",
+        "salon": "203",
+        "horario": {
+          "lunes": [
+            "16:40-17:30"
+          ],
+          "jueves": [
+            "15:50-16:40"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": 1703240,
+    "name": "TRABAJO INTERDISCIPLINAR II",
+    "creditos": 3,
+    "turnos": [
+      {
+        "tipo": "teoria",
+        "turno": "A",
+        "docente": "YARI RAMOS, YESSENIA DEYSI",
+        "salon": "203",
+        "horario": {
+          "martes": [
+            "11:30-12:20"
+          ],
+          "miercoles": [
+            "11:30-12:20"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": 1703241,
+    "name": "MATEMATICA APLICADA A LA COMPUTACION",
+    "creditos": 4,
+    "turnos": [
+      {
+        "tipo": "teoria",
+        "turno": "A",
+        "docente": "MORALES MOYA, ADHA",
+        "salon": "203",
+        "horario": {
+          "lunes": [
+            "07:40-08:40"
+          ],
+          "martes": [
+            "09:40-11:30"
+          ]
+        }
+      },
+      {
+        "tipo": "teoria",
+        "turno": "B",
+        "docente": "CANO MAMANI, ADELA LUISA",
+        "salon": "203",
+        "horario": {
+          "jueves": [
+            "15:50-13:50"
+          ],
+          "viernes": [
+            "14:00-15:40"
+          ]
+        }
+      },
+      {
+        "tipo": "laboratorio",
+        "turno": "A",
+        "docente": "HANCCO ANCORI, RICARDO JAVIER",
+        "salon": "Lab 2",
+        "horario": {
+          "viernes": [
+            "08:50-10:30"
+          ]
+        }
+      },
+      {
+        "tipo": "laboratorio",
+        "turno": "B",
+        "docente": "MORALES MOYA, ADHA",
+        "salon": "Lab 2",
+        "horario": {
+          "martes": [
+            "15:50-17:30"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": 1704248,
+    "name": "INTERACCION HUMANO COMPUTADOR",
+    "creditos": 3,
+    "turnos": [
+      {
+        "tipo": "teoria",
+        "turno": "A",
+        "docente": "CUADROS VALDIVIA, ANA MARIA",
+        "salon": "101",
+        "horario": {
+          "martes": [
+            "08:50-10:30"
+          ],
+          "miercoles": [
+            "07:00-08:40"
+          ]
+        }
+      },
+      {
+        "tipo": "teoria",
+        "turno": "B",
+        "docente": "CUADROS VALDIVIA, ANA MARIA",
+        "salon": "101",
+        "horario": {
+          "martes": [
+            "10:40-12:20"
+          ],
+          "jueves": [
+            "12:20-14:00"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": 1704249,
+    "name": "PROYECTO DE FINAL DE CARRERA I",
+    "creditos": 3,
+    "turnos": [
+      {
+        "tipo": "teoria",
+        "turno": "A",
+        "docente": "FLORES QUISPE, ROXANA",
+        "salon": "101",
+        "horario": {
+          "miercoles": [
+            "08:50-10:30"
+          ],
+          "viernes": [
+            "11:30-13:10"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": 1704250,
+    "name": "COMPUTACION PARALELA Y DISTRIBUIDA",
+    "creditos": 4,
+    "turnos": [
+      {
+        "tipo": "teoria",
+        "turno": "A",
+        "docente": "VELAZCO PAREDES, YUBER ELMER",
+        "salon": "101",
+        "horario": {
+          "lunes": [
+            "14:00-15:40"
+          ],
+          "jueves": [
+            "10:40-12:20"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": 1704251,
+    "name": "SEGURIDAD EN COMPUTACION",
+    "creditos": 3,
+    "turnos": [
+      {
+        "tipo": "teoria",
+        "turno": "A",
+        "docente": "DELGADO BARRY, LUCY ANGELA",
+        "salon": "101",
+        "horario": {
+          "miercoles": [
+            "10:40-13:10"
+          ]
+        }
+      },
+      {
+        "tipo": "laboratorio",
+        "turno": "A",
+        "docente": "DELGADO BARRY, LUCY ANGELA",
+        "salon": "Lab 1",
+        "horario": {
+          "lunes": [
+            "08:50-10:30"
+          ]
+        }
+      },
+      {
+        "tipo": "laboratorio",
+        "turno": "B",
+        "docente": "DELGADO BARRY, LUCY ANGELA",
+        "salon": "Lab 1",
+        "horario": {
+          "lunes": [
+            "14:50-15:40"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": 1704252,
+    "name": "FORMACION DE EMPRESAS DE BASE TECNOLOGICA I",
+    "creditos": 3,
+    "turnos": [
+      {
+        "tipo": "teoria",
+        "turno": "A",
+        "docente": "ZUÑIGA CUEVA, JESUS HERACLIO",
+        "salon": "101",
+        "horario": {
+          "jueves": [
+            "07:40-08:40"
+          ],
+          "viernes": [
+            "10:40-12:20"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": 1704253,
+    "name": "RELACIONES HUMANAS",
+    "creditos": 2,
+    "turnos": [
+      {
+        "tipo": "teoria",
+        "turno": "A",
+        "docente": "LAZO ALARCON, ERIKA PATRICIA",
+        "salon": "101",
+        "horario": {
+          "martes": [
+            "07:00-08:40"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": 1704254,
+    "name": "FISICA COMPUTACIONAL (E)",
+    "creditos": 3,
+    "turnos": [
+      {
+        "tipo": "teoria",
+        "turno": "A",
+        "docente": "CABANA HANCCO, WILSON RICARDO",
+        "salon": "101",
+        "horario": {
+          "jueves": [
+            "14:00-15:40"
+          ],
+          "viernes": [
+            "07:00-08:40"
+          ]
+        }
+      },
+      {
+        "tipo": "teoria",
+        "turno": "B",
+        "docente": "CABANA HANCCO, WILSON RICARDO",
+        "salon": "101",
+        "horario": {
+          "miercoles": [
+            "14:00-15:40"
+          ],
+          "viernes": [
+            "10:40-12:20"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": 1704255,
+    "name": "TOPICOS EN INGENIERIA DE SOFTWARE (E)",
+    "creditos": 3,
+    "turnos": [
+      {
+        "tipo": "teoria",
+        "turno": "A",
+        "docente": "SARMIENTO CALISAYA, EDGAR",
+        "salon": "101",
+        "horario": {
+          "lunes": [
+            "10:40-12:20"
+          ],
+          "miercoles": [
+            "07:00-08:40"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": 1705265,
+    "name": "CLOUD COMPUTING",
+    "creditos": 4,
+    "turnos": [
+      {
+        "tipo": "teoria",
+        "turno": "A",
+        "docente": "MAMANI ALIAGA, ALVARO HENRY",
+        "salon": "301",
+        "horario": {
+          "martes": [
+            "12:20-13:10"
+          ],
+          "miercoles": [
+            "12:20-13:10"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": 1705267,
+    "name": "TRABAJO INTERDISCIPLINAR III",
+    "creditos": 2,
+    "turnos": [
+      {
+        "tipo": "teoria",
+        "turno": "A",
+        "docente": "YARI RAMOS, YESSENIA DEYSI",
+        "salon": "301",
+        "horario": {
+          "lunes": [
+            "14:00-14:50",
+            "15:50-16:40"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": 1705268,
+    "name": "INTERNET DE LAS COSAS",
+    "creditos": 3,
+    "turnos": [
+      {
+        "tipo": "teoria",
+        "turno": "A",
+        "docente": "MALDONADO QUISPE, PERCY",
+        "salon": "301",
+        "horario": {
+          "jueves": [
+            "16:40-17:30"
+          ],
+          "viernes": [
+            "15:50-16:40"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": 1705269,
+    "name": "ROBOTICA (E)",
+    "creditos": 4,
+    "turnos": [
+      {
+        "tipo": "teoria",
+        "turno": "A",
+        "docente": "GUTIERREZ CACERES, JUAN CARLOS",
+        "salon": "201",
+        "horario": {
+          "martes": [
+            "15:50-17:30"
+          ]
+        }
+      },
+      {
+        "tipo": "laboratorio",
+        "turno": "A",
+        "docente": "MALDONADO QUISPE, PERCY",
+        "salon": "Lab 1",
+        "horario": {
+          "lunes": [
+            "18:30-20:10"
+          ],
+          "viernes": [
+            "14:00-15:40"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": 1705270,
+    "name": "TOPICOS EN CIBERSEGURIDAD (E)",
+    "creditos": 4,
+    "turnos": [
+      {
+        "tipo": "teoria",
+        "turno": "A",
+        "docente": "CARDENAS TALAVERA, ROLANDO JESUS",
+        "salon": "301",
+        "horario": {
+          "martes": [
+            "15:50-16:40"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": 1705271,
+    "name": "PRACTICAS PRE PROFESIONALES",
+    "creditos": 2,
+    "turnos": [
+      {
+        "tipo": "teoria",
+        "turno": "A",
+        "docente": "RAMOS LOVON, WILBER ROBERTO",
+        "salon": "n/a",
+        "horario": {
+          "lunes": [
+            "15:50-17:30"
+          ],
+          "miercoles": [
+            "15:50-17:30"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": 1705272,
+    "name": "TRABAJO DE INVESTIGACIÓN",
+    "creditos": 6,
+    "turnos": [
+      {
+        "tipo": "teoria",
+        "turno": "A",
+        "docente": "GUTIERREZ CACERES, JUAN CARLOS",
+        "salon": "301",
+        "horario": {
+          "martes": [
+            "17:40-20:10"
+          ],
+          "jueves": [
+            "16:40-20:10"
+          ]
+        }
+      },
+      {
+        "tipo": "teoria",
+        "turno": "B",
+        "docente": "YARI RAMOS, YESSENIA DEYSI",
+        "salon": "203",
+        "horario": {
+          "martes": [
+            "17:40-20:10"
+          ],
+          "jueves": [
+            "12:20-14:00"
+          ]
+        }
+      },
+      {
+        "tipo": "teoria",
+        "turno": "C",
+        "docente": "MALDONADO QUISPE, PERCY",
+        "salon": "101",
+        "horario": {
+          "martes": [
+            "17:40-20:10"
+          ]
+        }
+      }
+    ]
+  }
+]
