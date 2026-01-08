@@ -14,6 +14,13 @@ return new class extends Migration
         Schema::create('cursos', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
+            $table->unsignedTinyInteger('creditos')->nullable();
+            $table->unsignedTinyInteger('peso_p1')->nullable();
+            $table->unsignedTinyInteger('peso_p2')->nullable();
+            $table->unsignedTinyInteger('peso_p3')->nullable();
+            $table->unsignedTinyInteger('peso_c1')->nullable();
+            $table->unsignedTinyInteger('peso_c2')->nullable();
+            $table->unsignedTinyInteger('peso_c3')->nullable();
         });
     }
 
