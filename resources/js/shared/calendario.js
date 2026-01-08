@@ -13,9 +13,10 @@ function convertDiaToInt(dia) {
   return s_dayMap[dia.toLowerCase()];
 }
 
-function convertDateStringToDate(dateStr) {
+function convertDateStringToDate(dateStr, time) {
   const [y, m, d] = dateStr.split("-").map(Number);
-  return new Date(y, m-1, d);
+  const [hour, minutes] = time.split(":").map(Number);
+  return new Date(y, m-1, d, hour, minutes);
 }
 
 function ucfirst(val) {
@@ -24,12 +25,14 @@ function ucfirst(val) {
 
 export class Calendario {
   #fullCalendarOptions;
+  #eventDidMount;
 
   /**
    * @param data
    */
   constructor(data) {
-    const events = this.#createEvents(data);
+    const [events, sesionSet] = this.#createEvents(data);
+    const selfEventDidMount = (info) => this?.#eventDidMount(info);
     this.#fullCalendarOptions = {
       initialView: 'timeGridWeek',
       slotMinTime: '06:00:00',
@@ -64,6 +67,15 @@ export class Calendario {
           allowHTML: true,
           placement: 'top',
         });
+
+        if(props.sesion === false) {
+          const key = `${info.event.start.toISOString()}${info.event.end.toISOString()}`;
+          if(sesionSet.has(key)) {
+            info.el.style.display = "none";
+          }
+        }
+
+        selfEventDidMount(info);
       },
     };
   }
@@ -84,7 +96,7 @@ export class Calendario {
   }
 
   eventDidMount(callback) {
-    this.#fullCalendarOptions.eventDidMount = callback;
+    this.#eventDidMount = callback;
     return this;
   }
 
@@ -99,7 +111,8 @@ export class Calendario {
   #createEvents(data) {
     const sesionSet =  new Set();
     const sesiones = data.sesiones.map(function (item) {
-      sesionSet.add(`${convertDateStringToDate(item.fecha).getDay()}${item.horaInicio}${item.horaFin}`);
+      const key = `${convertDateStringToDate(item.fecha, item.horaInicio).toISOString()}${convertDateStringToDate(item.fecha, item.horaFin).toISOString()}`;
+      sesionSet.add(key);
       return {
         title: `${item.grupo.nombre} - ${ucfirst(item.tipo)}`,
         className: "ec-session",
@@ -115,7 +128,6 @@ export class Calendario {
     const horario =
       data
         .horario
-        .filter(item => !sesionSet.has(`${convertDiaToInt(item.dia)}${item.horaInicio}${item.horaFin}`))
         .map(function (item) {
           const colorMap = { teoria: '#60a5fa', laboratorio: '#2aa87c' };
           return {
@@ -125,7 +137,10 @@ export class Calendario {
             daysOfWeek: [convertDiaToInt(item .dia)],
             startTime: item.horaInicio,
             endTime: item.horaFin,
-            extendedProps: item,
+            extendedProps: {
+              sesion: false,
+              ...item
+            },
           }
         });
 
@@ -147,6 +162,6 @@ export class Calendario {
       return props;
     });
 
-    return [...horario, ...sesiones, ...others];
+    return [[...horario, ...sesiones, ...others], sesionSet];
   }
 }
