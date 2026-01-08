@@ -92,8 +92,13 @@ readonly class UploadSyllabusController
       DB::commit();
 
       return back()->with('success',
-        "Sílabo procesado: {$resultados['capitulos']} capítulos y {$resultados['temas']} temas importados."
+        "Sílabo procesado: " .
+        "{$resultados['capitulos']} capítulos, " .
+        "{$resultados['temas']} temas. " .
+        ($resultados['creditos'] ? "Créditos: {$resultados['creditos']}. " : "") .
+        ($resultados['pesos']['p1'] ? "Pesos extraídos." : "")
       );
+
 
     } catch (\Exception $e) {
       DB::rollBack();
@@ -105,19 +110,22 @@ readonly class UploadSyllabusController
     }
   }
 
-  /**
-   * Procesador simplificado sin dependencia de tabla unidades
-   */
 
-  // EN UploadSyllabusController, BUSCA y REEMPLAZA el método procesarSyllabusSimple:
 
   private function procesarSyllabusSimple(string $text, $curso): array
   {
     $capitulosCreados = 0;
     $temasCreados = 0;
 
-    $text = preg_replace('/\r\n/', "\n", $text);
-    $text = preg_replace('/\n+/', "\n", $text);
+    // Variables para extraer datos adicionales
+    $creditos = null;
+    $pesos = [
+      'p1' => null, 'p2' => null, 'p3' => null,
+      'c1' => null, 'c2' => null, 'c3' => null
+    ];
+
+    $text = str_replace('/\r\n/', "\n", $text);
+    $text = str_replace('/\n+/', "\n", $text);
 
     $lines = explode("\n", $text);
 
@@ -131,18 +139,56 @@ readonly class UploadSyllabusController
       $line = trim($line);
       if (empty($line)) continue;
 
-      // 1. Buscar CONTENIDO TEMÁTICO
+      // 1. EXTRACCIÓN DE CRÉDITOS (antes del contenido temático)
+      if (preg_match('/Número\s+de\s+créditos\s*:\s*(\d+(?:\.\d+)?)/i', $line, $matches)) {
+        $creditos = floatval($matches[1]);
+        Log::info('Créditos detectados', ['creditos' => $creditos]);
+      }
+
+      // 2. EXTRACCIÓN DE PESOS DE EVALUACIÓN
+      if (preg_match('/Cronograma\s+de\s+evaluación.*?Primera\s+Evaluación\s+Parcial.*?(\d+(?:\.\d+)?)%\D*(\d+(?:\.\d+)?)%.*?Segunda\s+Evaluación\s+Parcial.*?(\d+(?:\.\d+)?)%\D*(\d+(?:\.\d+)?)%.*?Tercera\s+Evaluación\s+Parcial.*?(\d+(?:\.\d+)?)%\D*(\d+(?:\.\d+)?)%/is', $text, $matches)) {
+        if (isset($matches[1])) $pesos['p1'] = floatval($matches[1]);
+        if (isset($matches[2])) $pesos['c1'] = floatval($matches[2]);
+        if (isset($matches[3])) $pesos['p2'] = floatval($matches[3]);
+        if (isset($matches[4])) $pesos['c2'] = floatval($matches[4]);
+        if (isset($matches[5])) $pesos['p3'] = floatval($matches[5]);
+        if (isset($matches[6])) $pesos['c3'] = floatval($matches[6]);
+
+        Log::info('Pesos encontrados mediante patrón de tabla', $pesos);
+      }
+
+      // PATRÓN 3: Buscar por líneas específicas (más robusto)
+      if (preg_match('/Primera\s+Evaluación\s+Parcial[^%]*?(\d+(?:\.\d+)?)%[^%]*?(\d+(?:\.\d+)?)%/i', $text, $matches)) {
+        $pesos['p1'] = floatval($matches[1]);
+        $pesos['c1'] = floatval($matches[2]);
+      }
+
+      if (preg_match('/Segunda\s+Evaluación\s+Parcial[^%]*?(\d+(?:\.\d+)?)%[^%]*?(\d+(?:\.\d+)?)%/i', $text, $matches)) {
+        $pesos['p2'] = floatval($matches[1]);
+        $pesos['c2'] = floatval($matches[2]);
+      }
+
+      if (preg_match('/Tercera\s+Evaluación\s+Parcial[^%]*?(\d+(?:\.\d+)?)%[^%]*?(\d+(?:\.\d+)?)%/i', $text, $matches)) {
+        $pesos['p3'] = floatval($matches[1]);
+        $pesos['c3'] = floatval($matches[2]);
+      }
+
+      // 3. Buscar CONTENIDO TEMÁTICO
       if (preg_match('/5\.[\s\.]*CONTENIDO[\s\.]*TEM[ÁA]TICO/i', $line)) {
         $enContenido = true;
+
+        // Si ya extrajimos créditos y pesos, actualizar el curso
+        $this->actualizarInformacionCurso($curso, $creditos, $pesos);
+
         continue;
       }
 
       if (!$enContenido) continue;
 
-      // 2. Detectar fin
+      // 4. Detectar fin
       if (preg_match('/^6\./i', $line)) break;
 
-      // 3. Detectar UNIDADES
+      // 5. Detectar UNIDADES
       if (preg_match('/^\s*(PRIMERA|SEGUNDA|TERCERA|CUARTA)\s+UNIDAD/i', $line, $matches)) {
         $unidadNombre = strtoupper($matches[1]);
         $unidadNumero = match($unidadNombre) {
@@ -158,8 +204,7 @@ readonly class UploadSyllabusController
         continue;
       }
 
-      // 4. Detectar CAPÍTULOS - CORREGIDO
-      // Tu PDF tiene: "Capítulo I: Visión General de los SO"
+      // 6. Detectar CAPÍTULOS
       if (preg_match('/Capítulo\s+([IVXLCDM]+)\s*:\s*(.+)/i', $line, $matches)) {
         $numeroRomano = trim($matches[1]);
         $titulo = trim($matches[2]);
@@ -183,7 +228,7 @@ readonly class UploadSyllabusController
         continue;
       }
 
-      // 5. Detectar TEMAS - CORREGIDO
+      // 7. Detectar TEMAS
       if (preg_match('/Tema\s+(\d+)\s*:\s*(.+)/i', $line, $matches)) {
         $numeroTema = str_pad(trim($matches[1]), 2, '0', STR_PAD_LEFT);
         $titulo = trim($matches[2]);
@@ -216,9 +261,57 @@ readonly class UploadSyllabusController
       }
     }
 
+    // Si no encontramos antes del contenido, buscar después
+    if ($creditos === null || array_filter($pesos) === array_fill_keys(array_keys($pesos), null)) {
+      $this->buscarInformacionAdicional($text, $curso, $creditos, $pesos);
+    }
+
     return [
       'capitulos' => $capitulosCreados,
-      'temas' => $temasCreados
+      'temas' => $temasCreados,
+      'creditos' => $creditos,
+      'pesos' => $pesos
     ];
   }
+
+  private function actualizarInformacionCurso($curso, $creditos, $pesos)
+  {
+    try {
+      $actualizaciones = [];
+
+      if ($creditos !== null) {
+        $curso->creditos = $creditos;
+        $actualizaciones['creditos'] = $creditos;
+      }
+
+      $columnas = [
+        'p1' => 'peso_p1', 'c1' => 'peso_c1',
+        'p2' => 'peso_p2', 'c2' => 'peso_c2',
+        'p3' => 'peso_p3', 'c3' => 'peso_c3'
+      ];
+
+      foreach ($columnas as $key => $columna) {
+        if (isset($pesos[$key]) && $pesos[$key] !== null) {
+          $curso->{$columna} = $pesos[$key];
+          $actualizaciones[$columna] = $pesos[$key];
+        }
+      }
+
+      if (!empty($actualizaciones)) {
+        $curso->save();
+        Log::info('Información del curso actualizada', $actualizaciones);
+      } else {
+        Log::warning('No se encontró información para actualizar en el curso');
+      }
+
+    } catch (\Exception $e) {
+      Log::error(' Error al actualizar información del curso', [
+        'curso_id' => $curso->id,
+        'error' => $e->getMessage(),
+        'trace' => $e->getTraceAsString()
+      ]);
+    }
+  }
+
+
 }
