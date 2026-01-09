@@ -9,16 +9,18 @@ use App\Domain\Shared\ValueObject\Id;
 
 interface ISesionRepository
 {
-    public function findByIdOrFail(Id $id): Sesion;
+  public function findByIdOrFail(Id $id): Sesion;
 
-    public function create(
-        Fecha $fecha,
-        Hora $inicio,
-        Hora $fin,
-        Id $grupoId,
-        Id $aulaId): Sesion;
+  public function create(
+    Fecha $fecha,
+    Hora $inicio,
+    Hora $fin,
+    Id $grupoId,
+    Id $aulaId,
+    bool $tomarAsistencia = true
+  ): Sesion;
 
-    public function update(Sesion $sesion): void;
+  public function update(Sesion $sesion): void;
 
-    public function deleteOrFail(Id $id): void;
+  public function deleteOrFail(Id $id): void;
 }

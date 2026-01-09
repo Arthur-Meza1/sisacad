@@ -23,8 +23,8 @@ class Curso extends Model
       return $this->hasManyThrough(
         Tema::class,
         Capitulo::class,
-        'curso_id',     // FK en capitulos
-        'capitulo_id',  // FK en temas
+        'curso_id',
+        'capitulo_id',
         'id',           // PK en cursos
         'id'            // PK en capitulos
       )->orderBy('capitulos.orden')->orderBy('temas.orden');

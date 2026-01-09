@@ -196,3 +196,12 @@ body {
 
 .fc-bg-event {
 }
+
+.toggle-checkbox:checked {
+  right: 0;
+  border-color: #10B981;
+}
+
+.toggle-checkbox:checked + .toggle-label {
+  background-color: #10B981;
+}

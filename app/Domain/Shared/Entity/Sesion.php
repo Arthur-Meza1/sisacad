@@ -11,7 +11,7 @@ use Carbon\Carbon;
 
 class Sesion
 {
-    private static int $AVAILABLE_MINUTES = 0xFFFFFF;
+    private static int $AVAILABLE_MINUTES = 15;
 
     private function __construct(
         private readonly Id $id,
