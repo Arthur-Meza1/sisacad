@@ -1,0 +1,120 @@
+{
+  "info": {
+    "name": "Sistema Académico API - Teacher",
+    "_postman_id": "teacher-collection-001",
+    "description": "Colección de endpoints de Teacher",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Obtener Libreta Descargable",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": {
+          "raw": "{{base_url}}/teacher/libreta/descargar",
+          "host": ["{{base_url}}"],
+          "path": ["teacher","libreta","descargar"]
+        }
+      }
+    },
+    {
+      "name": "Descargar Plantilla Sílabos",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": {
+          "raw": "{{base_url}}/teacher/silabo/plantilla",
+          "host": ["{{base_url}}"],
+          "path": ["teacher","silabo","plantilla"]
+        }
+      }
+    },
+    {
+      "name": "Subir Sílabos",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" },
+          { "key": "Content-Type", "value": "multipart/form-data" }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            { "key": "archivo", "type": "file", "src": "" }
+          ]
+        },
+        "url": {
+          "raw": "{{base_url}}/teacher/silabo/upload",
+          "host": ["{{base_url}}"],
+          "path": ["teacher","silabo","upload"]
+        }
+      }
+    },
+    {
+      "name": "Ver Horario",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": {
+          "raw": "{{base_url}}/teacher/horario",
+          "host": ["{{base_url}}"],
+          "path": ["teacher","horario"]
+        }
+      }
+    },
+    {
+      "name": "Reservar Horario",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": {
+          "raw": "{{base_url}}/teacher/horario/reservar",
+          "host": ["{{base_url}}"],
+          "path": ["teacher","horario","reservar"]
+        }
+      }
+    },
+    {
+      "name": "Ver Notas",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" }
+        ],
+        "url": {
+          "raw": "{{base_url}}/teacher/notas",
+          "host": ["{{base_url}}"],
+          "path": ["teacher","notas"]
+        }
+      }
+    },
+    {
+      "name": "Guardar Tema Enseñado",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"tema_id\":1,\"enseñado\":true}"
+        },
+        "url": {
+          "raw": "{{base_url}}/teacher/tema/toggle-enseñado",
+          "host": ["{{base_url}}"],
+          "path": ["teacher","tema","toggle-enseñado"]
+        }
+      }
+    }
+  ]
+}

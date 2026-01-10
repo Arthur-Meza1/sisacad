@@ -55,21 +55,7 @@ Route::prefix('/api/admin')->group(function () {
   Route::post('/asignar_curso', Admin\AsignarCursoDocenteController::class);
 });
 
-Route::prefix('/api/teacher')->group(function () {
-  Route::get("/grupo/{grupoId}/notas", Teacher\GetNotasController::class);
-  Route::post("/notas/guardar", Teacher\GuardarNotasController::class);
-  Route::get("/sesion/{id}", Teacher\GetSesionController::class);
-  Route::get('/libreta/descargar', Teacher\LibretaDescargarController::class)
-    ->name('teacher.libreta.descargar');
-  Route::get('/silabo/plantilla', Teacher\SilaboPlantillaController::class)
-    ->name('teacher.silabo.plantilla');
-  Route::post('/aulas', Teacher\GetAulasDisponiblesController::class);
-  Route::post('/crear_sesion', Teacher\CreateSesionController::class);
-  Route::post("/sesion/{sesion}/guardar", Teacher\GuardarSesionController::class)
-    ->name("asistencia.guardar");
-  Route::post('/sesion/{sesion}/borrar', Teacher\BorrarSesionController::class);
-})->middleware(['auth', 'role:teacher']);
-
+//aqui van las apis del teacher
 Route::prefix('teacher')->name("teacher.")->group(function () {
   Route::get('/', Teacher\IndexController::class)->name('index');
   Route::prefix('libreta')->name('libreta.')->group(function () {
