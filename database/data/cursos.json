@@ -608,7 +608,7 @@
       {
         "tipo": "teoria",
         "turno": "A",
-        "docente": "YARI RAMOS, YESSENIA DAISY",
+        "docente": "YARI RAMOS, YESSENIA DEISY",
         "salon": "203",
         "horario": {
           "lunes": [
@@ -622,7 +622,7 @@
       {
         "tipo": "laboratorio",
         "turno": "A",
-        "docente": "YARI RAMOS, YESSENIA DAISY",
+        "docente": "YARI RAMOS, YESSENIA DEISY",
         "salon": "Lab 1",
         "horario": {
           "miercoles": [
@@ -678,11 +678,11 @@
         "docente": "YARI RAMOS, YESSENIA DEYSI",
         "salon": "203",
         "horario": {
-          "martes": [
-            "11:30-12:20"
+          "jueves": [
+            "10:40-12:20"
           ],
           "miercoles": [
-            "11:30-12:20"
+            "07:00-08:40"
           ]
         }
       }

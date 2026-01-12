@@ -69,7 +69,7 @@ class StudentSeeder extends Seeder
         }
 
         $grupo = GrupoCurso::where('curso_id', $curso->id)
-          ->where('turno', $turno)
+          ->where('turno', $turno)->where('tipo', 'teoria')
           ->first();
 
         if (!$grupo) {

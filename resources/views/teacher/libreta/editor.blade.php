@@ -133,29 +133,29 @@
 
                 <th
                   class="px-4 py-3 text-center text-xs font-medium uppercase tracking-wider bg-blue-100 text-blue-800">
-                  Parcial 1
+                  Parcial 1 ({{$pesos["p1"]}}%)
                 </th>
                 <th
                   class="px-4 py-3 text-center text-xs font-medium uppercase tracking-wider bg-green-100 text-green-800">
-                  Continua 1
+                  Continua 1 ({{$pesos["c1"]}}%)
                 </th>
 
                 <th
                   class="px-4 py-3 text-center text-xs font-medium uppercase tracking-wider bg-blue-100 text-blue-800">
-                  Parcial 2
+                  Parcial 2 ({{$pesos["p2"]}}%)
                 </th>
                 <th
                   class="px-4 py-3 text-center text-xs font-medium uppercase tracking-wider bg-green-100 text-green-800">
-                  Continua 2
+                  Continua 2 ({{$pesos["c2"]}}%)
                 </th>
 
                 <th
                   class="px-4 py-3 text-center text-xs font-medium uppercase tracking-wider bg-blue-100 text-blue-800">
-                  Parcial 3
+                  Parcial 3 ({{$pesos["p3"]}}%)
                 </th>
                 <th
                   class="px-4 py-3 text-center text-xs font-medium uppercase tracking-wider bg-green-100 text-green-800">
-                  Continua 3
+                  Continua 3 ({{$pesos["c3"]}}%)
                 </th>
                 <th class="px-4 py-3 text-center text-xs font-medium uppercase tracking-wider bg-red-100 text-red-800">
                   Sustitutorio
@@ -272,5 +272,8 @@
     </div>
   </main>
 
+  <script>
+    const pesos = @json($pesos);
+  </script>
   @vite('resources/js/docente/libreta.js')
 </x-header_layout>
