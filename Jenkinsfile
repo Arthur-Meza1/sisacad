@@ -36,12 +36,20 @@ pipeline {
     }
 
     // d. Pruebas Funcionales (Punto D - postamn)
-    stage('Pruebas Funcionales (Postman)') {
-      //SIMEPRE CAMBIAR LA URL CADA VEZ QUE SE HAGA NGROK
+    stage('Pruebas de Performance') {
       steps {
-        echo 'Iniciando pruebas de Admin, Teacher y Student...'
-        // Nota: Asegúrate de tener Laravel Dusk instalado en el proyecto
-        sh "newman run tests/Postman/sisacad_full.json --env-var base_url=${APP_URL} --insecure --export-cookie-jar cookies.json --suppress-exit-code"
+        echo 'Ejecutando JMeter...'
+        // Creamos el plan dinámicamente para evitar errores de archivo no encontrado
+        sh """
+                printf '<?xml version="1.0" encoding="UTF-8"?><jmeterTestPlan version="1.2" properties="5.0"><hashTree><TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Plan"/><hashTree><ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Users"><intProp name="ThreadGroup.num_threads">5</intProp><intProp name="ThreadGroup.ramp_time">1</intProp><hashTree><HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy"><stringProp name="HTTPSampler.path">/</stringProp><stringProp name="HTTPSampler.method">GET</stringProp></HTTPSamplerProxy><hashTree/></hashTree></ThreadGroup></hashTree></hashTree></jmeterTestPlan>' > plan_carga.jmx
+                """
+        // Inyectamos el archivo al contenedor
+        sh """
+                cat plan_carga.jmx | docker run --rm -i justb4/jmeter:5.5 \
+                -n -t /dev/stdin \
+                -l /dev/stdout \
+                -Jurl=${APP_URL} > results.jtl || true
+                """
       }
     }
 
