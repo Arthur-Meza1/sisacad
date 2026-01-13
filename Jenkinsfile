@@ -1,10 +1,9 @@
 pipeline {
   agent any
-
   environment {
     // Usamos el nombre que salió en tu docker ps
     CONTAINER = 'sisacad-laravel.test-1'
-    APP_URL = 'http://localhost:80'
+    APP_URL = 'https://evitable-sublaryngeally-carlita.ngrok-free.dev'
   }
 
   stages {
@@ -36,7 +35,7 @@ pipeline {
       }
     }
 
-    // d. Pruebas Funcionales (Punto D - Selenium/Dusk)
+    // d. Pruebas Funcionales (Punto D - postamn)
     stage('Pruebas Funcionales (Postman)') {
       steps {
         echo 'Iniciando pruebas de Admin, Teacher y Student...'
