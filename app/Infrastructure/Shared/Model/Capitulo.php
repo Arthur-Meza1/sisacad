@@ -22,12 +22,6 @@ class Capitulo extends Model
   {
     return $this->belongsTo(Curso::class);
   }
-
-  public function unidad()
-  {
-    return $this->belongsTo(Unidad::class);
-  }
-
   public function temas()
   {
     return $this->hasMany(Tema::class);
