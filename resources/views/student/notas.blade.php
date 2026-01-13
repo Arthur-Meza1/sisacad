@@ -45,5 +45,5 @@
     </div>
   </main>
 
-  {{--@vite('resources/js/alumno/notas.js')--}}
+  @vite('resources/js/alumno/notas.js')
 </x-header_layout>
