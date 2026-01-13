@@ -159,7 +159,17 @@
 					"name": "ver notas",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/student/notas",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"student",
+								"notas"
+							]
+						}
 					},
 					"response": []
 				},
@@ -167,7 +177,17 @@
 					"name": "mi horario",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/student/horario",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"student",
+								"horario"
+							]
+						}
 					},
 					"response": []
 				},
@@ -264,7 +284,17 @@
 					"name": "lsitas cursos",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/admin/cursos",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"admin",
+								"cursos"
+							]
+						}
 					},
 					"response": []
 				},
