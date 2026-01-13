@@ -1,7 +1,7 @@
 pipeline {
   agent any
   parameters{
-    string(name: 'NGROK_URL', defaultValue: 'https://tu-url-actual.ngrok-free.dev', description: 'https://evitable-sublaryngeally-carlita.ngrok-free.dev')
+    string(name: 'NGROK_URL', defaultValue: 'https://evitable-sublaryngeally-carlita.ngrok-free.dev', description: 'url de ngrok')
   }
   environment {
     // Usamos el nombre que salió en tu docker ps
