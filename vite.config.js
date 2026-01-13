@@ -7,8 +7,7 @@ export default defineConfig({
         laravel({
             input: [
               'resources/css/app.css',
-              'resources/js/alumno/alumno.js',
-              'resources/js/docente/docente.js'
+              'resources/js/app.js'
             ],
             refresh: true,
         }),
