@@ -36,6 +36,16 @@ pipeline {
     }
 
     // d. Pruebas Funcionales (Punto D - postamn)
+    stage('Pruebas Funcionales (Postman)') {
+      //SIMEPRE CAMBIAR LA URL CADA VEZ QUE SE HAGA NGROK
+      steps {
+        echo 'Iniciando pruebas de Admin, Teacher y Student...'
+        // Nota: Asegúrate de tener Laravel Dusk instalado en el proyecto
+        sh "newman run tests/Postman/sisacad_full.json --env-var base_url=${APP_URL} --insecure --export-cookie-jar cookies.json --suppress-exit-code"
+      }
+    }
+
+    // e. Pruebas de Performance (Punto E - JMeter)
     stage('Pruebas de Performance') {
       steps {
         echo 'Ejecutando JMeter...'
@@ -50,23 +60,6 @@ pipeline {
                 -l /dev/stdout \
                 -Jurl=${APP_URL} > results.jtl || true
                 """
-      }
-    }
-
-    // e. Pruebas de Performance (Punto E - JMeter)
-    stage('Pruebas de Performance (JMeter)') {
-      steps {
-        // Esto nos dirá EXACTAMENTE qué carpetas hay en el servidor
-        sh "ls -R"
-
-        echo 'Ejecutando JMeter...'
-        sh """
-        docker run --rm -v \$(pwd):/opt/h8n \
-        justb4/jmeter:5.5 \
-        -n -t /opt/h8n/tests/Performance/plan_performance.jmx \
-        -l /opt/h8n/results.jtl \
-        -Jurl=${APP_URL}
-        """
       }
     }
 
