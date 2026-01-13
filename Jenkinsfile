@@ -50,7 +50,7 @@ pipeline {
       steps {
         echo 'Ejecutando JMeter...'
         // Nota: Requiere que jmeter esté instalado en el contenedor de Jenkins
-        // sh "jmeter -n -t tests/performance/plan.jmx -l results.jtl"
+         sh "jmeter -n -t tests/Performance/plan_perfomance.jmx -l results.jtl"
         echo 'Performance OK'
       }
     }
@@ -59,7 +59,7 @@ pipeline {
     stage('Pruebas de Seguridad (OWASP ZAP)') {
       steps {
         echo 'Escaneando vulnerabilidades...'
-        // sh "zap-baseline.py -t ${APP_URL} -r zap-report.html"
+         sh "zap-baseline.py -t ${APP_URL} -r zap-report.html"
         echo 'Seguridad OK'
       }
     }
