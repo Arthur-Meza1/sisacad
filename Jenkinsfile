@@ -46,22 +46,19 @@ pipeline {
     }
 
     // e. Pruebas de Performance (Punto E - JMeter)
-    stage('Pruebas de Performance (e)') {
+    stage('Pruebas de Performance (JMeter)') {
       steps {
-        echo "Ejecutando JMeter (Modo Inyección)..."
-        // 1. Creamos el archivo localmente por seguridad
-        sh "printf '<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<jmeterTestPlan version=\"1.2\" properties=\"5.0\">\n  <hashTree>\n    <TestPlan guiclass=\"TestPlanGui\" testclass=\"TestPlan\" testname=\"Plan\"/>\n    <hashTree>\n      <ThreadGroup guiclass=\"ThreadGroupGui\" testclass=\"ThreadGroup\" testname=\"Users\">\n        <intProp name=\"ThreadGroup.num_threads\">5</intProp>\n        <intProp name=\"ThreadGroup.ramp_time\">1</intProp>\n        <hashTree>\n          <HTTPSamplerProxy guiclass=\"HttpTestSampleGui\" testclass=\"HTTPSamplerProxy\">\n            <stringProp name=\"HTTPSampler.path\">/</stringProp>\n            <stringProp name=\"HTTPSampler.method\">GET</stringProp>\n          </HTTPSamplerProxy>\n          <hashTree/>\n        </hashTree>\n      </ThreadGroup>\n    </hashTree>\n  </hashTree>\n</jmeterTestPlan>' > plan.jmx"
+        // Esto nos dirá EXACTAMENTE qué carpetas hay en el servidor
+        sh "ls -R"
 
-        // 2. Ejecutamos SIN el flag -v para evitar líos de carpetas
+        echo 'Ejecutando JMeter...'
         sh """
-        cat plan.jmx | docker run --rm -i justb4/jmeter:5.5 \
-        -n -t /dev/stdin \
-        -l /dev/stdout \
-        -Jurl=${APP_URL} > results.jtl || true
-        """
-
-        sh "cat results.jtl"
-        echo "Performance Finalizada"
+    docker run --rm -v \$(pwd):/opt/h8n \
+    justb4/jmeter:5.5 \
+    -n -t /opt/h8n/tests/Performance/plan_performance.jmx \
+    -l /opt/h8n/results.jtl \
+    -Jurl=${APP_URL}
+    """
       }
     }
 
@@ -73,16 +70,20 @@ pipeline {
       }
     }
 
-  post {
+
+
+    post {
     success {
       echo '¡Felicidades! El pipeline de SisAcad ha pasado todas las etapas.'
-    }
-    failure {
+      }
+      failure {
       echo 'El build falló. Revisa los logs de la etapa afectada.'
-    }
-    always {
+      }
+      always {
       // Guarda los reportes si existen
-      archiveArtifacts artifacts: '*.html, *.jtl', allowEmptyArchive: true
+        archiveArtifacts artifacts: '*.html, *.jtl', allowEmptyArchive: true
+
     }
   }
+}
 }
