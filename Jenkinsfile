@@ -3,7 +3,7 @@ pipeline {
   environment {
     // Usamos el nombre que salió en tu docker ps
     CONTAINER = 'sisacad-laravel.test-1'
-    APP_URL = 'https://evitable-sublaryngeally-carlita.ngrok-free.dev '
+    APP_URL = 'https://evitable-sublaryngeally-carlita.ngrok-free.dev'
   }
 
   stages {
@@ -48,17 +48,16 @@ pipeline {
     // e. Pruebas de Performance (Punto E - JMeter)
     stage('Pruebas de Performance (JMeter)') {
       steps {
+        sh "ls -R"
+
         echo 'Ejecutando JMeter...'
-        // Nota: Requiere que jmeter esté instalado en el contenedor de Jenkins
         sh """
-        docker run --rm -v \$(pwd):/opt/h8n \
-        justb4/jmeter:5.5 \
-        -n -t /opt/h8n/tests/Performance/plan_performance.jmx \
-        -l /opt/h8n/results.jtl \
-        -Jurl=${APP_URL}
+            docker run --rm -v \$(pwd):/opt/h8n \
+            justb4/jmeter:5.5 \
+            -n -t /opt/h8n/tests/Performance/plan_performance.jmx \
+            -l /opt/h8n/results.jtl \
+            -Jurl=${APP_URL}
         """
-        sh "cat results.jtl || echo 'No se generó el archivo de resultados'"
-        echo 'Performance OK'
       }
     }
 
