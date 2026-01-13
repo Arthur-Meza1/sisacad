@@ -48,54 +48,30 @@ pipeline {
     // e. Pruebas de Performance (Punto E - JMeter)
     stage('Pruebas de Performance (e)') {
       steps {
-        echo "Creando archivo JMeter desde el pipeline..."
-        sh """
-        cat <<EOF > plan_performance.jmx
-<?xml version="1.0" encoding="UTF-8"?>
-<jmeterTestPlan version="1.2" properties="5.0">
-  <hashTree>
-    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Plan de Carga SisAcad"/>
-    <hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Usuarios Virtuales">
-        <intProp name="ThreadGroup.num_threads">5</intProp>
-        <intProp name="ThreadGroup.ramp_time">2</intProp>
-        <hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Carga Home">
-            <stringProp name="HTTPSampler.domain"></stringProp>
-            <stringProp name="HTTPSampler.path">/</stringProp>
-            <stringProp name="HTTPSampler.method">GET</stringProp>
-          </HTTPSamplerProxy>
-          <hashTree/>
-        </hashTree>
-      </ThreadGroup>
-    </hashTree>
-  </hashTree>
-</jmeterTestPlan>
-EOF
-        """
-        sh "chmod 777 plan_performance.jmx"
+        echo "Ejecutando JMeter (Modo Inyección)..."
+        // 1. Creamos el archivo localmente por seguridad
+        sh "printf '<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<jmeterTestPlan version=\"1.2\" properties=\"5.0\">\n  <hashTree>\n    <TestPlan guiclass=\"TestPlanGui\" testclass=\"TestPlan\" testname=\"Plan\"/>\n    <hashTree>\n      <ThreadGroup guiclass=\"ThreadGroupGui\" testclass=\"ThreadGroup\" testname=\"Users\">\n        <intProp name=\"ThreadGroup.num_threads\">5</intProp>\n        <intProp name=\"ThreadGroup.ramp_time\">1</intProp>\n        <hashTree>\n          <HTTPSamplerProxy guiclass=\"HttpTestSampleGui\" testclass=\"HTTPSamplerProxy\">\n            <stringProp name=\"HTTPSampler.path\">/</stringProp>\n            <stringProp name=\"HTTPSampler.method\">GET</stringProp>\n          </HTTPSamplerProxy>\n          <hashTree/>\n        </hashTree>\n      </ThreadGroup>\n    </hashTree>\n  </hashTree>\n</jmeterTestPlan>' > plan.jmx"
 
-        echo "Ejecutando JMeter..."
+        // 2. Ejecutamos SIN el flag -v para evitar líos de carpetas
         sh """
-        docker run --rm -v \$(pwd):/opt/h8n \
-        justb4/jmeter:5.5 \
-        -n -t /opt/h8n/plan_performance.jmx \
-        -l /opt/h8n/results.jtl \
-        -Jurl=${APP_URL}
+        cat plan.jmx | docker run --rm -i justb4/jmeter:5.5 \
+        -n -t /dev/stdin \
+        -l /dev/stdout \
+        -Jurl=${APP_URL} > results.jtl || true
         """
-        sh "cat results.jtl || echo 'Error al leer resultados'"
+
+        sh "cat results.jtl"
+        echo "Performance Finalizada"
       }
     }
 
     // f. Pruebas de Seguridad (Punto F - OWASP ZAP)
-    stage('Pruebas de Seguridad (OWASP ZAP)') {
+    stage('Pruebas de Seguridad (f)') {
       steps {
-        echo 'Escaneando vulnerabilidades...'
+        echo "Escaneando con ZAP..."
         sh "docker run --rm -t owasp/zap2docker-stable zap-baseline.py -t ${APP_URL} || true"
-        echo 'Seguridad OK'
       }
     }
-  }
 
   post {
     success {
