@@ -46,18 +46,44 @@ pipeline {
     }
 
     // e. Pruebas de Performance (Punto E - JMeter)
-    stage('Pruebas de Performance (JMeter)') {
+    stage('Pruebas de Performance (e)') {
       steps {
-        sh "ls -R"
-
-        echo 'Ejecutando JMeter...'
+        echo "Creando archivo JMeter desde el pipeline..."
         sh """
-            docker run --rm -v \$(pwd):/opt/h8n \
-            justb4/jmeter:5.5 \
-            -n -t /opt/h8n/plan_performance.jmx \
-            -l /opt/h8n/results.jtl \
-            -Jurl=${APP_URL}
+        cat <<EOF > plan_performance.jmx
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Plan de Carga SisAcad"/>
+    <hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Usuarios Virtuales">
+        <intProp name="ThreadGroup.num_threads">5</intProp>
+        <intProp name="ThreadGroup.ramp_time">2</intProp>
+        <hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Carga Home">
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.path">/</stringProp>
+            <stringProp name="HTTPSampler.method">GET</stringProp>
+          </HTTPSamplerProxy>
+          <hashTree/>
+        </hashTree>
+      </ThreadGroup>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>
+EOF
         """
+        sh "chmod 777 plan_performance.jmx"
+
+        echo "Ejecutando JMeter..."
+        sh """
+        docker run --rm -v \$(pwd):/opt/h8n \
+        justb4/jmeter:5.5 \
+        -n -t /opt/h8n/plan_performance.jmx \
+        -l /opt/h8n/results.jtl \
+        -Jurl=${APP_URL}
+        """
+        sh "cat results.jtl || echo 'Error al leer resultados'"
       }
     }
 
