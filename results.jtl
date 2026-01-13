@@ -1,0 +1,5 @@
+START Running Jmeter on Tue Jan 13 18:00:31 CET 2026
+JVM_ARGS=-Xmn84m -Xms336m -Xmx336m
+jmeter args=-n -t /dev/stdin -l /dev/stdout -Jurl=https://evitable-sublaryngeally-carlita.ngrok-free.dev
+jmeter ALL ARGS=-Dlog4j2.formatMsgNoLookups=true -n -t /dev/stdin -l /dev/stdout -Jurl=https://evitable-sublaryngeally-carlita.ngrok-free.dev
+An error occurred: The file /dev/stdin doesn't exist or can't be opened

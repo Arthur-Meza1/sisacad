@@ -14,6 +14,8 @@ pipeline {
         sh "docker exec ${CONTAINER} composer install --no-interaction --prefer-dist"
         sh "docker exec ${CONTAINER} php artisan key:generate --force"
         sh "docker exec ${CONTAINER} php artisan optimize:clear"
+        sh "docker exec ${CONTAINER} npm install"
+        sh "docker exec ${CONTAINER} npm run build"
       }
     }
 
