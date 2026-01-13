@@ -12,7 +12,7 @@
 			"name": "Teacher",
 			"item": [
 				{
-					"name": "New Request",
+					"name": "login_teacher",
 					"event": [
 						{
 							"listen": "test",
@@ -109,7 +109,7 @@
 			"name": "Student",
 			"item": [
 				{
-					"name": "New Request",
+					"name": "login_student",
 					"event": [
 						{
 							"listen": "test",
@@ -216,13 +216,13 @@
 			"name": "Admin",
 			"item": [
 				{
-					"name": "New Request",
+					"name": "login_admin",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.test(\"Login Correcto\", function () {",
+									"pm.test(\"Login ADMIN - Status OK o Redirect\", function () {",
 									"    pm.expect(pm.response.code).to.be.oneOf([200, 302]);",
 									"});"
 								],
@@ -304,7 +304,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/admin/users/show/student/169",
+							"raw": "{{base_url}}/admin/users/show/student/6",
 							"host": [
 								"{{base_url}}"
 							],
@@ -313,7 +313,7 @@
 								"users",
 								"show",
 								"student",
-								"169"
+								"6"
 							]
 						}
 					},

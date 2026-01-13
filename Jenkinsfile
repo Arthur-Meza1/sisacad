@@ -3,7 +3,7 @@ pipeline {
   environment {
     // Usamos el nombre que salió en tu docker ps
     CONTAINER = 'sisacad-laravel.test-1'
-    APP_URL = 'https://evitable-sublaryngeally-carlita.ngrok-free.dev'
+    APP_URL = 'https://evitable-sublaryngeally-carlita.ngrok-free.dev '
   }
 
   stages {
@@ -41,7 +41,7 @@ pipeline {
       steps {
         echo 'Iniciando pruebas de Admin, Teacher y Student...'
         // Nota: Asegúrate de tener Laravel Dusk instalado en el proyecto
-        sh "newman run tests/Postman/sisacad_full.json --env-var base_url=https://evitable-sublaryngeally-carlita.ngrok-free.dev --insecure"
+        sh "newman run tests/Postman/sisacad_full.json --env-var base_url=${APP_URL} --insecure --export-cookie-jar cookies.json"
       }
     }
 
