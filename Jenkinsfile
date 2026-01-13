@@ -37,11 +37,11 @@ pipeline {
     }
 
     // d. Pruebas Funcionales (Punto D - Selenium/Dusk)
-    stage('Pruebas Funcionales (Selenium)') {
+    stage('Pruebas Funcionales (Postman)') {
       steps {
-        echo 'Ejecutando pruebas de navegador...'
+        echo 'Iniciando pruebas de Admin, Teacher y Student...'
         // Nota: Asegúrate de tener Laravel Dusk instalado en el proyecto
-        sh "docker exec ${CONTAINER} php artisan dusk --browse"
+        sh "newman run tests/Postman/sisacad_full.json --env-var url=http://sisacad-laravel.test-1 --insecure --delay-request 500"
       }
     }
 
