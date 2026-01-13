@@ -53,7 +53,7 @@ pipeline {
         sh """
         docker run --rm -v \$(pwd):/opt/h8n \
         justb4/jmeter:5.5 \
-        -n -t /opt/h8n/tests/Perfomance/plan_performance.jmx \
+        -n -t /opt/h8n/tests/Performance/plan_performance.jmx \
         -l /opt/h8n/results.jtl \
         -Jurl=${APP_URL}
         """
