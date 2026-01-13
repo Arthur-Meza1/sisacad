@@ -53,12 +53,12 @@ pipeline {
 
         echo 'Ejecutando JMeter...'
         sh """
-    docker run --rm -v \$(pwd):/opt/h8n \
-    justb4/jmeter:5.5 \
-    -n -t /opt/h8n/tests/Performance/plan_performance.jmx \
-    -l /opt/h8n/results.jtl \
-    -Jurl=${APP_URL}
-    """
+        docker run --rm -v \$(pwd):/opt/h8n \
+        justb4/jmeter:5.5 \
+        -n -t /opt/h8n/tests/Performance/plan_performance.jmx \
+        -l /opt/h8n/results.jtl \
+        -Jurl=${APP_URL}
+        """
       }
     }
 
@@ -69,21 +69,18 @@ pipeline {
         sh "docker run --rm -t owasp/zap2docker-stable zap-baseline.py -t ${APP_URL} || true"
       }
     }
+  }
 
-
-
-    post {
+  post {
     success {
       echo '¡Felicidades! El pipeline de SisAcad ha pasado todas las etapas.'
-      }
-      failure {
+    }
+    failure {
       echo 'El build falló. Revisa los logs de la etapa afectada.'
-      }
-      always {
+    }
+    always {
       // Guarda los reportes si existen
-        archiveArtifacts artifacts: '*.html, *.jtl', allowEmptyArchive: true
-
+      archiveArtifacts artifacts: '*.html, *.jtl', allowEmptyArchive: true
     }
   }
-}
 }
