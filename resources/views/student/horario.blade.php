@@ -10,7 +10,7 @@
     </div>
   </main>
 
-  @vite('resources/js/alumno/calendario.js')
+  {{--@vite('resources/js/alumno/calendario.js')--}}
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
