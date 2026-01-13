@@ -41,7 +41,7 @@ pipeline {
       steps {
         echo 'Iniciando pruebas de Admin, Teacher y Student...'
         // Nota: Asegúrate de tener Laravel Dusk instalado en el proyecto
-        sh "newman run tests/Postman/sisacad_full.json --env-var url=http://sisacad-laravel.test-1 --insecure --delay-request 500"
+        sh "newman run tests/Postman/sisacad_full.json --env-var base_url=http://sisacad-laravel.test-1 --insecure"
       }
     }
 
