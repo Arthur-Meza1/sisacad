@@ -17,7 +17,7 @@ SISACAD es un sistema académico desarrollado con **Laravel**, cuyo objetivo es 
 ## Funcionalidades (Alto Nivel)
 
 ### Casos de Uso (UML)
-TODO: DIAGRAMA DE CASOS DE USO UML
+![Sistema Académico](https://github.com/user-attachments/assets/0e11fcb4-c94a-4b64-97c6-79a827d909c0)
 
 **Roles principales:**
 - Administrador
@@ -25,9 +25,9 @@ TODO: DIAGRAMA DE CASOS DE USO UML
 - Estudiante
 
 **Casos de uso clave:**
-- Gestión de usuarios y cursos (Admin)
-- Matrícula y consulta académica (Student)
-- Gestión de sesiones, asistencia y notas (Teacher)
+- Matricular laboratorios (Estudiante)
+- Crear Sesion, Guardar Asistencias, Guardar Notas (Docente)
+- Crear Nuevo Usuario (Administrador)
 
 ---
 
