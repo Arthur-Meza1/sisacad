@@ -156,6 +156,7 @@ TOD: OPENAPI Y SWAGGER
 
 
 ## Pipeline CI/CD
+![Pipeline](https://github.com/user-attachments/assets/9d5b912c-55e5-4941-8ead-eb6a47054135)
 
 ### Etapas
 
