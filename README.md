@@ -1,7 +1,7 @@
 # SISACAD – Sistema Académico
 
 ## Equipo de Trabajo
-**Equipo:** Amiguitos
+**Equipo:** Tilines Cabezaehuevo
 
 - Diaz Vasquez Esdras Amado
 - Meza Pareja Arthur Patrick
@@ -40,7 +40,8 @@ SISACAD es un sistema académico desarrollado con **Laravel**, cuyo objetivo es 
 
 ## Visión General de Arquitectura
 
-TODO: DIAGRAMA DE PAQUETES
+<img width="1600" height="1352" alt="image" src="https://github.com/user-attachments/assets/8400a53a-fa9e-4fa4-b917-45c8695b8b14" />
+
 
 ### Enfoque
 - **Domain-Driven Design (DDD)**
