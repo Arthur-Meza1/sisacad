@@ -1,5 +1,6 @@
 <x-header_layout>
   <x-teacher.sidebar></x-teacher.sidebar>
+  @vite('resources/js/docente/notas.js')
 
   <main class="flex-1 p-4">
     <div id="view-analytics" class="view-content space-y-6">
@@ -50,5 +51,4 @@
     </div>
   </main>
 
-  @vite('resources/js/docente/notas.js')
 </x-header_layout>
