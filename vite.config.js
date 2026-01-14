@@ -8,6 +8,10 @@ export default defineConfig({
             input: [
               'resources/css/app.css',
               'resources/js/app.js',
+              'resources/js/alumno/notas.js',
+              'resources/js/alumno/calendario.js',
+              'resources/js/docente/docente.js',
+              'resources/js/docente/notas.js'
             ],
             refresh: true,
         }),
