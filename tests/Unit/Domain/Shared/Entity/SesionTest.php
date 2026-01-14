@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Domain\Shared\Entity;
+namespace Tests\Unit\Domain\Shared\Entity;
 
 use App\Domain\Shared\Entity\Sesion;
 use App\Domain\Shared\ValueObject\Fecha;

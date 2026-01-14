@@ -5,11 +5,11 @@
          colors="true"
 >
     <testsuites>
-        <testsuite name="Domain/Shared/ValueObject">
-            <directory>tests/Domain/Shared/ValueObject</directory>
+        <testsuite name="Unit">
+            <directory>tests/Unit</directory>
         </testsuite>
-      <testsuite name="Domain/Shared/Entity">
-        <directory>tests/Domain/Shared/Entity</directory>
+      <testsuite name="Feature">
+        <directory>tests/Feature</directory>
       </testsuite>
     </testsuites>
     <source>
@@ -22,13 +22,15 @@
         <env name="APP_MAINTENANCE_DRIVER" value="file"/>
         <env name="BCRYPT_ROUNDS" value="4"/>
         <env name="BROADCAST_CONNECTION" value="null"/>
+        <env name="DB_CONNECTION" value="sqlite"/>
         <env name="CACHE_STORE" value="array"/>
-        <env name="DB_DATABASE" value="testing"/>
         <env name="MAIL_MAILER" value="array"/>
         <env name="QUEUE_CONNECTION" value="sync"/>
+        <env name="APP_KEY" value="base64:u6tI5m98Y6U4E6fL5FfI5m98Y6U4E6fL5FfI5m98Y6U="/>
         <env name="SESSION_DRIVER" value="array"/>
         <env name="PULSE_ENABLED" value="false"/>
         <env name="TELESCOPE_ENABLED" value="false"/>
-        <env name="NIGHTWATCH_ENABLED" value="false"/>
+        <env name="DB_DATABASE" value=":memory:"/>
+      <env name="NIGHTWATCH_ENABLED" value="false"/>
     </php>
 </phpunit>

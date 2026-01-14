@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Domain\Shared\ValueObject;
+namespace Tests\Unit\Domain\Shared\ValueObject;
 
 use App\Domain\Shared\ValueObject\Dia;
 use Carbon\Carbon;
