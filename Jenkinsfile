@@ -27,9 +27,10 @@ pipeline {
     stage('Análisis Estático (SonarQube)') {
       steps {
         echo 'Iniciando análisis de código...'
-        // Si no tienes SonarQube configurado todavía, comenta estas líneas
-        // sh "sonar-scanner -Dsonar.projectKey=sisacad -Dsonar.sources=app"
-        echo 'Análisis completado (Simulado)'
+        sh "docker exec ${CONTAINER} ./vendor/bin/pint --test"
+        sh "docker exec ${CONTAINER} composer require phpstan/phpstan --dev"
+        sh "docker exec ${CONTAINER} ./vendor/bin/phpstan analyse app"
+        echo 'Análisis completado'
       }
     }
 
