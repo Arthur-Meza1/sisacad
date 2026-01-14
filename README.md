@@ -270,7 +270,7 @@ Directorio del Projecto
   }
 ```
 - **Funcionales:** Endpoints REST
-´´´
+```
 // d. Pruebas Funcionales
   stage('Pruebas Funcionales (Postman)') {
     steps {
@@ -278,7 +278,8 @@ Directorio del Projecto
       sh "newman run tests/Postman/sisacad_full.json --env-var base_url=${APP_URL} --insecure --export-cookie-jar cookies.json --suppress-exit-code"
     }
   }
-´´´
+```
+
 - **Seguridad:** Roles y middleware
 ```
 // e. Pruebas de Performance
