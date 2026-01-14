@@ -68,6 +68,7 @@ class EloquentCourseRepository implements ICourseRepository
           grupos: $curso->grupoCursos->map(
             fn($grupo) => new GrupoCursoDTO(
               id: Id::fromInt($grupo->id),
+              cursoId: Id::fromInt($grupo->curso->id),
               nombre: $grupo->curso->nombre,
               turno: $grupo->turno,
               tipo: $grupo->tipo,
