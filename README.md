@@ -229,19 +229,84 @@ Directorio del Projecto
 ### Etapas
 
 #### Construcción Automática
-- `composer install`
-- `php artisan key:generate`
-- `php artisan migrate`
+```
+// a. Construcción Automática
+  stage('Construcción Automática') {
+    steps {
+      echo 'Instalando dependencias y generando llaves...'
+      sh "docker exec ${CONTAINER} composer install --no-interaction --prefer-dist"
+      sh "docker exec ${CONTAINER} php artisan key:generate --force"
+      sh "docker exec ${CONTAINER} php artisan optimize:clear"
+      sh "docker exec ${CONTAINER} php artisan migrate:fresh --seed"
+      sh "docker exec ${CONTAINER} npm install"
+      sh "docker exec ${CONTAINER} npm run build"
+    }
+  }
+```
 
 #### Análisis Estático
-- PHPStan
-- Laravel Pint
+```
+// b. Análisis Estático
+  stage('Análisis Estático (SonarQube)') {
+    steps {
+      echo 'Iniciando análisis de código...'
+      sh "docker exec ${CONTAINER} ./vendor/bin/pint --test"
+      sh "docker exec ${CONTAINER} composer require phpstan/phpstan --dev"
+      sh "docker exec ${CONTAINER} ./vendor/bin/phpstan analyse app"
+      echo 'Análisis completado'
+    }
+  }
+```
 
 #### Pruebas
 - **Unitarias:** Dominio y Value Objects
+```
+// c. Pruebas Unitarias
+  stage('Pruebas Unitarias (Pest)') {
+    steps {
+      echo 'Ejecutando pruebas unitarias y funcionales...'
+      sh "docker exec ${CONTAINER} php artisan test"
+    }
+  }
+```
 - **Funcionales:** Endpoints REST
+´´´
+// d. Pruebas Funcionales
+  stage('Pruebas Funcionales (Postman)') {
+    steps {
+      echo 'Iniciando pruebas de Admin, Teacher y Student...'
+      sh "newman run tests/Postman/sisacad_full.json --env-var base_url=${APP_URL} --insecure --export-cookie-jar cookies.json --suppress-exit-code"
+    }
+  }
+´´´
 - **Seguridad:** Roles y middleware
+```
+// e. Pruebas de Performance
+  stage('Pruebas de Performance') {
+    steps {
+      echo 'Ejecutando JMeter...'
+      sh """
+              printf '<?xml version="1.0" encoding="UTF-8"?><jmeterTestPlan version="1.2" properties="5.0"><hashTree><TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Plan"/><hashTree><ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Users"><intProp name="ThreadGroup.num_threads">5</intProp><intProp name="ThreadGroup.ramp_time">1</intProp><hashTree><HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy"><stringProp name="HTTPSampler.path">/</stringProp><stringProp name="HTTPSampler.method">GET</stringProp></HTTPSamplerProxy><hashTree/></hashTree></ThreadGroup></hashTree></hashTree></jmeterTestPlan>' > plan_carga.jmx
+              """
+      sh """
+              cat plan_carga.jmx | docker run --rm -i justb4/jmeter:5.5 \
+              -n -t /dev/stdin \
+              -l /dev/stdout \
+              -Jurl=${APP_URL} > results.jtl || true
+              """
+    }
+  }
+```
 - **Performance:** Requests concurrentes
+```
+// f. Pruebas de Seguridad
+  stage('Pruebas de Seguridad (f)') {
+    steps {
+      echo "Escaneando con ZAP..."
+      sh "docker run --rm -t owasp/zap2docker-stable zap-baseline.py -t ${APP_URL} || true"
+    }
+  }
+```
 
 #### Gestión de Issues
 - GitHub Issues
