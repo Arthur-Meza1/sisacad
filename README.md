@@ -34,26 +34,7 @@ TODO: DIAGRAMA DE CASOS DE USO UML
 ## Modelo de Dominio
 
 ### Diagrama de Clases
-TODO: DIAGRAMA DE CLASES UML
-
-### Agregados y Entidades Clave
-- **Curso**
-- **GrupoCurso**
-- **Sesion**
-- **Asistencia**
-- **Alumno**
-- **Docente**
-- **Usuario**
-
-### Value Objects
-- `Id`
-- `Fecha`
-- `Hora`
-- `Dia`
-- `CursoTipo`
-- `UserRol`
-- `NotasParcial`
-- `NotasContinua`
+<img width="2905" height="3105" alt="clases_uml" src="https://github.com/user-attachments/assets/1a4cd91e-f99d-4e2a-b26d-2a9778c7325f" />
 
 ---
 
