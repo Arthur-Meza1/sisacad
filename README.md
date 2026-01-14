@@ -76,8 +76,6 @@ TODO: DIAGRAMA DE PAQUETES
 
 ## Organización por Módulos
 
-TOD: OPENAPI Y SWAGGER
-
 ### Admin
 **Responsabilidad:** Gestión administrativa del sistema
 
