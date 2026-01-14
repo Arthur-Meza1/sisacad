@@ -1,0 +1,662 @@
+name: Endpoints
+description: ''
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/student/cursos/{curso}/notas'
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+      ngrok-skip-browser-warning: 'true'
+    urlParameters:
+      curso:
+        custom: []
+        name: curso
+        description: 'The curso.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      curso: architecto
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 500
+        content: |-
+          {
+              "message": "Server Error"
+          }
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+          set-cookie: 'XSRF-TOKEN=eyJpdiI6IkpQa1Z5b2VNcXFsWUVTc2EwWlphZWc9PSIsInZhbHVlIjoiSE85VGdabmFzT2dpY3hVOThheXE0SXgvVUJGOFZTNlc4ZkQ3ajhNMEg4bGpsQzBRY0UrQUVJNkVpL1c1MGxPb1QrbXc0UjlmdUZVRnRmb0N5TForSDhSM0hYbFYrcDM3V2xEdUtOdGw1WFJmeWU4U0xlaEcrMk5aUG1qeWNaeC8iLCJtYWMiOiI0ZWVhMWFjMTU3MDU2ZmQ3NmRjNTEzNjA0OWEwM2NiM2YyYWY1ZjI3ZmQ1ZTkxZmNhYjQ4MjRlYjlkNDlkNTRjIiwidGFnIjoiIn0%3D; expires=Wed, 14 Jan 2026 18:26:23 GMT; Max-Age=7200; path=/; samesite=lax; sisacad-session=eyJpdiI6IkxIdktsbGZ3emZxNWNZZU9Mb0NPUXc9PSIsInZhbHVlIjoibG5nRCtaYkJqUkg4eDh5NGUrNUdERWZQRUgxZ2dkSmRBekFSbEhEa1NZWmlWL28veEJaSUE2VnJYSThCS1pJditEM0s1YzEwODhxRHMyQnFCTFlYMzF0VU1vVHJ0V3JZc1JVdFRyMFVkQ1k4OURMc1lyVWRodUlENm1nN2Y1TEYiLCJtYWMiOiI5ZGU2YzQwYjMzM2VlMTVhMjdmMDZmYTM1OWVhYmY5ZTEzNmIxMjVjZDFjMGNhOGVmMTEwMmRlOGM2ZDg2NGFiIiwidGFnIjoiIn0%3D; expires=Wed, 14 Jan 2026 18:26:23 GMT; Max-Age=7200; path=/; httponly; samesite=lax'
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/student/matricular
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+      ngrok-skip-browser-warning: 'true'
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/student/desmatricular
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+      ngrok-skip-browser-warning: 'true'
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/teacher/grupo/{grupoId}/notas'
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+      ngrok-skip-browser-warning: 'true'
+    urlParameters:
+      grupoId:
+        custom: []
+        name: grupoId
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      grupoId: architecto
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 500
+        content: |-
+          {
+              "message": "Server Error"
+          }
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+          set-cookie: 'XSRF-TOKEN=eyJpdiI6IjlZZjFIekgwR0J5SFlBNFRNdVlFRWc9PSIsInZhbHVlIjoiM3FianZsK1lmbGY4ai8zODFhUWpiVzZ0VllIUUkvM3ZlSzNtMFMybDBQdy9uNFUxa3hsY25jNmFXb1NLZFBYamdUYjZWeGdLQ2NHTDlaQ2hUQ0x5dVJ2bGU5dHJselQ2RG1PbkVwTWNXdXNsY2czR3NOcWlIUXZNZEVQRUx2cE0iLCJtYWMiOiIxNWQwZTRmMjhlMDk1NmY2YWMxZjY5MzdmYjA5ZjJlOGY5NzNhZWJlODE2MDVlMTAzNjU1ZDk2MjMxYzc0OWI4IiwidGFnIjoiIn0%3D; expires=Wed, 14 Jan 2026 18:26:23 GMT; Max-Age=7200; path=/; samesite=lax; sisacad-session=eyJpdiI6IlV5bUpNb0dVWGRPNHFBeldvcy92QkE9PSIsInZhbHVlIjoiY28yZjkvNU10YW5icm9rSHFud2RkNHBYaERVNVpINFhRTjVYaXhzZm0wUGRrcWxyc3liZHBabERDbU4vOGo0ejBOaGlSdU11NlJPbUgzSXBPdEk2bnpUdy96Smx2cVJKOUNPZXdoQmFrMVNucHZtM3FBdlBoZEt1THF1UGRHUEMiLCJtYWMiOiIyMzViNTY2ZGJiNDVkY2QwZGZiYTI2YzdiNmFlMGVkMjYzNGUyYzU3ZDYzZjkzM2U1MmZiOTNiMTc4MjkzOGY5IiwidGFnIjoiIn0%3D; expires=Wed, 14 Jan 2026 18:26:23 GMT; Max-Age=7200; path=/; httponly; samesite=lax'
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/teacher/notas/guardar
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+      ngrok-skip-browser-warning: 'true'
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      data:
+        custom: []
+        name: data
+        description: ''
+        required: true
+        example:
+          - []
+        type: 'object[]'
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'data[].registro_id':
+        custom: []
+        name: 'data[].registro_id'
+        description: ''
+        required: true
+        example: 16
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      'data[].notas':
+        custom: []
+        name: 'data[].notas'
+        description: ''
+        required: false
+        example:
+          - 4326.41688
+        type: 'number[]'
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        deprecated: false
+    cleanBodyParameters:
+      data:
+        -
+          registro_id: 16
+          notas:
+            - 4326.41688
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'api/teacher/sesion/{id}'
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+      ngrok-skip-browser-warning: 'true'
+    urlParameters:
+      id:
+        custom: []
+        name: id
+        description: 'The ID of the sesion.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      id: architecto
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 500
+        content: |-
+          {
+              "message": "Server Error"
+          }
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+          set-cookie: 'XSRF-TOKEN=eyJpdiI6IkVrZmRuZ1pLcFVnT1ZPTUl2V0JvUnc9PSIsInZhbHVlIjoiUVRTczk5dzZqcUJ5Z1Q4M3R2QlV3cVhHaURXNHJQc1dubnE3SWlmYiswUURxK29TQnRMZWFrRmFZREdvMm1ESHJqakpUSUpIM0syVFY5SXQxL29JK1dnMmN3c0p1WCtpVnJzTVBZeVpqNkJHQ3lpaitHY0dkRUcyVzJ0Q3ovVzIiLCJtYWMiOiIwMWZmZjVjNzIzY2VlNTM1ZDkwNzkyZTMyMGE4MTM1MTc3ODBjNWFjNWQ2MWMwZjJkODZkYmFiNDhiYmZiYjgyIiwidGFnIjoiIn0%3D; expires=Wed, 14 Jan 2026 18:26:23 GMT; Max-Age=7200; path=/; samesite=lax; sisacad-session=eyJpdiI6IjBWZnBiUkQwVGFTYVFHREk4RU1meFE9PSIsInZhbHVlIjoiUVZHQ3FRK1J1VHNqOGpiOE9XVVdnbG5QaGFrVTZNRUtaak44R00zaEduakUvWHVxbkpLRnpjc3RKQlFQbGVmdVBpMFZNTS9xQWhtSHBISkZMa0xmcFNjRUFyY2EveHRSb3dsWVBWZFA5YlNCK0RIVGZFNDRoSFEwNGd1d0hZZFEiLCJtYWMiOiIwNDNhZDExYjE0MTI5MDA3YTJhMDYxODgyZjcxMTE1NjA2NzllYjRmYzY4MzJlYTUwN2NjYzEzYzZmZTljNzgxIiwidGFnIjoiIn0%3D; expires=Wed, 14 Jan 2026 18:26:23 GMT; Max-Age=7200; path=/; httponly; samesite=lax'
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/teacher/libreta/descargar
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+      ngrok-skip-browser-warning: 'true'
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: ''
+        headers:
+          cache-control: public
+          content-disposition: 'attachment; filename=libreta.xlsx'
+          content-type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+          accept-ranges: bytes
+          access-control-allow-origin: '*'
+          set-cookie: 'XSRF-TOKEN=eyJpdiI6InhLaHdPNnJzamRzUm9IUmt4MTJoOEE9PSIsInZhbHVlIjoiR0U2dlAxNjA1Smcwa3NQcDU4YXhpQkRUdUtBL2lKSkVBOVdDeThtcFZFRW9Ed0dCdnllU1ZOTUVlYllBcGRscmxlWllmRCtGb095NTVwR1NiRUVDbE1pUk50VHVZRDFKempOTVVFM3VETFhjVHpLSlU1UnpzYTJRMnJ4OVl3VTAiLCJtYWMiOiIxOGZiZDk0NzJmNzExMzYxNDUxMDk3Y2Y3Zjc1NDg1NDBlMTA3Nzk4OTZkZjFhZWMwZGE2YWExYTdhNjZjNWNkIiwidGFnIjoiIn0%3D; expires=Wed, 14 Jan 2026 18:26:23 GMT; Max-Age=7200; path=/; samesite=lax; sisacad-session=eyJpdiI6IlUzc3BzOXdWYTdLODgyRXFQTHNkeWc9PSIsInZhbHVlIjoiZXkvZjNEemE5bGJUdHBuZUZkWTcwd2htYlVBVTE4ZHVUa3RmTFBYbjZrQ0tkblUrQ0hXYjg5YmZFRWpuYld5Y3RQTU9zMHI1enJpN05qbDhGOXphZDczY0dQd3FMNlRRT2xRdmhUWW00dmhUcGJ4cHpuTHIyZ01ISTRmcitISzkiLCJtYWMiOiI3N2NjZWFhMjAxZGI2ZjI1ODJmNTU5OWUyNTUzN2NmNzA5MzMwZjA3ZGFlMzQyNWM1ODBiMTI3MzU3NTQwY2QwIiwidGFnIjoiIn0%3D; expires=Wed, 14 Jan 2026 18:26:23 GMT; Max-Age=7200; path=/; httponly; samesite=lax'
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: api/teacher/silabo/plantilla
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+      ngrok-skip-browser-warning: 'true'
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: ''
+        headers:
+          cache-control: public
+          content-disposition: 'attachment; filename=silabo-plantilla.pdf'
+          content-type: application/pdf
+          accept-ranges: bytes
+          access-control-allow-origin: '*'
+          set-cookie: 'XSRF-TOKEN=eyJpdiI6InM5UXhPWFNVTCt4ZFR3Zm1zTmFzYUE9PSIsInZhbHVlIjoiZGo4bld3SzcvRzhFM1ZjQXU1TWs1amxLWjFvN3lDREpwMG9ST1JVOHBjY0JDUUVLOWVQS05iSlRiTHRBOFd0eWhqSkhESjJkM2J6L3d2cDFSanZNd3RleTRCS2NXb0NXMzh4dE1WbFJuSzBFZGFjR2Y3bWpkTXpRdXdKVUhZU2MiLCJtYWMiOiI3YzI5MTVlNDgzOGFhY2JhYzFjY2FlNmNiMjk1OTVhYjAxM2E2ZGI2ZTIxNjI1NjUyMGRlYThkZTU2YWY1NmZhIiwidGFnIjoiIn0%3D; expires=Wed, 14 Jan 2026 18:26:23 GMT; Max-Age=7200; path=/; samesite=lax; sisacad-session=eyJpdiI6ImNod1N0NmNicGVTejlXQzlWY0tQS3c9PSIsInZhbHVlIjoicmxWV1N1T2VmVFQ1d2svQ051dzQzbDMyZmZUM0Z5TDVoSXVxL1ZhTStwY0Zha2VsaEI3b3dCaU9EcXVaeldqWnVkQ293MktYZGNlNWNZWUxiT3lKVkZiblR1RzRocUU3MjhIcURpVmpQRGU4VE9aQVRMZGhRdnJHbE1OUkJNV1kiLCJtYWMiOiJjODA0YWU1NWE0YmJhZTFjODFkODMwNTk1OGEwMjczMmI0YjU4NWQwMzQxZWY2ZTVkYWI0NWEzZTdmZGZiMDJmIiwidGFnIjoiIn0%3D; expires=Wed, 14 Jan 2026 18:26:23 GMT; Max-Age=7200; path=/; httponly; samesite=lax'
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/teacher/aulas
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+      ngrok-skip-browser-warning: 'true'
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      fecha:
+        custom: []
+        name: fecha
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      hora_inicio:
+        custom: []
+        name: hora_inicio
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      hora_fin:
+        custom: []
+        name: hora_fin
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      fecha: architecto
+      hora_inicio: architecto
+      hora_fin: architecto
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: api/teacher/crear_sesion
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+      ngrok-skip-browser-warning: 'true'
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      grupo_id:
+        custom: []
+        name: grupo_id
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      fecha:
+        custom: []
+        name: fecha
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      hora_inicio:
+        custom: []
+        name: hora_inicio
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      hora_fin:
+        custom: []
+        name: hora_fin
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+      aula_id:
+        custom: []
+        name: aula_id
+        description: ''
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      grupo_id: architecto
+      fecha: architecto
+      hora_inicio: architecto
+      hora_fin: architecto
+      aula_id: architecto
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/teacher/sesion/{sesion}/guardar'
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+      ngrok-skip-browser-warning: 'true'
+    urlParameters:
+      sesion:
+        custom: []
+        name: sesion
+        description: 'The sesion.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      sesion: architecto
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      alumnos:
+        custom: []
+        name: alumnos
+        description: ''
+        required: false
+        example:
+          - '1'
+        type: 'string[]'
+        enumValues:
+          - '0'
+          - '1'
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanBodyParameters:
+      alumnos:
+        - '1'
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - POST
+    uri: 'api/teacher/sesion/{sesion}/borrar'
+    metadata:
+      custom: []
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+      ngrok-skip-browser-warning: 'true'
+    urlParameters:
+      sesion:
+        custom: []
+        name: sesion
+        description: 'The sesion.'
+        required: true
+        example: architecto
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      sesion: architecto
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
