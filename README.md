@@ -1,39 +1,234 @@
-# SISACAD
-## Installation
-1) Install [Docker](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository)
-   > If requires permissions, use `sudo usermod -aG docker $USER` and restart.
-2) Initialize Laravel environment
-```shell
+# SISACAD – Sistema Académico
+
+## Equipo de Trabajo
+**Equipo:** AGT Avictus
+
+- Diaz Vasquez Esdras Amado
+- Meza Pareja Arthur Patrick
+- Torres Ara Alberto Gabriel
+
+---
+
+## Propósito del Proyecto
+SISACAD es un sistema académico desarrollado con **Laravel**, cuyo objetivo es gestionar procesos académicos como matrícula, horarios, asistencia, notas y administración de cursos, aplicando principios de **DDD (Domain-Driven Design)** y **Arquitectura Limpia**.
+
+---
+
+## Funcionalidades (Alto Nivel)
+
+### Casos de Uso (UML)
+TODO: `docs/uml/casos-de-uso.png`
+
+**Roles principales:**
+- Administrador
+- Docente
+- Estudiante
+
+**Casos de uso clave:**
+- Gestión de usuarios y cursos (Admin)
+- Matrícula y consulta académica (Student)
+- Gestión de sesiones, asistencia y notas (Teacher)
+
+---
+
+## Modelo de Dominio
+
+### Diagrama de Clases
+TODO: `docs/uml/diagrama-clases.png`
+
+### Agregados y Entidades Clave
+- **Curso**
+- **GrupoCurso**
+- **Sesion**
+- **Asistencia**
+- **Alumno**
+- **Docente**
+- **Usuario**
+
+### Value Objects
+- `Id`
+- `Fecha`
+- `Hora`
+- `Dia`
+- `CursoTipo`
+- `UserRol`
+- `NotasParcial`
+- `NotasContinua`
+
+---
+
+## Visión General de Arquitectura
+
+### Enfoque
+- **Domain-Driven Design (DDD)**
+- **Arquitectura Limpia**
+- Separación estricta de responsabilidades
+
+### Capas del Sistema
+
+#### Domain
+- Entidades
+- Value Objects
+- Excepciones de negocio
+- Interfaces de repositorio
+
+#### Application
+- Casos de uso (Commands / Queries)
+- DTOs
+- Transformers
+- Lógica de aplicación
+
+#### Infrastructure
+- Implementaciones Eloquent
+- Controllers HTTP
+- Providers
+- Parsers (Infra → Domain)
+
+#### Interface / HTTP
+- Controllers
+- Middleware
+- Autenticación
+
+---
+
+## Organización por Módulos
+
+### Admin
+**Responsabilidad:** Gestión administrativa del sistema
+
+- Usuarios
+- Cursos
+- Temas
+
+**Casos de uso:**
+- Crear usuarios
+- Listar usuarios
+- Buscar cursos
+
+---
+
+### Student
+**Responsabilidad:** Funcionalidades del estudiante
+
+- Matrícula
+- Horario
+- Notas
+- Asistencias
+
+**Casos de uso:**
+- Matricular / desmatricular
+- Consultar horarios
+- Ver notas
+
+---
+
+### Teacher
+**Responsabilidad:** Funcionalidades del docente
+
+- Gestión de sesiones
+- Asistencia
+- Notas
+- Sílabos
+
+**Casos de uso:**
+- Crear sesión
+- Guardar asistencia
+- Descargar libreta
+- Subir sílabo
+
+---
+
+## API REST
+
+### Documentación OpenAPI
+- **Formato:** OpenAPI 3.0
+- **Herramienta:** Swagger
+- **URL:**
+
+---
+
+### Módulo: Autenticación
+| Método | Endpoint | Descripción |
+|------|---------|------------|
+| POST | /api/login | Iniciar sesión |
+| POST | /api/logout | Cerrar sesión |
+| POST | /api/register | Registrar usuario |
+
+---
+
+### Módulo: Admin – Usuarios
+| Método | Endpoint | Descripción |
+|------|---------|------------|
+| GET | /api/admin/users | Listar usuarios |
+| POST | /api/admin/users | Crear usuario |
+| GET | /api/admin/users/{id} | Obtener usuario |
+
+---
+
+### Módulo: Student – Matrícula
+| Método | Endpoint | Descripción |
+|------|---------|------------|
+| GET | /api/student/cursos | Listar cursos |
+| POST | /api/student/matricula | Matricular |
+| DELETE | /api/student/matricula | Desmatricular |
+
+---
+
+### Módulo: Teacher – Sesiones
+| Método | Endpoint | Descripción |
+|------|---------|------------|
+| POST | /api/teacher/sesion | Crear sesión |
+| GET | /api/teacher/sesion/{id} | Obtener sesión |
+| POST | /api/teacher/asistencia | Guardar asistencia |
+
+---
+
+## Pipeline CI/CD
+
+### Etapas
+
+#### Construcción Automática
+- `composer install`
+- `php artisan key:generate`
+- `php artisan migrate`
+
+#### Análisis Estático
+- PHPStan
+- Laravel Pint
+
+#### Pruebas
+- **Unitarias:** Dominio y Value Objects
+- **Funcionales:** Endpoints REST
+- **Seguridad:** Roles y middleware
+- **Performance:** Requests concurrentes
+
+#### Gestión de Issues
+- GitHub Issues
+- Etiquetas: `bug`, `feature`, `refactor`
+
+---
+
+## Gestión de Entrega (Despliegue)
+
+### Entornos
+- Development
+- Staging
+- Production
+
+### Herramientas
+- Docker / Docker Compose
+- GitHub Actions
+- VPS / Cloud
+
+---
+
+## ⚙️ Instalación y Ejecución
+
+```bash
+git clone https://github.com/usuario/sisacad.git
+cd sisacad
 composer install
-cp .env.example .env 
+cp .env.example .env
 php artisan key:generate
-```
-3) Initialize Sail with Postgres
-```shell
-docker context use default
-composer require laravel/sail --dev
-php artisan sail:install --with=pgsql
-./vendor/bin/sail up -d       # Iniciar backend
-./vendor/bin/sail npm install
-```
-4) Creating `storage` folders
-```shell
-mkdir -p ./storage/framework/sessions
-mkdir -p ./storage/framework/views
-mkdir -p ./storage/framework/cache
-```
-
-### Update Database
-```shell
-./vendor/bin/sail artisan migrate:fresh --seed
-```
-
-### Running
-```shell
-./vendor/bin/sail npm run dev # Iniciar frontend
-```
-
-### 3rd_party
-```shell
-./vendor/bin/sail composer require smalot/pdfparser
-```
+php artisan migrate
+php artisan serve

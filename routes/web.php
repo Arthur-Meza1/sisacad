@@ -20,14 +20,6 @@ Route::get('/', function () {
   };
 });
 
-Route::middleware('auth')->group(function () {
-    /*Route::get('/student', Student\AlumnoController::class)
-      ->name('student')
-      ->middleware('role:student');*/
-    // TODO: Secretary view missing
-    Route::view('/secretary', 'secretary')->middleware('role:secretary');
-});
-
 Route::view('/login', 'auth.login')
   ->middleware('guest')
   ->name('login');
@@ -75,7 +67,6 @@ Route::prefix('teacher')->name("teacher.")->group(function () {
   Route::prefix('horario')->name('horario.')->group(function () {
     Route::get('/', Teacher\HorarioController::class)->name('index');
     Route::get('reservar', Teacher\ReservarController::class)->name('reservar');
-    // Route::get('asistencia', Teacher\AsistenciaController::class)->name('asistencia');
   });
   Route::get('notas', Teacher\NotasController::class)->name('notas');
   Route::get('temas/{grupo}', Teacher\TemasIndexController::class)->name('temas.index');
