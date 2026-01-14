@@ -50,11 +50,10 @@ class UserController extends Controller
 
   public function edit_student(int $userId): View {
     $id = Id::fromInt($userId);
-    $student = User::findOrFail($userId);
     $grupos = $this->studentGetBasicGruposData->execute($id);
     $horario = $this->studentGetHorario->execute($id);
 
-    return view('admin.users.show_student', compact('grupos', 'horario', 'student'));
+    return view('admin.users.show_student', compact('grupos', 'horario'));
   }
 
   public function show_teacher(int $userId): View {
