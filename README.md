@@ -73,6 +73,75 @@ SISACAD es un sistema académico desarrollado con **Laravel**, cuyo objetivo es 
 - Middleware
 - Autenticación
 
+```
+Directorio del Projecto
+├── Application
+│   ├── Admin
+│   │   ├── DTOs
+│   │   ├── UseCase
+│   │   └── Transformer
+│   ├── Student
+│   │   ├── DTOs
+│   │   ├── UseCase
+│   │   └── Transformer
+│   ├── Teacher
+│   │   ├── DTOs
+│   │   ├── UseCase
+│   │   └── Transformer
+│   └── Shared
+│       ├── DTOs
+│       └── Transformer
+│
+├── Domain
+│   ├── Admin
+│   │   ├── Repository
+│   │   └── ValueObject
+│   ├── Student
+│   │   ├── Entity
+│   │   ├── Exception
+│   │   ├── Repository
+│   │   └── ValueObject
+│   ├── Teacher
+│   │   ├── Entity
+│   │   ├── Repository
+│   │   └── ValueObject
+│   └── Shared
+│       ├── Entity
+│       ├── Exception
+│       ├── Repository
+│       └── ValueObject
+│
+├── Http
+│   ├── Controllers
+│   └── Middleware
+│
+├── Infrastructure
+│   ├── Admin
+│   │   ├── Controller
+│   │   ├── Model
+│   │   ├── Parser
+│   │   ├── Provider
+│   │   └── Repository
+│   ├── Student
+│   │   ├── Controller
+│   │   ├── Model
+│   │   ├── Parser
+│   │   ├── Provider
+│   │   └── Repository
+│   ├── Teacher
+│   │   ├── Controller
+│   │   ├── Model
+│   │   ├── Parser
+│   │   ├── Provider
+│   │   └── Repository
+│   └── Shared
+│       ├── Model
+│       ├── Parser
+│       ├── Provider
+│       └── Repository
+
+```
+
 ---
 
 ## Organización por Módulos
