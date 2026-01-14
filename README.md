@@ -1,7 +1,7 @@
 # SISACAD – Sistema Académico
 
 ## Equipo de Trabajo
-**Equipo:** AGT Avictus
+**Equipo:** Amiguitos
 
 - Diaz Vasquez Esdras Amado
 - Meza Pareja Arthur Patrick
@@ -17,7 +17,7 @@ SISACAD es un sistema académico desarrollado con **Laravel**, cuyo objetivo es 
 ## Funcionalidades (Alto Nivel)
 
 ### Casos de Uso (UML)
-TODO: `docs/uml/casos-de-uso.png`
+TODO: DIAGRAMA DE CASOS DE USO UML
 
 **Roles principales:**
 - Administrador
@@ -34,7 +34,7 @@ TODO: `docs/uml/casos-de-uso.png`
 ## Modelo de Dominio
 
 ### Diagrama de Clases
-TODO: `docs/uml/diagrama-clases.png`
+TODO: DIAGRAMA DE CLASES UML
 
 ### Agregados y Entidades Clave
 - **Curso**
@@ -58,6 +58,8 @@ TODO: `docs/uml/diagrama-clases.png`
 ---
 
 ## Visión General de Arquitectura
+
+TODO: DIAGRAMA DE PAQUETES
 
 ### Enfoque
 - **Domain-Driven Design (DDD)**
@@ -93,6 +95,8 @@ TODO: `docs/uml/diagrama-clases.png`
 
 ## Organización por Módulos
 
+TOD: OPENAPI Y SWAGGER
+
 ### Admin
 **Responsabilidad:** Gestión administrativa del sistema
 
@@ -104,8 +108,6 @@ TODO: `docs/uml/diagrama-clases.png`
 - Crear usuarios
 - Listar usuarios
 - Buscar cursos
-
----
 
 ### Student
 **Responsabilidad:** Funcionalidades del estudiante
@@ -119,8 +121,6 @@ TODO: `docs/uml/diagrama-clases.png`
 - Matricular / desmatricular
 - Consultar horarios
 - Ver notas
-
----
 
 ### Teacher
 **Responsabilidad:** Funcionalidades del docente
@@ -138,8 +138,6 @@ TODO: `docs/uml/diagrama-clases.png`
 
 ---
 
-## API REST
-
 ### Documentación OpenAPI
 - **Formato:** OpenAPI 3.0
 - **Herramienta:** Swagger
@@ -154,16 +152,12 @@ TODO: `docs/uml/diagrama-clases.png`
 | POST | /api/logout | Cerrar sesión |
 | POST | /api/register | Registrar usuario |
 
----
-
 ### Módulo: Admin – Usuarios
 | Método | Endpoint | Descripción |
 |------|---------|------------|
 | GET | /api/admin/users | Listar usuarios |
 | POST | /api/admin/users | Crear usuario |
 | GET | /api/admin/users/{id} | Obtener usuario |
-
----
 
 ### Módulo: Student – Matrícula
 | Método | Endpoint | Descripción |
@@ -172,8 +166,6 @@ TODO: `docs/uml/diagrama-clases.png`
 | POST | /api/student/matricula | Matricular |
 | DELETE | /api/student/matricula | Desmatricular |
 
----
-
 ### Módulo: Teacher – Sesiones
 | Método | Endpoint | Descripción |
 |------|---------|------------|
@@ -181,7 +173,6 @@ TODO: `docs/uml/diagrama-clases.png`
 | GET | /api/teacher/sesion/{id} | Obtener sesión |
 | POST | /api/teacher/asistencia | Guardar asistencia |
 
----
 
 ## Pipeline CI/CD
 
@@ -206,29 +197,12 @@ TODO: `docs/uml/diagrama-clases.png`
 - GitHub Issues
 - Etiquetas: `bug`, `feature`, `refactor`
 
----
-
-## Gestión de Entrega (Despliegue)
-
-### Entornos
+#### Gestión de Entrega (Despliegue)
+##### Entornos
 - Development
 - Staging
 - Production
-
-### Herramientas
+##### Herramientas
 - Docker / Docker Compose
 - GitHub Actions
 - VPS / Cloud
-
----
-
-## ⚙️ Instalación y Ejecución
-
-```bash
-git clone https://github.com/usuario/sisacad.git
-cd sisacad
-composer install
-cp .env.example .env
-php artisan key:generate
-php artisan migrate
-php artisan serve
