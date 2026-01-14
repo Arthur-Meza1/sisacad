@@ -1,170 +1,198 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f5f5dc;
+  background: #f4f7f9;
 }
 
-
-.header {
-    background-color: #72161b;
-    color: white;
-    padding: 10px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.accent {
+  background: linear-gradient(90deg, #06b6d4, #8b5cf6);
 }
 
-.logo {
-    display: flex;
-    align-items: center;
-    font-size: 0.8em;
+.card {
+  transition: all 0.3s ease;
 }
 
-.logo img {
-    height: 40px;
-    margin-right: 15px;
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
-.title-right h2 {
-    font-size: 1.8em;
-    margin: 0;
-    font-weight: bold;
+.active-link {
+  background-color: #eef2ff;
+  color: #4338ca;
+  border-left: 4px solid #4338ca;
 }
 
-
-.content-container {
-    display: flex;
-    justify-content: center;
-    gap: 50px;
-    padding: 50px 20px;
+.inactive-link {
+  color: #4b5563;
+  border-left: 4px solid transparent;
 }
 
-
-.block {
-    background-color: white;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    width: 350px;
+.table-schedule {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0;
 }
 
-
-.block-title {
-    color: white;
-    padding: 10px;
-    margin: -20px -20px 20px -20px;
-    text-align: left;
-    font-size: 1.1em;
-    font-weight: bold;
+.table-schedule th, .table-schedule td {
+  border: 1px solid #ddd;
+  padding: 10px 6px;
+  text-align: center;
+  background-color: #ffffff;
+  vertical-align: middle;
+  min-width: 90px;
+  height: 50px;
+  font-size: 0.9rem;
 }
 
-.title-rojo {
-    background-color: #b5383f;
+.table-schedule thead th {
+  background-color: #4CAF50; /* Verde */
+  color: white;
+  font-weight: bold;
 }
 
-
-.documentos ul {
-    list-style: none;
-    padding: 0;
+.table-schedule tbody th {
+  background-color: #f0f0f0;
+  color: #333;
+  font-weight: bold;
+  min-width: 120px;
 }
 
-.documentos li {
-    padding: 8px 0;
-    border-bottom: 1px dashed #ddd;
-    font-size: 1em;
-    display: flex;
-    align-items: center;
+.table-schedule tr:hover {
+  background-color: #e8e8e8;
 }
 
-.documentos li a {
-    text-decoration: none;
-    color: #444;
-    margin-left: 10px;
-}
-
-.check-icon {
-    color: green;
-    font-weight: bold;
-    font-size: 1.2em;
-}
-
-
-
-.system-links {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.system-button {
-    text-decoration: none;
-    color: white;
-    background-color: #808080;
-    padding: 15px;
-    border-radius: 5px;
-    text-align: center;
-    font-weight: bold;
-    transition: background-color 0.2s;
-    box-shadow: 0 3px 0 #5e5e5e;
-}
-
-
-.system-button:hover {
-    background-color: #6a6a6a;
-}
-
-.login-container {
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    height: 80vh;
-    padding: 20px;
-}
-
-.login-box {
-    width: 400px;
-    padding-bottom: 30px;
-    text-align: center;
-}
-
-
-.input-group {
-    margin-bottom: 20px;
-    text-align: left;
-}
-
-.login-box label {
+@media (max-width: 768px) {
+  .table-schedule {
     display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
-    color: #444;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  .table-schedule th, .table-schedule td {
+    padding: 8px 4px;
+    height: auto;
+  }
 }
 
-.login-box input[type="text"],
-.login-box input[type="password"] {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    font-size: 1em;
+.table-schedule td.schedule-class {
+  background-color: #e0f2fe;
+  color: #0c4a6e;
+  font-weight: 500;
 }
 
-.full-width {
-    width: 100%;
-    margin-top: 10px;
+.table-schedule td.schedule-lab {
+  background-color: #ecfdf5;
+  color: #065f46;
+  font-weight: 500;
 }
 
-.error-message {
-    color: #b5383f;
-    font-weight: bold;
-    margin-top: 15px;
+.table-schedule td.schedule-lunch {
+  background-color: #fffbeb;
+  color: #92400e;
+  font-weight: 500;
 }
 
-.enlace-publico {
-    margin-top: 20px;
-    font-size: 0.9em;
+.table-schedule td.schedule-other {
+  background-color: #f3e8ff;
+  color: #581c87;
+  font-weight: 500;
+}
+
+.table-schedule tr:hover td.schedule-class,
+.table-schedule tr:hover td.schedule-lab,
+.table-schedule tr:hover td.schedule-lunch,
+.table-schedule tr:hover td.schedule-other {
+  background-color: inherit;
+}
+
+#calendarContainer {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+}
+
+.ec-session {
+  background-color: #ab0647;
+  border-color: #ab0647;
+}
+
+.ec-session:hover {
+  cursor: pointer;
+  transform: scale(1);
+}
+
+.ec-now {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.5) !important;
+  cursor: pointer;
+  transform: scale(1.01);
+}
+.ec-now:active {
+  transform: scale(1);
+}
+
+.ec-week-header {
+  background-color: #e5d7d3;
+  border-bottom: 2px solid #d4c6c2;
+  font-weight: bold;
+  color: #4b5563;
+}
+.ec-week-header span {
+  padding: 10px 0;
+}
+
+.ec-today {
+  background-color: #f5f5f4 !important;
+}
+.ec-day-name.ec-today {
+  color: #8b5cf6;
+}
+
+.ec-event-name {
+  padding: 4px 8px;
+  margin: 2px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  line-height: 1.3;
+  cursor: pointer;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  text-align: left;
+  white-space: normal;
+}
+.ec-event-title {
+  display: block;
+  font-weight: 500;
+}
+.ec-event-time {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 400;
+  opacity: 0.8;
+}
+
+.ec-event-class {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+.ec-event-lab {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+.ec-event-lunch {
+  background-color: #fffbeb;
+  color: #92400e;
+}
+.ec-event-other {
+  background-color: #ede9fe;
+  color: #5b21b6;
+}
+
+.course-btn {
+  background-color: #BFDBFE;
+  color: #6B7280;
+}
+
+.course-btn.active {
+  background-color: #1e40af;
+  color: #ffffff;
+}
+
+.fc-bg-event {
 }

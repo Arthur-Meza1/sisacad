@@ -1,0 +1,14 @@
+<?php
+
+namespace App\Domain\Shared\Repository;
+
+use App\Application\Shared\DTOs\BloqueHorarioDTO;
+use App\Application\Shared\DTOs\HorarioDTO;
+
+interface IHorarioRepository
+{
+    /**
+     * @return BloqueHorarioDTO
+     */
+    public function getFromGrupoIds(array $grupoIds, bool $withOthers): HorarioDTO;
+}
